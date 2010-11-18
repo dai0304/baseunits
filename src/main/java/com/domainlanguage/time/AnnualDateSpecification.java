@@ -11,10 +11,13 @@ import java.util.NoSuchElementException;
 
 import com.domainlanguage.util.ImmutableIterator;
 
+import org.apache.commons.lang.Validate;
+
 public abstract class AnnualDateSpecification extends DateSpecification {
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
+		Validate.notNull(interval);
 		CalendarDate firstTry = ofYear(interval.start().breachEncapsulationOf_year());
 		if (interval.includes(firstTry)) {
 			return firstTry;
@@ -28,6 +31,7 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 	
 	@Override
 	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
+		Validate.notNull(interval);
 		return new ImmutableIterator<CalendarDate>() {
 			
 			CalendarDate next = firstOccurrenceIn(interval);

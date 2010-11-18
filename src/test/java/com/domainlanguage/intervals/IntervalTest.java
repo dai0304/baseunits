@@ -78,11 +78,11 @@ public class IntervalTest {
 	 */
 	@Test
 	public void test02_UpTo() throws Exception {
-		Interval<Double> range = Interval.upTo(new Double(5.5));
-		assertThat(range.includes(new Double(5.5)), is(true));
-		assertThat(range.includes(new Double(-5.5)), is(true));
+		Interval<Double> range = Interval.upTo(Double.valueOf(5.5));
+		assertThat(range.includes(Double.valueOf(5.5)), is(true));
+		assertThat(range.includes(Double.valueOf(-5.5)), is(true));
 		assertThat(range.includes(Double.NEGATIVE_INFINITY), is(true));
-		assertThat(!range.includes(new Double(5.5001)), is(true));
+		assertThat(!range.includes(Double.valueOf(5.5001)), is(true));
 	}
 	
 	/**

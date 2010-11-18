@@ -15,9 +15,7 @@ import com.domainlanguage.time.TimeSource;
 /**
  * 時計を表すクラス。
  * 
- * <p>このクラスはステートを持つstaticなユーティリティクラスである。
- * 
- * </p>
+ * <p>このクラスはステートを持つstaticなユーティリティクラスである。</p>
  * 
  * @version $Id$
  * @author daisuke

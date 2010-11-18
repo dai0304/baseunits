@@ -40,7 +40,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 */
-	public static TimePoint at(int year, int month, int date, int hour, int minute, int second, int millisecond,
+	public static TimePoint at(int year, int month, int date, int hour, int minute, int second, int millisecond, // CHECKSTYLE IGNORE THIS LINE
 			TimeZone zone) {
 		Calendar calendar = Calendar.getInstance(zone);
 		calendar.set(Calendar.YEAR, year);
@@ -93,15 +93,15 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param month 月（1〜12）
 	 * @param date 日
 	 * @param hour 時
-	 * @param am_pm 午前午後を表す文字列("AM", "PM"など)
+	 * @param amPm 午前午後を表す文字列("AM", "PM"など)
 	 * @param minute 分
 	 * @param second 秒
 	 * @param millisecond ミリ秒
 	 * @return {@link TimePoint}
 	 */
-	public static TimePoint at12hr(int year, int month, int date, int hour, String am_pm, int minute, int second,
+	public static TimePoint at12hr(int year, int month, int date, int hour, String amPm, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond) {
-		return at(year, month, date, convertedTo24hour(hour, am_pm), minute, second, millisecond, GMT);
+		return at(year, month, date, convertedTo24hour(hour, amPm), minute, second, millisecond, GMT);
 	}
 	
 	/**
@@ -111,16 +111,16 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param month 月（1〜12）
 	 * @param date 日
 	 * @param hour 時
-	 * @param am_pm 午前午後を表す文字列("AM", "PM"など)
+	 * @param amPm 午前午後を表す文字列("AM", "PM"など)
 	 * @param minute 分
 	 * @param second 秒
 	 * @param millisecond ミリ秒
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 */
-	public static TimePoint at12hr(int year, int month, int date, int hour, String am_pm, int minute, int second,
+	public static TimePoint at12hr(int year, int month, int date, int hour, String amPm, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond, TimeZone zone) {
-		return at(year, month, date, convertedTo24hour(hour, am_pm), minute, second, millisecond, zone);
+		return at(year, month, date, convertedTo24hour(hour, amPm), minute, second, millisecond, zone);
 	}
 	
 	/**
@@ -258,8 +258,8 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		return parseFrom(dateString, pattern, GMT);
 	}
 	
-	private static int convertedTo24hour(int hour, String am_pm) {
-		int translatedAmPm = "AM".equalsIgnoreCase(am_pm) ? 0 : 12;
+	private static int convertedTo24hour(int hour, String amPm) {
+		int translatedAmPm = "AM".equalsIgnoreCase(amPm) ? 0 : 12;
 		translatedAmPm -= (hour == 12) ? 12 : 0;
 		return hour + translatedAmPm;
 	}
@@ -322,6 +322,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
 	@Override
 	public int compareTo(TimePoint otherPoint) {
+		if (otherPoint == null) {
+			return -1;
+		}
 		if (this.isBefore(otherPoint)) {
 			return -1;
 		}
@@ -347,10 +350,18 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
 	@Override
 	public int hashCode() {
-		return (int) (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32));
+		return (int) (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)); // CHECKSTYLE IGNORE THIS LINE
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param interval
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public boolean isAfter(TimeInterval interval) {
+		Validate.notNull(interval);
 		return interval.isBefore(this);
 	}
 	
@@ -368,7 +379,15 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		return millisecondsFromEpoc > other.millisecondsFromEpoc;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param interval
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public boolean isBefore(TimeInterval interval) {
+		Validate.notNull(interval);
 		return interval.isAfter(this);
 	}
 	

@@ -5,6 +5,8 @@
  */
 package com.domainlanguage.time;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * 特定の「時」を表すクラス。
  * 
@@ -32,24 +34,24 @@ public class HourOfDay {
 	 * インスタンスを生成する。
 	 * 
 	 * @param initial 時をあらわす正数
-	 * @param am_pm 午前午後を表す文字列
+	 * @param amPm 午前午後を表す文字列
 	 * @return 時
 	 * @throws IllegalArgumentException 引数initialの値が0〜11の範囲ではない場合
 	 * @throws IllegalArgumentException 引数am_pmの値が AM, PM ではない場合
 	 */
-	public static HourOfDay value(int initial, String am_pm) {
-		return HourOfDay.of(convertTo24hour(initial, am_pm));
+	public static HourOfDay value(int initial, String amPm) {
+		return HourOfDay.of(convertTo24hour(initial, amPm));
 	}
 	
-	private static int convertTo24hour(int hour, String am_pm) {
-		if (!("AM".equalsIgnoreCase(am_pm) || "PM".equalsIgnoreCase(am_pm))) {
-			throw new IllegalArgumentException("AM PM indicator invalid: " + am_pm + ", please use AM or PM");
+	private static int convertTo24hour(int hour, String amPm) {
+		if (("AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm)) == false) {
+			throw new IllegalArgumentException("AM PM indicator invalid: " + amPm + ", please use AM or PM");
 		}
-		if (hour < MIN | hour > 12) {
+		if (hour < MIN || hour > 12) {
 			throw new IllegalArgumentException("Illegal value for 12 hour: " + hour
 					+ ", please use a value between 0 and 11");
 		}
-		int translatedAmPm = "AM".equalsIgnoreCase(am_pm) ? 0 : 12;
+		int translatedAmPm = "AM".equalsIgnoreCase(amPm) ? 0 : 12;
 		translatedAmPm -= (hour == 12) ? 12 : 0;
 		return hour + translatedAmPm;
 	}
@@ -88,11 +90,27 @@ public class HourOfDay {
 		return value;
 	}
 	
+	/**
+	 * 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来かどうか調べる。
+	 * 
+	 * @param another 基準時
+	 * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public boolean isAfter(HourOfDay another) {
+		Validate.notNull(another);
 		return value > another.value;
 	}
 	
+	/**
+	 * 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去かどうか調べる。
+	 * 
+	 * @param another 基準時
+	 * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public boolean isBefore(HourOfDay another) {
+		Validate.notNull(another);
 		return value < another.value;
 	}
 	
@@ -101,6 +119,11 @@ public class HourOfDay {
 		return String.valueOf(value);
 	}
 	
+	/**
+	 * 時をあらわす正数を取得する。
+	 * 
+	 * @return 時をあらわす正数
+	 */
 	public int value() {
 		return value;
 	}

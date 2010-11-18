@@ -156,16 +156,18 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * さらに下側限界の開閉が一致している場合、下側限界値が小さい方を「小さい」と判断する。
 	 * 上側下側両方の限界値が一致し、下側限界の開閉も一致している場合同一と判断する。</p>
 	 * 
+	 * TODO other == null の時
 	 * THINK 上側限界の開閉には影響されない？ これでいいの？
 	 * 
 	 * @param other 比較対象
 	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
 	public int compareTo(Interval<T> other) {
-		Validate.notNull(other);
+		if (other == null) {
+			return -1;
+		}
 		if (upperLimit().equals(other.upperLimit()) == false) {
 			return upperLimit().compareTo(other.upperLimit());
 		}
@@ -191,8 +193,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * @param other 対照となる区間
 	 * @return 補区間と対照区間の共通部分のリスト
 	 * @see <a href="http://en.wikipedia.org/wiki/Set_theoretic_complement">complement (wikipedia)</a>
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public List<Interval<T>> complementRelativeTo(Interval<T> other) {
+		Validate.notNull(other);
 		List<Interval<T>> intervalSequence = new ArrayList<Interval<T>>();
 		if (this.intersects(other) == false) {
 			intervalSequence.add(other);
@@ -214,8 +218,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * 
 	 * @param other 区間
 	 * @return 完全に内包する場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean covers(Interval<T> other) {
+		Validate.notNull(other);
 		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
 		boolean lowerPass = this.includes(other.lowerLimit()) || (lowerComparison == 0 && !other.includesLowerLimit());
 		int upperComparison = upperLimit().compareTo(other.upperLimit());
@@ -291,8 +297,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * 
 	 * @param other 比較対象の区間
 	 * @return ギャップ区間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Interval<T> gap(Interval<T> other) {
+		Validate.notNull(other);
 		if (this.intersects(other)) {
 			return this.emptyOfSameType();
 		}
@@ -619,7 +627,7 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	private void assertLowerIsLessThanOrEqualUpper(IntervalLimit<T> lower, IntervalLimit<T> upper) {
-		if (!(lower.isLower() && upper.isUpper() && lower.compareTo(upper) <= 0)) {
+		if ((lower.isLower() && upper.isUpper() && lower.compareTo(upper) <= 0) == false) {
 			throw new IllegalArgumentException(lower + " is not before or equal to " + upper);
 		}
 	}

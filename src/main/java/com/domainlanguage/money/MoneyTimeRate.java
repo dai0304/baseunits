@@ -11,6 +11,8 @@ import com.domainlanguage.base.Rounding;
 import com.domainlanguage.time.Duration;
 import com.domainlanguage.time.TimeRate;
 
+import org.apache.commons.lang.Validate;
+
 public class MoneyTimeRate {
 	
 	private TimeRate rate;
@@ -18,7 +20,16 @@ public class MoneyTimeRate {
 	private Currency currency;
 	
 
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param money
+	 * @param duration
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public MoneyTimeRate(Money money, Duration duration) {
+		Validate.notNull(money);
+		Validate.notNull(duration);
 		rate = new TimeRate(money.getAmount(), duration);
 		currency = money.getCurrency();
 	}

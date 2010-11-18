@@ -35,6 +35,7 @@ public class Ratio {
 	 * 
 	 * @param fractional 分数
 	 * @return 与えた分数であらわされる比率
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Ratio of(BigDecimal fractional) {
 		return new Ratio(fractional, BigDecimal.valueOf(1));
@@ -46,6 +47,7 @@ public class Ratio {
 	 * @param numerator 分子
 	 * @param denominator 分母
 	 * @return 引数に与えた分子、分母からなる比
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Ratio of(BigDecimal numerator, BigDecimal denominator) {
 		return new Ratio(numerator, denominator);
@@ -83,8 +85,11 @@ public class Ratio {
 	 * 
 	 * @param numerator 分子
 	 * @param denominator 分母
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Ratio(BigDecimal numerator, BigDecimal denominator) {
+		Validate.notNull(numerator);
+		Validate.notNull(denominator);
 		this.numerator = numerator;
 		this.denominator = denominator;
 	}
@@ -102,8 +107,10 @@ public class Ratio {
 	 * @param scale 小数点以下の有効数字
 	 * @param roundingRule 丸めルール
 	 * @return この比率の {@link BigDecimal} 型の表現
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public BigDecimal decimalValue(int scale, Rounding roundingRule) {
+		Validate.notNull(roundingRule);
 		return numerator.divide(denominator, scale, roundingRule.value);
 	}
 	
@@ -172,8 +179,10 @@ public class Ratio {
 	 * 
 	 * @param multiplier 乗数比率
 	 * @return 積
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Ratio times(Ratio multiplier) {
+		Validate.notNull(multiplier);
 		return Ratio.of(numerator.multiply(multiplier.numerator), denominator.multiply(multiplier.denominator));
 	}
 	

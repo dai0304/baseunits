@@ -5,15 +5,24 @@
  */
 package com.domainlanguage.time;
 
+import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.Validate;
 
+/**
+ * 特定のカレンダー上の「日時」を表すクラス。
+ * 
+ * <p>{@link Date}と異なり、分未満（秒以下）の概念を持っていない。また、{@link TimePoint}と異なり、1分間全ての範囲を表し、
+ * 特定の瞬間をモデリングしたものではない。</p>
+ * 
+ * @author daisuke
+ */
 public class CalendarMinute {
 	
 	/**
-	 * @param aDate
-	 * @param aTime
+	 * @param aDate 年月日
+	 * @param aTime 時分
 	 * @return
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
@@ -41,6 +50,8 @@ public class CalendarMinute {
 	}
 	
 	private CalendarMinute(CalendarDate date, TimeOfDay time) {
+		Validate.notNull(date);
+		Validate.notNull(time);
 		this.date = date;
 		this.time = time;
 	}

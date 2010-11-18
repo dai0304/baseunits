@@ -179,7 +179,7 @@ public class MoneyTest {
 		try {
 			d15.plus(e2_51);
 			fail("added different currencies");
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			// success
 		}
 	}

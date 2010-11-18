@@ -14,9 +14,24 @@ import java.util.Set;
 
 import com.domainlanguage.util.ImmutableIterator;
 
+import org.apache.commons.lang.Validate;
+
+/**
+ * 営業日カレンダー。
+ * 
+ * <p>営業日と非営業日を判定する責務を持つ。非営業日とは休日（祝日）及び週末（土日）を表し、営業日とは非営業日でない日を表す。
+ * 週末は休日ではないが、週末かつ休日は休日である。</p>
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class BusinessCalendar {
 	
-	/** Should be rewritten for each particular organization */
+	/**
+	 * Should be rewritten for each particular organization
+	 *  
+	 * @return 営業日の{@link Set} 
+	 */
 	static Set<CalendarDate> defaultHolidays() {
 		return new HashSet<CalendarDate>();
 	}
@@ -25,15 +40,35 @@ public class BusinessCalendar {
 	private Set<CalendarDate> holidays;
 	
 
+	/**
+	 * インスタンスを生成する。
+	 */
 	public BusinessCalendar() {
 		holidays = defaultHolidays();
 	}
 	
+	/**
+	 * 休日として取り扱う「日」を追加する。
+	 * 
+	 * @param days 休日として取り扱う「日」 
+	 */
 	public void addHolidays(Set<CalendarDate> days) {
 		holidays.addAll(days);
 	}
 	
+	/**
+	 * {@link CalendarDate}の反復子を受け取り、その反復子が返す{@link CalendarDate}のうち、
+	 * 営業日に当たる{@link CalendarDate}のみを返す反復子を返す。
+	 * 
+	 * <p>このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
+	 * 引数に与えた反復子の {@link Iterator#next()} を呼び出してはならない。</p>
+	 * 
+	 * @param calendarDays 元となる反復子
+	 * @return 営業日のみを返す反復子
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public Iterator<CalendarDate> businessDaysOnly(final Iterator<CalendarDate> calendarDays) {
+		Validate.notNull(calendarDays);
 		return new ImmutableIterator<CalendarDate>() {
 			
 			CalendarDate lookAhead = null;
@@ -68,6 +103,12 @@ public class BusinessCalendar {
 		};
 	}
 	
+	/**
+	 * {@link CalendarInterval}で表す期間のうち、営業日の日数を返す。
+	 * 
+	 * @param interval 期間
+	 * @return 営業日の日数
+	 */
 	public int getElapsedBusinessDays(CalendarInterval interval) {
 		int tally = 0;
 		Iterator<CalendarDate> iterator = businessDaysOnly(interval.daysIterator());
@@ -78,21 +119,56 @@ public class BusinessCalendar {
 		return tally;
 	}
 	
+	/**
+	 * {@link CalendarDate}が営業日に当たるかどうか調べる。
+	 * 
+	 * @param day 日
+	 * @return 営業日に当たる場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public boolean isBusinessDay(CalendarDate day) {
-		return !isWeekend(day) && !isHoliday(day);
+		return isWeekend(day) == false && isHoliday(day) == false;
 	}
 	
+	/**
+	 * {@link CalendarDate}が休日に当たるかどうか調べる。
+	 * 
+	 * <p>休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。</p>
+	 * 
+	 * @param day 日
+	 * @return 休日に当たる場合は{@code true}、そうでない場合は{@code false}
+	 */
 	public boolean isHoliday(CalendarDate day) {
 		return holidays.contains(day);
 	}
 	
+	/**
+	 * {@link CalendarDate}が週末に当たるかどうか調べる。
+	 * 
+	 * <p>週末とは、土曜日と日曜日のことである。</p>
+	 * 
+	 * @param day 日
+	 * @return 週末に当たる場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public boolean isWeekend(CalendarDate day) {
+		Validate.notNull(day);
 		Calendar calday = day.asJavaCalendarUniversalZoneMidnight();
 		return (calday.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
 				|| (calday.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
 	}
 	
+	/**
+	 * 開始日から数えて{@code numberOfDays}営業日前の日付を返す。
+	 * 
+	 * @param startDate 開始日
+	 * @param numberOfDays 営業日数（現在は正数しかサポートしない）
+	 * @return 日付
+	 * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
+	 * @throws IllegalArgumentException 引数{@code startDate}に{@code null}を与えた場合
+	 */
 	public CalendarDate minusBusinessDays(CalendarDate startDate, int numberOfDays) {
+		Validate.notNull(startDate);
 		if (numberOfDays < 0) {
 			throw new IllegalArgumentException("Negative numberOfDays not supported");
 		}
@@ -100,9 +176,15 @@ public class BusinessCalendar {
 		return nextNumberOfBusinessDays(numberOfDays, iterator);
 	}
 	
-	/*
-	 * @deprecated
+	/**
+	 * 指定した日に最も近い営業日を取得する。
+	 * 
+	 * @param day 基準日
+	 * @return 営業日
+	 * @deprecated TODO
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
+	@Deprecated
 	public CalendarDate nearestBusinessDay(CalendarDate day) {
 		if (isBusinessDay(day)) {
 			return day;
@@ -111,6 +193,13 @@ public class BusinessCalendar {
 		}
 	}
 	
+	/**
+	 * 指定した日の翌営業日を取得する。
+	 * 
+	 * @param startDate 基準日
+	 * @return 翌営業日
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public CalendarDate nextBusinessDay(CalendarDate startDate) {
 		if (isBusinessDay(startDate)) {
 			return plusBusinessDays(startDate, 1);
@@ -119,7 +208,17 @@ public class BusinessCalendar {
 		}
 	}
 	
+	/**
+	 * 開始日から数えて{@code numberOfDays}営業日目の日付を返す。
+	 * 
+	 * @param startDate 開始日
+	 * @param numberOfDays 営業日数（現在は正数しかサポートしない）
+	 * @return 日付
+	 * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
+	 * @throws IllegalArgumentException 引数{@code startDate}に{@code null}を与えた場合
+	 */
 	public CalendarDate plusBusinessDays(CalendarDate startDate, int numberOfDays) {
+		Validate.notNull(startDate);
 		if (numberOfDays < 0) {
 			throw new IllegalArgumentException("Negative numberOfDays not supported");
 		}
@@ -135,6 +234,34 @@ public class BusinessCalendar {
 	@SuppressWarnings("unused")
 	private Set<CalendarDate> getForPersistentMapping_Holidays() { // CHECKSTYLE IGNORE THIS LINE
 		return holidays;
+	}
+	
+	/**
+	 * {@code calendarDays}の先頭から数えて{@code numberOfDays}営業日目の日付を返す。
+	 * 
+	 * @param numberOfDays 営業日数
+	 * @param calendarDays 日付イテレータ
+	 * @return 営業日
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	private CalendarDate nextNumberOfBusinessDays(int numberOfDays, Iterator<CalendarDate> calendarDays) {
+		Iterator<CalendarDate> businessDays = businessDaysOnly(calendarDays);
+		CalendarDate result = null;
+		for (int i = 0; i <= numberOfDays; i++) {
+			result = businessDays.next();
+		}
+		return result;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * 
+	 * @param holidays {@link #holidays}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Holidays(Set<CalendarDate> holidays) { // CHECKSTYLE IGNORE THIS LINE
+		this.holidays = holidays;
 	}
 	
 	/*
@@ -181,24 +308,4 @@ public class BusinessCalendar {
 	 * 
 	 * return false; }
 	 */
-
-	private CalendarDate nextNumberOfBusinessDays(int numberOfDays, Iterator<CalendarDate> calendarDays) {
-		Iterator<CalendarDate> businessDays = businessDaysOnly(calendarDays);
-		CalendarDate result = null;
-		for (int i = 0; i <= numberOfDays; i++) {
-			result = businessDays.next();
-		}
-		return result;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * 
-	 * @param holidays {@link #holidays}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Holidays(Set<CalendarDate> holidays) { // CHECKSTYLE IGNORE THIS LINE
-		this.holidays = holidays;
-	}
 }

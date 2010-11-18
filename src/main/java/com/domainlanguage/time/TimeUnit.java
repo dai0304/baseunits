@@ -106,6 +106,9 @@ public enum TimeUnit {
 	}
 	
 //    public int compareTo(TimeUnit other) {
+//		if (other == null) {
+//			return -1;
+//		}
 //        if (other.baseType.equals(baseType)) {
 //            return factor.value - other.factor.value;
 //        }

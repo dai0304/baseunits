@@ -13,10 +13,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * 特定のカレンダー上の「日」を表すクラス。
  * 
- * <p>{@link Date}と異なり、時間の概念を持っていない。</p>
+ * <p>{@link Date}と異なり、時間の概念を持っていない。また、{@link TimePoint}と異なり、1日(24時間)間全ての範囲を表し、
+ * 特定の瞬間をモデリングしたものではない。</p>
  * 
  * @author daisuke
  */
@@ -101,6 +104,9 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	CalendarDate(int year, int month, int day) {
+		Validate.isTrue(0 < month && month <= 12);
+		Validate.isTrue(0 < day && day <= 31); // CHECKSTYLE IGNORE THIS LINE
+		
 		this.year = year;
 		this.month = month;
 		this.day = day;
@@ -359,15 +365,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return calendar;
 	}
 	
-	int breachEncapsulationOf_day() {
+	int breachEncapsulationOf_day() { // CHECKSTYLE IGNORE THIS LINE
 		return day;
 	}
 	
-	int breachEncapsulationOf_month() {
+	int breachEncapsulationOf_month() { // CHECKSTYLE IGNORE THIS LINE
 		return month;
 	}
 	
-	int breachEncapsulationOf_year() {
+	int breachEncapsulationOf_year() { // CHECKSTYLE IGNORE THIS LINE
 		return year;
 	}
 	

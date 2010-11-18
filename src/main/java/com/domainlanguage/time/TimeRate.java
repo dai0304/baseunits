@@ -73,16 +73,41 @@ public class TimeRate {
 	}
 	
 	@Override
-	public boolean equals(Object another) {
-		try {
-			return equals((TimeRate) another);
-		} catch (ClassCastException ex) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		TimeRate other = (TimeRate) obj;
+		if (quantity == null) {
+			if (other.quantity != null) {
+				return false;
+			}
+		} else if (quantity.equals(other.quantity) == false) {
+			return false;
+		}
+		if (unit == null) {
+			if (other.unit != null) {
+				return false;
+			}
+		} else if (!unit.equals(other.unit)) {
+			return false;
+		}
+		return true;
 	}
 	
-	public boolean equals(TimeRate another) {
-		return another != null && quantity.equals(another.quantity) && unit.equals(another.unit);
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
+		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+		return result;
 	}
 	
 	/**
@@ -105,7 +130,7 @@ public class TimeRate {
 	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
 	 * 
 	 * @param duration 時間量
-	 * @param scale
+	 * @param scale 
 	 * @param roundRule 丸めルール
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合

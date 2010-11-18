@@ -223,6 +223,9 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 */
 	@Override
 	public int compareTo(Duration other) {
+		if (other == null) {
+			return -1;
+		}
 		assertConvertible(other);
 		long difference = inBaseUnits() - other.inBaseUnits();
 		if (difference > 0) {

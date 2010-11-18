@@ -7,8 +7,6 @@ package com.domainlanguage.intervals;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.Validate;
-
 /**
  * 区間における「限界」を表すクラス。
  * 
@@ -106,12 +104,13 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	 * 
 	 * @param other 比較対象
 	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
 	public int compareTo(IntervalLimit<T> other) {
-		Validate.notNull(other);
+		if (other == null) {
+			return -1;
+		}
 		
 		T otherValue = other.value;
 		if (otherValue == value) {

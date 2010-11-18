@@ -5,6 +5,8 @@
  */
 package com.domainlanguage.time;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * 特定の「分」を表すクラス。
  * 
@@ -62,11 +64,27 @@ public class MinuteOfHour {
 		return value;
 	}
 	
+	/**
+	 * 同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来かどうか調べる。
+	 * 
+	 * @param another 基準分
+	 * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public boolean isAfter(MinuteOfHour another) {
+		Validate.notNull(another);
 		return value > another.value;
 	}
 	
+	/**
+	 * 同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去かどうか調べる。
+	 * 
+	 * @param another 基準分
+	 * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public boolean isBefore(MinuteOfHour another) {
+		Validate.notNull(another);
 		return value < another.value;
 	}
 	
@@ -75,6 +93,11 @@ public class MinuteOfHour {
 		return String.valueOf(value);
 	}
 	
+	/**
+	 * 分をあらわす正数を取得する。
+	 * 
+	 * @return 分をあらわす正数
+	 */
 	public int value() {
 		return value;
 	}

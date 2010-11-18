@@ -6,18 +6,34 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.Validate;
+
 public class MoneyFan<T> {
 	
 	private Set<Allotment<T>> allotments;
 	
 
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param allotments
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public MoneyFan(Allotment<T>... allotments) {
+		Validate.noNullElements(allotments);
 		Set<Allotment<T>> setOfAllotments = new HashSet<Allotment<T>>();
 		setOfAllotments.addAll(Arrays.asList(allotments));
 		this.allotments = setOfAllotments;
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param allotments
+	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
+	 */
 	public MoneyFan(Set<Allotment<T>> allotments) {
+		Validate.noNullElements(allotments);
 		this.allotments = allotments;
 	}
 	
@@ -30,9 +46,6 @@ public class MoneyFan<T> {
 		return null;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -55,9 +68,6 @@ public class MoneyFan<T> {
 		return true;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -66,7 +76,15 @@ public class MoneyFan<T> {
 		return result;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param subtracted
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public MoneyFan<T> minus(MoneyFan<T> subtracted) {
+		Validate.notNull(subtracted);
 		return plus(subtracted.negated());
 	}
 	
