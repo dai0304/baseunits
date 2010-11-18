@@ -251,22 +251,42 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 		return upperLimit();
 	}
 	
-	public boolean equals(CalendarInterval other) {
-		return other != null && upperLimit().equals(other.upperLimit()) && lowerLimit().equals(other.lowerLimit());
-	}
-	
 	@Override
-	public boolean equals(Object object) {
-		try {
-			return equals((CalendarInterval) object);
-		} catch (ClassCastException ex) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
 			return false;
 		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		CalendarInterval other = (CalendarInterval) obj;
+		if (upperLimit() == null) {
+			if (other.upperLimit() != null) {
+				return false;
+			}
+		} else if (upperLimit().equals(other.upperLimit()) == false) {
+			return false;
+		}
+		if (lowerLimit() == null) {
+			if (other.lowerLimit() != null) {
+				return false;
+			}
+		} else if (lowerLimit().equals(other.lowerLimit()) == false) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return lowerLimit().hashCode();
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (upperLimit() == null ? 0 : upperLimit().hashCode());
+		result = prime * result + (lowerLimit() == null ? 0 : lowerLimit().hashCode());
+		return result;
 	}
 	
 	/**

@@ -39,16 +39,28 @@ public class Money implements Comparable<Money>, Serializable {
 	
 
 	/**
-	 * This creation method is safe to use. It will adjust scale, but will not
-	 * round off the amount.
+	 * {@code amount}で表す量のドルを表すインスタンスを返す。
+	 * 
+	 * <p>This creation method is safe to use. It will adjust scale, but will not
+	 * round off the amount.</p>
+	 * 
+	 * @param amount 量
+	 * @return {@code amount}で表す量のドルを表すインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Money dollars(BigDecimal amount) {
+		Validate.notNull(amount);
 		return Money.valueOf(amount, USD);
 	}
 	
 	/**
-	 * WARNING: Because of the indefinite precision of double, this method must
-	 * round off the value.
+	 * {@code amount}で表す量のドルを表すインスタンスを返す。
+	 * 
+	 * <p>WARNING: Because of the indefinite precision of double, this method must
+	 * round off the value.</p>
+	 * 
+	 * @param amount 量
+	 * @return {@code amount}で表す量のドルを表すインスタンス
 	 */
 	public static Money dollars(double amount) {
 		return Money.valueOf(amount, USD);
@@ -57,14 +69,20 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * This creation method is safe to use. It will adjust scale, but will not
 	 * round off the amount.
+	 * @param amount 量
+	 * @return {@code amount}で表す量のユーロを表すインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Money euros(BigDecimal amount) {
+		Validate.notNull(amount);
 		return Money.valueOf(amount, EUR);
 	}
 	
 	/**
 	 * WARNING: Because of the indefinite precision of double, this method must
 	 * round off the value.
+	 * @param amount 量
+	 * @return {@code amount}で表す量のユーロを表すインスタンス
 	 */
 	public static Money euros(double amount) {
 		return Money.valueOf(amount, EUR);
@@ -75,7 +93,6 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param monies
 	 * @return
-	 * @since TODO
 	 * @throws ClassCastException 引数の通貨単位の中に通貨単位が異なるものを含む場合
 	 */
 	public static Money sum(Collection<Money> monies) {
@@ -145,6 +162,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * This creation method is safe to use. It will adjust scale, but will not
 	 * round off the amount.
 	 * 
+	 * @param amount 量
+	 * @return {@code amount}で表す量の円を表すインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Money yens(BigDecimal amount) {
@@ -155,6 +174,9 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * WARNING: Because of the indefinite precision of double, this method must
 	 * round off the value.
+	 * 
+	 * @param amount 量
+	 * @return {@code amount}で表す量の円を表すインスタンス
 	 */
 	public static Money yens(double amount) {
 		return Money.valueOf(amount, JPY);
@@ -189,7 +211,7 @@ public class Money implements Comparable<Money>, Serializable {
 		Validate.notNull(amount);
 		Validate.notNull(currency);
 		if (amount.scale() != currency.getDefaultFractionDigits()) {
-			throw new IllegalArgumentException("Scale of amount does not match currency");
+			throw new IllegalArgumentException("Scale of amount does not match currency"); // TODO @throws
 		}
 		this.currency = currency;
 		this.amount = amount;

@@ -124,6 +124,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return TimeInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
 	}
 	
+	/**
+	 * このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
+	 * 
+	 * @param timeOfDay 時
+	 * @return 日時
+	 */
 	public CalendarMinute at(TimeOfDay timeOfDay) {
 		return CalendarMinute.dateAndTimeOfDay(this, timeOfDay);
 	}
@@ -152,24 +158,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return DayOfWeek.valueOf(calendar.get(Calendar.DAY_OF_WEEK));
 	}
 	
-	public boolean equals(CalendarDate other) {
-		return other != null && year == other.year && month == other.month && day == other.day;
-	}
-	
-	@Override
-	public boolean equals(Object object) {
-		try {
-			return equals((CalendarDate) object);
-		} catch (ClassCastException ex) {
-			return false;
-		}
-	}
-	
-	@Override
-	public int hashCode() {
-		return year * month * day;
-	}
-	
 	// comment-out by daisuke
 //	public CalendarDate start() {
 //		return this;
@@ -178,6 +166,40 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 //	public CalendarDate end() {
 //		return this;
 //	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		CalendarDate other = (CalendarDate) obj;
+		if (day != other.day) {
+			return false;
+		}
+		if (month != other.month) {
+			return false;
+		}
+		if (year != other.year) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + day;
+		result = prime * result + month;
+		result = prime * result + year;
+		return result;
+	}
 	
 	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
@@ -192,7 +214,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		if (other == null) {
 			return false;
 		}
-		return isBefore(other) == false && this.equals(other) == false;
+		return isBefore(other) == false && equals(other) == false;
 	}
 	
 	/**

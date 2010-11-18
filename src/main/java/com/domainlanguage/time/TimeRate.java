@@ -130,7 +130,7 @@ public class TimeRate {
 	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
 	 * 
 	 * @param duration 時間量
-	 * @param scale 
+	 * @param scale スケール
 	 * @param roundRule 丸めルール
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
@@ -155,6 +155,11 @@ public class TimeRate {
 		return over(duration, scale(), roundRule);
 	}
 	
+	/**
+	 * スケールを取得する。
+	 * 
+	 * @return スケール
+	 */
 	public int scale() {
 		return quantity.scale();
 	}

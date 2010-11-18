@@ -125,6 +125,37 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 		return value.compareTo(otherValue);
 	}
 	
+	@Override
+	@SuppressWarnings("unchecked")
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		IntervalLimit<?> other = (IntervalLimit<?>) obj;
+		if (other.value == value) {
+			return true;
+		}
+		try {
+			return value.compareTo((T) other.value) == 0;
+		} catch (ClassCastException e) {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		return result;
+	}
+	
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>

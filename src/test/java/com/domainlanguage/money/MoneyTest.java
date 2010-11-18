@@ -237,7 +237,7 @@ public class MoneyTest {
 		try {
 			d15.isGreaterThan(e2_51);
 			fail();
-		} catch (Exception correctBehavior) {
+		} catch (ClassCastException correctBehavior) {
 		}
 	}
 	

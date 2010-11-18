@@ -61,24 +61,62 @@ public class CalendarMinute {
 				date.breachEncapsulationOf_day(), time.getHour(), time.getMinute(), 0, 0, timeZone);
 	}
 	
-	public boolean equals(CalendarMinute another) {
-		if (another == null) {
-			return false;
-		}
-		return date.equals(another.date) && time.equals(another.time);
-	}
+//	public boolean equals(CalendarMinute another) {
+//		if (another == null) {
+//			return false;
+//		}
+//		return date.equals(another.date) && time.equals(another.time);
+//	}
+//	
+//	@Override
+//	public boolean equals(Object anotherObject) {
+//		if (anotherObject instanceof CalendarMinute == false) {
+//			return false;
+//		}
+//		return equals((CalendarMinute) anotherObject);
+//	}
+//	
+//	@Override
+//	public int hashCode() {
+//		return date.hashCode() ^ time.hashCode();
+//	}
 	
 	@Override
-	public boolean equals(Object anotherObject) {
-		if (anotherObject instanceof CalendarMinute == false) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
-		return equals((CalendarMinute) anotherObject);
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		CalendarMinute other = (CalendarMinute) obj;
+		if (date == null) {
+			if (other.date != null) {
+				return false;
+			}
+		} else if (date.equals(other.date) == false) {
+			return false;
+		}
+		if (time == null) {
+			if (other.time != null) {
+				return false;
+			}
+		} else if (time.equals(other.time) == false) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return date.hashCode() ^ time.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((time == null) ? 0 : time.hashCode());
+		return result;
 	}
 	
 	@Override

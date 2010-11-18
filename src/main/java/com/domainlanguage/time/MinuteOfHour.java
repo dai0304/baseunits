@@ -47,16 +47,22 @@ public class MinuteOfHour {
 		value = initial;
 	}
 	
-	public boolean equals(MinuteOfHour another) {
-		return value == another.value;
-	}
-	
 	@Override
-	public boolean equals(Object another) {
-		if (!(another instanceof MinuteOfHour)) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
-		return equals((MinuteOfHour) another);
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		MinuteOfHour other = (MinuteOfHour) obj;
+		if (value != other.value) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override

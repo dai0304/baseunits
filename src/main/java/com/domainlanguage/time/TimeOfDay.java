@@ -45,23 +45,41 @@ public class TimeOfDay {
 	}
 	
 	@Override
-	public boolean equals(Object anotherObject) {
-		if (anotherObject instanceof TimeOfDay == false) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
-		return equals((TimeOfDay) anotherObject);
-	}
-	
-	public boolean equals(TimeOfDay another) {
-		if (another == null) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		return hour.equals(another.hour) && minute.equals(another.minute);
+		TimeOfDay other = (TimeOfDay) obj;
+		if (hour == null) {
+			if (other.hour != null) {
+				return false;
+			}
+		} else if (!hour.equals(other.hour)) {
+			return false;
+		}
+		if (minute == null) {
+			if (other.minute != null) {
+				return false;
+			}
+		} else if (!minute.equals(other.minute)) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return hour.hashCode() ^ minute.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((hour == null) ? 0 : hour.hashCode());
+		result = prime * result + ((minute == null) ? 0 : minute.hashCode());
+		return result;
 	}
 	
 	public boolean isAfter(TimeOfDay another) {

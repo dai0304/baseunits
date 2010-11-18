@@ -73,16 +73,22 @@ public class HourOfDay {
 		value = initial;
 	}
 	
-	public boolean equals(HourOfDay another) {
-		return value == another.value;
-	}
-	
 	@Override
-	public boolean equals(Object another) {
-		if (another instanceof HourOfDay == false) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
-		return equals((HourOfDay) another);
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		HourOfDay other = (HourOfDay) obj;
+		if (value != other.value) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
