@@ -1,0 +1,6 @@
+#Wed Nov 17 18:28:40 JST 2010
+eclipse.preferences.version=1
+task-tags/enabled=true
+task-tags/taskPriorities=1,2,2,0,0
+task-tags/taskTags=TODO,FIXME,UNDONE,HACK,REVIEW
+task-tags/use-project-settings=true
