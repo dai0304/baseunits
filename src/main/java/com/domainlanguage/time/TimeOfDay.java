@@ -17,6 +17,15 @@ import java.util.TimeZone;
  */
 public class TimeOfDay {
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param hour 時
+	 * @param minute 分
+	 * @return
+	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
+	 */
 	public static TimeOfDay hourAndMinute(int hour, int minute) {
 		return new TimeOfDay(hour, minute);
 	}

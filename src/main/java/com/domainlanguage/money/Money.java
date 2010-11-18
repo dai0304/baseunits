@@ -20,7 +20,7 @@ import com.domainlanguage.time.Duration;
 import org.apache.commons.lang.Validate;
 
 /**
- * 金銭を表すクラス。
+ * 金額を表すクラス。
  * 
  * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
  * 

@@ -62,7 +62,7 @@ public class MoneyFan<T> {
 			if (other.allotments != null) {
 				return false;
 			}
-		} else if (!allotments.equals(other.allotments)) {
+		} else if (allotments.equals(other.allotments) == false) {
 			return false;
 		}
 		return true;

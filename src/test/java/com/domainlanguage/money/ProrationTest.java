@@ -18,9 +18,6 @@ import org.junit.Test;
  */
 public class ProrationTest {
 	
-	private Proration proration = new Proration();
-	
-
 	/**
 	 * TODO for daisuke
 	 * 
@@ -32,7 +29,7 @@ public class ProrationTest {
 			1,
 			1
 		};
-		Money[] result = proration.proratedOver(Money.dollars(0.01), proportions);
+		Money[] result = Proration.proratedOver(Money.dollars(0.01), proportions);
 		assertThat(result[0], is(Money.dollars(0.01)));
 		assertThat(result[1], is(Money.dollars(0)));
 	}
@@ -48,7 +45,7 @@ public class ProrationTest {
 			3,
 			7
 		};
-		Money[] result = proration.proratedOver(Money.dollars(0.05), proportions);
+		Money[] result = Proration.proratedOver(Money.dollars(0.05), proportions);
 		assertThat(result[0], is(Money.dollars(0.02)));
 		assertThat(result[1], is(Money.dollars(0.03)));
 	}
@@ -68,7 +65,7 @@ public class ProrationTest {
 			35,
 			10
 		};
-		Money[] result = proration.proratedOver(Money.dollars(0.10), proportions);
+		Money[] result = Proration.proratedOver(Money.dollars(0.10), proportions);
 		assertThat(result[0], is(Money.dollars(0.02)));
 		assertThat(result[1], is(Money.dollars(0.01)));
 		assertThat(result[2], is(Money.dollars(0.00)));
@@ -93,7 +90,7 @@ public class ProrationTest {
 			3,
 			7
 		};
-		Money[] result = proration.proratedOver(Money.dollars(0), proportions);
+		Money[] result = Proration.proratedOver(Money.dollars(0), proportions);
 		assertThat(result[0], is(Money.dollars(0)));
 		assertThat(result[1], is(Money.dollars(0)));
 	}
@@ -105,7 +102,7 @@ public class ProrationTest {
 	 */
 	@Test
 	public void test05_ProrateTotalIndivisibleBy3() throws Exception {
-		Money[] actual = proration.dividedEvenlyIntoParts(Money.dollars(100), 3);
+		Money[] actual = Proration.dividedEvenlyIntoParts(Money.dollars(100), 3);
 		Money[] expected = {
 			Money.dollars(33.34),
 			Money.dollars(33.33),
@@ -123,7 +120,7 @@ public class ProrationTest {
 	 */
 	@Test
 	public void test06_ProrateOnlyOneShortOfEven() throws Exception {
-		Money[] prorated = proration.dividedEvenlyIntoParts(Money.dollars(1.09), 10);
+		Money[] prorated = Proration.dividedEvenlyIntoParts(Money.dollars(1.09), 10);
 		for (int i = 0; i < 9; i++) {
 			assertThat(prorated[i], is(Money.dollars(0.11)));
 		}
@@ -142,7 +139,7 @@ public class ProrationTest {
 		startingValues[1] = Money.dollars(2.00);
 		startingValues[2] = Money.dollars(3.00);
 		startingValues[3] = Money.dollars(4.00);
-		Money[] result = proration.distributeRemainderOver(startingValues, Money.dollars(0.02));
+		Money[] result = Proration.distributeRemainderOver(startingValues, Money.dollars(0.02));
 		assertThat(result[0], is(Money.dollars(1.01)));
 		assertThat(result[1], is(Money.dollars(2.01)));
 		assertThat(result[2], is(Money.dollars(3.00)));
@@ -174,7 +171,7 @@ public class ProrationTest {
 		Money total = Money.dollars(10.00);
 		long portion = 3L;
 		long whole = 9L;
-		assertThat(proration.partOfWhole(total, portion, whole), is(Money.dollars(3.33)));
+		assertThat(Proration.partOfWhole(total, portion, whole), is(Money.dollars(3.33)));
 	}
 	
 }

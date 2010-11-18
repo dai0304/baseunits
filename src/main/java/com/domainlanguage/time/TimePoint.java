@@ -39,9 +39,11 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param millisecond ミリ秒
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static TimePoint at(int year, int month, int date, int hour, int minute, int second, int millisecond, // CHECKSTYLE IGNORE THIS LINE
 			TimeZone zone) {
+		Validate.notNull(zone);
 		Calendar calendar = Calendar.getInstance(zone);
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month - 1);
@@ -176,8 +178,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param date 日
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static TimePoint atMidnight(int year, int month, int date, TimeZone zone) {
+		Validate.notNull(zone);
 		return at(year, month, date, 0, 0, 0, 0, zone);
 	}
 	
@@ -312,10 +316,24 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		return new Date(millisecondsFromEpoc);
 	}
 	
+	/**
+	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付における午前0時（深夜）の瞬間を表す {@link TimePoint}を取得する。
+	 * 
+	 * @param zone タイムゾーン
+	 * @return 午前0時（深夜）の瞬間を表す {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public TimePoint backToMidnight(TimeZone zone) {
+		Validate.notNull(zone);
 		return calendarDate(zone).asTimeInterval(zone).start();
 	}
 	
+	/**
+	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
+	 * 
+	 * @param zone タイムゾーン
+	 * @return 日付
+	 */
 	public CalendarDate calendarDate(TimeZone zone) {
 		return CalendarDate.from(this, zone);
 	}
@@ -366,7 +384,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定した日時 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
+	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>同一日時である場合は {@code false} を返す。</p>
 	 * 
@@ -392,7 +410,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定した日時 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
+	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>同一日時である場合は {@code false} を返す。</p>
 	 * 
@@ -405,12 +423,16 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		return millisecondsFromEpoc < other.millisecondsFromEpoc;
 	}
 	
+	/**
+	 * 指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間{@code other}の年月日が等価であるかを調べる。
+	 * 
+	 * @param other 対象瞬間
+	 * @param zone タイムゾーン
+	 * @return 等価である場合は{@code true}、そうでない場合は{@code false}
+	 */
 	public boolean isSameDayAs(TimePoint other, TimeZone zone) {
 		return calendarDate(zone).equals(other.calendarDate(zone));
 	}
-	
-// CONVENIENCE METHODS
-// (Responsibility lies elsewhere, but language is more fluid with a method here.)
 	
 	/**
 	 * この日時の、指定した時間の長さ分過去の日時を取得する。

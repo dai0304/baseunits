@@ -79,15 +79,44 @@ public class MoneyTimeRate {
 		return result;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param duration
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public Money over(Duration duration) {
+		Validate.notNull(duration);
 		return over(duration, Rounding.UNNECESSARY);
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param duration
+	 * @param scale
+	 * @param roundRule
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public Money over(Duration duration, int scale, Rounding roundRule) {
+		Validate.notNull(duration);
+		Validate.notNull(roundRule);
 		return Money.valueOf(rate.over(duration, scale, roundRule), currency);
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param duration
+	 * @param roundRule
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public Money over(Duration duration, Rounding roundRule) {
+		Validate.notNull(duration);
+		Validate.notNull(roundRule);
 		return over(duration, rate.scale(), roundRule);
 	}
 	

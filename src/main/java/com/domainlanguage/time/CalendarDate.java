@@ -73,8 +73,11 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param timePoint 瞬間
 	 * @param zone タイムゾーン
 	 * @return {@link CalendarDate}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static CalendarDate from(TimePoint timePoint, TimeZone zone) {
+		Validate.notNull(timePoint);
+		Validate.notNull(zone);
 		Calendar calendar = timePoint.asJavaCalendar();
 		calendar.setTimeZone(zone);
 		return CalendarDate._from(calendar);
@@ -119,8 +122,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param zone タイムゾーン
 	 * @return このインスタンスが表現する日の午前0時から丸一日を表現する期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimeInterval asTimeInterval(TimeZone zone) {
+		Validate.notNull(zone);
 		return TimeInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
 	}
 	
@@ -323,8 +328,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param zone タイムゾーン
 	 * @return このインスタンスが表現する日の午前0時を表現する日時
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimePoint startAsTimePoint(TimeZone zone) {
+		Validate.notNull(zone);
 		return TimePoint.atMidnight(year, month, day, zone);
 	}
 	
