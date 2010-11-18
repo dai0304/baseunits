@@ -1,25 +1,48 @@
 package com.domainlanguage.money;
 
-import junit.framework.TestCase;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-public class AllotmentTest extends TestCase {
+import com.domainlanguage.money.Allotment;
+import com.domainlanguage.money.Money;
+
+import org.junit.Test;
+
+/**
+ * {@link Allotment}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class AllotmentTest {
 	
-	public void testEquals() {
-		assertEquals(new Allotment<String>("ABC", Money.dollars(1.23)),
-				new Allotment<String>("ABC", Money.dollars(1.23)));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Equals() throws Exception {
+		assertThat(new Allotment<String>("ABC", Money.dollars(1.23)).equals(new Allotment<String>("ABC", Money
+			.dollars(1.23))), is(true));
 		
-		assertFalse(new Allotment<String>("ABC", Money.dollars(1.23)).equals(new Allotment<String>("ABC", Money
-			.euros(1.23))));
+		assertThat(new Allotment<String>("ABC", Money.dollars(1.23)).equals(new Allotment<String>("ABC", Money
+			.euros(1.23))), is(false));
 		
-		assertFalse(new Allotment<String>("ABC", Money.dollars(1.23)).equals(new Allotment<String>("XYZ", Money
-			.dollars(1.23))));
+		assertThat(new Allotment<String>("ABC", Money.dollars(1.23)).equals(new Allotment<String>("XYZ", Money
+			.dollars(1.23))), is(false));
 		
-		assertFalse(new Allotment<String>("ABC", Money.dollars(1.23)).equals(new Allotment<String>("ABC", Money
-			.dollars(1.24))));
+		assertThat(new Allotment<String>("ABC", Money.dollars(1.23)).equals(new Allotment<String>("ABC", Money
+			.dollars(1.24))), is(false));
 	}
 	
-	public void testNegated() {
-		assertEquals(new Allotment<String>("ABC", Money.dollars(-1.23)),
-				new Allotment<String>("ABC", Money.dollars(1.23)).negated());
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_Negated() throws Exception {
+		assertThat(new Allotment<String>("ABC", Money.dollars(-1.23)).equals(new Allotment<String>("ABC", Money
+			.dollars(1.23)).negated()), is(true));
 	}
 }

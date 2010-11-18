@@ -6,14 +6,27 @@
 
 package com.domainlanguage.time;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import junit.framework.TestCase;
-
 import com.domainlanguage.tests.SerializationTester;
+import com.domainlanguage.time.CalendarDate;
+import com.domainlanguage.time.CalendarInterval;
+import com.domainlanguage.time.DayOfWeek;
+import com.domainlanguage.time.TimeInterval;
+import com.domainlanguage.time.TimePoint;
 
-public class CalendarDateTest extends TestCase {
+import org.junit.Test;
+
+/**
+ * {@link CalendarDate}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class CalendarDateTest {
 	
 	private CalendarDate feb17 = CalendarDate.from(2003, 2, 17);
 	
@@ -24,24 +37,184 @@ public class CalendarDateTest extends TestCase {
 	private TimeZone ct = TimeZone.getTimeZone("America/Chicago");
 	
 
-	public void testAsTimeInterval() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Serialization() throws Exception {
+		SerializationTester.assertCanBeSerialized(feb17);
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_Comparison() throws Exception {
+		assertThat(feb17.isBefore(mar13), is(true));
+		assertThat(mar13.isBefore(feb17), is(false));
+		assertThat(feb17.isBefore(feb17), is(false));
+		assertThat(feb17.isAfter(mar13), is(false));
+		assertThat(mar13.isAfter(feb17), is(true));
+		assertThat(feb17.isAfter(feb17), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_StartAsTimePoint() throws Exception {
+		TimePoint feb17StartAsCt = feb17.startAsTimePoint(ct);
+		TimePoint feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct);
+		assertThat(feb17StartAsCt, is(feb17Hour0Ct));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_AsTimeInterval() throws Exception {
 		TimeInterval feb17AsCt = feb17.asTimeInterval(ct);
 		TimePoint feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct);
 		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, ct);
-		assertEquals("start", feb17Hour0Ct, feb17AsCt.start());
-		assertEquals("end", feb18Hour0Ct, feb17AsCt.end());
+		assertThat("start", feb17AsCt.start(), is(feb17Hour0Ct));
+		assertThat("end", feb17AsCt.end(), is(feb18Hour0Ct));
 	}
 	
-	public void testComparison() {
-		assertTrue(feb17.isBefore(mar13));
-		assertFalse(mar13.isBefore(feb17));
-		assertFalse(feb17.isBefore(feb17));
-		assertFalse(feb17.isAfter(mar13));
-		assertTrue(mar13.isAfter(feb17));
-		assertFalse(feb17.isAfter(feb17));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_FormattedString() throws Exception {
+		assertThat(feb17.toString("M/d/yyyy"), is("2/17/2003"));
+		//Now a nonsense pattern, to make sure it isn't succeeding by accident.
+		assertThat(feb17.toString("#d-yy/MM yyyy"), is("#17-03/02 2003"));
 	}
 	
-	public void testConversionToJavaUtil() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_FromFormattedString() throws Exception {
+		assertThat(CalendarDate.from("2/17/2003", "M/d/yyyy"), is(feb17));
+		//Now a nonsense pattern, to make sure it isn't succeeding by accident.
+		assertThat(CalendarDate.from("#17-03/02 2003", "#d-yy/MM yyyy"), is(feb17));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_FromTimePoint() throws Exception {
+		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, gmt);
+		CalendarDate mapped = CalendarDate.from(feb18Hour0Ct, ct);
+		assertThat(mapped, is(CalendarDate.from(2003, 2, 17)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_Includes() throws Exception {
+		assertThat(feb17.equals(feb17), is(true));
+		assertThat(feb17.equals(mar13), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_DayOfWeek() throws Exception {
+		CalendarDate date = CalendarDate.date(2004, 11, 6);
+		assertThat(date.dayOfWeek(), is(DayOfWeek.SATURDAY));
+		date = CalendarDate.date(2007, 1, 1);
+		assertThat(date.dayOfWeek(), is(DayOfWeek.MONDAY));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test10_NextDay() throws Exception {
+		CalendarDate feb28_2004 = CalendarDate.date(2004, 2, 28);
+		assertThat(feb28_2004.nextDay(), is(CalendarDate.date(2004, 2, 29)));
+		assertThat(feb28_2004.nextDay().nextDay(), is(CalendarDate.date(2004, 3, 1)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test11_PreviousDay() throws Exception {
+		CalendarDate mar1_2004 = CalendarDate.date(2004, 3, 1);
+		assertThat(mar1_2004.previousDay(), is(CalendarDate.date(2004, 2, 29)));
+		assertThat(mar1_2004.previousDay().previousDay(), is(CalendarDate.date(2004, 2, 28)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test12_Month() throws Exception {
+		CalendarDate nov6_2004 = CalendarDate.date(2004, 11, 6);
+		CalendarInterval nov2004 = CalendarInterval.inclusive(2004, 11, 1, 2004, 11, 30);
+		assertThat(nov6_2004.month(), is(nov2004));
+		
+		CalendarDate dec6_2004 = CalendarDate.date(2004, 12, 6);
+		CalendarInterval dec2004 = CalendarInterval.inclusive(2004, 12, 1, 2004, 12, 31);
+		assertThat(dec6_2004.month(), is(dec2004));
+		
+		CalendarDate feb9_2004 = CalendarDate.date(2004, 2, 9);
+		CalendarInterval feb2004 = CalendarInterval.inclusive(2004, 2, 1, 2004, 2, 29);
+		assertThat(feb9_2004.month(), is(feb2004));
+		
+		CalendarDate feb9_2003 = CalendarDate.date(2003, 2, 9);
+		CalendarInterval feb2003 = CalendarInterval.inclusive(2003, 2, 1, 2003, 2, 28);
+		assertThat(feb9_2003.month(), is(feb2003));
+		
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test13_ToString() throws Exception {
+		CalendarDate date = CalendarDate.date(2004, 5, 28);
+		assertThat(date.toString(), is("2004-05-28"));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test14_ConversionToJavaUtil() throws Exception {
 		Calendar expected = Calendar.getInstance(gmt);
 		expected.set(Calendar.YEAR, 1969);
 		expected.set(Calendar.MONTH, Calendar.JULY);
@@ -54,86 +227,10 @@ public class CalendarDateTest extends TestCase {
 		
 		CalendarDate date = CalendarDate.from(1969, 7, 20);
 		Calendar actual = date.asJavaCalendarUniversalZoneMidnight();
-		assertEquals(expected.get(Calendar.HOUR), actual.get(Calendar.HOUR));
-		assertEquals(expected.get(Calendar.AM_PM), actual.get(Calendar.AM_PM));
-		assertEquals(expected.get(Calendar.HOUR_OF_DAY), actual.get(Calendar.HOUR_OF_DAY));
-		assertEquals(expected, actual);
-	}
-	
-	public void testDayOfWeek() {
-		CalendarDate date = CalendarDate.date(2004, 11, 6);
-		assertEquals(Calendar.SATURDAY, date.dayOfWeek());
-		date = CalendarDate.date(2007, 1, 1);
-		assertEquals(Calendar.MONDAY, date.dayOfWeek());
-	}
-	
-	public void testFormattedString() {
-		assertEquals("2/17/2003", feb17.toString("M/d/yyyy"));
-		//Now a nonsense pattern, to make sure it isn't succeeding by accident.
-		assertEquals("#17-03/02 2003", feb17.toString("#d-yy/MM yyyy"));
-	}
-	
-	public void testFromFormattedString() {
-		assertEquals(feb17, CalendarDate.from("2/17/2003", "M/d/yyyy"));
-		//Now a nonsense pattern, to make sure it isn't succeeding by accident.
-		assertEquals(feb17, CalendarDate.from("#17-03/02 2003", "#d-yy/MM yyyy"));
-	}
-	
-	public void testFromTimePoint() {
-		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, gmt);
-		CalendarDate mapped = CalendarDate.from(feb18Hour0Ct, ct);
-		assertEquals(CalendarDate.from(2003, 2, 17), mapped);
-	}
-	
-	public void testIncludes() {
-		assertTrue(feb17.equals(feb17));
-		assertFalse(feb17.equals(mar13));
-	}
-	
-	public void testMonth() {
-		CalendarDate nov6_2004 = CalendarDate.date(2004, 11, 6);
-		CalendarInterval nov2004 = CalendarInterval.inclusive(2004, 11, 1, 2004, 11, 30);
-		assertEquals(nov2004, nov6_2004.month());
-		
-		CalendarDate dec6_2004 = CalendarDate.date(2004, 12, 6);
-		CalendarInterval dec2004 = CalendarInterval.inclusive(2004, 12, 1, 2004, 12, 31);
-		assertEquals(dec2004, dec6_2004.month());
-		
-		CalendarDate feb9_2004 = CalendarDate.date(2004, 2, 9);
-		CalendarInterval feb2004 = CalendarInterval.inclusive(2004, 2, 1, 2004, 2, 29);
-		assertEquals(feb2004, feb9_2004.month());
-		
-		CalendarDate feb9_2003 = CalendarDate.date(2003, 2, 9);
-		CalendarInterval feb2003 = CalendarInterval.inclusive(2003, 2, 1, 2003, 2, 28);
-		assertEquals(feb2003, feb9_2003.month());
-		
-	}
-	
-	public void testNextDay() {
-		CalendarDate feb28_2004 = CalendarDate.date(2004, 2, 28);
-		assertEquals(CalendarDate.date(2004, 2, 29), feb28_2004.nextDay());
-		assertEquals(CalendarDate.date(2004, 3, 1), feb28_2004.nextDay().nextDay());
-	}
-	
-	public void testPreviousDay() {
-		CalendarDate mar1_2004 = CalendarDate.date(2004, 3, 1);
-		assertEquals(CalendarDate.date(2004, 2, 29), mar1_2004.previousDay());
-		assertEquals(CalendarDate.date(2004, 2, 28), mar1_2004.previousDay().previousDay());
-	}
-	
-	public void testSerialization() {
-		SerializationTester.assertCanBeSerialized(feb17);
-	}
-	
-	public void testStartAsTimePoint() {
-		TimePoint feb17StartAsCt = feb17.startAsTimePoint(ct);
-		TimePoint feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct);
-		assertEquals(feb17Hour0Ct, feb17StartAsCt);
-	}
-	
-	public void testToString() {
-		CalendarDate date = CalendarDate.date(2004, 5, 28);
-		assertEquals("2004-5-28", date.toString());
+		assertThat(actual.get(Calendar.HOUR), is(expected.get(Calendar.HOUR)));
+		assertThat(actual.get(Calendar.AM_PM), is(expected.get(Calendar.AM_PM)));
+		assertThat(actual.get(Calendar.HOUR_OF_DAY), is(expected.get(Calendar.HOUR_OF_DAY)));
+		assertThat(actual, is(expected));
 	}
 	
 }

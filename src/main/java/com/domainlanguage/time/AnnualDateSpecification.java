@@ -7,10 +7,14 @@
 package com.domainlanguage.time;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import com.domainlanguage.util.ImmutableIterator;
 
+
 public abstract class AnnualDateSpecification extends DateSpecification {
+	
+	public abstract CalendarDate ofYear(int year);
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
@@ -26,35 +30,30 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 	}
 	
 	@Override
-	public Iterator iterateOver(final CalendarInterval interval) {
-		final AnnualDateSpecification spec = this;
-		return new ImmutableIterator() {
+	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
+		return new ImmutableIterator<CalendarDate>() {
 			
 			CalendarDate next = firstOccurrenceIn(interval);
 			
 			int year = next.breachEncapsulationOf_year();
 			
 
-			@Override
 			public boolean hasNext() {
 				return next != null;
 			}
 			
-			@Override
-			public Object next() {
-				if (next == null) {
-					return null;
+			public CalendarDate next() {
+				if (hasNext() == false) {
+					throw new NoSuchElementException();
 				}
-				Object current = next;
+				CalendarDate current = next;
 				year += 1;
-				next = spec.ofYear(year);
-				if (!interval.includes(next)) {
+				next = AnnualDateSpecification.this.ofYear(year);
+				if (interval.includes(next) == false) {
 					next = null;
 				}
 				return current;
 			}
 		};
 	}
-	
-	public abstract CalendarDate ofYear(int year);
 }

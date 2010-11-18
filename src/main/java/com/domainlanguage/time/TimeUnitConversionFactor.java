@@ -8,30 +8,16 @@ package com.domainlanguage.time;
 
 enum TimeUnitConversionFactor {
 	
-	/** 1 */
-	one(1),
+	identical(1),
 
-	/** 1000 */
-	millisecondsPerSecond(1000),
-
-	millisecondsPerMinute(60 * TimeUnitConversionFactor.millisecondsPerSecond.value),
-
-	millisecondsPerHour(60 * TimeUnitConversionFactor.millisecondsPerMinute.value),
-
-	millisecondsPerDay(24 * TimeUnitConversionFactor.millisecondsPerHour.value),
-
-	millisecondsPerWeek(7 * TimeUnitConversionFactor.millisecondsPerDay.value),
-
-	/** 3 */
-	monthsPerQuarter(3),
-
-	/** 12 */
-	monthsPerYear(12);
+	millisecondsPerSecond(1000), millisecondsPerMinute(60 * millisecondsPerSecond.value), millisecondsPerHour(
+			60 * millisecondsPerMinute.value), millisecondsPerDay(24 * millisecondsPerHour.value), millisecondsPerWeek(
+			7 * millisecondsPerDay.value), monthsPerQuarter(3), monthsPerYear(12);
 	
-	public final int value;
+	final int value;
 	
 
-	TimeUnitConversionFactor(int value) {
-		this.value = value;
+	TimeUnitConversionFactor(int factor) {
+		this.value = factor;
 	}
 }

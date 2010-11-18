@@ -29,18 +29,9 @@ public class CannedResponseServer {
 	
 
 	public CannedResponseServer(String cannedResponse) throws IOException {
-		super();
 		socket = new ServerSocket();
 		socket.bind(new InetSocketAddress(InetAddress.getLocalHost().getHostName(), 0));
 		this.cannedResponse = cannedResponse;
-	}
-	
-	public String getHostName() {
-		return socket.getInetAddress().getHostName();
-	}
-	
-	public int getPort() {
-		return socket.getLocalPort();
 	}
 	
 	public void start() {
@@ -59,14 +50,17 @@ public class CannedResponseServer {
 		}
 	}
 	
-	private synchronized boolean getKeepProcessing() {
-		return keepProcessing;
+	public String getHostName() {
+		return socket.getInetAddress().getHostName();
+	}
+	
+	public int getPort() {
+		return socket.getLocalPort();
 	}
 	
 	private Runnable getServerConnectionProcessor() {
 		return new Runnable() {
 			
-			@Override
 			public void run() {
 				try {
 					while (getKeepProcessing()) {
@@ -89,6 +83,10 @@ public class CannedResponseServer {
 		} finally {
 			writer.close();
 		}
+	}
+	
+	private synchronized boolean getKeepProcessing() {
+		return keepProcessing;
 	}
 	
 	private synchronized void setKeepProcessing(boolean keepProcessing) {

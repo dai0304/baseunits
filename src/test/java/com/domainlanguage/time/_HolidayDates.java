@@ -1,7 +1,10 @@
 package com.domainlanguage.time;
 
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.domainlanguage.time.CalendarDate;
 
 /**
  * dates are taken from: http://www.opm.gov/fedhol/index.htm note: when a
@@ -52,14 +55,18 @@ class _HolidayDates {
 		"2006/09/04", /* Labor Day */
 		"2006/11/23", /* Thanksgiving Day */
 		"2006/12/25", /* Christmas Day, December 25 */
-	};
+			};
 	
 
-	static Set defaultHolidays() {
-		Set dates = new HashSet();
+	static Set<CalendarDate> defaultHolidays() {
+		Set<CalendarDate> dates = new HashSet<CalendarDate>();
 		String[] strings = COMMON_US_HOLIDAYS;
 		for (String string : strings) {
-			dates.add(CalendarDate.from(string, "yyyy/MM/dd"));
+			try {
+				dates.add(CalendarDate.from(string, "yyyy/MM/dd"));
+			} catch (ParseException e) {
+				throw new Error(e);
+			}
 		}
 		return dates;
 	}

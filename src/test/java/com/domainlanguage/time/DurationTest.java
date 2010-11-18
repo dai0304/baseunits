@@ -6,151 +6,281 @@
 
 package com.domainlanguage.time;
 
-import java.math.BigDecimal;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertThat;
 
-import junit.framework.TestCase;
+import java.math.BigDecimal;
 
 import com.domainlanguage.base.Rounding;
 import com.domainlanguage.tests.SerializationTester;
+import com.domainlanguage.time.CalendarDate;
+import com.domainlanguage.time.CalendarInterval;
+import com.domainlanguage.time.Duration;
+import com.domainlanguage.time.TimeInterval;
+import com.domainlanguage.time.TimePoint;
+import com.domainlanguage.time.TimeUnit;
 
-public class DurationTest extends TestCase {
+import org.junit.Test;
+
+/**
+ * {@link Duration}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class DurationTest {
 	
-	public void testAdd() {
-		assertEquals(Duration.days(2), Duration.hours(24).plus(Duration.days(1)));
-		assertEquals(Duration.months(4), Duration.months(1).plus(Duration.quarters(1)));
-	}
-	
-	public void testAddMillisecondsToPoint() {
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
-		TimePoint dec22At1 = TimePoint.atGMT(2003, 12, 22, 01, 0, 0, 0);
-		Duration twoDays = Duration.days(2);
-		assertEquals(dec22At1, twoDays.addedTo(dec20At1));
-	}
-	
-	public void testAddMonthsToPoint() {
-		TimePoint oct20At1 = TimePoint.atGMT(2003, 10, 20, 01, 0, 0, 0);
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
-		Duration twoMonths = Duration.months(2);
-		assertEquals(dec20At1, twoMonths.addedTo(oct20At1));
-	}
-	
-	public void testAddToCalendarDate() {
-		CalendarDate oct20_2003 = CalendarDate.from(2003, 10, 20);
-		CalendarDate dec20_2003 = CalendarDate.from(2003, 12, 20);
-		
-		Duration twoMonths = Duration.months(2);
-		assertEquals(dec20_2003, twoMonths.addedTo(oct20_2003));
-		
-		Duration sixtyoneDays = Duration.days(61);
-		assertEquals(dec20_2003, sixtyoneDays.addedTo(oct20_2003));
-		
-		CalendarDate dec20_2001 = CalendarDate.from(2001, 12, 20);
-		Duration twoYears = Duration.years(2);
-		assertEquals(dec20_2003, twoYears.addedTo(dec20_2001));
-	}
-	
-	// TODO: More edge cases and exceptions (like nonconvertable units).
-	public void testCompare() {
-		Duration oneHour = Duration.hours(1);
-		Duration twoHours = Duration.hours(2);
-		Duration sixtyMinutes = Duration.minutes(60);
-		assertTrue(oneHour.compareTo(twoHours) < 0);
-		assertTrue(oneHour.compareTo(sixtyMinutes) == 0);
-		assertTrue(twoHours.compareTo(oneHour) > 0);
-	}
-	
-	public void testConversionToBaseUnits() {
-		Duration twoSeconds = Duration.seconds(2);
-		assertEquals(2000, twoSeconds.inBaseUnits());
-	}
-	
-	public void testDivide() {
-		assertEquals(new BigDecimal(1.5), Duration.days(3).dividedBy(Duration.days(2)).decimalValue(1, Rounding.DOWN));
-	}
-	
-	public void testEquals() {
-		assertEquals(Duration.days(2), Duration.hours(48));
-		assertEquals(Duration.years(1), Duration.quarters(4));
-	}
-	
-	public void testNormalizedUnit() {
-		assertEquals(TimeUnit.SECOND, Duration.seconds(30).normalizedUnit());
-		assertEquals(TimeUnit.MINUTE, Duration.seconds(120).normalizedUnit());
-		assertEquals(TimeUnit.DAY, Duration.hours(24).normalizedUnit());
-		assertEquals(TimeUnit.HOUR, Duration.hours(25).normalizedUnit());
-	}
-	
-	public void testSerialization() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Serialization() throws Exception {
 		SerializationTester.assertCanBeSerialized(Duration.days(1));
 	}
 	
-	public void testStartingFromCalendarDate() {
-		CalendarDate dec20 = CalendarDate.date(2004, 12, 20);
-		CalendarDate dec26 = CalendarDate.date(2004, 12, 26);
-		CalendarInterval dec20_26 = dec20.through(dec26);
-		assertEquals(dec20_26, Duration.days(7).startingFrom(dec20));
-	}
-	
-	public void testStartingFromTimePoint() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_AddMillisecondsToPoint() throws Exception {
 		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
-		TimePoint dec20At3 = TimePoint.atGMT(2003, 12, 20, 03, 0, 0, 0);
-		TimeInterval dec20_1_3 = dec20At1.until(dec20At3);
-		assertEquals(dec20_1_3, Duration.hours(2).startingFrom(dec20At1));
+		TimePoint dec22At1 = TimePoint.atGMT(2003, 12, 22, 01, 0, 0, 0);
+		Duration twoDays = Duration.days(2);
+		assertThat(twoDays.addedTo(dec20At1), is(dec22At1));
 	}
 	
-	public void testSubtract() {
-		assertEquals(Duration.days(2), Duration.days(3).minus(Duration.hours(24)));
-		assertEquals(Duration.months(2), Duration.quarters(1).minus(Duration.months(1)));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_AddMonthsToPoint() throws Exception {
+		TimePoint oct20At1 = TimePoint.atGMT(2003, 10, 20, 01, 0, 0, 0);
+		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
+		Duration twoMonths = Duration.months(2);
+		assertThat(twoMonths.addedTo(oct20At1), is(dec20At1));
 	}
 	
-	public void testSubtractFromCalendarDate() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_SubtractMillisecondsFromPoint() throws Exception {
+		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
+		TimePoint dec18At1 = TimePoint.atGMT(2003, 12, 18, 01, 0, 0, 0);
+		Duration twoDays = Duration.days(2);
+		assertThat(twoDays.subtractedFrom(dec20At1), is(dec18At1));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_SubtractMonthsFromPoint() throws Exception {
+		TimePoint oct20At1 = TimePoint.atGMT(2003, 10, 20, 01, 0, 0, 0);
+		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
+		Duration twoMonths = Duration.months(2);
+		assertThat(twoMonths.subtractedFrom(dec20At1), is(oct20At1));
+		
+		TimePoint dec20At1_2001 = TimePoint.atGMT(2001, 12, 20, 01, 0, 0, 0);
+		Duration twoYears = Duration.years(2);
+		assertThat(twoYears.subtractedFrom(dec20At1), is(dec20At1_2001));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_SubtractFromCalendarDate() throws Exception {
 		CalendarDate oct20 = CalendarDate.from(2003, 10, 20);
 		CalendarDate dec20 = CalendarDate.from(2003, 12, 20);
 		
 		Duration twoMonths = Duration.months(2);
-		assertEquals(oct20, twoMonths.subtractedFrom(dec20));
+		assertThat(twoMonths.subtractedFrom(dec20), is(oct20));
 		
 		Duration sixtyoneDays = Duration.days(61);
-		assertEquals(oct20, sixtyoneDays.subtractedFrom(dec20));
+		assertThat(sixtyoneDays.subtractedFrom(dec20), is(oct20));
 		
 		CalendarDate dec20_2001 = CalendarDate.from(2001, 12, 20);
 		Duration twoYears = Duration.years(2);
-		assertEquals(dec20_2001, twoYears.subtractedFrom(dec20));
+		assertThat(twoYears.subtractedFrom(dec20), is(dec20_2001));
 	}
 	
-	public void testSubtractMillisecondsFromPoint() {
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
-		TimePoint dec18At1 = TimePoint.atGMT(2003, 12, 18, 01, 0, 0, 0);
-		Duration twoDays = Duration.days(2);
-		assertEquals(dec18At1, twoDays.subtractedFrom(dec20At1));
-	}
-	
-	public void testSubtractMonthsFromPoint() {
-		TimePoint oct20At1 = TimePoint.atGMT(2003, 10, 20, 01, 0, 0, 0);
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
-		Duration twoMonths = Duration.months(2);
-		assertEquals(oct20At1, twoMonths.subtractedFrom(dec20At1));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_AddToCalendarDate() throws Exception {
+		CalendarDate oct20_2003 = CalendarDate.from(2003, 10, 20);
+		CalendarDate dec20_2003 = CalendarDate.from(2003, 12, 20);
 		
-		TimePoint dec20At1_2001 = TimePoint.atGMT(2001, 12, 20, 01, 0, 0, 0);
+		Duration twoMonths = Duration.months(2);
+		assertThat(twoMonths.addedTo(oct20_2003), is(dec20_2003));
+		
+		Duration sixtyoneDays = Duration.days(61);
+		assertThat(sixtyoneDays.addedTo(oct20_2003), is(dec20_2003));
+		
+		CalendarDate dec20_2001 = CalendarDate.from(2001, 12, 20);
 		Duration twoYears = Duration.years(2);
-		assertEquals(dec20At1_2001, twoYears.subtractedFrom(dec20At1));
+		assertThat(twoYears.addedTo(dec20_2001), is(dec20_2003));
 	}
 	
-	public void testToNormalizedString() {
-		assertEquals("2 days", Duration.days(2).toNormalizedString());
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_ConversionToBaseUnits() throws Exception {
+		Duration twoSeconds = Duration.seconds(2);
+		assertThat(twoSeconds.inBaseUnits(), is(2000L));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_Equals() throws Exception {
+		assertThat(Duration.hours(48), is(Duration.days(2)));
+		assertThat(Duration.quarters(4), is(Duration.years(1)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test10_Add() throws Exception {
+		assertThat(Duration.hours(24).plus(Duration.days(1)), is(Duration.days(2)));
+		assertThat(Duration.months(1).plus(Duration.quarters(1)), is(Duration.months(4)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test11_Subtract() throws Exception {
+		assertThat(Duration.days(3).minus(Duration.hours(24)), is(Duration.days(2)));
+		assertThat(Duration.quarters(1).minus(Duration.months(1)), is(Duration.months(2)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test12_Divide() throws Exception {
+		assertThat(Duration.days(3).dividedBy(Duration.days(2)).decimalValue(1, Rounding.DOWN), is(new BigDecimal(1.5)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test13_ToNormalizedString() throws Exception {
+		assertThat(Duration.days(2).toNormalizedString(), is("2 days"));
 		Duration complicatedDuration = Duration.daysHoursMinutesSecondsMilliseconds(5, 4, 3, 2, 1);
-		assertEquals("5 days, 4 hours, 3 minutes, 2 seconds, 1 millisecond", complicatedDuration.toNormalizedString());
-		assertEquals("52 weeks, 1 day", Duration.days(365).toNormalizedString());
+		assertThat(complicatedDuration.toNormalizedString(), is("5 days, 4 hours, 3 minutes, 2 seconds, 1 millisecond"));
+		assertThat(Duration.days(365).toNormalizedString(), is("52 weeks, 1 day"));
 	}
 	
-	public void testToNormalizedStringMonthBased() {
-		assertEquals("2 months", Duration.months(2).toNormalizedString());
-		assertEquals("1 year, 1 quarter, 1 month", Duration.months(16).toNormalizedString());
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test14_ToNormalizedStringMonthBased() throws Exception {
+		assertThat(Duration.months(2).toNormalizedString(), is("2 months"));
+		assertThat(Duration.months(16).toNormalizedString(), is("1 year, 1 quarter, 1 month"));
 	}
 	
-	public void testToString() {
-		assertEquals("21 days", Duration.weeks(3).toString()); //Weeks are not conventional to read.
-		assertEquals("1 year, 4 months", Duration.months(16).toString()); //Quarters are not conventionalto read.
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test15_ToString() throws Exception {
+		assertThat(Duration.weeks(3).toString(), is("21 days")); //Weeks are not conventional to read.
+		assertThat(Duration.months(16).toString(), is("1 year, 4 months")); //Quarters are not conventionalto read.
+	}
+	
+	// TODO: More edge cases and exceptions (like nonconvertable units).
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test16_Compare() throws Exception {
+		Duration oneHour = Duration.hours(1);
+		Duration twoHours = Duration.hours(2);
+		Duration sixtyMinutes = Duration.minutes(60);
+		assertThat(oneHour.compareTo(twoHours), is(lessThan(0)));
+		assertThat(oneHour.compareTo(sixtyMinutes), is(0));
+		assertThat(twoHours.compareTo(oneHour), is(greaterThan(0)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test17_StartingFromTimePoint() throws Exception {
+		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
+		TimePoint dec20At3 = TimePoint.atGMT(2003, 12, 20, 03, 0, 0, 0);
+		TimeInterval dec20_1_3 = dec20At1.until(dec20At3);
+		assertThat(Duration.hours(2).startingFrom(dec20At1), is(dec20_1_3));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test18_StartingFromCalendarDate() throws Exception {
+		CalendarDate dec20 = CalendarDate.date(2004, 12, 20);
+		CalendarDate dec26 = CalendarDate.date(2004, 12, 26);
+		CalendarInterval dec20_26 = dec20.through(dec26);
+		assertThat(Duration.days(7).startingFrom(dec20), is(dec20_26));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test19_NormalizedUnit() throws Exception {
+		assertThat(Duration.seconds(30).normalizedUnit(), is(TimeUnit.second));
+		assertThat(Duration.seconds(120).normalizedUnit(), is(TimeUnit.minute));
+		assertThat(Duration.hours(24).normalizedUnit(), is(TimeUnit.day));
+		assertThat(Duration.hours(25).normalizedUnit(), is(TimeUnit.hour));
 	}
 	
 }

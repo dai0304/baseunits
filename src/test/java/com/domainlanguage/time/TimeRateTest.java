@@ -5,20 +5,43 @@
  */
 package com.domainlanguage.time;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
 import java.math.BigDecimal;
 
-import junit.framework.TestCase;
-
 import com.domainlanguage.base.Rounding;
+import com.domainlanguage.time.Duration;
+import com.domainlanguage.time.TimeRate;
 
-public class TimeRateTest extends TestCase {
+import org.junit.Test;
+
+/**
+ * {@link TimeRate}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class TimeRateTest {
 	
-	public void testEquals() {
-		TimeRate rate = new TimeRate(11, Duration.days(2));
-		assertEquals(new TimeRate(11.00, Duration.days(2)), rate);
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_SimpleRate() throws Exception {
+		TimeRate rate = new TimeRate(100.00, Duration.minutes(1));
+		assertThat(rate.over(Duration.hours(1)), is(new BigDecimal(6000.00)));
 	}
 	
-	public void testRounding() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_Rounding() throws Exception {
 		TimeRate rate = new TimeRate(100.00, Duration.minutes(3));
 		try {
 			rate.over(Duration.minutes(1));
@@ -27,19 +50,36 @@ public class TimeRateTest extends TestCase {
 		}
 	}
 	
-	public void testRoundingRate() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_RoundingRate() throws Exception {
 		TimeRate rate = new TimeRate("100.00", Duration.minutes(3));
-		assertEquals(new BigDecimal("33.33"), rate.over(Duration.minutes(1), Rounding.DOWN));
+		assertThat(rate.over(Duration.minutes(1), Rounding.DOWN), is(new BigDecimal("33.33")));
 	}
 	
-	public void testSimpleRate() {
-		TimeRate rate = new TimeRate(100.00, Duration.minutes(1));
-		assertEquals(new BigDecimal(6000.00), rate.over(Duration.hours(1)));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_RoundingScalingRate() throws Exception {
+		TimeRate rate = new TimeRate("100.00", Duration.minutes(3));
+		assertThat(rate.over(Duration.minutes(1), 3, Rounding.DOWN), is(new BigDecimal("33.333")));
 	}
 	
-	//	TODO: failing test
-	public void xtestRoundingScalingRate() {
-		TimeRate rate = new TimeRate("100.00", Duration.minutes(3));
-		assertEquals(new BigDecimal("33.33"), rate.over(Duration.minutes(1), 3, Rounding.DOWN));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_Equals() throws Exception {
+		TimeRate rate = new TimeRate(11, Duration.days(2));
+		assertThat(rate, is(new TimeRate(11.00, Duration.days(2))));
 	}
 }

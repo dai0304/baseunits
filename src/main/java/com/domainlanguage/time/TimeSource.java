@@ -9,7 +9,6 @@ package com.domainlanguage.time;
 /**
  * 現在時刻を返す責務を表すインターフェイス。
  * 
- * @version $Id$
  * @author daisuke
  */
 public interface TimeSource {
@@ -18,7 +17,7 @@ public interface TimeSource {
 	 * 現在時刻を返す。
 	 * 
 	 * @return 現在時刻
+	 * @throws TimeSourceException 現在時刻の取得に失敗した場合
 	 */
 	TimePoint now();
-	
 }

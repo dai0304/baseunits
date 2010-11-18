@@ -5,66 +5,132 @@
  */
 package com.domainlanguage.time;
 
-import junit.framework.TestCase;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
-public class MinuteOfHourTest extends TestCase {
+import com.domainlanguage.time.HourOfDay;
+import com.domainlanguage.time.MinuteOfHour;
+
+import org.junit.Test;
+
+/**
+ * {@link MinuteOfHour}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class MinuteOfHourTest {
 	
-	public void testEarlierAfterLater() {
-		MinuteOfHour earlier = MinuteOfHour.value(15);
-		MinuteOfHour later = MinuteOfHour.value(45);
-		assertFalse(earlier.isAfter(later));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Simple() throws Exception {
+		assertThat(MinuteOfHour.of(11).value(), is(11));
+		assertThat(MinuteOfHour.of(23), is(MinuteOfHour.of(23)));
 	}
 	
-	public void testEarlierBeforeLater() {
-		MinuteOfHour earlier = MinuteOfHour.value(15);
-		MinuteOfHour later = MinuteOfHour.value(45);
-		assertTrue(earlier.isBefore(later));
-	}
-	
-	public void testEqualAfterEqual() {
-		MinuteOfHour anMinute = MinuteOfHour.value(45);
-		MinuteOfHour anotherMinute = MinuteOfHour.value(45);
-		assertFalse(anMinute.isAfter(anotherMinute));
-	}
-	
-	public void testEqualBeforeEqual() {
-		MinuteOfHour anMinute = MinuteOfHour.value(15);
-		MinuteOfHour anotherMinute = MinuteOfHour.value(15);
-		assertFalse(anMinute.isBefore(anotherMinute));
-	}
-	
-	public void testGreaterThan() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_IllegalLessThanZero() throws Exception {
 		try {
-			HourOfDay.value(60);
+			MinuteOfHour.of(-1);
 		} catch (IllegalArgumentException ex) {
 			return;
 		}
 		fail("Illegal Argument Not Caught");
 	}
 	
-	public void testIllegalLessThanZero() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_GreaterThan() throws Exception {
 		try {
-			MinuteOfHour.value(-1);
+			HourOfDay.of(60);
 		} catch (IllegalArgumentException ex) {
 			return;
 		}
 		fail("Illegal Argument Not Caught");
 	}
 	
-	public void testLaterAfterEarlier() {
-		MinuteOfHour later = MinuteOfHour.value(45);
-		MinuteOfHour earlier = MinuteOfHour.value(15);
-		assertTrue(later.isAfter(earlier));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_LaterAfterEarlier() throws Exception {
+		MinuteOfHour later = MinuteOfHour.of(45);
+		MinuteOfHour earlier = MinuteOfHour.of(15);
+		assertThat(later.isAfter(earlier), is(true));
 	}
 	
-	public void testLaterBeforeEarlier() {
-		MinuteOfHour later = MinuteOfHour.value(45);
-		MinuteOfHour earlier = MinuteOfHour.value(15);
-		assertFalse(later.isBefore(earlier));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_EarlierAfterLater() throws Exception {
+		MinuteOfHour earlier = MinuteOfHour.of(15);
+		MinuteOfHour later = MinuteOfHour.of(45);
+		assertThat(earlier.isAfter(later), is(false));
 	}
 	
-	public void testSimple() {
-		assertEquals(11, MinuteOfHour.value(11).value());
-		assertEquals(MinuteOfHour.value(23), MinuteOfHour.value(23));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_EqualAfterEqual() throws Exception {
+		MinuteOfHour anMinute = MinuteOfHour.of(45);
+		MinuteOfHour anotherMinute = MinuteOfHour.of(45);
+		assertThat(anMinute.isAfter(anotherMinute), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_LaterBeforeEarlier() throws Exception {
+		MinuteOfHour later = MinuteOfHour.of(45);
+		MinuteOfHour earlier = MinuteOfHour.of(15);
+		assertThat(later.isBefore(earlier), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_EarlierBeforeLater() throws Exception {
+		MinuteOfHour earlier = MinuteOfHour.of(15);
+		MinuteOfHour later = MinuteOfHour.of(45);
+		assertThat(earlier.isBefore(later), is(true));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_EqualBeforeEqual() throws Exception {
+		MinuteOfHour anMinute = MinuteOfHour.of(15);
+		MinuteOfHour anotherMinute = MinuteOfHour.of(15);
+		assertThat(anMinute.isBefore(anotherMinute), is(false));
 	}
 }

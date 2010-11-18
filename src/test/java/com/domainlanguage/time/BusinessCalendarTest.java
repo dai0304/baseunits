@@ -6,137 +6,223 @@
 
 package com.domainlanguage.time;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.Iterator;
 
-import junit.framework.TestCase;
+import com.domainlanguage.time.BusinessCalendar;
+import com.domainlanguage.time.CalendarDate;
+import com.domainlanguage.time.CalendarInterval;
+import com.domainlanguage.time.Duration;
 
-public class BusinessCalendarTest extends TestCase {
+import org.junit.Test;
+
+/**
+ * {@link BusinessCalendar}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class BusinessCalendarTest {
 	
-	public void testBusinessDayReverseIterator() {
-		CalendarDate friday = CalendarDate.from(2006, 06, 16);
-		CalendarDate nextTuesday = CalendarDate.from(2006, 06, 20);
-		CalendarInterval interval = CalendarInterval.inclusive(friday, nextTuesday);
-		Iterator it = businessCalendar().businessDaysOnly(interval.daysInReverseIterator());
-		assertTrue(it.hasNext());
-		assertEquals(nextTuesday, it.next());
-		assertTrue(it.hasNext());
-		CalendarDate nextMonday = CalendarDate.from(2006, 06, 19);
-		assertEquals(nextMonday, it.next());
-		assertTrue(it.hasNext());
-		assertEquals(friday, it.next());
-		assertFalse(it.hasNext());
-	}
-	
-	public void testBusinessDaysIterator() {
-		CalendarDate start = CalendarDate.from(2004, 2, 5);
-		CalendarDate end = CalendarDate.from(2004, 2, 8);
-		CalendarInterval interval = CalendarInterval.inclusive(start, end);
-		Iterator it = businessCalendar().businessDaysOnly(interval.daysIterator());
-		assertTrue(it.hasNext());
-		assertEquals(start, it.next());
-		assertTrue(it.hasNext());
-		assertEquals(CalendarDate.from(2004, 2, 6), it.next());
-		assertFalse(it.hasNext());
-	}
-	
-	public void testElapsedBusinessDays() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_ElapsedBusinessDays() throws Exception {
 		CalendarDate nov1 = CalendarDate.from(2004, 11, 1);
 		CalendarDate nov30 = CalendarDate.from(2004, 11, 30);
 		CalendarInterval interval = CalendarInterval.inclusive(nov1, nov30);
-		assertEquals(Duration.days(30), interval.length());
+		assertThat(interval.length(), is(Duration.days(30)));
 		// 1 holiday (Thanksgiving on a Thursday) + 8 weekend days.
-		assertEquals(21, businessCalendar().getElapsedBusinessDays(interval));
+		assertThat(businessCalendar().getElapsedBusinessDays(interval), is(21));
 	}
 	
-	public void testIsBusinessDay() {
-		CalendarDate day = CalendarDate.from(2004, 1, 12); // it's a Monday
-		for (int i = 0; i < 5; i++) {
-			assertTrue("another working day", businessCalendar().isBusinessDay(day));
-			day = day.nextDay();
-		}
-		assertFalse("finally, saturday arrived ...", businessCalendar().isBusinessDay(day));
-		assertFalse("... then sunday", businessCalendar().isBusinessDay(day.nextDay()));
-		
-		CalendarDate newYearEve = CalendarDate.from(2004, 1, 1); // it's a
-		assertFalse("hey, it's a holiday", businessCalendar().isBusinessDay(newYearEve));
-	}
-	
-	public void testIsHoliday() {
-		CalendarDate newYearEve = CalendarDate.from(2004, 1, 1); // it's a
-		assertTrue("New Years Eve is a holiday.", businessCalendar().isHoliday(newYearEve));
-		assertFalse("The day after New Years Eve is not a holiday.", businessCalendar().isHoliday(newYearEve.nextDay()));
-	}
-	
-	public void testIsWeekend() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_IsWeekend() throws Exception {
 		CalendarDate saturday = CalendarDate.from(2004, 1, 10);
-		assertTrue(businessCalendar().isWeekend(saturday));
+		assertThat(businessCalendar().isWeekend(saturday), is(true));
 		
 		CalendarDate sunday = saturday.nextDay();
-		assertTrue(businessCalendar().isWeekend(sunday));
+		assertThat(businessCalendar().isWeekend(sunday), is(true));
 		
 		CalendarDate day = sunday;
 		for (int i = 0; i < 5; i++) {
 			day = day.nextDay();
-			assertFalse("it's a midweek day", businessCalendar().isWeekend(day));
+			assertThat("it's a midweek day", businessCalendar().isWeekend(day), is(false));
 		}
 		day = day.nextDay();
-		assertTrue("finally, the weekend is here...", businessCalendar().isWeekend(day));
+		assertThat("finally, the weekend is here...", businessCalendar().isWeekend(day), is(true));
 		
 		CalendarDate newYearEve = CalendarDate.from(2004, 1, 1); // it's a
-		assertFalse("a holiday is not necessarily a weekend day", businessCalendar().isWeekend(newYearEve));
+		assertThat("a holiday is not necessarily a weekend day", businessCalendar().isWeekend(newYearEve), is(false));
 	}
 	
-	public void testMinusNonBusinessDayZero() {
-		CalendarDate saturday = CalendarDate.from(2006, 06, 17);
-		CalendarDate friday = CalendarDate.from(2006, 06, 16);
-		CalendarDate actual = businessCalendar().minusBusinessDays(saturday, 0);
-		assertEquals(friday, actual);
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_IsHoliday() throws Exception {
+		CalendarDate newYearEve = CalendarDate.from(2004, 1, 1); // it's a
+		assertThat("New Years Eve is a holiday.", businessCalendar().isHoliday(newYearEve), is(true));
+		assertThat("The day after New Years Eve is not a holiday.", businessCalendar().isHoliday(newYearEve.nextDay()),
+				is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_IsBusinessDay() throws Exception {
+		CalendarDate day = CalendarDate.from(2004, 1, 12); // it's a Monday
+		for (int i = 0; i < 5; i++) {
+			assertThat("another working day", businessCalendar().isBusinessDay(day), is(true));
+			day = day.nextDay();
+		}
+		assertThat("finally, saturday arrived ...", businessCalendar().isBusinessDay(day), is(false));
+		assertThat("... then sunday", businessCalendar().isBusinessDay(day.nextDay()), is(false));
 		
+		CalendarDate newYearEve = CalendarDate.from(2004, 1, 1); // it's a
+		assertThat("hey, it's a holiday", businessCalendar().isBusinessDay(newYearEve), is(false));
 	}
 	
-	public void testNearestBusinessDay() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_NearestBusinessDay() throws Exception {
 		CalendarDate saturday = CalendarDate.from(2004, 1, 10);
 		CalendarDate sunday = saturday.nextDay();
 		CalendarDate monday = sunday.nextDay();
-		assertEquals(monday, businessCalendar().nearestBusinessDay(saturday));
-		assertEquals(monday, businessCalendar().nearestBusinessDay(sunday));
-		assertEquals(monday, businessCalendar().nearestBusinessDay(monday));
+		assertThat(businessCalendar().nearestBusinessDay(saturday), is(monday));
+		assertThat(businessCalendar().nearestBusinessDay(sunday), is(monday));
+		assertThat(businessCalendar().nearestBusinessDay(monday), is(monday));
 		
 		CalendarDate newYearEve = CalendarDate.from(2004, 1, 1); // it's a
-		assertEquals("it's a holiday & a thursday; wait till friday", newYearEve.nextDay(), businessCalendar()
-			.nearestBusinessDay(newYearEve));
+		assertThat("it's a holiday & a thursday; wait till friday", businessCalendar().nearestBusinessDay(newYearEve),
+				is(newYearEve.nextDay()));
 		
 		CalendarDate christmas = CalendarDate.from(2004, 12, 24); // it's a
-		assertEquals("it's a holiday & a friday; wait till monday", CalendarDate.from(2004, 12, 27), businessCalendar()
-			.nearestBusinessDay(christmas));
+		assertThat("it's a holiday & a friday; wait till monday", businessCalendar().nearestBusinessDay(christmas),
+				is(CalendarDate.from(2004, 12, 27)));
 	}
 	
-	public void testNextBusinessDayOverWeekday() {
-		CalendarDate monday = CalendarDate.from(2006, 06, 19);
-		CalendarDate tuesday = CalendarDate.from(2006, 06, 20);
-		CalendarDate actual = businessCalendar().nextBusinessDay(monday);
-		assertEquals(tuesday, actual);
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_BusinessDaysIterator() throws Exception {
+		CalendarDate start = CalendarDate.from(2004, 2, 5);
+		CalendarDate end = CalendarDate.from(2004, 2, 8);
+		CalendarInterval interval = CalendarInterval.inclusive(start, end);
+		Iterator<CalendarDate> it = businessCalendar().businessDaysOnly(interval.daysIterator());
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(start));
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(CalendarDate.from(2004, 2, 6)));
+		assertThat(it.hasNext(), is(false));
 	}
 	
-	public void testNextBusinessDayOverWeekend() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_NextBusinessDayOverWeekend() throws Exception {
 		CalendarDate friday = CalendarDate.from(2006, 06, 16);
 		CalendarDate monday = CalendarDate.from(2006, 06, 19);
 		CalendarDate actual = businessCalendar().nextBusinessDay(friday);
-		assertEquals(monday, actual);
+		assertThat(actual, is(monday));
 	}
 	
-	public void testPlusBusinessDayZero() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_NextBusinessDayOverWeekday() throws Exception {
+		CalendarDate monday = CalendarDate.from(2006, 06, 19);
+		CalendarDate tuesday = CalendarDate.from(2006, 06, 20);
+		CalendarDate actual = businessCalendar().nextBusinessDay(monday);
+		assertThat(actual, is(tuesday));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_PlusBusinessDayZero() throws Exception {
 		CalendarDate monday = CalendarDate.from(2006, 06, 19);
 		CalendarDate actual = businessCalendar().plusBusinessDays(monday, 0);
-		assertEquals(monday, actual);
+		assertThat(actual, is(monday));
 	}
 	
-	public void testPlusNonBusinessDayZero() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test10_PlusNonBusinessDayZero() throws Exception {
 		CalendarDate saturday = CalendarDate.from(2006, 06, 17);
 		CalendarDate monday = CalendarDate.from(2006, 06, 19);
 		CalendarDate actual = businessCalendar().plusBusinessDays(saturday, 0);
-		assertEquals(monday, actual);
+		assertThat(actual, is(monday));
 		
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test11_MinusNonBusinessDayZero() throws Exception {
+		CalendarDate saturday = CalendarDate.from(2006, 06, 17);
+		CalendarDate friday = CalendarDate.from(2006, 06, 16);
+		CalendarDate actual = businessCalendar().minusBusinessDays(saturday, 0);
+		assertThat(actual, is(friday));
+		
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test12_BusinessDayReverseIterator() throws Exception {
+		CalendarDate friday = CalendarDate.from(2006, 06, 16);
+		CalendarDate nextTuesday = CalendarDate.from(2006, 06, 20);
+		CalendarInterval interval = CalendarInterval.inclusive(friday, nextTuesday);
+		Iterator<CalendarDate> it = businessCalendar().businessDaysOnly(interval.daysInReverseIterator());
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(nextTuesday));
+		assertThat(it.hasNext(), is(true));
+		CalendarDate nextMonday = CalendarDate.from(2006, 06, 19);
+		assertThat(it.next(), is(nextMonday));
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(friday));
+		assertThat(it.hasNext(), is(false));
 	}
 	
 	private BusinessCalendar businessCalendar() {

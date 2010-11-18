@@ -6,76 +6,128 @@
 
 package com.domainlanguage.time;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertThat;
+
 import java.util.Calendar;
 
-import junit.framework.TestCase;
-
 import com.domainlanguage.tests.SerializationTester;
+import com.domainlanguage.time.TimeUnit;
 
-public class TimeUnitTest extends TestCase {
+import org.junit.Test;
+
+/**
+ * {@link TimeUnit}のテストクラス。
+ * @author daisuke
+ */
+public class TimeUnitTest {
 	
 	public static TimeUnit exampleForPersistentMappingTesting() {
-		return TimeUnit.SECOND;
+		return TimeUnit.second;
 	}
 	
 	public static TimeUnit.Type exampleTypeForPersistentMappingTesting() {
 		return TimeUnit.Type.hour;
 	}
 	
-	public void testComparison() {
-		assertEquals(0, TimeUnit.HOUR.compareTo(TimeUnit.HOUR));
-		assertTrue(TimeUnit.HOUR.compareTo(TimeUnit.MILLISECOND) > 0);
-		assertTrue(TimeUnit.MILLISECOND.compareTo(TimeUnit.HOUR) < 0);
-		assertTrue(TimeUnit.DAY.compareTo(TimeUnit.HOUR) > 0);
-		assertTrue(TimeUnit.HOUR.compareTo(TimeUnit.DAY) < 0);
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Serialization() throws Exception {
+		SerializationTester.assertCanBeSerialized(TimeUnit.month);
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_ToString() throws Exception {
+		assertThat(TimeUnit.month.toString(), is("month"));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_ConvertibleToMilliseconds() throws Exception {
+		assertThat(TimeUnit.millisecond.isConvertibleToMilliseconds(), is(true));
+		assertThat(TimeUnit.hour.isConvertibleToMilliseconds(), is(true));
+		assertThat(TimeUnit.day.isConvertibleToMilliseconds(), is(true));
+		assertThat(TimeUnit.week.isConvertibleToMilliseconds(), is(true));
+		assertThat(TimeUnit.month.isConvertibleToMilliseconds(), is(false));
+		assertThat(TimeUnit.year.isConvertibleToMilliseconds(), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_Comparison() throws Exception {
+		assertThat(TimeUnit.hour.compareTo(TimeUnit.hour), is(0));
+		assertThat(TimeUnit.hour.compareTo(TimeUnit.millisecond), is(greaterThan(0)));
+		assertThat(TimeUnit.millisecond.compareTo(TimeUnit.hour), is(lessThan(0)));
+		assertThat(TimeUnit.day.compareTo(TimeUnit.hour), is(greaterThan(0)));
+		assertThat(TimeUnit.hour.compareTo(TimeUnit.day), is(lessThan(0)));
 		
-		assertTrue(TimeUnit.MONTH.compareTo(TimeUnit.DAY) > 0);
-		assertTrue(TimeUnit.DAY.compareTo(TimeUnit.MONTH) < 0);
-		assertTrue(TimeUnit.QUARTER.compareTo(TimeUnit.HOUR) > 0);
+		assertThat(TimeUnit.month.compareTo(TimeUnit.day), is(greaterThan(0)));
+		assertThat(TimeUnit.day.compareTo(TimeUnit.month), is(lessThan(0)));
+		assertThat(TimeUnit.quarter.compareTo(TimeUnit.hour), is(greaterThan(0)));
 		
-		assertEquals(0, TimeUnit.MONTH.compareTo(TimeUnit.MONTH));
-		assertTrue(TimeUnit.QUARTER.compareTo(TimeUnit.YEAR) < 0);
-		assertTrue(TimeUnit.YEAR.compareTo(TimeUnit.QUARTER) > 0);
+		assertThat(TimeUnit.month.compareTo(TimeUnit.month), is(0));
+		assertThat(TimeUnit.quarter.compareTo(TimeUnit.year), is(lessThan(0)));
+		assertThat(TimeUnit.year.compareTo(TimeUnit.quarter), is(greaterThan(0)));
 	}
 	
-	public void testConvertibleToMilliseconds() {
-		assertTrue(TimeUnit.MILLISECOND.isConvertibleToMilliseconds());
-		assertTrue(TimeUnit.HOUR.isConvertibleToMilliseconds());
-		assertTrue(TimeUnit.DAY.isConvertibleToMilliseconds());
-		assertTrue(TimeUnit.WEEK.isConvertibleToMilliseconds());
-		assertFalse(TimeUnit.MONTH.isConvertibleToMilliseconds());
-		assertFalse(TimeUnit.YEAR.isConvertibleToMilliseconds());
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_JavaCalendarConstantForBaseType() throws Exception {
+		assertThat(TimeUnit.millisecond.javaCalendarConstantForBaseType(), is(Calendar.MILLISECOND));
+		assertThat(TimeUnit.hour.javaCalendarConstantForBaseType(), is(Calendar.MILLISECOND));
+		assertThat(TimeUnit.day.javaCalendarConstantForBaseType(), is(Calendar.MILLISECOND));
+		assertThat(TimeUnit.week.javaCalendarConstantForBaseType(), is(Calendar.MILLISECOND));
+		assertThat(TimeUnit.month.javaCalendarConstantForBaseType(), is(Calendar.MONTH));
+		assertThat(TimeUnit.quarter.javaCalendarConstantForBaseType(), is(Calendar.MONTH));
+		assertThat(TimeUnit.year.javaCalendarConstantForBaseType(), is(Calendar.MONTH));
 	}
 	
-	public void testIsConvertableTo() {
-		assertTrue(TimeUnit.HOUR.isConvertibleTo(TimeUnit.MINUTE));
-		assertTrue(TimeUnit.MINUTE.isConvertibleTo(TimeUnit.HOUR));
-		assertTrue(TimeUnit.YEAR.isConvertibleTo(TimeUnit.MONTH));
-		assertTrue(TimeUnit.MONTH.isConvertibleTo(TimeUnit.YEAR));
-		assertFalse(TimeUnit.MONTH.isConvertibleTo(TimeUnit.HOUR));
-		assertFalse(TimeUnit.HOUR.isConvertibleTo(TimeUnit.MONTH));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_IsConvertableTo() throws Exception {
+		assertThat(TimeUnit.hour.isConvertibleTo(TimeUnit.minute), is(true));
+		assertThat(TimeUnit.minute.isConvertibleTo(TimeUnit.hour), is(true));
+		assertThat(TimeUnit.year.isConvertibleTo(TimeUnit.month), is(true));
+		assertThat(TimeUnit.month.isConvertibleTo(TimeUnit.year), is(true));
+		assertThat(TimeUnit.month.isConvertibleTo(TimeUnit.hour), is(false));
+		assertThat(TimeUnit.hour.isConvertibleTo(TimeUnit.month), is(false));
 	}
 	
-	public void testJavaCalendarConstantForBaseType() {
-		assertEquals(Calendar.MILLISECOND, TimeUnit.MILLISECOND.javaCalendarConstantForBaseType());
-		assertEquals(Calendar.MILLISECOND, TimeUnit.HOUR.javaCalendarConstantForBaseType());
-		assertEquals(Calendar.MILLISECOND, TimeUnit.DAY.javaCalendarConstantForBaseType());
-		assertEquals(Calendar.MILLISECOND, TimeUnit.WEEK.javaCalendarConstantForBaseType());
-		assertEquals(Calendar.MONTH, TimeUnit.MONTH.javaCalendarConstantForBaseType());
-		assertEquals(Calendar.MONTH, TimeUnit.QUARTER.javaCalendarConstantForBaseType());
-		assertEquals(Calendar.MONTH, TimeUnit.YEAR.javaCalendarConstantForBaseType());
-	}
-	
-	public void testNextFinerUnit() {
-		assertEquals(TimeUnit.MINUTE, TimeUnit.HOUR.nextFinerUnit());
-		assertEquals(TimeUnit.MONTH, TimeUnit.QUARTER.nextFinerUnit());
-	}
-	
-	public void testSerialization() {
-		SerializationTester.assertCanBeSerialized(TimeUnit.MONTH);
-	}
-	
-	public void testToString() {
-		assertEquals("month", TimeUnit.MONTH.toString());
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_NextFinerUnit() throws Exception {
+		assertThat(TimeUnit.hour.nextFinerUnit(), is(TimeUnit.minute));
+		assertThat(TimeUnit.quarter.nextFinerUnit(), is(TimeUnit.month));
 	}
 }

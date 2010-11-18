@@ -7,5 +7,5 @@ package com.domainlanguage.util;
 
 public interface ClassFilter {
 	
-	public boolean accepts(Class klass);
+	public boolean accepts(Class<?> klass);
 }

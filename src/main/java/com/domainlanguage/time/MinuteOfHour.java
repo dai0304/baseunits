@@ -5,30 +5,37 @@
  */
 package com.domainlanguage.time;
 
+/**
+ * 特定の「分」を表すクラス。
+ * 
+ * @author daisuke
+ */
 public class MinuteOfHour {
 	
-	public static MinuteOfHour value(int initial) {
+	private static final int MIN = 0;
+	
+	private static final int MAX = 59;
+	
+	final int value;
+	
+
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param initial 分をあらわす正数
+	 * @return 分
+	 * @throws IllegalArgumentException 引数の値が0〜59の範囲ではない場合
+	 */
+	public static MinuteOfHour of(int initial) {
 		return new MinuteOfHour(initial);
 	}
 	
-	private static Class getPrimitivePersistenceMappingType() {
-		return Integer.TYPE;
-	}
-	
-
-	int value;
-	
-
 	private MinuteOfHour(int initial) {
-		if (initial < 0 || initial > 59) {
+		if (initial < MIN || initial > MAX) {
 			throw new IllegalArgumentException("Illegal value for minute: " + initial
 					+ ", please use a value between 0 and 59");
 		}
 		value = initial;
-	}
-	
-	public boolean equals(MinuteOfHour another) {
-		return value == another.value;
 	}
 	
 	@Override
@@ -37,6 +44,10 @@ public class MinuteOfHour {
 			return false;
 		}
 		return equals((MinuteOfHour) another);
+	}
+	
+	public boolean equals(MinuteOfHour another) {
+		return value == another.value;
 	}
 	
 	@Override
@@ -52,12 +63,17 @@ public class MinuteOfHour {
 		return value < another.value;
 	}
 	
+	public int value() {
+		return value;
+	}
+	
 	@Override
 	public String toString() {
 		return String.valueOf(value);
 	}
 	
-	public int value() {
-		return value;
+	@SuppressWarnings("unused")
+	private static Class<?> getPrimitivePersistenceMappingType() {
+		return Integer.TYPE;
 	}
 }

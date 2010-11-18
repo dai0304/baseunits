@@ -6,104 +6,147 @@
 
 package com.domainlanguage.intervals;
 
-import junit.framework.TestCase;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 
-public class IntervalMapTest extends TestCase {
+import com.domainlanguage.intervals.Interval;
+import com.domainlanguage.intervals.IntervalMap;
+import com.domainlanguage.intervals.LinearIntervalMap;
+
+import org.junit.Test;
+
+/**
+ * {@link IntervalMap}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class IntervalMapTest {
 	
-	public void testConstructionOverwriteMiddle() {
-		IntervalMap map = new LinearIntervalMap();
-		map.put(Interval.closed(new Integer(1), new Integer(3)), "one-three");
-		map.put(Interval.closed(new Integer(5), new Integer(9)), "five-nine");
-		map.put(Interval.open(new Integer(9), new Integer(12)), "ten-eleven");
-		assertEquals("five-nine", map.get(new Integer(6)));
-		assertEquals("five-nine", map.get(new Integer(7)));
-		assertEquals("five-nine", map.get(new Integer(8)));
-		assertEquals("five-nine", map.get(new Integer(9)));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Lookup() throws Exception {
+		IntervalMap<Integer, String> map = new LinearIntervalMap<Integer, String>();
+		map.put(Interval.closed(1, 3), "one-three");
+		map.put(Interval.closed(5, 9), "five-nine");
+		map.put(Interval.open(9, 12), "ten-eleven");
 		
-		Interval seven_eight = Interval.closed(new Integer(7), new Integer(8));
-		assertTrue(map.containsIntersectingKey(seven_eight));
-		map.put(seven_eight, "seven-eight");
-		assertEquals("five-nine", map.get(new Integer(6)));
-		assertEquals("seven-eight", map.get(new Integer(7)));
-		assertEquals("seven-eight", map.get(new Integer(8)));
-		assertEquals("five-nine", map.get(new Integer(9)));
+		assertThat(map.containsKey(0), is(false));
+		assertThat(map.containsKey(1), is(true));
+		assertThat(map.containsKey(2), is(true));
+		assertThat(map.containsKey(3), is(true));
+		assertThat(map.containsKey(4), is(false));
+		assertThat(map.containsKey(5), is(true));
+		assertThat(map.containsKey(9), is(true));
+		assertThat(map.containsKey(11), is(true));
+		assertThat(map.containsKey(12), is(false));
+		assertThat(map.containsKey(13), is(false));
+		assertThat(map.containsKey(null), is(false));
+		
+		assertThat(map.get(0), is(nullValue()));
+		assertThat(map.get(1), is("one-three"));
+		assertThat(map.get(2), is("one-three"));
+		assertThat(map.get(3), is("one-three"));
+		assertThat(map.get(4), is(nullValue()));
+		assertThat(map.get(5), is("five-nine"));
+		assertThat(map.get(9), is("five-nine"));
+		assertThat(map.get(10), is("ten-eleven"));
+		assertThat(map.get(11), is("ten-eleven"));
+		assertThat(map.get(12), is(nullValue()));
+		assertThat(map.get(13), is(nullValue()));
+		assertThat(map.get(null), is(nullValue()));
 	}
 	
-	public void testConstructionOverwriteMultiple() {
-		IntervalMap map = new LinearIntervalMap();
-		map.put(Interval.closed(new Integer(1), new Integer(2)), "one-two");
-		map.put(Interval.closed(new Integer(3), new Integer(4)), "three-four");
-		map.put(Interval.closed(new Integer(5), new Integer(6)), "five-six");
-		map.put(Interval.closed(new Integer(8), new Integer(9)), "eight-nine");
-		map.put(Interval.closed(new Integer(3), new Integer(8)), "three-eight");
-		assertEquals("one-two", map.get(new Integer(2)));
-		assertEquals("three-eight", map.get(new Integer(3)));
-		assertEquals("three-eight", map.get(new Integer(4)));
-		assertEquals("three-eight", map.get(new Integer(5)));
-		assertEquals("three-eight", map.get(new Integer(6)));
-		assertEquals("three-eight", map.get(new Integer(7)));
-		assertEquals("three-eight", map.get(new Integer(8)));
-		assertEquals("eight-nine", map.get(new Integer(9)));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_Remove() throws Exception {
+		IntervalMap<Integer, String> map = new LinearIntervalMap<Integer, String>();
+		map.put(Interval.closed(1, 10), "one-ten");
+		map.remove(Interval.closed(3, 5));
+		assertThat(map.get(2), is("one-ten"));
+		assertThat(map.get(3), is(nullValue()));
+		assertThat(map.get(4), is(nullValue()));
+		assertThat(map.get(5), is(nullValue()));
+		assertThat(map.get(6), is("one-ten"));
 	}
 	
-	public void testConstructionOverwriteOverlap() {
-		IntervalMap map = new LinearIntervalMap();
-		map.put(Interval.closed(new Integer(1), new Integer(3)), "one-three");
-		map.put(Interval.closed(new Integer(5), new Integer(9)), "five-nine");
-		map.put(Interval.open(new Integer(9), new Integer(12)), "ten-eleven");
-		assertEquals("ten-eleven", map.get(new Integer(10)));
-		assertEquals("ten-eleven", map.get(new Integer(11)));
-		assertNull(map.get(new Integer(12)));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_ConstructionOverwriteOverlap() throws Exception {
+		IntervalMap<Integer, String> map = new LinearIntervalMap<Integer, String>();
+		map.put(Interval.closed(1, 3), "one-three");
+		map.put(Interval.closed(5, 9), "five-nine");
+		map.put(Interval.open(9, 12), "ten-eleven");
+		assertThat(map.get(10), is("ten-eleven"));
+		assertThat(map.get(11), is("ten-eleven"));
+		assertThat(map.get(12), is(nullValue()));
 		
-		Interval eleven_thirteen = Interval.closed(new Integer(11), new Integer(13));
-		assertTrue(map.containsIntersectingKey(eleven_thirteen));
+		Interval<Integer> eleven_thirteen = Interval.closed(11, 13);
+		assertThat(map.containsIntersectingKey(eleven_thirteen), is(true));
 		map.put(eleven_thirteen, "eleven-thirteen");
-		assertEquals("ten-eleven", map.get(new Integer(10)));
-		assertEquals("eleven-thirteen", map.get(new Integer(11)));
-		assertEquals("eleven-thirteen", map.get(new Integer(12)));
+		assertThat(map.get(10), is("ten-eleven"));
+		assertThat(map.get(11), is("eleven-thirteen"));
+		assertThat(map.get(12), is("eleven-thirteen"));
 	}
 	
-	public void testLookup() {
-		IntervalMap map = new LinearIntervalMap();
-		map.put(Interval.closed(new Integer(1), new Integer(3)), "one-three");
-		map.put(Interval.closed(new Integer(5), new Integer(9)), "five-nine");
-		map.put(Interval.open(new Integer(9), new Integer(12)), "ten-eleven");
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_ConstructionOverwriteMiddle() throws Exception {
+		IntervalMap<Integer, String> map = new LinearIntervalMap<Integer, String>();
+		map.put(Interval.closed(1, 3), "one-three");
+		map.put(Interval.closed(5, 9), "five-nine");
+		map.put(Interval.open(9, 12), "ten-eleven");
+		assertThat(map.get(6), is("five-nine"));
+		assertThat(map.get(7), is("five-nine"));
+		assertThat(map.get(8), is("five-nine"));
+		assertThat(map.get(9), is("five-nine"));
 		
-		assertFalse(map.containsKey(new Integer(0)));
-		assertTrue(map.containsKey(new Integer(1)));
-		assertTrue(map.containsKey(new Integer(2)));
-		assertTrue(map.containsKey(new Integer(3)));
-		assertFalse(map.containsKey(new Integer(4)));
-		assertTrue(map.containsKey(new Integer(5)));
-		assertTrue(map.containsKey(new Integer(9)));
-		assertTrue(map.containsKey(new Integer(11)));
-		assertFalse(map.containsKey(new Integer(12)));
-		assertFalse(map.containsKey(new Integer(13)));
-		assertFalse(map.containsKey(null));
-		
-		assertNull(map.get(new Integer(0)));
-		assertEquals("one-three", map.get(new Integer(1)));
-		assertEquals("one-three", map.get(new Integer(2)));
-		assertEquals("one-three", map.get(new Integer(3)));
-		assertNull(map.get(new Integer(4)));
-		assertEquals("five-nine", map.get(new Integer(5)));
-		assertEquals("five-nine", map.get(new Integer(9)));
-		assertEquals("ten-eleven", map.get(new Integer(10)));
-		assertEquals("ten-eleven", map.get(new Integer(11)));
-		assertNull(map.get(new Integer(12)));
-		assertNull(map.get(new Integer(13)));
-		assertNull(map.get(null));
+		Interval<Integer> seven_eight = Interval.closed(7, 8);
+		assertThat(map.containsIntersectingKey(seven_eight), is(true));
+		map.put(seven_eight, "seven-eight");
+		assertThat(map.get(6), is("five-nine"));
+		assertThat(map.get(7), is("seven-eight"));
+		assertThat(map.get(8), is("seven-eight"));
+		assertThat(map.get(9), is("five-nine"));
 	}
 	
-	public void testRemove() {
-		IntervalMap map = new LinearIntervalMap();
-		map.put(Interval.closed(new Integer(1), new Integer(10)), "one-ten");
-		map.remove(Interval.closed(new Integer(3), new Integer(5)));
-		assertEquals("one-ten", map.get(new Integer(2)));
-		assertNull(map.get(new Integer(3)));
-		assertNull(map.get(new Integer(4)));
-		assertNull(map.get(new Integer(5)));
-		assertEquals("one-ten", map.get(new Integer(6)));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_ConstructionOverwriteMultiple() throws Exception {
+		IntervalMap<Integer, String> map = new LinearIntervalMap<Integer, String>();
+		map.put(Interval.closed(1, 2), "one-two");
+		map.put(Interval.closed(3, 4), "three-four");
+		map.put(Interval.closed(5, 6), "five-six");
+		map.put(Interval.closed(8, 9), "eight-nine");
+		map.put(Interval.closed(3, 8), "three-eight");
+		assertThat(map.get(2), is("one-two"));
+		assertThat(map.get(3), is("three-eight"));
+		assertThat(map.get(4), is("three-eight"));
+		assertThat(map.get(5), is("three-eight"));
+		assertThat(map.get(6), is("three-eight"));
+		assertThat(map.get(7), is("three-eight"));
+		assertThat(map.get(8), is("three-eight"));
+		assertThat(map.get(9), is("eight-nine"));
 	}
 	
 }

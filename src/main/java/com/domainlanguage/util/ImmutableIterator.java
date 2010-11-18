@@ -9,16 +9,13 @@ package com.domainlanguage.util;
 import java.util.Iterator;
 
 /**
- * TODO for daisuke
+ * 明示的に、対象のコレクションに対する操作ができないことを表す反復子。
  * 
- * @param <E> element type
- * @since 1.0
- * @version $Id$
+ * @param <T> 要素の型
  * @author daisuke
  */
-public abstract class ImmutableIterator<E> implements Iterator<E> {
+public abstract class ImmutableIterator<T> implements Iterator<T> {
 	
-	@Override
 	public void remove() {
 		throw new UnsupportedOperationException("sorry, no can do :-(");
 	}

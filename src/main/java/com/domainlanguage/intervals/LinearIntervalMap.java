@@ -8,67 +8,73 @@ package com.domainlanguage.intervals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class LinearIntervalMap implements IntervalMap {
+import org.apache.commons.lang.Validate;
+
+/**
+ * 線形{@link IntervalMap}実装クラス。
+ * 
+ * TODO なんのこっちゃ
+ * 
+ * @param <K> キーとなる区間が表現する型
+ * @param <V> 値の型
+ * @author daisuke
+ */
+public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMap<K, V> {
 	
-	private Map keyValues;
+	private Map<Interval<K>, V> keyValues;
 	
 
+	/**
+	 * インスタンスを生成する。
+	 */
 	public LinearIntervalMap() {
-		keyValues = new HashMap();
+		keyValues = new HashMap<Interval<K>, V>();
 	}
 	
-	@Override
-	public boolean containsIntersectingKey(Interval otherInterval) {
-		return !intersectingKeys(otherInterval).isEmpty();
-	}
-	
-	@Override
-	public boolean containsKey(Comparable key) {
-		return findKeyIntervalContaining(key) != null;
-	}
-	
-	@Override
-	public Object get(Comparable key) {
-		Interval keyInterval = findKeyIntervalContaining(key);
-		//		if (keyInterval == null) return null;
-		return keyValues.get(keyInterval);
-	}
-	
-	@Override
-	public void put(Interval keyInterval, Object value) {
+	public void put(Interval<K> keyInterval, V value) {
+		Validate.notNull(keyInterval);
 		remove(keyInterval);
 		keyValues.put(keyInterval, value);
 	}
 	
-	@Override
-	public void remove(Interval keyInterval) {
-		List intervalSequence = intersectingKeys(keyInterval);
-		for (Iterator iter = intervalSequence.iterator(); iter.hasNext();) {
-			Interval oldInterval = (Interval) iter.next();
-			Object oldValue = keyValues.get(oldInterval);
+	public void remove(Interval<K> keyInterval) {
+		Validate.notNull(keyInterval);
+		List<Interval<K>> intervalSequence = intersectingKeys(keyInterval);
+		for (Interval<K> oldInterval : intervalSequence) {
+			V oldValue = keyValues.get(oldInterval);
 			keyValues.remove(oldInterval);
-			List complementIntervalSequence = keyInterval.complementRelativeTo(oldInterval);
+			List<Interval<K>> complementIntervalSequence = keyInterval.complementRelativeTo(oldInterval);
 			directPut(complementIntervalSequence, oldValue);
 		}
 	}
 	
-	private void directPut(List intervalSequence, Object value) {
-		for (Iterator iter = intervalSequence.iterator(); iter.hasNext();) {
-			keyValues.put(iter.next(), value);
+	private void directPut(List<Interval<K>> intervalSequence, V value) {
+		Validate.noNullElements(intervalSequence);
+		for (Interval<K> interval : intervalSequence) {
+			keyValues.put(interval, value);
 		}
 	}
 	
-	private Interval findKeyIntervalContaining(Comparable key) {
+	public V get(K key) {
+		Interval<K> keyInterval = findKeyIntervalContaining(key);
+		//		if (keyInterval == null) return null;
+		return keyValues.get(keyInterval);
+	}
+	
+	public boolean containsKey(K key) {
+		return findKeyIntervalContaining(key) != null;
+	}
+	
+	private Interval<K> findKeyIntervalContaining(K key) {
 		if (key == null) {
 			return null;
 		}
-		Iterator it = keyValues.keySet().iterator();
-		while (it.hasNext()) {
-			Interval interval = (Interval) it.next();
+		Set<Interval<K>> keySet = keyValues.keySet();
+		for (Interval<K> interval : keySet) {
 			if (interval.includes(key)) {
 				return interval;
 			}
@@ -76,17 +82,20 @@ public class LinearIntervalMap implements IntervalMap {
 		return null;
 	}
 	
-	//Only for use by persistence mapping frameworks
-	//<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	private Map getForPersistentMapping_KeyValues() {
-		return keyValues;
-	}
-	
-	private List intersectingKeys(Interval otherInterval) {
-		List intervalSequence = new ArrayList();
-		Iterator it = keyValues.keySet().iterator();
-		while (it.hasNext()) {
-			Interval keyInterval = (Interval) it.next();
+	/**
+	 * この写像が保持するキーとしての区間のうち、指定した区間 {@code otherInterval}と共通部分を持つ
+	 * 区間の列を取得する。
+	 * 
+	 * <p>戻り値の列は、区間の自然順にソートされている。</p>
+	 * 
+	 * @param otherInterval 対象区間
+	 * @return 指定した区間と共通部分を持つ区間の列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	private List<Interval<K>> intersectingKeys(Interval<K> otherInterval) {
+		Validate.notNull(otherInterval);
+		List<Interval<K>> intervalSequence = new ArrayList<Interval<K>>();
+		for (Interval<K> keyInterval : keyValues.keySet()) {
 			if (keyInterval.intersects(otherInterval)) {
 				intervalSequence.add(keyInterval);
 			}
@@ -94,9 +103,27 @@ public class LinearIntervalMap implements IntervalMap {
 		return intervalSequence;
 	}
 	
-	//Only for use by persistence mapping frameworks
-	//<rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	private void setForPersistentMapping_KeyValues(Map keyValues) {
+	public boolean containsIntersectingKey(Interval<K> otherInterval) {
+		return intersectingKeys(otherInterval).isEmpty() == false;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return {@link #keyValues}
+	 */
+	@SuppressWarnings("unused")
+	private Map<Interval<K>, V> getForPersistentMapping_KeyValues() { // CHECKSTYLE IGNORE THIS LINE
+		return keyValues;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param keyValues {@link #keyValues}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_KeyValues(Map<Interval<K>, V> keyValues) { // CHECKSTYLE IGNORE THIS LINE
 		this.keyValues = keyValues;
 	}
 	

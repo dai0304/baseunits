@@ -11,7 +11,24 @@ import java.math.BigDecimal;
 import com.domainlanguage.base.Ratio;
 import com.domainlanguage.base.Rounding;
 
+
 public class Proration {
+	
+	static Money sum(Money[] elements) {
+		Money sum = Money.valueOf(0, elements[0].getCurrency());
+		for (Money element : elements) {
+			sum = sum.plus(element);
+		}
+		return sum;
+	}
+	
+	static BigDecimal sum(BigDecimal[] elements) {
+		BigDecimal sum = BigDecimal.ZERO;
+		for (BigDecimal element : elements) {
+			sum = sum.add(element);
+		}
+		return sum;
+	}
 	
 	static Ratio[] ratios(BigDecimal[] proportions) {
 		BigDecimal total = sum(proportions);
@@ -22,28 +39,12 @@ public class Proration {
 		return ratios;
 	}
 	
-	static BigDecimal sum(BigDecimal[] elements) {
-		BigDecimal sum = new BigDecimal(0);
-		for (BigDecimal element : elements) {
-			sum = sum.add(element);
-		}
-		return sum;
-	}
-	
-	static Money sum(Money[] elements) {
-		Money sum = Money.valueOf(0, elements[0].getCurrency());
-		for (Money element : elements) {
-			sum = sum.plus(element);
-		}
-		return sum;
-	}
-	
 	private static int defaultScaleForIntermediateCalculations(Money total) {
 		return total.getCurrency().getDefaultFractionDigits() + 1;
 	}
 	
 	public Money[] dividedEvenlyIntoParts(Money total, int n) {
-		Money lowResult = total.dividedBy(BigDecimal.valueOf(n), Rounding.DOWN.value);
+		Money lowResult = total.dividedBy(BigDecimal.valueOf(n), Rounding.DOWN);
 		Money[] lowResults = new Money[n];
 		for (int i = 0; i < n; i++) {
 			lowResults[i] = lowResult;
@@ -52,14 +53,12 @@ public class Proration {
 		return distributeRemainderOver(lowResults, remainder);
 	}
 	
-	public Money partOfWhole(Money total, long portion, long whole) {
-		return partOfWhole(total, Ratio.of(portion, whole));
-	}
-	
-	public Money partOfWhole(Money total, Ratio ratio) {
-		int scale = defaultScaleForIntermediateCalculations(total);
-		BigDecimal multiplier = ratio.decimalValue(scale, Rounding.DOWN);
-		return total.times(multiplier, Rounding.DOWN);
+	public Money[] proratedOver(Money total, long[] longProportions) {
+		BigDecimal[] proportions = new BigDecimal[longProportions.length];
+		for (int i = 0; i < longProportions.length; i++) {
+			proportions[i] = BigDecimal.valueOf(longProportions[i]);
+		}
+		return proratedOver(total, proportions);
 	}
 	
 	public Money[] proratedOver(Money total, BigDecimal[] proportions) {
@@ -74,12 +73,14 @@ public class Proration {
 		return distributeRemainderOver(simpleResult, remainder);
 	}
 	
-	public Money[] proratedOver(Money total, long[] longProportions) {
-		BigDecimal[] proportions = new BigDecimal[longProportions.length];
-		for (int i = 0; i < longProportions.length; i++) {
-			proportions[i] = BigDecimal.valueOf(longProportions[i]);
-		}
-		return proratedOver(total, proportions);
+	public Money partOfWhole(Money total, long portion, long whole) {
+		return partOfWhole(total, Ratio.of(portion, whole));
+	}
+	
+	public Money partOfWhole(Money total, Ratio ratio) {
+		int scale = defaultScaleForIntermediateCalculations(total);
+		BigDecimal multiplier = ratio.decimalValue(scale, Rounding.DOWN);
+		return total.times(multiplier, Rounding.DOWN);
 	}
 	
 	Money[] distributeRemainderOver(Money[] amounts, Money remainder) {

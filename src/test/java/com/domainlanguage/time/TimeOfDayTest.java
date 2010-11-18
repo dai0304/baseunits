@@ -5,16 +5,24 @@
  */
 package com.domainlanguage.time;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.TimeZone;
 
-import junit.framework.TestCase;
+import com.domainlanguage.time.CalendarDate;
+import com.domainlanguage.time.CalendarMinute;
+import com.domainlanguage.time.TimeOfDay;
+import com.domainlanguage.time.TimePoint;
+
+import org.junit.Test;
 
 /**
- * TimeOfDayTest
+ * {@link TimeOfDay}のテストクラス。
  *
  * @author davem
  */
-public class TimeOfDayTest extends TestCase {
+public class TimeOfDayTest {
 	
 	private static final TimeZone CST = TimeZone.getTimeZone("CST");
 	
@@ -32,109 +40,184 @@ public class TimeOfDayTest extends TestCase {
 	
 
 	/**
-	 * Constructs a TimeOfDayTest.
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
 	 */
-	public TimeOfDayTest() {
-		super();
+	@Test
+	public void test01_OnStartOfDay() throws Exception {
+		CalendarMinute feb17AtStartOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 0, 0);
+		assertThat(midnight.on(feb17), is(feb17AtStartOfDay));
 	}
 	
 	/**
-	 * Constructs a TimeOfDayTest.
-	 * @param name
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
 	 */
-	public TimeOfDayTest(String name) {
-		super(name);
+	@Test
+	public void test02_OnMiddleOfDay() throws Exception {
+		CalendarMinute feb17AtMiddleOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 12, 0);
+		assertThat(noon.on(feb17), is(feb17AtMiddleOfDay));
 	}
 	
-	public void testAfterWithEarlierTimeOfDay() {
-		assertTrue("expected twoMinutesBeforeMidnight to be after midnight", twoMinutesBeforeMidnight.isAfter(midnight));
-		assertTrue("expected afternoon to be after morning", afternoon.isAfter(morning));
-		assertTrue("expected noon to be after midnight", noon.isAfter(midnight));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_OnEndOfDay() throws Exception {
+		CalendarMinute feb17AtEndOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 23, 58);
+		assertThat(twoMinutesBeforeMidnight.on(feb17), is(feb17AtEndOfDay));
 	}
 	
-	public void testAfterWithLaterTimeOfDay() {
-		assertFalse("expected midnight not after twoMinutesBeforeMidnight", midnight.isAfter(twoMinutesBeforeMidnight));
-		assertFalse("expected morning not after afternoon", morning.isAfter(afternoon));
-		assertFalse("expected noon not after twoMinutesBeforeMidnight", noon.isAfter(twoMinutesBeforeMidnight));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_Equals() throws Exception {
+		assertThat(midnight, is(TimeOfDay.hourAndMinute(0, 0)));
+		assertThat(morning, is(TimeOfDay.hourAndMinute(10, 20)));
+		assertThat(noon, is(TimeOfDay.hourAndMinute(12, 0)));
+		assertThat(afternoon, is(TimeOfDay.hourAndMinute(15, 40)));
+		assertThat(twoMinutesBeforeMidnight, is(TimeOfDay.hourAndMinute(23, 58)));
 	}
 	
-	public void testAfterWithSameTimeOfDay() {
-		assertFalse("expected midnight not after midnight", midnight.isAfter(midnight));
-		assertFalse("expected morning not after morning", morning.isAfter(morning));
-		assertFalse("expected afternoon not after afternoon", afternoon.isAfter(afternoon));
-		assertFalse("expected noon not after noon", noon.isAfter(noon));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_HashCode() throws Exception {
+		assertThat(midnight.hashCode(), is(TimeOfDay.hourAndMinute(0, 0).hashCode()));
+		assertThat(morning.hashCode(), is(TimeOfDay.hourAndMinute(10, 20).hashCode()));
+		assertThat(noon.hashCode(), is(TimeOfDay.hourAndMinute(12, 0).hashCode()));
+		assertThat(afternoon.hashCode(), is(TimeOfDay.hourAndMinute(15, 40).hashCode()));
+		assertThat(twoMinutesBeforeMidnight.hashCode(), is(TimeOfDay.hourAndMinute(23, 58).hashCode()));
 	}
 	
-	public void testAsTimePoint() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_AfterWithEarlierTimeOfDay() throws Exception {
+		assertThat("expected twoMinutesBeforeMidnight to be after midnight",
+				twoMinutesBeforeMidnight.isAfter(midnight), is(true));
+		assertThat("expected afternoon to be after morning", afternoon.isAfter(morning), is(true));
+		assertThat("expected noon to be after midnight", noon.isAfter(midnight), is(true));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_AfterWithLaterTimeOfDay() throws Exception {
+		assertThat("expected midnight not after twoMinutesBeforeMidnight", midnight.isAfter(twoMinutesBeforeMidnight),
+				is(false));
+		assertThat("expected morning not after afternoon", morning.isAfter(afternoon), is(false));
+		assertThat("expected noon not after twoMinutesBeforeMidnight", noon.isAfter(twoMinutesBeforeMidnight),
+				is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_AfterWithSameTimeOfDay() throws Exception {
+		assertThat("expected midnight not after midnight", midnight.isAfter(midnight), is(false));
+		assertThat("expected morning not after morning", morning.isAfter(morning), is(false));
+		assertThat("expected afternoon not after afternoon", afternoon.isAfter(afternoon), is(false));
+		assertThat("expected noon not after noon", noon.isAfter(noon), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_BeforeWithEarlierTimeOfDay() throws Exception {
+		assertThat("expected twoMinutesBeforeMidnight not after midnight", twoMinutesBeforeMidnight.isBefore(midnight),
+				is(false));
+		assertThat("expected afternoon not after morning", afternoon.isBefore(morning), is(false));
+		assertThat("expected noon not after midnight", noon.isBefore(midnight), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test10_BeforeWithLaterTimeOfDay() throws Exception {
+		assertThat("expected midnight not after twoMinutesBeforeMidnight", midnight.isBefore(twoMinutesBeforeMidnight),
+				is(true));
+		assertThat("expected morning not after afternoon", morning.isBefore(afternoon), is(true));
+		assertThat("expected noon not after twoMinutesBeforeMidnight", noon.isBefore(twoMinutesBeforeMidnight),
+				is(true));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test11_BeforeWithSameTimeOfDay() throws Exception {
+		assertThat("expected midnight not after midnight", midnight.isBefore(midnight), is(false));
+		assertThat("expected morning not after morning", morning.isBefore(morning), is(false));
+		assertThat("expected afternoon not after afternoon", afternoon.isBefore(afternoon), is(false));
+		assertThat("expected noon not after noon", noon.isBefore(noon), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test12_GetHour() throws Exception {
+		assertThat(midnight.getHour(), is(0));
+		assertThat(morning.getHour(), is(10));
+		assertThat(noon.getHour(), is(12));
+		assertThat(afternoon.getHour(), is(15));
+		assertThat(twoMinutesBeforeMidnight.getHour(), is(23));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test13_GetMinute() throws Exception {
+		assertThat(midnight.getMinute(), is(0));
+		assertThat(morning.getMinute(), is(20));
+		assertThat(noon.getMinute(), is(0));
+		assertThat(afternoon.getMinute(), is(40));
+		assertThat(twoMinutesBeforeMidnight.getMinute(), is(58));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test14_AsTimePoint() throws Exception {
 		TimeOfDay fiveFifteen = TimeOfDay.hourAndMinute(17, 15);
 		CalendarDate mayEleventh = CalendarDate.date(2006, 5, 11);
 		TimePoint mayEleventhAtFiveFifteen = fiveFifteen.asTimePointGiven(mayEleventh, CST);
-		assertEquals(TimePoint.at(2006, 5, 11, 17, 15, 0, 0, CST), mayEleventhAtFiveFifteen);
-	}
-	
-	public void testBeforeWithEarlierTimeOfDay() {
-		assertFalse("expected twoMinutesBeforeMidnight not after midnight", twoMinutesBeforeMidnight.isBefore(midnight));
-		assertFalse("expected afternoon not after morning", afternoon.isBefore(morning));
-		assertFalse("expected noon not after midnight", noon.isBefore(midnight));
-	}
-	
-	public void testBeforeWithLaterTimeOfDay() {
-		assertTrue("expected midnight not after twoMinutesBeforeMidnight", midnight.isBefore(twoMinutesBeforeMidnight));
-		assertTrue("expected morning not after afternoon", morning.isBefore(afternoon));
-		assertTrue("expected noon not after twoMinutesBeforeMidnight", noon.isBefore(twoMinutesBeforeMidnight));
-	}
-	
-	public void testBeforeWithSameTimeOfDay() {
-		assertFalse("expected midnight not after midnight", midnight.isBefore(midnight));
-		assertFalse("expected morning not after morning", morning.isBefore(morning));
-		assertFalse("expected afternoon not after afternoon", afternoon.isBefore(afternoon));
-		assertFalse("expected noon not after noon", noon.isBefore(noon));
-	}
-	
-	public void testEquals() {
-		assertEquals(TimeOfDay.hourAndMinute(0, 0), midnight);
-		assertEquals(TimeOfDay.hourAndMinute(10, 20), morning);
-		assertEquals(TimeOfDay.hourAndMinute(12, 0), noon);
-		assertEquals(TimeOfDay.hourAndMinute(15, 40), afternoon);
-		assertEquals(TimeOfDay.hourAndMinute(23, 58), twoMinutesBeforeMidnight);
-	}
-	
-	public void testGetHour() {
-		assertEquals(0, midnight.getHour());
-		assertEquals(10, morning.getHour());
-		assertEquals(12, noon.getHour());
-		assertEquals(15, afternoon.getHour());
-		assertEquals(23, twoMinutesBeforeMidnight.getHour());
-	}
-	
-	public void testGetMinute() {
-		assertEquals(0, midnight.getMinute());
-		assertEquals(20, morning.getMinute());
-		assertEquals(0, noon.getMinute());
-		assertEquals(40, afternoon.getMinute());
-		assertEquals(58, twoMinutesBeforeMidnight.getMinute());
-	}
-	
-	public void testHashCode() {
-		assertEquals(TimeOfDay.hourAndMinute(0, 0).hashCode(), midnight.hashCode());
-		assertEquals(TimeOfDay.hourAndMinute(10, 20).hashCode(), morning.hashCode());
-		assertEquals(TimeOfDay.hourAndMinute(12, 0).hashCode(), noon.hashCode());
-		assertEquals(TimeOfDay.hourAndMinute(15, 40).hashCode(), afternoon.hashCode());
-		assertEquals(TimeOfDay.hourAndMinute(23, 58).hashCode(), twoMinutesBeforeMidnight.hashCode());
-	}
-	
-	public void testOnEndOfDay() {
-		CalendarMinute feb17AtEndOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 23, 58);
-		assertEquals(feb17AtEndOfDay, twoMinutesBeforeMidnight.on(feb17));
-	}
-	
-	public void testOnMiddleOfDay() {
-		CalendarMinute feb17AtMiddleOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 12, 0);
-		assertEquals(feb17AtMiddleOfDay, noon.on(feb17));
-	}
-	
-	public void testOnStartOfDay() {
-		CalendarMinute feb17AtStartOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 0, 0);
-		assertEquals(feb17AtStartOfDay, midnight.on(feb17));
+		assertThat(mayEleventhAtFiveFifteen, is(TimePoint.at(2006, 5, 11, 17, 15, 0, 0, CST)));
 	}
 }

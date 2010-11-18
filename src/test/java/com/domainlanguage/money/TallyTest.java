@@ -1,12 +1,33 @@
 package com.domainlanguage.money;
 
-import junit.framework.TestCase;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-public class TallyTest extends TestCase {
+import com.domainlanguage.money.Money;
+import com.domainlanguage.money.Tally;
+
+import org.junit.Test;
+
+/**
+ * {@link Tally}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class TallyTest {
 	
-	public void testNet() {
-		Tally tally = new Tally(Money.dollars(55.34), Money.dollars(12.22), Money.dollars(-3.07));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Net() throws Exception {
+		Tally tally = new Tally(
+				Money.dollars(55.34),
+				Money.dollars(12.22),
+				Money.dollars(-3.07)
+				);
 		
-		assertEquals(Money.dollars(64.49), tally.net());
+		assertThat(tally.net(), is(Money.dollars(64.49)));
 	}
 }

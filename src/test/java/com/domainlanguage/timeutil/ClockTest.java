@@ -6,15 +6,27 @@
 
 package com.domainlanguage.timeutil;
 
-import java.util.TimeZone;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
-import junit.framework.TestCase;
+import java.util.TimeZone;
 
 import com.domainlanguage.time.CalendarDate;
 import com.domainlanguage.time.TimePoint;
 import com.domainlanguage.time.TimeSource;
+import com.domainlanguage.timeutil.Clock;
 
-public class ClockTest extends TestCase {
+import org.junit.After;
+import org.junit.Test;
+
+/**
+ * {@link Clock}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class ClockTest {
 	
 	TimePoint dec1_5am_gmt = TimePoint.atGMT(2004, 12, 1, 5, 0);
 	
@@ -27,48 +39,77 @@ public class ClockTest extends TestCase {
 	TimeSource dummySourceDec1_5h = dummyTimeSource(dec1_5am_gmt);
 	
 
-	@Override
-	public void tearDown() {
+	/**
+	 * テストの情報を破棄する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@After
+	public void tearDown() throws Exception {
 		Clock.reset();
 	}
 	
-	public void testNow() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Now() throws Exception {
 		Clock.setTimeSource(dummySourceDec1_5h);
-		assertEquals(dec1_5am_gmt, Clock.now());
+		assertThat(Clock.now(), is(dec1_5am_gmt));
 	}
 	
 	//[ 1466694 ] Clock.now() should use default TimeSource
-	public void testNowDoesntBreak() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_NowDoesntBreak() throws Exception {
 		Exception possibleNullPointerException = null;
 		try {
 			Clock.now();
 		} catch (Exception exceptionalEvent) {
 			possibleNullPointerException = exceptionalEvent;
 		}
-		assertNull(possibleNullPointerException);
+		assertThat(possibleNullPointerException, is(nullValue()));
 	}
 	
-	public void testToday() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_Today() throws Exception {
 		Clock.setTimeSource(dummySourceDec1_5h);
 		
 		Clock.setDefaultTimeZone(gmt);
-		assertEquals(CalendarDate.date(2004, 12, 1), Clock.today());
-		assertEquals(dec1_5am_gmt, Clock.now());
+		assertThat(Clock.today(), is(CalendarDate.date(2004, 12, 1)));
+		assertThat(Clock.now(), is(dec1_5am_gmt));
 		
 		Clock.setDefaultTimeZone(pt);
-		assertEquals(CalendarDate.date(2004, 11, 30), Clock.today());
-		assertEquals(dec1_5am_gmt, Clock.now());
+		assertThat(Clock.today(), is(CalendarDate.date(2004, 11, 30)));
+		assertThat(Clock.now(), is(dec1_5am_gmt));
 		
 	}
 	
-	public void testTodayWithoutTimeZone() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_TodayWithoutTimeZone() throws Exception {
 		Clock.setTimeSource(dummySourceDec1_5h);
 		
 		try {
 			Clock.today();
 			fail("Clock cannot answer today() without a timezone.");
 		} catch (RuntimeException e) {
-			assertTrue("Correctly threw exception", true);
+			// Correctly threw exception
 		}
 		
 	}
@@ -76,7 +117,6 @@ public class ClockTest extends TestCase {
 	private TimeSource dummyTimeSource(final TimePoint returnValueForNow) {
 		return new TimeSource() {
 			
-			@Override
 			public TimePoint now() {
 				return returnValueForNow;
 			}

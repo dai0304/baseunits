@@ -6,22 +6,35 @@
 
 package com.domainlanguage.util;
 
+import static org.junit.Assert.fail;
+
 import java.util.Iterator;
 
-import junit.framework.TestCase;
+import com.domainlanguage.util.ImmutableIterator;
 
-public class ImmutableIteratorTest extends TestCase {
+import org.junit.Test;
+
+/**
+ * {@link ImmutableIterator}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class ImmutableIteratorTest {
 	
-	public void testRemove() {
-		Iterator iterator = new ImmutableIterator() {
+	/**
+	 * {@link ImmutableIterator}に対して {@link Iterator#remove()}ができないことを確認する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Remove() throws Exception {
+		Iterator<Void> iterator = new ImmutableIterator<Void>() {
 			
-			@Override
 			public boolean hasNext() {
 				return true;
 			}
 			
-			@Override
-			public Object next() {
+			public Void next() {
 				return null;
 			}
 		};
@@ -29,6 +42,7 @@ public class ImmutableIteratorTest extends TestCase {
 			iterator.remove();
 			fail("remove is unsupported");
 		} catch (UnsupportedOperationException expected) {
+			// success
 		}
 	}
 	

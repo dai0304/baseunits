@@ -6,69 +6,114 @@
 
 package com.domainlanguage.time;
 
-import java.util.Calendar;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-import junit.framework.TestCase;
+import com.domainlanguage.time.AnnualDateSpecification;
+import com.domainlanguage.time.CalendarDate;
+import com.domainlanguage.time.CalendarInterval;
+import com.domainlanguage.time.DateSpecification;
+import com.domainlanguage.time.DayOfWeek;
 
-public class DateSpecificationTest extends TestCase {
+import org.junit.Test;
+
+/**
+ * {@link DateSpecification}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class DateSpecificationTest {
 	
-	public void testFixedDate() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_FixedDate() throws Exception {
 		CalendarInterval y2004 = CalendarInterval.year(2004);
 		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
-		assertEquals(CalendarDate.date(2004, 7, 4), ((AnnualDateSpecification) independenceDay).ofYear(2004));
-		assertEquals(CalendarDate.date(2004, 7, 4), independenceDay.firstOccurrenceIn(y2004));
-		assertTrue(independenceDay.isSatisfiedBy(CalendarDate.date(2004, 7, 4)));
-		assertFalse(independenceDay.isSatisfiedBy(CalendarDate.date(2004, 7, 3)));
-		assertTrue(independenceDay.isSatisfiedBy(CalendarDate.date(1970, 7, 4)));
+		assertThat(((AnnualDateSpecification) independenceDay).ofYear(2004), is(CalendarDate.date(2004, 7, 4)));
+		assertThat(independenceDay.firstOccurrenceIn(y2004), is(CalendarDate.date(2004, 7, 4)));
+		assertThat(independenceDay.isSatisfiedBy(CalendarDate.date(2004, 7, 4)), is(true));
+		assertThat(independenceDay.isSatisfiedBy(CalendarDate.date(2004, 7, 3)), is(false));
+		assertThat(independenceDay.isSatisfiedBy(CalendarDate.date(1970, 7, 4)), is(true));
 	}
 	
-	public void testIterateThroughInterval() {
-		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
-		CalendarInterval ylate2002_early2005 = CalendarInterval.inclusive(2002, 8, 1, 2005, 6, 31);
-		Iterator it = independenceDay.iterateOver(ylate2002_early2005);
-		assertTrue(it.hasNext());
-		assertEquals(CalendarDate.date(2003, 7, 4), it.next());
-		assertTrue(it.hasNext());
-		assertEquals(CalendarDate.date(2004, 7, 4), it.next());
-		assertFalse(it.hasNext());
-		assertNull(it.next());
-	}
-	
-	public void testNthWeekdayInMonth() {
-		DateSpecification thanksgiving = DateSpecification.nthOccuranceOfWeekdayInMonth(11, Calendar.THURSDAY, 4);
-		assertEquals(CalendarDate.date(2004, 11, 25), ((AnnualDateSpecification) thanksgiving).ofYear(2004));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_NthWeekdayInMonth() throws Exception {
+		DateSpecification thanksgiving = DateSpecification.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
+		assertThat(((AnnualDateSpecification) thanksgiving).ofYear(2004), is(CalendarDate.date(2004, 11, 25)));
 		
 		CalendarInterval y2004 = CalendarInterval.year(2004);
-		assertEquals(CalendarDate.date(2004, 11, 25), thanksgiving.firstOccurrenceIn(y2004));
-		assertTrue(thanksgiving.isSatisfiedBy(CalendarDate.date(2004, 11, 25)));
-		assertFalse(thanksgiving.isSatisfiedBy(CalendarDate.date(2002, 11, 25)));
+		assertThat(thanksgiving.firstOccurrenceIn(y2004), is(CalendarDate.date(2004, 11, 25)));
+		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.date(2004, 11, 25)), is(true));
+		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.date(2002, 11, 25)), is(false));
 		CalendarInterval y2002 = CalendarInterval.year(2002);
-		assertEquals(CalendarDate.date(2002, 11, 28), thanksgiving.firstOccurrenceIn(y2002));
-		assertTrue(thanksgiving.isSatisfiedBy(CalendarDate.date(2002, 11, 28)));
+		assertThat(thanksgiving.firstOccurrenceIn(y2002), is(CalendarDate.date(2002, 11, 28)));
+		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.date(2002, 11, 28)), is(true));
 		
 		// Calculate all the Thanksgivings over a three year interval.
 		CalendarInterval y2002_2004 = CalendarInterval.inclusive(2002, 1, 1, 2004, 12, 31);
-		assertEquals(CalendarDate.date(2002, 11, 28), thanksgiving.firstOccurrenceIn(y2002_2004));
-		Iterator iterator = thanksgiving.iterateOver(y2002_2004);
-		assertTrue(iterator.hasNext());
-		assertEquals(CalendarDate.date(2002, 11, 28), iterator.next());
-		assertTrue(iterator.hasNext());
-		assertEquals(CalendarDate.date(2003, 11, 27), iterator.next());
-		assertTrue(iterator.hasNext());
-		assertEquals(CalendarDate.date(2004, 11, 25), iterator.next());
-		assertFalse(iterator.hasNext());
+		assertThat(thanksgiving.firstOccurrenceIn(y2002_2004), is(CalendarDate.date(2002, 11, 28)));
+		Iterator<CalendarDate> iterator = thanksgiving.iterateOver(y2002_2004);
+		assertThat(iterator.hasNext(), is(true));
+		assertThat(iterator.next(), is(CalendarDate.date(2002, 11, 28)));
+		assertThat(iterator.hasNext(), is(true));
+		assertThat(iterator.next(), is(CalendarDate.date(2003, 11, 27)));
+		assertThat(iterator.hasNext(), is(true));
+		assertThat(iterator.next(), is(CalendarDate.date(2004, 11, 25)));
+		assertThat(iterator.hasNext(), is(false));
 	}
 	
-	public void testSelectFirstFromInterval() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_SelectFirstFromInterval() throws Exception {
 		CalendarInterval y2002_2004 = CalendarInterval.inclusive(2002, 1, 1, 2004, 12, 31);
 		CalendarInterval ylate2002_2004 = CalendarInterval.inclusive(2002, 8, 1, 2004, 12, 31);
 		CalendarInterval ylate2002 = CalendarInterval.inclusive(2002, 8, 1, 2002, 12, 31);
 		CalendarInterval ylate2002_early2003 = CalendarInterval.inclusive(2002, 8, 1, 2003, 6, 30);
 		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
-		assertEquals(CalendarDate.date(2002, 7, 4), independenceDay.firstOccurrenceIn(y2002_2004));
-		assertEquals(CalendarDate.date(2003, 7, 4), independenceDay.firstOccurrenceIn(ylate2002_2004));
-		assertNull(independenceDay.firstOccurrenceIn(ylate2002));
-		assertNull(independenceDay.firstOccurrenceIn(ylate2002_early2003));
+		assertThat(independenceDay.firstOccurrenceIn(y2002_2004), is(CalendarDate.date(2002, 7, 4)));
+		assertThat(independenceDay.firstOccurrenceIn(ylate2002_2004), is(CalendarDate.date(2003, 7, 4)));
+		assertThat(independenceDay.firstOccurrenceIn(ylate2002), is(nullValue()));
+		assertThat(independenceDay.firstOccurrenceIn(ylate2002_early2003), is(nullValue()));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_IterateThroughInterval() throws Exception {
+		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
+		CalendarInterval ylate2002_early2005 = CalendarInterval.inclusive(2002, 8, 1, 2005, 6, 31);
+		Iterator<CalendarDate> it = independenceDay.iterateOver(ylate2002_early2005);
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(CalendarDate.date(2003, 7, 4)));
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(CalendarDate.date(2004, 7, 4)));
+		assertThat(it.hasNext(), is(false));
+		try {
+			it.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
 	}
 }

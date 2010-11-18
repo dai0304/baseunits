@@ -6,20 +6,32 @@
 
 package com.domainlanguage.tests;
 
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 
+/**
+ * シリアライズのテストを行う、ヘルパークラス。
+ * 
+ * @author daisuke
+ */
 public class SerializationTester {
 	
-	public static void assertCanBeSerialized(Object serializable) throws AssertionFailedError {
-		if (!Serializable.class.isInstance(serializable)) {
-			throw new AssertionFailedError("Object doesn't implement java.io.Serializable interface");
+	/**
+	 * シリアライズできるかどうか検証する。
+	 * 
+	 * @param serializable シリアライズ対象オブジェクト
+	 * @throws AssertionFailedError シリアライズに成功しなかった場合
+	 */
+	public static void assertCanBeSerialized(Object serializable) {
+		if (Serializable.class.isInstance(serializable) == false) {
+			fail("Object doesn't implement java.io.Serializable interface");
 		}
 		
 		ObjectOutputStream out = null;
@@ -33,14 +45,12 @@ public class SerializationTester {
 			byteArrayIn = new ByteArrayInputStream(byteArrayOut.toByteArray());
 			in = new ObjectInputStream(byteArrayIn);
 			Object deserialized = in.readObject();
-			if (!serializable.equals(deserialized)) {
-				throw new AssertionFailedError("Reconstituted object is expected to be equal to serialized");
+			if (serializable.equals(deserialized) == false) {
+				fail("Reconstituted object is expected to be equal to serialized");
 			}
 			in.close(); //this shouldn't matter
-		} catch (AssertionFailedError e) {
-			throw e;
 		} catch (Exception e) {
-			Assert.fail("Exception while serializing: " + e);
+			fail("Exception while serializing: " + e);
 		}
 	}
 	

@@ -5,22 +5,44 @@
  */
 package com.domainlanguage.money;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
 import java.math.BigDecimal;
 
-import junit.framework.TestCase;
-
 import com.domainlanguage.base.Rounding;
+import com.domainlanguage.money.Money;
+import com.domainlanguage.money.MoneyTimeRate;
 import com.domainlanguage.time.Duration;
 
-public class MoneyTimeRateTest extends TestCase {
+import org.junit.Test;
+
+/**
+ * {@link MoneyTimeRate}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class MoneyTimeRateTest {
 	
-	public void testEquals() {
-		Money amount = Money.euros(11.00);
-		MoneyTimeRate rate = amount.per(Duration.days(2));
-		assertEquals(new MoneyTimeRate(Money.euros(11.00), Duration.days(2)), rate);
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_SimpleRate() throws Exception {
+		MoneyTimeRate rate = new MoneyTimeRate(Money.dollars(20.00), Duration.hours(1));
+		assertThat(rate.over(Duration.hours(2)), is(Money.dollars(40.00)));
 	}
 	
-	public void testRounding() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_Rounding() throws Exception {
 		MoneyTimeRate rate = new MoneyTimeRate(Money.dollars(100.00), Duration.minutes(3));
 		try {
 			rate.over(Duration.minutes(1));
@@ -29,18 +51,37 @@ public class MoneyTimeRateTest extends TestCase {
 		}
 	}
 	
-	public void testRoundingRate() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_RoundingRate() throws Exception {
 		MoneyTimeRate rate = new MoneyTimeRate(Money.euros(100.00), Duration.minutes(3));
-		assertEquals(Money.euros(new BigDecimal("33.33")), rate.over(Duration.minutes(1), Rounding.DOWN));
+		assertThat(rate.over(Duration.minutes(1), Rounding.DOWN), is(Money.euros(new BigDecimal("33.33"))));
 	}
 	
-	public void testRoundingScalingRate() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_RoundingScalingRate() throws Exception {
 		MoneyTimeRate rate = new MoneyTimeRate(Money.euros(new BigDecimal("100.00")), Duration.minutes(3));
-		assertEquals(Money.euros(new BigDecimal("33.33")), rate.over(Duration.minutes(1), 2, Rounding.DOWN));
+		assertThat(rate.over(Duration.minutes(1), 2, Rounding.DOWN), is(Money.euros(new BigDecimal("33.33"))));
 	}
 	
-	public void testSimpleRate() {
-		MoneyTimeRate rate = new MoneyTimeRate(Money.dollars(20.00), Duration.hours(1));
-		assertEquals(Money.dollars(40.00), rate.over(Duration.hours(2)));
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_Equals() throws Exception {
+		Money amount = Money.euros(11.00);
+		MoneyTimeRate rate = amount.per(Duration.days(2));
+		assertThat(rate, is(new MoneyTimeRate(Money.euros(11.00), Duration.days(2))));
 	}
 }

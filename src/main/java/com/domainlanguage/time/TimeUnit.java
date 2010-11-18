@@ -6,170 +6,126 @@
 
 package com.domainlanguage.time;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- * 時間単位を表す値クラス。
+ * 時間の単位を表す列挙型。
  * 
- * @version $Id$
  * @author daisuke
  */
-public class TimeUnit implements Comparable<TimeUnit>, Serializable {
+public enum TimeUnit {
 	
-	private static final long serialVersionUID = -6356796143887842261L;
+	/** ミリ秒単位 */
+	millisecond(Type.millisecond, Type.millisecond, TimeUnitConversionFactor.identical),
+
+	/** 秒単位 */
+	second(Type.second, Type.millisecond, TimeUnitConversionFactor.millisecondsPerSecond),
+
+	/** 分単位 */
+	minute(Type.minute, Type.millisecond, TimeUnitConversionFactor.millisecondsPerMinute),
+
+	/** 時単位 */
+	hour(Type.hour, Type.millisecond, TimeUnitConversionFactor.millisecondsPerHour),
+
+	/** 日単位 */
+	day(Type.day, Type.millisecond, TimeUnitConversionFactor.millisecondsPerDay),
+
+	/** 週単位 */
+	week(Type.week, Type.millisecond, TimeUnitConversionFactor.millisecondsPerWeek),
+
+	/** 月単位 */
+	month(Type.month, Type.month, TimeUnitConversionFactor.identical),
+
+	/** 四半期単位 */
+	quarter(Type.quarter, Type.month, TimeUnitConversionFactor.monthsPerQuarter),
+
+	/** 年単位 */
+	year(Type.year, Type.month, TimeUnitConversionFactor.monthsPerYear);
 	
-	/** ミリ秒 */
-	public static final TimeUnit MILLISECOND = new TimeUnit(Type.millisecond, Type.millisecond,
-			TimeUnitConversionFactor.one);
+	private static final TimeUnit[] DESCENDING_MS_BASED = {
+		week,
+		day,
+		hour,
+		minute,
+		second,
+		millisecond
+			};
 	
-	/** 秒 */
-	public static final TimeUnit SECOND = new TimeUnit(Type.second, Type.millisecond,
-			TimeUnitConversionFactor.millisecondsPerSecond);
+	private static final TimeUnit[] DESCENDING_MS_BASED_FOR_DISPLAY = {
+		day,
+		hour,
+		minute,
+		second,
+		millisecond
+			};
 	
-	/** 分 */
-	public static final TimeUnit MINUTE = new TimeUnit(Type.minute, Type.millisecond,
-			TimeUnitConversionFactor.millisecondsPerMinute);
+	private static final TimeUnit[] DESCENDING_MONTH_BASED = {
+		year,
+		quarter,
+		month
+			};
 	
-	/** 時 */
-	public static final TimeUnit HOUR = new TimeUnit(Type.hour, Type.millisecond,
-			TimeUnitConversionFactor.millisecondsPerHour);
+	private static final TimeUnit[] DESCENDING_MONTH_BASED_FOR_DISPLAY = {
+		year,
+		month
+			};
 	
-	/** 日 */
-	public static final TimeUnit DAY = new TimeUnit(Type.day, Type.millisecond,
-			TimeUnitConversionFactor.millisecondsPerDay);
+	private final Type type;
 	
-	/** 週 */
-	public static final TimeUnit WEEK = new TimeUnit(Type.week, Type.millisecond,
-			TimeUnitConversionFactor.millisecondsPerWeek);
+	private final Type baseType;
 	
-	public static final TimeUnit[] descendingMillisecondBased = {
-		WEEK,
-		DAY,
-		HOUR,
-		MINUTE,
-		SECOND,
-		MILLISECOND
-	};
-	
-	public static final TimeUnit[] descendingMillisecondBasedForDisplay = {
-		DAY,
-		HOUR,
-		MINUTE,
-		SECOND,
-		MILLISECOND
-	};
-	
-	/** 月 */
-	public static final TimeUnit MONTH = new TimeUnit(Type.month, Type.month, TimeUnitConversionFactor.one);
-	
-	/** 四半期 */
-	public static final TimeUnit QUARTER = new TimeUnit(Type.quarter, Type.month,
-			TimeUnitConversionFactor.monthsPerQuarter);
-	
-	/** 年 */
-	public static final TimeUnit YEAR = new TimeUnit(Type.year, Type.month, TimeUnitConversionFactor.monthsPerYear);
-	
-	public static final TimeUnit[] descendingMonthBased = {
-		YEAR,
-		QUARTER,
-		MONTH
-	};
-	
-	public static final TimeUnit[] descendingMonthBasedForDisplay = {
-		YEAR,
-		MONTH
-	};
-	
-	private Type type;
-	
-	private Type baseType;
-	
-	private int factor;
+	private final TimeUnitConversionFactor factor;
 	
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	TimeUnit() {
-	}
-	
-	private TimeUnit(Type type, Type baseType, TimeUnitConversionFactor factor) {
+	TimeUnit(Type type, Type baseType, TimeUnitConversionFactor factor) {
 		this.type = type;
 		this.baseType = baseType;
-		this.factor = factor.value;
-	}
-	
-	@Override
-	public int compareTo(TimeUnit other) {
-		if (other.baseType.equals(baseType)) {
-			return factor - other.factor;
-		}
-		if (baseType.equals(Type.month)) {
-			return 1;
-		}
-		return -1;
-	}
-	
-	@Override
-	public boolean equals(Object object) {
-		//revisit: maybe use: Reflection.equalsOverClassAndNull(this, other)
-		if (object == null || !(object instanceof TimeUnit)) {
-			return false;
-		}
-		TimeUnit other = (TimeUnit) object;
-		return baseType.equals(other.baseType) && factor == other.factor && type.equals(other.type);
-	}
-	
-	@Override
-	public int hashCode() {
-		return factor + baseType.hashCode() + type.hashCode();
+		this.factor = factor;
 	}
 	
 	/**
-	 * この時間単位は、与えた時間単位{@code other}に換算可能かどうか調べる。
+	 * この単位の計数の基数とすることができる最小の単位を取得する。
 	 * 
-	 * <p>例えば、秒と分は相互変換可能であるが、日と月は変換不可能である。
-	 * なぜなら、1ヶ月は28〜31日の可能性があるから。</p>
+	 * <p>例えば、分単位はミリ秒単位で計数できるが、四半期単位は（一ヶ月の長さが毎月異なるため）月単位までしか計数できない。</p>
 	 * 
-	 * @param other 変換対象時間単位
-	 * @return 換算可能な場合は{@code true}、そうでない場合は{@code false}
+	 * @return この単位の計数の基数とすることができる最小の単位
+	 */
+	TimeUnit baseUnit() {
+		return baseType.equals(Type.millisecond) ? millisecond : month;
+	}
+	
+	/**
+	 * この単位で表される値を、ミリ秒単位に変換できるかどうかを検証する。
+	 * 
+	 * <p>例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）ミリ秒単位に変換できない。</p>
+	 * 
+	 * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
+	 */
+	public boolean isConvertibleToMilliseconds() {
+		return isConvertibleTo(millisecond);
+	}
+	
+	/**
+	 * この単位で表される値を、指定した単位に変換できるかどうかを検証する。
+	 * 
+	 * <p>例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）日単位に変換できない。</p>
+	 * 
+	 * @param other 変換先単位
+	 * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public boolean isConvertibleTo(TimeUnit other) {
 		return baseType.equals(other.baseType);
 	}
 	
-	/**
-	 * この時間単位は、ミリ秒単位に換算可能かどうか調べる。
-	 * 
-	 * @return 換算可能な場合は{@code true}、そうでない場合は{@code false}
-	 * @see #isConvertibleTo(TimeUnit)
-	 */
-	public boolean isConvertibleToMilliseconds() {
-		return isConvertibleTo(MILLISECOND);
-	}
-	
-	@Override
-	public String toString() {
-		return type.name;
-	}
-	
-	TimeUnit baseUnit() {
-		return baseType.equals(Type.millisecond) ? MILLISECOND : MONTH;
-	}
-	
-	TimeUnit[] descendingUnits() {
-		return isConvertibleToMilliseconds() ? descendingMillisecondBased : descendingMonthBased;
-	}
-	
-	TimeUnit[] descendingUnitsForDisplay() {
-		return isConvertibleToMilliseconds() ? descendingMillisecondBasedForDisplay : descendingMonthBasedForDisplay;
-	}
-	
-	int getFactor() {
-		return factor;
-	}
+//    public int compareTo(TimeUnit other) {
+//        if (other.baseType.equals(baseType)) {
+//            return factor.value - other.factor.value;
+//        }
+//        if (baseType.equals(Type.month)) {
+//            return 1;
+//        }
+//        return -1;
+//    }
 	
 	int javaCalendarConstantForBaseType() {
 		if (baseType.equals(Type.millisecond)) {
@@ -181,6 +137,43 @@ public class TimeUnit implements Comparable<TimeUnit>, Serializable {
 		return 0;
 	}
 	
+	@Override
+	public String toString() {
+		return type.name();
+	}
+	
+	String toString(long quantity) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(quantity);
+		buffer.append(" ");
+		buffer.append(type.name());
+		buffer.append(quantity == 1 ? "" : "s");
+		return buffer.toString();
+	}
+	
+	/**
+	 * この単位から変換可能な全ての単位を含み、大きい単位から降順にソートした配列を取得する。
+	 * 
+	 * @return この単位から変換可能な全ての単位を含み、大きい単位から降順にソートした配列
+	 */
+	TimeUnit[] descendingUnits() {
+		return isConvertibleToMilliseconds() ? DESCENDING_MS_BASED : DESCENDING_MONTH_BASED;
+	}
+	
+	/**
+	 * この単位から変換可能な単位のうち、しばしば表示に利用する単位を、大きい単位から降順にソートした配列を取得する。
+	 * 
+	 * @return この単位から変換可能な全ての単位のうち、しばしば表示に利用する単位を、大きい単位から降順にソートした配列
+	 */
+	TimeUnit[] descendingUnitsForDisplay() {
+		return isConvertibleToMilliseconds() ? DESCENDING_MS_BASED_FOR_DISPLAY : DESCENDING_MONTH_BASED_FOR_DISPLAY;
+	}
+	
+	/**
+	 * この単位から変換可能な単位のうち、現在の単位より一つ小さい単位を取得する。
+	 * 
+	 * @return この単位から変換可能な単位のうち、現在の単位より一つ小さい単位
+	 */
 	TimeUnit nextFinerUnit() {
 		TimeUnit[] descending = descendingUnits();
 		int index = -1;
@@ -195,41 +188,62 @@ public class TimeUnit implements Comparable<TimeUnit>, Serializable {
 		return descending[index + 1];
 	}
 	
-	String toString(long quantity) {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(quantity);
-		buffer.append(" ");
-		buffer.append(type.name);
-		buffer.append(quantity == 1 ? "" : "s");
-		return buffer.toString();
+
+	static enum Type {
+		millisecond,
+		second,
+		minute,
+		hour,
+		day,
+		week,
+		month,
+		quarter,
+		year;
 	}
 	
 
-	enum Type {
-		
-		millisecond("millisecond"),
-
-		second("second"),
-
-		minute("minute"),
-
-		hour("hour"),
-
-		day("day"),
-
-		week("week"),
-
-		month("month"),
-
-		quarter("quarter"),
-
-		year("year");
-		
-		private final String name;
-		
-
-		Type(String name) {
-			this.name = name;
-		}
+	int getFactor() {
+		return factor.value;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * 
+	 * @return {@link #baseType}
+	 */
+	@SuppressWarnings("unused")
+	private Type getForPersistentMapping_BaseType() { // CHECKSTYLE IGNORE THIS LINE
+		return baseType;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * 
+	 * @return {@link #factor}
+	 */
+	@SuppressWarnings("unused")
+	private TimeUnitConversionFactor getForPersistentMapping_Factor() { // CHECKSTYLE IGNORE THIS LINE
+		return factor;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * 
+	 * @return {@link #type}
+	 */
+	@SuppressWarnings("unused")
+	private Type getForPersistentMapping_Type() { // CHECKSTYLE IGNORE THIS LINE
+		return type;
+	}
+	
+	static TimeUnit exampleForPersistentMappingTesting() {
+		return second;
+	}
+	
+	static Type exampleTypeForPersistentMappingTesting() {
+		return Type.hour;
 	}
 }

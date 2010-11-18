@@ -6,303 +6,486 @@
 
 package com.domainlanguage.intervals;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+
 import java.math.BigDecimal;
 import java.util.List;
 
-import junit.framework.TestCase;
-
+import com.domainlanguage.intervals.Interval;
+import com.domainlanguage.intervals.IntervalLimit;
 import com.domainlanguage.tests.SerializationTester;
 
-public class IntervalTest extends TestCase {
-	
-	public static IntervalLimit exampleLimitForPersistentMappingTesting() {
-		return IntervalLimit.upper(true, new Integer(78));
-	}
-	
+import org.junit.Test;
 
-	private Interval empty = Interval.open(new BigDecimal(1), new BigDecimal(1));
+/**
+ * {@link Interval}のテストクラス。
+ * 
+ * @author daisuke
+ */
+public class IntervalTest {
 	
-	private Interval c5_10c = Interval.closed(new BigDecimal(5), new BigDecimal(10));
-	
-	private Interval c1_10c = Interval.closed(new BigDecimal(1), new BigDecimal(10));
-	
-	private Interval c4_6c = Interval.closed(new BigDecimal(4), new BigDecimal(6));
-	
-	private Interval c5_15c = Interval.closed(new BigDecimal(5), new BigDecimal(15));
-	
-	private Interval c12_16c = Interval.closed(new BigDecimal(12), new BigDecimal(16));
-	
-	private Interval o10_12c = Interval.over(new BigDecimal(10), false, new BigDecimal(12), true);
-	
-	private Interval o1_1c = Interval.over(new BigDecimal(1), false, new BigDecimal(1), true);
-	
-	private Interval c1_1o = Interval.over(new BigDecimal(1), true, new BigDecimal(1), false);
-	
-	private Interval c1_1c = Interval.over(new BigDecimal(1), true, new BigDecimal(1), true);
-	
-	private Interval o1_1o = Interval.over(new BigDecimal(1), false, new BigDecimal(1), false);
+	public static IntervalLimit<Integer> exampleLimitForPersistentMappingTesting() {
+		return IntervalLimit.upper(true, 78);
+	}
 	
 
 //    private Interval o1_10o = Interval.open(new BigDecimal(1), new BigDecimal(10));
 //    private Interval o10_12o = Interval.open(new BigDecimal(10), new BigDecimal(12));
+	private Interval<BigDecimal> empty = Interval.open(new BigDecimal(1), new BigDecimal(1));
 	
-	//TODO: either fix those tests, or delete them (Benny)
-	//	public void testAssertions() {
-	//		//Redundant, maybe, but with all the compiler default
-	//		//confusion at the moment, I decided to throw this in.
-	//		try {
-	//			Interval.closed(new BigDecimal(2.0), new BigDecimal(1.0));
-	//			fail("Lower bound mustn't be above upper bound.");
-	//		} catch (AssertionError e) {
-	//			//Correct. Do nothing.
-	//		}
-	//	}
-	//
-	//	public void testUpTo() {
-	//		Interval range = Interval.upTo(new BigDecimal(5.5));
-	//		assertTrue(range.includes(new BigDecimal(5.5)));
-	//		assertTrue(range.includes(new BigDecimal(-5.5)));
-	//		assertTrue(range.includes(new BigDecimal(Double.NEGATIVE_INFINITY)));
-	//		assertTrue(!range.includes(new BigDecimal(5.5001)));
-	//	}
-	//
-	//	public void testAndMore() {
-	//		Interval range = Interval.andMore(5.5);
-	//		assertTrue(range.includes(5.5));
-	//		assertTrue(!range.includes(5.4999));
-	//		assertTrue(!range.includes(-5.5));
-	//		assertTrue(range.includes(Double.POSITIVE_INFINITY));
-	//		assertTrue(range.includes(5.5001));
-	//	}
-	//
-	public void testAbstractCreation() {
-		Interval concrete = new Interval(new Integer(1), true, new Integer(3), true);
-		Interval newInterval = concrete.newOfSameType(new Integer(1), false, new Integer(4), false);
+	private Interval<BigDecimal> c5_10c = Interval.closed(new BigDecimal(5), new BigDecimal(10));
+	
+	private Interval<BigDecimal> c1_10c = Interval.closed(new BigDecimal(1), new BigDecimal(10));
+	
+	private Interval<BigDecimal> c4_6c = Interval.closed(new BigDecimal(4), new BigDecimal(6));
+	
+	private Interval<BigDecimal> c5_15c = Interval.closed(new BigDecimal(5), new BigDecimal(15));
+	
+	private Interval<BigDecimal> c12_16c = Interval.closed(new BigDecimal(12), new BigDecimal(16));
+	
+	private Interval<BigDecimal> o10_12c = Interval.over(new BigDecimal(10), false, new BigDecimal(12), true);
+	
+	private Interval<BigDecimal> o1_1c = Interval.over(new BigDecimal(1), false, new BigDecimal(1), true);
+	
+	private Interval<BigDecimal> c1_1o = Interval.over(new BigDecimal(1), true, new BigDecimal(1), false);
+	
+	private Interval<BigDecimal> c1_1c = Interval.over(new BigDecimal(1), true, new BigDecimal(1), true);
+	
+	private Interval<BigDecimal> o1_1o = Interval.over(new BigDecimal(1), false, new BigDecimal(1), false);
+	
+
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Assertions() throws Exception {
+		//Redundant, maybe, but with all the compiler default
+		//confusion at the moment, I decided to throw this in.
+		try {
+			Interval.closed(new BigDecimal(2.0), new BigDecimal(1.0));
+			fail("Lower bound mustn't be above upper bound.");
+		} catch (IllegalArgumentException e) {
+			//Correct. Do nothing.
+		}
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_UpTo() throws Exception {
+		Interval<Double> range = Interval.upTo(new Double(5.5));
+		assertThat(range.includes(new Double(5.5)), is(true));
+		assertThat(range.includes(new Double(-5.5)), is(true));
+		assertThat(range.includes(Double.NEGATIVE_INFINITY), is(true));
+		assertThat(!range.includes(new Double(5.5001)), is(true));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_AndMore() throws Exception {
+		Interval<Double> range = Interval.andMore(5.5);
+		assertThat(range.includes(5.5), is(true));
+		assertThat(range.includes(5.4999), is(false));
+		assertThat(range.includes(-5.5), is(false));
+		assertThat(range.includes(Double.POSITIVE_INFINITY), is(true));
+		assertThat(range.includes(5.5001), is(true));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_AbstractCreation() throws Exception {
+		Interval<Integer> concrete = new Interval<Integer>(1, true, 3, true);
+		Interval<Integer> newInterval = concrete.newOfSameType(1, false, 4, false);
 		
-		Interval expected = new Interval(new Integer(1), false, new Integer(4), false);
-		assertEquals(expected, newInterval);
+		Interval<Integer> expected = new Interval<Integer>(1, false, 4, false);
+		assertThat(newInterval, is(expected));
 	}
 	
-	public void testCoversInterval() {
-		assertFalse(c5_10c.covers(c1_10c));
-		assertTrue(c1_10c.covers(c5_10c));
-		assertFalse(c4_6c.covers(c1_10c));
-		assertTrue(c1_10c.covers(c4_6c));
-		assertTrue(c5_10c.covers(c5_10c));
-		Interval halfOpen5_10 = Interval.over(new BigDecimal(5), false, new BigDecimal(10), true);
-		assertTrue("closed incl left-open", c5_10c.covers(halfOpen5_10));
-		assertTrue("left-open incl left-open", halfOpen5_10.covers(halfOpen5_10));
-		assertFalse("left-open doesn't include closed", halfOpen5_10.covers(c5_10c));
-		//TODO: Need to test other half-open case and full-open case.
-	}
-	
-	public void testEqualsForEmptyIntervals() {
-		assertEquals(c1_10c.emptyOfSameType(), c4_6c.emptyOfSameType());
-	}
-	
-	public void testEqualsForOnePointIntervals() {
-		assertEquals(o1_1c, c1_1o);
-		assertEquals(o1_1c, c1_1c);
-		assertEquals(c1_1o, c1_1c);
-		assertFalse(o1_1c.equals(o1_1o));
-	}
-	
-	public void testGap() {
-		Interval c1_3c = Interval.closed(new Integer(1), new Integer(3));
-		Interval c5_7c = Interval.closed(new Integer(5), new Integer(7));
-		Interval o3_5o = Interval.open(new Integer(3), new Integer(5));
-		Interval c2_3o = Interval.over(new Integer(2), true, new Integer(3), false);
-		
-		assertEquals(o3_5o, c1_3c.gap(c5_7c));
-		assertTrue(c1_3c.gap(o3_5o).isEmpty());
-		assertTrue(c1_3c.gap(c2_3o).isEmpty());
-		assertTrue(c2_3o.gap(o3_5o).isSingleElement());
-	}
-	
-	public void testGreaterOfLowerLimits() {
-		assertEquals(new BigDecimal(5), c5_10c.greaterOfLowerLimits(c1_10c));
-		assertEquals(new BigDecimal(5), c1_10c.greaterOfLowerLimits(c5_10c));
-		assertEquals(new BigDecimal(12), c1_10c.greaterOfLowerLimits(c12_16c));
-		assertEquals(new BigDecimal(12), c12_16c.greaterOfLowerLimits(c1_10c));
-	}
-	
-	public void testIncludes() {
-		Interval range = Interval.closed(new BigDecimal(-5.5), new BigDecimal(6.6));
-		assertTrue(range.includes(new BigDecimal(5.0)));
-		assertTrue(range.includes(new BigDecimal(-5.5)));
-		assertTrue(range.includes(new BigDecimal(-5.4999)));
-		assertTrue(range.includes(new BigDecimal(6.6)));
-		assertFalse(range.includes(new BigDecimal(6.601)));
-		assertFalse(range.includes(new BigDecimal(-5.501)));
-	}
-	
-	public void testIntersection() {
-		assertEquals(c5_10c, c5_10c.intersect(c1_10c));
-		assertEquals(c5_10c, c1_10c.intersect(c5_10c));
-		assertEquals(c4_6c, c4_6c.intersect(c1_10c));
-		assertEquals(c4_6c, c1_10c.intersect(c4_6c));
-		assertEquals(c5_10c, c5_10c.intersect(c5_15c));
-		assertEquals(c5_10c, c5_15c.intersect(c1_10c));
-		assertEquals(c5_10c, c1_10c.intersect(c5_15c));
-		assertTrue(c1_10c.intersect(c12_16c).isEmpty());
-		assertEquals(empty, c1_10c.intersect(c12_16c));
-		assertEquals(empty, c12_16c.intersect(c1_10c));
-		assertEquals(c5_10c, c5_10c.intersect(c5_10c));
-		assertEquals(empty, c1_10c.intersect(o10_12c));
-		assertEquals(empty, o10_12c.intersect(c1_10c));
-	}
-	
-	public void testIntersects() {
-		assertTrue("c5_10c.intersects(c1_10c)", c5_10c.intersects(c1_10c));
-		assertTrue("c1_10c.intersects(c5_10c)", c1_10c.intersects(c5_10c));
-		assertTrue("c4_6c.intersects(c1_10c)", c4_6c.intersects(c1_10c));
-		assertTrue("c1_10c.intersects(c4_6c)", c1_10c.intersects(c4_6c));
-		assertTrue("c5_10c.intersects(c5_15c)", c5_10c.intersects(c5_15c));
-		assertTrue("c5_15c.intersects(c1_10c)", c5_15c.intersects(c1_10c));
-		assertTrue("c1_10c.intersects(c5_15c)", c1_10c.intersects(c5_15c));
-		assertFalse("c1_10c.intersects(c12_16c)", c1_10c.intersects(c12_16c));
-		assertFalse("c12_16c.intersects(c1_10c)", c12_16c.intersects(c1_10c));
-		assertTrue("c5_10c.intersects(c5_10c)", c5_10c.intersects(c5_10c));
-		assertFalse("c1_10c.intersects(o10_12c)", c1_10c.intersects(o10_12c));
-		assertFalse("o10_12c.intersects(c1_10c)", o10_12c.intersects(c1_10c));
-	}
-	
-	public void testIsBelow() {
-		Interval range = Interval.closed(new BigDecimal(-5.5), new BigDecimal(6.6));
-		assertFalse(range.isBelow(new BigDecimal(5.0)));
-		assertFalse(range.isBelow(new BigDecimal(-5.5)));
-		assertFalse(range.isBelow(new BigDecimal(-5.4999)));
-		assertFalse(range.isBelow(new BigDecimal(6.6)));
-		assertTrue(range.isBelow(new BigDecimal(6.601)));
-		assertFalse(range.isBelow(new BigDecimal(-5.501)));
-	}
-	
-	public void testIsEmpty() {
-		assertFalse(Interval.closed(new Integer(5), new Integer(6)).isEmpty());
-		assertFalse(Interval.closed(new Integer(6), new Integer(6)).isEmpty());
-		assertTrue(Interval.open(new Integer(6), new Integer(6)).isEmpty());
-		assertTrue(c1_10c.emptyOfSameType().isEmpty());
-	}
-	
-	public void testIsSingleElement() {
-		assertTrue(o1_1c.isSingleElement());
-		assertTrue(c1_1c.isSingleElement());
-		assertTrue(c1_1o.isSingleElement());
-		assertFalse(c1_10c.isSingleElement());
-		assertFalse(o1_1o.isSingleElement());
-	}
-	
-	public void testLesserOfUpperLimits() {
-		assertEquals(new BigDecimal(10), c5_10c.lesserOfUpperLimits(c1_10c));
-		assertEquals(new BigDecimal(10), c1_10c.lesserOfUpperLimits(c5_10c));
-		assertEquals(new BigDecimal(6), c4_6c.lesserOfUpperLimits(c12_16c));
-		assertEquals(new BigDecimal(6), c12_16c.lesserOfUpperLimits(c4_6c));
-	}
-	
-	public void testOpenInterval() {
-		Interval exRange = Interval.over(new BigDecimal(-5.5), false, new BigDecimal(6.6), true);
-		assertTrue(exRange.includes(new BigDecimal(5.0)));
-		assertFalse(exRange.includes(new BigDecimal(-5.5)));
-		assertTrue(exRange.includes(new BigDecimal(-5.4999)));
-		assertTrue(exRange.includes(new BigDecimal(6.6)));
-		assertFalse(exRange.includes(new BigDecimal(6.601)));
-		assertFalse(exRange.includes(new BigDecimal(-5.501)));
-	}
-	
-	public void testRelativeComplementAdjacentClosed() {
-		Interval c1_3c = Interval.closed(new Integer(1), new Integer(3));
-		Interval c5_7c = Interval.closed(new Integer(5), new Integer(7));
-		List complement = c1_3c.complementRelativeTo(c5_7c);
-		assertEquals(1, complement.size());
-		assertEquals(c5_7c, complement.get(0));
-	}
-	
-	public void testRelativeComplementDisjoint() {
-		Interval c1_3c = Interval.closed(new Integer(1), new Integer(3));
-		Interval c5_7c = Interval.closed(new Integer(5), new Integer(7));
-		List complement = c1_3c.complementRelativeTo(c5_7c);
-		assertEquals(1, complement.size());
-		assertEquals(c5_7c, complement.get(0));
-	}
-	
-	public void testRelativeComplementDisjointAdjacentOpen() {
-		Interval c1_3o = Interval.over(new Integer(1), true, new Integer(3), false);
-		Interval c3_7c = Interval.closed(new Integer(3), new Integer(7));
-		List complement = c1_3o.complementRelativeTo(c3_7c);
-		assertEquals(1, complement.size());
-		assertEquals(c3_7c, complement.get(0));
-	}
-	
-	public void testRelativeComplementEnclosed() {
-		Interval c3_5c = Interval.closed(new Integer(3), new Integer(5));
-		Interval c1_7c = Interval.closed(new Integer(1), new Integer(7));
-		Interval c1_3o = Interval.over(new Integer(1), true, new Integer(3), false);
-		Interval o5_7c = Interval.over(new Integer(5), false, new Integer(7), true);
-		List complement = c3_5c.complementRelativeTo(c1_7c);
-		assertEquals(2, complement.size());
-		assertEquals(c1_3o, complement.get(0));
-		assertEquals(o5_7c, complement.get(1));
-	}
-	
-	public void testRelativeComplementEnclosedEndPoint() {
-		Interval o3_5o = Interval.open(new Integer(3), new Integer(5));
-		Interval c3_5c = Interval.closed(new Integer(3), new Integer(5));
-		List complement = o3_5o.complementRelativeTo(c3_5c);
-		assertEquals(2, complement.size());
-		assertTrue(((Interval) complement.get(0)).includes(new Integer(3)));
-	}
-	
-	public void testRelativeComplementEnclosedOpen() {
-		Interval o3_5o = Interval.open(new Integer(3), new Integer(5));
-		Interval c1_7c = Interval.closed(new Integer(1), new Integer(7));
-		Interval c1_3c = Interval.closed(new Integer(1), new Integer(3));
-		Interval c5_7c = Interval.closed(new Integer(5), new Integer(7));
-		List complement = o3_5o.complementRelativeTo(c1_7c);
-		assertEquals(2, complement.size());
-		assertEquals(c1_3c, complement.get(0));
-		assertEquals(c5_7c, complement.get(1));
-	}
-	
-	public void testRelativeComplementEnclosing() {
-		Interval c3_5c = Interval.closed(new Integer(3), new Integer(5));
-		Interval c1_7c = Interval.closed(new Integer(1), new Integer(7));
-		List complement = c1_7c.complementRelativeTo(c3_5c);
-		assertEquals(0, complement.size());
-	}
-	
-	public void testRelativeComplementEqual() {
-		Interval c1_7c = Interval.closed(new Integer(1), new Integer(7));
-		List complement = c1_7c.complementRelativeTo(c1_7c);
-		assertEquals(0, complement.size());
-	}
-	
-	public void testRelativeComplementOverlapLeft() {
-		Interval c1_5c = Interval.closed(new Integer(1), new Integer(5));
-		Interval c3_7c = Interval.closed(new Integer(3), new Integer(7));
-		List complement = c3_7c.complementRelativeTo(c1_5c);
-		Interval c1_3o = Interval.over(new Integer(1), true, new Integer(3), false);
-		assertEquals(1, complement.size());
-		assertEquals(c1_3o, complement.get(0));
-	}
-	
-	public void testRelativeComplementOverlapRight() {
-		Interval c1_5c = Interval.closed(new Integer(1), new Integer(5));
-		Interval c3_7c = Interval.closed(new Integer(3), new Integer(7));
-		List complement = c1_5c.complementRelativeTo(c3_7c);
-		Interval o5_7c = Interval.over(new Integer(5), false, new Integer(7), true);
-		assertEquals(1, complement.size());
-		assertEquals(o5_7c, complement.get(0));
-	}
-	
-	public void testSerialization() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_Serialization() throws Exception {
 		SerializationTester.assertCanBeSerialized(c5_10c);
 	}
 	
-	public void testToString() {
-		assertEquals("[1, 10]", c1_10c.toString());
-		assertEquals("(10, 12]", o10_12c.toString());
-		assertEquals("{}", empty.toString());
-		assertEquals("{10}", Interval.closed(new Integer(10), new Integer(10)).toString());
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_ToString() throws Exception {
+		assertThat(c1_10c.toString(), is("[1, 10]"));
+		assertThat(o10_12c.toString(), is("(10, 12]"));
+		assertThat(empty.toString(), is("{}"));
+		assertThat(Interval.closed(10, 10).toString(), is("{10}"));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_IsBelow() throws Exception {
+		Interval<BigDecimal> range = Interval.closed(new BigDecimal(-5.5), new BigDecimal(6.6));
+		assertThat(range.isBelow(new BigDecimal(5.0)), is(false));
+		assertThat(range.isBelow(new BigDecimal(-5.5)), is(false));
+		assertThat(range.isBelow(new BigDecimal(-5.4999)), is(false));
+		assertThat(range.isBelow(new BigDecimal(6.6)), is(false));
+		assertThat(range.isBelow(new BigDecimal(6.601)), is(true));
+		assertThat(range.isBelow(new BigDecimal(-5.501)), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_Includes() throws Exception {
+		Interval<BigDecimal> range = Interval.closed(new BigDecimal(-5.5), new BigDecimal(6.6));
+		assertThat(range.includes(new BigDecimal(5.0)), is(true));
+		assertThat(range.includes(new BigDecimal(-5.5)), is(true));
+		assertThat(range.includes(new BigDecimal(-5.4999)), is(true));
+		assertThat(range.includes(new BigDecimal(6.6)), is(true));
+		assertThat(range.includes(new BigDecimal(6.601)), is(false));
+		assertThat(range.includes(new BigDecimal(-5.501)), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_OpenInterval() throws Exception {
+		Interval<BigDecimal> exRange = Interval.over(new BigDecimal(-5.5), false, new BigDecimal(6.6), true);
+		assertThat(exRange.includes(new BigDecimal(5.0)), is(true));
+		assertThat(exRange.includes(new BigDecimal(-5.5)), is(false));
+		assertThat(exRange.includes(new BigDecimal(-5.4999)), is(true));
+		assertThat(exRange.includes(new BigDecimal(6.6)), is(true));
+		assertThat(exRange.includes(new BigDecimal(6.601)), is(false));
+		assertThat(exRange.includes(new BigDecimal(-5.501)), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test10_IsEmpty() throws Exception {
+		assertThat(Interval.closed(5, 6).isEmpty(), is(false));
+		assertThat(Interval.closed(6, 6).isEmpty(), is(false));
+		assertThat(Interval.open(6, 6).isEmpty(), is(true));
+		assertThat(c1_10c.emptyOfSameType().isEmpty(), is(true));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test11_Intersects() throws Exception {
+		assertThat("c5_10c.intersects(c1_10c)", c5_10c.intersects(c1_10c), is(true));
+		assertThat("c1_10c.intersects(c5_10c)", c1_10c.intersects(c5_10c), is(true));
+		assertThat("c4_6c.intersects(c1_10c)", c4_6c.intersects(c1_10c), is(true));
+		assertThat("c1_10c.intersects(c4_6c)", c1_10c.intersects(c4_6c), is(true));
+		assertThat("c5_10c.intersects(c5_15c)", c5_10c.intersects(c5_15c), is(true));
+		assertThat("c5_15c.intersects(c1_10c)", c5_15c.intersects(c1_10c), is(true));
+		assertThat("c1_10c.intersects(c5_15c)", c1_10c.intersects(c5_15c), is(true));
+		assertThat("c1_10c.intersects(c12_16c)", c1_10c.intersects(c12_16c), is(false));
+		assertThat("c12_16c.intersects(c1_10c)", c12_16c.intersects(c1_10c), is(false));
+		assertThat("c5_10c.intersects(c5_10c)", c5_10c.intersects(c5_10c), is(true));
+		assertThat("c1_10c.intersects(o10_12c)", c1_10c.intersects(o10_12c), is(false));
+		assertThat("o10_12c.intersects(c1_10c)", o10_12c.intersects(c1_10c), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test12_Intersection() throws Exception {
+		assertThat(c5_10c.intersect(c1_10c), is(c5_10c));
+		assertThat(c1_10c.intersect(c5_10c), is(c5_10c));
+		assertThat(c4_6c.intersect(c1_10c), is(c4_6c));
+		assertThat(c1_10c.intersect(c4_6c), is(c4_6c));
+		assertThat(c5_10c.intersect(c5_15c), is(c5_10c));
+		assertThat(c5_15c.intersect(c1_10c), is(c5_10c));
+		assertThat(c1_10c.intersect(c5_15c), is(c5_10c));
+		assertThat(c1_10c.intersect(c12_16c).isEmpty(), is(true));
+		assertThat(c1_10c.intersect(c12_16c), is(empty));
+		assertThat(c12_16c.intersect(c1_10c), is(empty));
+		assertThat(c5_10c.intersect(c5_10c), is(c5_10c));
+		assertThat(c1_10c.intersect(o10_12c), is(empty));
+		assertThat(o10_12c.intersect(c1_10c), is(empty));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test13_GreaterOfLowerLimits() throws Exception {
+		assertThat(c5_10c.greaterOfLowerLimits(c1_10c), is(new BigDecimal(5)));
+		assertThat(c1_10c.greaterOfLowerLimits(c5_10c), is(new BigDecimal(5)));
+		assertThat(c1_10c.greaterOfLowerLimits(c12_16c), is(new BigDecimal(12)));
+		assertThat(c12_16c.greaterOfLowerLimits(c1_10c), is(new BigDecimal(12)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test14_LesserOfUpperLimits() throws Exception {
+		assertThat(c5_10c.lesserOfUpperLimits(c1_10c), is(new BigDecimal(10)));
+		assertThat(c1_10c.lesserOfUpperLimits(c5_10c), is(new BigDecimal(10)));
+		assertThat(c4_6c.lesserOfUpperLimits(c12_16c), is(new BigDecimal(6)));
+		assertThat(c12_16c.lesserOfUpperLimits(c4_6c), is(new BigDecimal(6)));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test15_CoversInterval() throws Exception {
+		assertThat(c5_10c.covers(c1_10c), is(false));
+		assertThat(c1_10c.covers(c5_10c), is(true));
+		assertThat(c4_6c.covers(c1_10c), is(false));
+		assertThat(c1_10c.covers(c4_6c), is(true));
+		assertThat(c5_10c.covers(c5_10c), is(true));
+		Interval<BigDecimal> halfOpen5_10 = Interval.over(new BigDecimal(5), false, new BigDecimal(10), true);
+		assertThat("closed incl left-open", c5_10c.covers(halfOpen5_10), is(true));
+		assertThat("left-open incl left-open", halfOpen5_10.covers(halfOpen5_10), is(true));
+		assertThat("left-open doesn't include closed", halfOpen5_10.covers(c5_10c), is(false));
+		//TODO: Need to test other half-open case and full-open case.
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test16_Gap() throws Exception {
+		Interval<Integer> c1_3c = Interval.closed(1, 3);
+		Interval<Integer> c5_7c = Interval.closed(5, 7);
+		Interval<Integer> o3_5o = Interval.open(3, 5);
+		Interval<Integer> c2_3o = Interval.over(2, true, 3, false);
+		
+		assertThat(c1_3c.gap(c5_7c), is(o3_5o));
+		assertThat(c1_3c.gap(o3_5o).isEmpty(), is(true));
+		assertThat(c1_3c.gap(c2_3o).isEmpty(), is(true));
+		assertThat(c2_3o.gap(o3_5o).isSingleElement(), is(true));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test17_RelativeComplementDisjoint() throws Exception {
+		Interval<Integer> c1_3c = Interval.closed(1, 3);
+		Interval<Integer> c5_7c = Interval.closed(5, 7);
+		List<Interval<Integer>> complement = c1_3c.complementRelativeTo(c5_7c);
+		assertThat(complement.size(), is(1));
+		assertThat(complement.get(0), is(c5_7c));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test18_RelativeComplementDisjointAdjacentOpen() throws Exception {
+		Interval<Integer> c1_3o = Interval.over(1, true, 3, false);
+		Interval<Integer> c3_7c = Interval.closed(3, 7);
+		List<Interval<Integer>> complement = c1_3o.complementRelativeTo(c3_7c);
+		assertThat(complement.size(), is(1));
+		assertThat(complement.get(0), is(c3_7c));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test19_RelativeComplementOverlapLeft() throws Exception {
+		Interval<Integer> c1_5c = Interval.closed(1, 5);
+		Interval<Integer> c3_7c = Interval.closed(3, 7);
+		List<Interval<Integer>> complement = c3_7c.complementRelativeTo(c1_5c);
+		Interval<Integer> c1_3o = Interval.over(1, true, 3, false);
+		assertThat(complement.size(), is(1));
+		assertThat(complement.get(0), is(c1_3o));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test20_RelativeComplementOverlapRight() throws Exception {
+		Interval<Integer> c1_5c = Interval.closed(1, 5);
+		Interval<Integer> c3_7c = Interval.closed(3, 7);
+		List<Interval<Integer>> complement = c1_5c.complementRelativeTo(c3_7c);
+		Interval<Integer> o5_7c = Interval.over(5, false, 7, true);
+		assertThat(complement.size(), is(1));
+		assertThat(complement.get(0), is(o5_7c));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test21_RelativeComplementAdjacentClosed() throws Exception {
+		Interval<Integer> c1_3c = Interval.closed(1, 3);
+		Interval<Integer> c5_7c = Interval.closed(5, 7);
+		List<Interval<Integer>> complement = c1_3c.complementRelativeTo(c5_7c);
+		assertThat(complement.size(), is(1));
+		assertThat(complement.get(0), is(c5_7c));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test22_RelativeComplementEnclosing() throws Exception {
+		Interval<Integer> c3_5c = Interval.closed(3, 5);
+		Interval<Integer> c1_7c = Interval.closed(1, 7);
+		List<Interval<Integer>> complement = c1_7c.complementRelativeTo(c3_5c);
+		assertThat(complement.size(), is(0));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test23_RelativeComplementEqual() throws Exception {
+		Interval<Integer> c1_7c = Interval.closed(1, 7);
+		List<Interval<Integer>> complement = c1_7c.complementRelativeTo(c1_7c);
+		assertThat(complement.size(), is(0));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test24_RelativeComplementEnclosed() throws Exception {
+		Interval<Integer> c3_5c = Interval.closed(3, 5);
+		Interval<Integer> c1_7c = Interval.closed(1, 7);
+		Interval<Integer> c1_3o = Interval.over(1, true, 3, false);
+		Interval<Integer> o5_7c = Interval.over(5, false, 7, true);
+		List<Interval<Integer>> complement = c3_5c.complementRelativeTo(c1_7c);
+		assertThat(complement.size(), is(2));
+		assertThat(complement.get(0), is(c1_3o));
+		assertThat(complement.get(1), is(o5_7c));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test25_RelativeComplementEnclosedEndPoint() throws Exception {
+		Interval<Integer> o3_5o = Interval.open(3, 5);
+		Interval<Integer> c3_5c = Interval.closed(3, 5);
+		List<Interval<Integer>> complement = o3_5o.complementRelativeTo(c3_5c);
+		assertThat(complement.size(), is(2));
+		assertThat(complement.get(0).includes(3), is(true));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test26_IsSingleElement() throws Exception {
+		assertThat(o1_1c.isSingleElement(), is(true));
+		assertThat(c1_1c.isSingleElement(), is(true));
+		assertThat(c1_1o.isSingleElement(), is(true));
+		assertThat(c1_10c.isSingleElement(), is(false));
+		assertThat(o1_1o.isSingleElement(), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test27_EqualsForOnePointIntervals() throws Exception {
+		assertThat(c1_1o, is(o1_1c));
+		assertThat(c1_1c, is(o1_1c));
+		assertThat(c1_1c, is(c1_1o));
+		assertThat(o1_1c.equals(o1_1o), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test28_EqualsForEmptyIntervals() throws Exception {
+		assertThat(c4_6c.emptyOfSameType(), is(c1_10c.emptyOfSameType()));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test29_RelativeComplementEnclosedOpen() throws Exception {
+		Interval<Integer> o3_5o = Interval.open(3, 5);
+		Interval<Integer> c1_7c = Interval.closed(1, 7);
+		Interval<Integer> c1_3c = Interval.closed(1, 3);
+		Interval<Integer> c5_7c = Interval.closed(5, 7);
+		List<Interval<Integer>> complement = o3_5o.complementRelativeTo(c1_7c);
+		assertThat(complement.size(), is(2));
+		assertThat(complement.get(0), is(c1_3c));
+		assertThat(complement.get(1), is(c5_7c));
 	}
 	
 }

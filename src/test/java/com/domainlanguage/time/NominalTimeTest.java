@@ -5,27 +5,46 @@
  */
 package com.domainlanguage.time;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.TimeZone;
 
-import junit.framework.TestCase;
+import com.domainlanguage.time.CalendarDate;
+import com.domainlanguage.time.CalendarMinute;
+import com.domainlanguage.time.TimeOfDay;
+import com.domainlanguage.time.TimePoint;
 
-public class NominalTimeTest extends TestCase {
+import org.junit.Test;
+
+public class NominalTimeTest {
 	
 	private static final TimeZone HONOLULU_TIME = TimeZone.getTimeZone("Pacific/Honolulu");
 	
 
-	public void testCombineNominalTimes() {
-		
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_CombineNominalTimes() throws Exception {
 		TimeOfDay fiveFifteenPM = TimeOfDay.hourAndMinute(17, 15);
 		CalendarDate april19_2006 = CalendarDate.from(2006, 4, 19);
 		CalendarMinute expectedCombination = CalendarMinute.dateHourAndMinute(2006, 4, 19, 17, 15);
-		assertEquals(expectedCombination, fiveFifteenPM.on(april19_2006));
-		assertEquals(expectedCombination, april19_2006.at(fiveFifteenPM));
+		assertThat(fiveFifteenPM.on(april19_2006), is(expectedCombination));
+		assertThat(april19_2006.at(fiveFifteenPM), is(expectedCombination));
 	}
 	
-	public void testConvertNominalTimeToTimePoint() {
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_ConvertNominalTimeToTimePoint() throws Exception {
 		CalendarMinute calendarMinute = CalendarMinute.dateHourAndMinute(2006, 4, 19, 17, 15);
 		TimePoint expectedTimePoint = TimePoint.at(2006, 4, 19, 17, 15, 0, 0, HONOLULU_TIME);
-		assertEquals(expectedTimePoint, calendarMinute.asTimePoint(HONOLULU_TIME));
+		assertThat(calendarMinute.asTimePoint(HONOLULU_TIME), is(expectedTimePoint));
 	}
 }
