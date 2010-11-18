@@ -9,8 +9,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-import com.domainlanguage.time.HourOfDay;
-
 import org.junit.Test;
 
 /**

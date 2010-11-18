@@ -11,11 +11,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
 
-import com.domainlanguage.time.BusinessCalendar;
-import com.domainlanguage.time.CalendarDate;
-import com.domainlanguage.time.CalendarInterval;
-import com.domainlanguage.time.Duration;
-
 import org.junit.Test;
 
 /**

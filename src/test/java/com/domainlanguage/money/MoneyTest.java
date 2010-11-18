@@ -15,7 +15,6 @@ import java.util.Locale;
 
 import com.domainlanguage.base.Ratio;
 import com.domainlanguage.base.Rounding;
-import com.domainlanguage.money.Money;
 import com.domainlanguage.tests.SerializationTester;
 
 import org.junit.Before;

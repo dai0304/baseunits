@@ -17,13 +17,21 @@ import java.util.TimeZone;
  */
 public class TimeOfDay {
 	
+	public static TimeOfDay hourAndMinute(int hour, int minute) {
+		return new TimeOfDay(hour, minute);
+	}
+	
+
 	private HourOfDay hour;
 	
 	private MinuteOfHour minute;
 	
 
-	public static TimeOfDay hourAndMinute(int hour, int minute) {
-		return new TimeOfDay(hour, minute);
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 */
+	TimeOfDay() {
 	}
 	
 	private TimeOfDay(int hour, int minute) {
@@ -31,13 +39,9 @@ public class TimeOfDay {
 		this.minute = MinuteOfHour.of(minute);
 	}
 	
-	public CalendarMinute on(CalendarDate date) {
-		return CalendarMinute.dateAndTimeOfDay(date, this);
-	}
-	
-	@Override
-	public String toString() {
-		return hour.toString() + ":" + minute.toString();
+	public TimePoint asTimePointGiven(CalendarDate date, TimeZone timeZone) {
+		CalendarMinute timeOfDayOnDate = on(date);
+		return timeOfDayOnDate.asTimePoint(timeZone);
 	}
 	
 	@Override
@@ -61,13 +65,20 @@ public class TimeOfDay {
 	}
 	
 	public boolean isAfter(TimeOfDay another) {
-		return hour.isAfter(another.hour)
-				|| hour.equals(another) && minute.isAfter(another.minute);
+		return hour.isAfter(another.hour) || hour.equals(another) && minute.isAfter(another.minute);
 	}
 	
 	public boolean isBefore(TimeOfDay another) {
-		return hour.isBefore(another.hour)
-				|| hour.equals(another) && minute.isBefore(another.minute);
+		return hour.isBefore(another.hour) || hour.equals(another) && minute.isBefore(another.minute);
+	}
+	
+	public CalendarMinute on(CalendarDate date) {
+		return CalendarMinute.dateAndTimeOfDay(date, this);
+	}
+	
+	@Override
+	public String toString() {
+		return hour.toString() + ":" + minute.toString();
 	}
 	
 	int getHour() {
@@ -76,13 +87,6 @@ public class TimeOfDay {
 	
 	int getMinute() {
 		return minute.value();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	TimeOfDay() {
 	}
 	
 	/**
@@ -98,16 +102,6 @@ public class TimeOfDay {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param hour value of hour
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Hour(int hour) { // CHECKSTYLE IGNORE THIS LINE
-		this.hour = HourOfDay.of(hour);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return value of minute
 	 */
 	@SuppressWarnings("unused")
@@ -118,15 +112,20 @@ public class TimeOfDay {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param hour value of hour
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Hour(int hour) { // CHECKSTYLE IGNORE THIS LINE
+		this.hour = HourOfDay.of(hour);
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @param minute value of minute
 	 */
 	@SuppressWarnings("unused")
 	private void setForPersistentMapping_Minute(int minute) { // CHECKSTYLE IGNORE THIS LINE
 		this.minute = MinuteOfHour.of(minute);
-	}
-	
-	public TimePoint asTimePointGiven(CalendarDate date, TimeZone timeZone) {
-		CalendarMinute timeOfDayOnDate = on(date);
-		return timeOfDayOnDate.asTimePoint(timeZone);
 	}
 }

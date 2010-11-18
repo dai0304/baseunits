@@ -37,6 +37,8 @@ public abstract class DateSpecification {
 		return new FloatingDateSpecification(month, dayOfWeek, n);
 	}
 	
+	public abstract CalendarDate firstOccurrenceIn(CalendarInterval interval);
+	
 	/**
 	 * 与えた日付が、この日付仕様を満たすかどうか検証する。
 	 * 
@@ -44,8 +46,6 @@ public abstract class DateSpecification {
 	 * @return 仕様を満たす場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public abstract boolean isSatisfiedBy(CalendarDate date);
-	
-	public abstract CalendarDate firstOccurrenceIn(CalendarInterval interval);
 	
 	public abstract Iterator<CalendarDate> iterateOver(CalendarInterval interval);
 	

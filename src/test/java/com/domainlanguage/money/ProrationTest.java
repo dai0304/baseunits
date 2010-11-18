@@ -9,9 +9,6 @@ package com.domainlanguage.money;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import com.domainlanguage.money.Money;
-import com.domainlanguage.money.Proration;
-
 import org.junit.Test;
 
 /**
@@ -34,7 +31,7 @@ public class ProrationTest {
 		long[] proportions = {
 			1,
 			1
-				};
+		};
 		Money[] result = proration.proratedOver(Money.dollars(0.01), proportions);
 		assertThat(result[0], is(Money.dollars(0.01)));
 		assertThat(result[1], is(Money.dollars(0)));
@@ -50,7 +47,7 @@ public class ProrationTest {
 		long[] proportions = {
 			3,
 			7
-				};
+		};
 		Money[] result = proration.proratedOver(Money.dollars(0.05), proportions);
 		assertThat(result[0], is(Money.dollars(0.02)));
 		assertThat(result[1], is(Money.dollars(0.03)));
@@ -70,7 +67,7 @@ public class ProrationTest {
 			35,
 			35,
 			10
-				};
+		};
 		Money[] result = proration.proratedOver(Money.dollars(0.10), proportions);
 		assertThat(result[0], is(Money.dollars(0.02)));
 		assertThat(result[1], is(Money.dollars(0.01)));
@@ -95,7 +92,7 @@ public class ProrationTest {
 		long[] proportions = {
 			3,
 			7
-				};
+		};
 		Money[] result = proration.proratedOver(Money.dollars(0), proportions);
 		assertThat(result[0], is(Money.dollars(0)));
 		assertThat(result[1], is(Money.dollars(0)));
@@ -113,7 +110,7 @@ public class ProrationTest {
 			Money.dollars(33.34),
 			Money.dollars(33.33),
 			Money.dollars(33.33)
-				};
+		};
 		for (int i = 0; i < expected.length; i++) {
 			assertThat(actual[i], is(expected[i]));
 		}

@@ -3,9 +3,6 @@ package com.domainlanguage.money;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import com.domainlanguage.money.Allotment;
-import com.domainlanguage.money.Money;
-
 import org.junit.Test;
 
 /**

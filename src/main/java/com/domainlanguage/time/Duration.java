@@ -24,51 +24,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	/** 長さ {@code 0} の期間 */
 	public static final Duration NONE = milliseconds(0);
 	
-	private long quantity;
-	
-	TimeUnit unit;
-	
 
-	/**
-	 * 長さが {@code howMany} ミリ秒の時間量を取得する。
-	 * 
-	 * @param howMany 時間の長さ（ミリ秒）
-	 * @return 時間量
-	 */
-	public static Duration milliseconds(long howMany) {
-		return Duration.of(howMany, TimeUnit.millisecond);
-	}
-	
-	/**
-	 * 長さが {@code howMany} ミリの時間量を取得する。
-	 * 
-	 * @param howMany 時間の長さ（ミリ）
-	 * @return 時間量
-	 */
-	public static Duration seconds(int howMany) {
-		return Duration.of(howMany, TimeUnit.second);
-	}
-	
-	/**
-	 * 長さが {@code howMany} 分の時間量を取得する。
-	 * 
-	 * @param howMany 時間の長さ（分）
-	 * @return 時間量
-	 */
-	public static Duration minutes(int howMany) {
-		return Duration.of(howMany, TimeUnit.minute);
-	}
-	
-	/**
-	 * 長さが {@code howMany} 時間の時間量を取得する。
-	 * 
-	 * @param howMany 時間の長さ（時間）
-	 * @return 時間量
-	 */
-	public static Duration hours(int howMany) {
-		return Duration.of(howMany, TimeUnit.hour);
-	}
-	
 	/**
 	 * 長さが {@code howMany} 日の時間量を取得する。
 	 * 
@@ -109,13 +65,33 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 長さが {@code howMany} 週間の時間量を取得する。
+	 * 長さが {@code howMany} 時間の時間量を取得する。
 	 * 
-	 * @param howMany 時間の長さ（週）
+	 * @param howMany 時間の長さ（時間）
 	 * @return 時間量
 	 */
-	public static Duration weeks(int howMany) {
-		return Duration.of(howMany, TimeUnit.week);
+	public static Duration hours(int howMany) {
+		return Duration.of(howMany, TimeUnit.hour);
+	}
+	
+	/**
+	 * 長さが {@code howMany} ミリ秒の時間量を取得する。
+	 * 
+	 * @param howMany 時間の長さ（ミリ秒）
+	 * @return 時間量
+	 */
+	public static Duration milliseconds(long howMany) {
+		return Duration.of(howMany, TimeUnit.millisecond);
+	}
+	
+	/**
+	 * 長さが {@code howMany} 分の時間量を取得する。
+	 * 
+	 * @param howMany 時間の長さ（分）
+	 * @return 時間量
+	 */
+	public static Duration minutes(int howMany) {
+		return Duration.of(howMany, TimeUnit.minute);
 	}
 	
 	/**
@@ -139,6 +115,26 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
+	 * 長さが {@code howMany} ミリの時間量を取得する。
+	 * 
+	 * @param howMany 時間の長さ（ミリ）
+	 * @return 時間量
+	 */
+	public static Duration seconds(int howMany) {
+		return Duration.of(howMany, TimeUnit.second);
+	}
+	
+	/**
+	 * 長さが {@code howMany} 週間の時間量を取得する。
+	 * 
+	 * @param howMany 時間の長さ（週）
+	 * @return 時間量
+	 */
+	public static Duration weeks(int howMany) {
+		return Duration.of(howMany, TimeUnit.week);
+	}
+	
+	/**
 	 * 長さが {@code howMany} 年の時間量を取得する。
 	 * 
 	 * @param howMany 時間の長さ（年）
@@ -152,6 +148,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 		return new Duration(howMany, unit);
 	}
 	
+
+	private long quantity;
+	
+	TimeUnit unit;
+	
+
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -167,62 +169,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 		this.unit = unit;
 	}
 	
-	long inBaseUnits() {
-		return quantity * unit.getFactor();
-	}
-	
 	/**
-	 * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の和を返す。
-	 * 
-	 * <p>ただし、返す結果の単位は、 TODO</p>
-	 * 
-	 * @param other 期間
-	 * @return 時間量の和
-	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 */
-	public Duration plus(Duration other) {
-		assertConvertible(other);
-		long newQuantity = inBaseUnits() + other.inBaseUnits();
-		return new Duration(newQuantity, unit.baseUnit());
-	}
-	
-	/**
-	 * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の差を返す。
-	 * 
-	 * <p>ただし、返す結果の単位は、 TODO</p>
-	 * 
-	 * @param other 期間
-	 * @return 時間量の差
-	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合
-	 * @throws IllegalArgumentException 引数otherの長さが、このオブジェクトよりも長い場合
-	 */
-	public Duration minus(Duration other) {
-		assertConvertible(other);
-		assertGreaterThanOrEqualTo(other);
-		long newQuantity = inBaseUnits() - other.inBaseUnits();
-		return new Duration(newQuantity, unit.baseUnit());
-	}
-	
-	/**
-	 * 指定した日時に、このオブジェクトが表現する長さの時間を加えた、未来の日時を取得する。
-	 * 
-	 * @param point 元となる日時
-	 * @return このオブジェクトが表現する長さの時間が経過した未来の日時
-	 * @see #addAmountToTimePoint(long, TimePoint)
-	 */
-	public TimePoint addedTo(TimePoint point) {
-		return addAmountToTimePoint(inBaseUnits(), point);
-	}
-	
-	/**
-	 * 指定した日時に、このオブジェクトが表現する長さの時間を引いた、過去の日時を取得する。
-	 * 
-	 * @param point 元となる日時
-	 * @return このオブジェクトが表現する長さのを引いた、過去の日時
-	 * @see #addAmountToTimePoint(long, TimePoint)
-	 */
-	public TimePoint subtractedFrom(TimePoint point) {
-		return addAmountToTimePoint(-1 * inBaseUnits(), point);
+	Duration() {
 	}
 	
 	/**
@@ -252,29 +203,35 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日付に、このオブジェクトが表現する長さの時間を引いた、過去の日付を取得する。
+	 * 指定した日時に、このオブジェクトが表現する長さの時間を加えた、未来の日時を取得する。
 	 * 
-	 * <p>このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。<p>
-	 * 
-	 * TODO 48時間、とした場合も、単位が「時間」であるため、日付は更新されない。これでいいのか？
-	 * 
-	 * @param day 元となる日付
-	 * @return このオブジェクトが表現する長さのを引いた、過去の日付
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @param point 元となる日時
+	 * @return このオブジェクトが表現する長さの時間が経過した未来の日時
+	 * @see #addAmountToTimePoint(long, TimePoint)
 	 */
-	public CalendarDate subtractedFrom(CalendarDate day) {
-		Validate.notNull(day);
-//		only valid for days and larger units
-		if (unit.compareTo(TimeUnit.day) < 0) {
-			return day;
+	public TimePoint addedTo(TimePoint point) {
+		return addAmountToTimePoint(inBaseUnits(), point);
+	}
+	
+	/**
+	 * TODO 詳細定義
+	 * 
+	 * @param other 比較対照
+	 * @return {@link Comparable#compareTo(Object)}に準じる
+	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合.
+	 * 	例えば「1ヶ月間」と「30日間」は比較不能
+	 */
+	@Override
+	public int compareTo(Duration other) {
+		assertConvertible(other);
+		long difference = inBaseUnits() - other.inBaseUnits();
+		if (difference > 0) {
+			return 1;
 		}
-		Calendar calendar = day.asJavaCalendarUniversalZoneMidnight();
-		if (unit.equals(TimeUnit.day)) {
-			calendar.add(Calendar.DATE, -1 * (int) quantity);
-		} else {
-			subtractAmountFromCalendar(inBaseUnits(), calendar);
+		if (difference < 0) {
+			return -1;
 		}
-		return CalendarDate._from(calendar);
+		return 0;
 	}
 	
 	/**
@@ -304,12 +261,25 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	@Override
-	public String toString() {
-		return toNormalizedString(unit.descendingUnitsForDisplay());
+	public int hashCode() {
+		return (int) quantity;
 	}
 	
-	public String toNormalizedString() {
-		return toNormalizedString(unit.descendingUnits());
+	/**
+	 * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の差を返す。
+	 * 
+	 * <p>ただし、返す結果の単位は、 TODO</p>
+	 * 
+	 * @param other 期間
+	 * @return 時間量の差
+	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合
+	 * @throws IllegalArgumentException 引数otherの長さが、このオブジェクトよりも長い場合
+	 */
+	public Duration minus(Duration other) {
+		assertConvertible(other);
+		assertGreaterThanOrEqualTo(other);
+		long newQuantity = inBaseUnits() - other.inBaseUnits();
+		return new Duration(newQuantity, unit.baseUnit());
 	}
 	
 	public TimeUnit normalizedUnit() {
@@ -325,42 +295,30 @@ public class Duration implements Comparable<Duration>, Serializable {
 		
 	}
 	
-	@Override
-	public int hashCode() {
-		return (int) quantity;
-	}
-	
 	/**
-	 * TODO 詳細定義
+	 * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の和を返す。
 	 * 
-	 * @param other 比較対照
-	 * @return {@link Comparable#compareTo(Object)}に準じる
-	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合.
-	 * 	例えば「1ヶ月間」と「30日間」は比較不能
+	 * <p>ただし、返す結果の単位は、 TODO</p>
+	 * 
+	 * @param other 期間
+	 * @return 時間量の和
+	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合
 	 */
-	public int compareTo(Duration other) {
+	public Duration plus(Duration other) {
 		assertConvertible(other);
-		long difference = inBaseUnits() - other.inBaseUnits();
-		if (difference > 0) {
-			return 1;
-		}
-		if (difference < 0) {
-			return -1;
-		}
-		return 0;
+		long newQuantity = inBaseUnits() + other.inBaseUnits();
+		return new Duration(newQuantity, unit.baseUnit());
 	}
 	
 	/**
-	 * 指定した日時を開始日時とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 終了日時とこのオブジェクトが表現する時間量より、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
-	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public TimeInterval startingFrom(TimePoint start) {
-		return TimeInterval.startingFrom(start, this);
+	public TimeInterval preceding(TimePoint end) {
+		return TimeInterval.preceding(end, this);
 	}
 	
 	/**
@@ -379,14 +337,71 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 終了日時とこのオブジェクトが表現する時間量より、期間を生成する。
+	 * 指定した日時を開始日時とする、このオブジェクトが表現する長さを持つ期間を生成する。
 	 * 
-	 * @param end 終了日時（上側限界値）
+	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
+	 * 
+	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public TimeInterval preceding(TimePoint end) {
-		return TimeInterval.preceding(end, this);
+	public TimeInterval startingFrom(TimePoint start) {
+		return TimeInterval.startingFrom(start, this);
+	}
+	
+	/**
+	 * 指定した日付に、このオブジェクトが表現する長さの時間を引いた、過去の日付を取得する。
+	 * 
+	 * <p>このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。<p>
+	 * 
+	 * TODO 48時間、とした場合も、単位が「時間」であるため、日付は更新されない。これでいいのか？
+	 * 
+	 * @param day 元となる日付
+	 * @return このオブジェクトが表現する長さのを引いた、過去の日付
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public CalendarDate subtractedFrom(CalendarDate day) {
+		Validate.notNull(day);
+//		only valid for days and larger units
+		if (unit.compareTo(TimeUnit.day) < 0) {
+			return day;
+		}
+		Calendar calendar = day.asJavaCalendarUniversalZoneMidnight();
+		if (unit.equals(TimeUnit.day)) {
+			calendar.add(Calendar.DATE, -1 * (int) quantity);
+		} else {
+			subtractAmountFromCalendar(inBaseUnits(), calendar);
+		}
+		return CalendarDate._from(calendar);
+	}
+	
+	/**
+	 * 指定した日時に、このオブジェクトが表現する長さの時間を引いた、過去の日時を取得する。
+	 * 
+	 * @param point 元となる日時
+	 * @return このオブジェクトが表現する長さのを引いた、過去の日時
+	 * @see #addAmountToTimePoint(long, TimePoint)
+	 */
+	public TimePoint subtractedFrom(TimePoint point) {
+		return addAmountToTimePoint(-1 * inBaseUnits(), point);
+	}
+	
+	public String toNormalizedString() {
+		return toNormalizedString(unit.descendingUnits());
+	}
+	
+	@Override
+	public String toString() {
+		return toNormalizedString(unit.descendingUnitsForDisplay());
+	}
+	
+	void addAmountToCalendar(long amount, Calendar calendar) {
+		if (unit.isConvertibleToMilliseconds()) {
+			calendar.setTimeInMillis(calendar.getTimeInMillis() + amount);
+		} else {
+			assertAmountValid(amount);
+			calendar.add(unit.javaCalendarConstantForBaseType(), (int) amount);
+		}
 	}
 	
 	TimePoint addAmountToTimePoint(long amount, TimePoint point) {
@@ -399,28 +414,23 @@ public class Duration implements Comparable<Duration>, Serializable {
 		}
 	}
 	
-	void addAmountToCalendar(long amount, Calendar calendar) {
-		if (unit.isConvertibleToMilliseconds()) {
-			calendar.setTimeInMillis(calendar.getTimeInMillis() + amount);
-		} else {
-			assertAmountValid(amount);
-			calendar.add(unit.javaCalendarConstantForBaseType(), (int) amount);
-		}
+	long inBaseUnits() {
+		return quantity * unit.getFactor();
 	}
 	
 	void subtractAmountFromCalendar(long amount, Calendar calendar) {
 		addAmountToCalendar(-1 * amount, calendar);
 	}
 	
-	private void assertConvertible(Duration other) {
-		if (other.unit.isConvertibleTo(unit) == false) {
-			throw new IllegalArgumentException(other.toString() + " is not convertible to: " + toString());
+	private void assertAmountValid(long amount) {
+		if (!(amount >= Integer.MIN_VALUE && amount <= Integer.MAX_VALUE)) {
+			throw new IllegalArgumentException(amount + " is not valid");
 		}
 	}
 	
-	private void assertQuantityPositiveOrZero(long quantity) {
-		if (quantity < 0) {
-			throw new IllegalArgumentException("Quantity: " + quantity + " must be zero or positive");
+	private void assertConvertible(Duration other) {
+		if (other.unit.isConvertibleTo(unit) == false) {
+			throw new IllegalArgumentException(other.toString() + " is not convertible to: " + toString());
 		}
 	}
 	
@@ -430,14 +440,54 @@ public class Duration implements Comparable<Duration>, Serializable {
 		}
 	}
 	
-	private void assertAmountValid(long amount) {
-		if (!(amount >= Integer.MIN_VALUE && amount <= Integer.MAX_VALUE)) {
-			throw new IllegalArgumentException(amount + " is not valid");
+	private void assertQuantityPositiveOrZero(long quantity) {
+		if (quantity < 0) {
+			throw new IllegalArgumentException("Quantity: " + quantity + " must be zero or positive");
 		}
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return {@link #quantity}
+	 */
+	@SuppressWarnings("unused")
+	private long getForPersistentMapping_Quantity() { // CHECKSTYLE IGNORE THIS LINE
+		return quantity;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return {@link #unit}
+	 */
+	@SuppressWarnings("unused")
+	private TimeUnit getForPersistentMapping_Unit() { // CHECKSTYLE IGNORE THIS LINE
+		return unit;
 	}
 	
 	private boolean isConvertibleTo(Duration other) {
 		return unit.isConvertibleTo(other.unit);
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param quantity {@link #quantity}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Quantity(long quantity) { // CHECKSTYLE IGNORE THIS LINE
+		this.quantity = quantity;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param unit {@link #unit}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Unit(TimeUnit unit) { // CHECKSTYLE IGNORE THIS LINE
+		this.unit = unit;
 	}
 	
 	private String toNormalizedString(TimeUnit[] units) {
@@ -457,52 +507,5 @@ public class Duration implements Comparable<Duration>, Serializable {
 			remainder = remainder % aUnit.getFactor();
 		}
 		return buffer.toString();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	Duration() {
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #quantity}
-	 */
-	@SuppressWarnings("unused")
-	private long getForPersistentMapping_Quantity() { // CHECKSTYLE IGNORE THIS LINE
-		return quantity;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param quantity {@link #quantity}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Quantity(long quantity) { // CHECKSTYLE IGNORE THIS LINE
-		this.quantity = quantity;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #unit}
-	 */
-	@SuppressWarnings("unused")
-	private TimeUnit getForPersistentMapping_Unit() { // CHECKSTYLE IGNORE THIS LINE
-		return unit;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param unit {@link #unit}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Unit(TimeUnit unit) { // CHECKSTYLE IGNORE THIS LINE
-		this.unit = unit;
 	}
 }

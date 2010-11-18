@@ -29,7 +29,6 @@ import com.domainlanguage.time.TimeOfDay;
 import com.domainlanguage.time.TimeRate;
 import com.domainlanguage.time.TimeUnitTest;
 
-
 public class PersistentMappingVerification {
 	
 	private static final String SET = "set";
@@ -144,17 +143,13 @@ public class PersistentMappingVerification {
 		} catch (NoSuchMethodException ex) {
 			addToProblems(klass.toString() + " has no default constructor");
 		} catch (IllegalArgumentException ex) {
-			addToProblems(constructor.toString()
-					+ " had an illegal argument exception");
+			addToProblems(constructor.toString() + " had an illegal argument exception");
 		} catch (InstantiationException ex) {
-			addToProblems(constructor.toString()
-					+ " had an instantion exception");
+			addToProblems(constructor.toString() + " had an instantion exception");
 		} catch (IllegalAccessException ex) {
-			addToProblems(constructor.toString()
-					+ " had an illegal access exception");
+			addToProblems(constructor.toString() + " had an illegal access exception");
 		} catch (InvocationTargetException ex) {
-			addToProblems(constructor.toString()
-					+ " had an invocation exception");
+			addToProblems(constructor.toString() + " had an invocation exception");
 		}
 	}
 	
@@ -174,8 +169,7 @@ public class PersistentMappingVerification {
 		checkSetter(theField, name, toTest);
 		Object actual = checkGetter(theField, name);
 		if (instance != null && !sameClassOrBothNull(toTest, actual)) {
-			addToProblems(theField.toString()
-					+ " getter/setter result do not match, expected [" + toTest
+			addToProblems(theField.toString() + " getter/setter result do not match, expected [" + toTest
 					+ "], but got [" + actual + "]");
 			return;
 		}
@@ -209,14 +203,11 @@ public class PersistentMappingVerification {
 		} catch (NoSuchMethodException ex) {
 			addToProblems(ex.getMessage() + "does not exist");
 		} catch (IllegalArgumentException ex) {
-			addToProblems(getter.toString()
-					+ " had an illegal argument exception");
+			addToProblems(getter.toString() + " had an illegal argument exception");
 		} catch (IllegalAccessException ex) {
-			addToProblems(getter.toString()
-					+ " had an illegal access exception");
+			addToProblems(getter.toString() + " had an illegal access exception");
 		} catch (InvocationTargetException ex) {
-			addToProblems(getter.toString()
-					+ " had an invocation target exception");
+			addToProblems(getter.toString() + " had an invocation target exception");
 		}
 		return actual;
 	}
@@ -231,46 +222,38 @@ public class PersistentMappingVerification {
 			if (instance != null) {
 				setter.setAccessible(true);
 				setter.invoke(instance, new Object[] {
-						toTest
-						});
+					toTest
+				});
 			}
 		} catch (NoSuchMethodException ex) {
 			addToProblems(ex.getMessage() + "does not exist");
 		} catch (IllegalArgumentException ex) {
-			addToProblems(setter.toString()
-					+ " had an illegal argument exception");
+			addToProblems(setter.toString() + " had an illegal argument exception");
 		} catch (IllegalAccessException ex) {
-			addToProblems(setter.toString()
-					+ " had an illegal access exception");
+			addToProblems(setter.toString() + " had an illegal access exception");
 		} catch (InvocationTargetException ex) {
-			addToProblems(setter.toString()
-					+ " had an invocation target exception");
+			addToProblems(setter.toString() + " had an invocation target exception");
 		}
 	}
 	
-	private Method getGetter(Field theField, String name, String getter)
-			throws NoSuchMethodException {
+	private Method getGetter(Field theField, String name, String getter) throws NoSuchMethodException {
 		try {
 			return theField.getDeclaringClass().getDeclaredMethod(getter);
 		} catch (NoSuchMethodException unknownGetter) {
-			return theField.getDeclaringClass().getDeclaredMethod(
-					"is" + FOR_PERSISTENT_MAPPING + name);
+			return theField.getDeclaringClass().getDeclaredMethod("is" + FOR_PERSISTENT_MAPPING + name);
 		}
 	}
 	
-	private Method getSetter(Field theField, String setter)
-			throws NoSuchMethodException {
+	private Method getSetter(Field theField, String setter) throws NoSuchMethodException {
 		Class<?>[] setterTypes = new Class[1];
 		setterTypes[0] = getTypeFor(theField);
-		return theField.getDeclaringClass().getDeclaredMethod(setter,
-				setterTypes);
+		return theField.getDeclaringClass().getDeclaredMethod(setter, setterTypes);
 	}
 	
 	private Object getTestValueFor(Class<?> type) {
 		Object result = TEST_TYPE_MAPPING.get(type.getName());
 		if (result == null) {
-			addToProblems("Add sample value for " + type.toString()
-					+ " to TEST_TYPE_MAPPING");
+			addToProblems("Add sample value for " + type.toString() + " to TEST_TYPE_MAPPING");
 		}
 		return result;
 	}
@@ -281,8 +264,7 @@ public class PersistentMappingVerification {
 			return type;
 		}
 		try {
-			Method method = type.getDeclaredMethod(
-				GET_PRIMITIVE_PERSISTENCE_MAPPING_TYPE);
+			Method method = type.getDeclaredMethod(GET_PRIMITIVE_PERSISTENCE_MAPPING_TYPE);
 			method.setAccessible(true);
 			return (Class<?>) method.invoke(null);
 		} catch (IllegalArgumentException ex) {

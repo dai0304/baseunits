@@ -34,6 +34,14 @@ public class CannedResponseServer {
 		this.cannedResponse = cannedResponse;
 	}
 	
+	public String getHostName() {
+		return socket.getInetAddress().getHostName();
+	}
+	
+	public int getPort() {
+		return socket.getLocalPort();
+	}
+	
 	public void start() {
 		processingThread = new Thread(getServerConnectionProcessor(), getClass().getName() + " processing thread");
 		setKeepProcessing(true);
@@ -50,17 +58,14 @@ public class CannedResponseServer {
 		}
 	}
 	
-	public String getHostName() {
-		return socket.getInetAddress().getHostName();
-	}
-	
-	public int getPort() {
-		return socket.getLocalPort();
+	private synchronized boolean getKeepProcessing() {
+		return keepProcessing;
 	}
 	
 	private Runnable getServerConnectionProcessor() {
 		return new Runnable() {
 			
+			@Override
 			public void run() {
 				try {
 					while (getKeepProcessing()) {
@@ -83,10 +88,6 @@ public class CannedResponseServer {
 		} finally {
 			writer.close();
 		}
-	}
-	
-	private synchronized boolean getKeepProcessing() {
-		return keepProcessing;
 	}
 	
 	private synchronized void setKeepProcessing(boolean keepProcessing) {

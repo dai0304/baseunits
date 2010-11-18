@@ -14,58 +14,23 @@ import java.util.Set;
 
 import com.domainlanguage.util.ImmutableIterator;
 
-
 public class BusinessCalendar {
 	
-	private Set<CalendarDate> holidays;
-	
-
 	/** Should be rewritten for each particular organization */
 	static Set<CalendarDate> defaultHolidays() {
 		return new HashSet<CalendarDate>();
 	}
 	
+
+	private Set<CalendarDate> holidays;
+	
+
 	public BusinessCalendar() {
 		holidays = defaultHolidays();
 	}
 	
 	public void addHolidays(Set<CalendarDate> days) {
 		holidays.addAll(days);
-	}
-	
-	public int getElapsedBusinessDays(CalendarInterval interval) {
-		int tally = 0;
-		Iterator<CalendarDate> iterator = businessDaysOnly(interval.daysIterator());
-		while (iterator.hasNext()) {
-			iterator.next();
-			tally += 1;
-		}
-		return tally;
-	}
-	
-	/*
-	 * @deprecated
-	 */
-	public CalendarDate nearestBusinessDay(CalendarDate day) {
-		if (isBusinessDay(day)) {
-			return day;
-		} else {
-			return nextBusinessDay(day);
-		}
-	}
-	
-	public boolean isHoliday(CalendarDate day) {
-		return holidays.contains(day);
-	}
-	
-	public boolean isWeekend(CalendarDate day) {
-		Calendar calday = day.asJavaCalendarUniversalZoneMidnight();
-		return (calday.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
-				|| (calday.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
-	}
-	
-	public boolean isBusinessDay(CalendarDate day) {
-		return !isWeekend(day) && !isHoliday(day);
 	}
 	
 	public Iterator<CalendarDate> businessDaysOnly(final Iterator<CalendarDate> calendarDays) {
@@ -78,10 +43,12 @@ public class BusinessCalendar {
 			}
 			
 
+			@Override
 			public boolean hasNext() {
 				return lookAhead != null;
 			}
 			
+			@Override
 			public CalendarDate next() {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
@@ -101,12 +68,28 @@ public class BusinessCalendar {
 		};
 	}
 	
-	public CalendarDate plusBusinessDays(CalendarDate startDate, int numberOfDays) {
-		if (numberOfDays < 0) {
-			throw new IllegalArgumentException("Negative numberOfDays not supported");
+	public int getElapsedBusinessDays(CalendarInterval interval) {
+		int tally = 0;
+		Iterator<CalendarDate> iterator = businessDaysOnly(interval.daysIterator());
+		while (iterator.hasNext()) {
+			iterator.next();
+			tally += 1;
 		}
-		Iterator<CalendarDate> iterator = CalendarInterval.everFrom(startDate).daysIterator();
-		return nextNumberOfBusinessDays(numberOfDays, iterator);
+		return tally;
+	}
+	
+	public boolean isBusinessDay(CalendarDate day) {
+		return !isWeekend(day) && !isHoliday(day);
+	}
+	
+	public boolean isHoliday(CalendarDate day) {
+		return holidays.contains(day);
+	}
+	
+	public boolean isWeekend(CalendarDate day) {
+		Calendar calday = day.asJavaCalendarUniversalZoneMidnight();
+		return (calday.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+				|| (calday.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
 	}
 	
 	public CalendarDate minusBusinessDays(CalendarDate startDate, int numberOfDays) {
@@ -117,13 +100,15 @@ public class BusinessCalendar {
 		return nextNumberOfBusinessDays(numberOfDays, iterator);
 	}
 	
-	private CalendarDate nextNumberOfBusinessDays(int numberOfDays, Iterator<CalendarDate> calendarDays) {
-		Iterator<CalendarDate> businessDays = businessDaysOnly(calendarDays);
-		CalendarDate result = null;
-		for (int i = 0; i <= numberOfDays; i++) {
-			result = businessDays.next();
+	/*
+	 * @deprecated
+	 */
+	public CalendarDate nearestBusinessDay(CalendarDate day) {
+		if (isBusinessDay(day)) {
+			return day;
+		} else {
+			return nextBusinessDay(day);
 		}
-		return result;
 	}
 	
 	public CalendarDate nextBusinessDay(CalendarDate startDate) {
@@ -132,6 +117,24 @@ public class BusinessCalendar {
 		} else {
 			return plusBusinessDays(startDate, 0);
 		}
+	}
+	
+	public CalendarDate plusBusinessDays(CalendarDate startDate, int numberOfDays) {
+		if (numberOfDays < 0) {
+			throw new IllegalArgumentException("Negative numberOfDays not supported");
+		}
+		Iterator<CalendarDate> iterator = CalendarInterval.everFrom(startDate).daysIterator();
+		return nextNumberOfBusinessDays(numberOfDays, iterator);
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return {@link #holidays}
+	 */
+	@SuppressWarnings("unused")
+	private Set<CalendarDate> getForPersistentMapping_Holidays() { // CHECKSTYLE IGNORE THIS LINE
+		return holidays;
 	}
 	
 	/*
@@ -179,14 +182,13 @@ public class BusinessCalendar {
 	 * return false; }
 	 */
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #holidays}
-	 */
-	@SuppressWarnings("unused")
-	private Set<CalendarDate> getForPersistentMapping_Holidays() { // CHECKSTYLE IGNORE THIS LINE
-		return holidays;
+	private CalendarDate nextNumberOfBusinessDays(int numberOfDays, Iterator<CalendarDate> calendarDays) {
+		Iterator<CalendarDate> businessDays = businessDaysOnly(calendarDays);
+		CalendarDate result = null;
+		for (int i = 0; i <= numberOfDays; i++) {
+			result = businessDays.next();
+		}
+		return result;
 	}
 	
 	/**

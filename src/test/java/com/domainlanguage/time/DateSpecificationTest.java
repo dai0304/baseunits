@@ -14,12 +14,6 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import com.domainlanguage.time.AnnualDateSpecification;
-import com.domainlanguage.time.CalendarDate;
-import com.domainlanguage.time.CalendarInterval;
-import com.domainlanguage.time.DateSpecification;
-import com.domainlanguage.time.DayOfWeek;
-
 import org.junit.Test;
 
 /**

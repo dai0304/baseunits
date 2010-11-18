@@ -25,6 +25,54 @@ import org.apache.commons.lang.Validate;
 public class TimeInterval extends Interval<TimePoint> {
 	
 	/**
+	 * 開始日時と終了日時より、閉期間を生成する。
+	 * 
+	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @return 期間
+	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
+	 */
+	public static TimeInterval closed(TimePoint start, TimePoint end) {
+		return over(start, true, end, true);
+	}
+	
+	/**
+	 * 開始日時より、下側限界のみを持つ期間を生成する。
+	 * 
+	 * <p>開始日時は期間に含む（閉じている）区間である。</p>
+	 * 
+	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @return 期間
+	 */
+	public static TimeInterval everFrom(TimePoint start) {
+		return over(start, null);
+	}
+	
+	/**
+	 * 終了日時より、上側限界のみを持つ期間を生成する。
+	 * 
+	 * <p>終了日時は期間に含まない（開いている）区間である。</p>
+	 * 
+	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @return 期間
+	 */
+	public static TimeInterval everPreceding(TimePoint end) {
+		return over(null, end);
+	}
+	
+	/**
+	 * 開始日時と終了日時より、開期間を生成する。
+	 * 
+	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @return 期間
+	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
+	 */
+	public static TimeInterval open(TimePoint start, TimePoint end) {
+		return over(start, false, end, false);
+	}
+	
+	/**
 	 * 開始日時と終了日時より、期間を生成する。
 	 * 
 	 * <p>主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。</p>
@@ -53,6 +101,38 @@ public class TimeInterval extends Interval<TimePoint> {
 	public static TimeInterval over(TimePoint start, TimePoint end) {
 		//Uses the common default for time intervals, [start, end).
 		return over(start, true, end, false);
+	}
+	
+	/**
+	 * 終了日時と期間の長さより、期間を生成する。
+	 * 
+	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
+	 * @param length 期間の長さ
+	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
+	 * @return 期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static TimeInterval preceding(TimePoint end, boolean startClosed, Duration length, boolean endClosed) {
+		Validate.notNull(end);
+		Validate.notNull(length);
+		TimePoint start = end.minus(length);
+		return over(start, startClosed, end, endClosed);
+	}
+	
+	/**
+	 * 終了日時と期間の長さより、期間を生成する。
+	 * 
+	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param length 期間の長さ
+	 * @return 期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static TimeInterval preceding(TimePoint end, Duration length) {
+		Validate.notNull(end);
+		Validate.notNull(length);
+		//Uses the common default for time intervals, [start, end).
+		return preceding(end, true, length, false);
 	}
 	
 	/**
@@ -90,86 +170,6 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 終了日時と期間の長さより、期間を生成する。
-	 * 
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
-	 * @param length 期間の長さ
-	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
-	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static TimeInterval preceding(TimePoint end, boolean startClosed, Duration length, boolean endClosed) {
-		Validate.notNull(end);
-		Validate.notNull(length);
-		TimePoint start = end.minus(length);
-		return over(start, startClosed, end, endClosed);
-	}
-	
-	/**
-	 * 終了日時と期間の長さより、期間を生成する。
-	 * 
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @param length 期間の長さ
-	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static TimeInterval preceding(TimePoint end, Duration length) {
-		Validate.notNull(end);
-		Validate.notNull(length);
-		//Uses the common default for time intervals, [start, end).
-		return preceding(end, true, length, false);
-	}
-	
-	/**
-	 * 開始日時と終了日時より、閉期間を生成する。
-	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @return 期間
-	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 */
-	public static TimeInterval closed(TimePoint start, TimePoint end) {
-		return over(start, true, end, true);
-	}
-	
-	/**
-	 * 開始日時と終了日時より、開期間を生成する。
-	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @return 期間
-	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 */
-	public static TimeInterval open(TimePoint start, TimePoint end) {
-		return over(start, false, end, false);
-	}
-	
-	/**
-	 * 開始日時より、下側限界のみを持つ期間を生成する。
-	 * 
-	 * <p>開始日時は期間に含む（閉じている）区間である。</p>
-	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @return 期間
-	 */
-	public static TimeInterval everFrom(TimePoint start) {
-		return over(start, null);
-	}
-	
-	/**
-	 * 終了日時より、上側限界のみを持つ期間を生成する。
-	 * 
-	 * <p>終了日時は期間に含まない（開いている）区間である。</p>
-	 * 
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @return 期間
-	 */
-	public static TimeInterval everPreceding(TimePoint end) {
-		return over(null, end);
-	}
-	
-	/**
 	 * インスタンスを生成する。
 	 * 
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
@@ -183,49 +183,10 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * この期間と同じ型を持つ、新しい期間を生成する。
-	 * 
-	 * @param start 下側限界値. 限界値がない場合は、{@code null}
-	 * @param isStartClosed 下限値を期間に含む（閉じた下側限界）場合は{@code true}を指定する
-	 * @param end 上側限界値. 限界値がない場合は、{@code null}
-	 * @param isEndClosed 上限値を期間に含む（閉じた上側限界）場合は{@code true}を指定する
-	 * @return 新しい期間
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 */
-	@Override
-	public Interval<TimePoint> newOfSameType(TimePoint start, boolean isStartClosed, TimePoint end, boolean isEndClosed) {
-		return new TimeInterval(start, isStartClosed, end, isEndClosed);
-	}
-	
-	/**
-	 * 指定した日時が、この期間の終了日時を以後でないかどうかを検証する。
-	 * 
-	 * @param point 日時
-	 * @return 終了日時以後でない場合は{@code true}、そうでない場合は{@code false}
-	 * @see #isBelow(TimePoint)
-	 */
-	public boolean isBefore(TimePoint point) {
-		return isBelow(point);
-	}
-	
-	/**
-	 * 指定した日時が、この期間の開始日時以前でないかどうかを検証する。
-	 * 
-	 * @param point 日時
-	 * @return 開始日時以前でない場合は{@code true}、そうでない場合は{@code false}
-	 * @see #isAbove(TimePoint)
-	 */
-	public boolean isAfter(TimePoint point) {
-		return isAbove(point);
-	}
-	
-	/**
-	 * この期間の長さを取得する。
-	 * 
-	 * @return 長さ
-	 */
-	public Duration length() {
-		long difference = end().millisecondsFromEpoc - start().millisecondsFromEpoc;
-		return Duration.milliseconds(difference);
+	TimeInterval() {
 	}
 	
 	/**
@@ -258,10 +219,12 @@ public class TimeInterval extends Interval<TimePoint> {
 			TimePoint next = start();
 			
 
+			@Override
 			public boolean hasNext() {
 				return end().isAfter(next);
 			}
 			
+			@Override
 			public TimePoint next() {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
@@ -271,6 +234,82 @@ public class TimeInterval extends Interval<TimePoint> {
 				return current;
 			}
 		};
+	}
+	
+	/**
+	 * この期間の終了日時を取得する。
+	 * 
+	 * @return この期間の終了日時. 上側限界がない場合は {@code null}
+	 */
+	public TimePoint end() {
+		return upperLimit();
+	}
+	
+	/**
+	 * この期間と与えた期間 {@code interval} の積集合（共通部分）を返す。
+	 * 
+	 * <p>共通部分が存在しない場合は、空の区間を返す。</p>
+	 * 
+	 * @param interval 比較対象の期間
+	 * @return 積集合（共通部分）
+	 */
+	public TimeInterval intersect(TimeInterval interval) {
+		return (TimeInterval) super.intersect(interval);
+	}
+	
+	/**
+	 * 指定した日時が、この期間の開始日時以前でないかどうかを検証する。
+	 * 
+	 * @param point 日時
+	 * @return 開始日時以前でない場合は{@code true}、そうでない場合は{@code false}
+	 * @see #isAbove(TimePoint)
+	 */
+	public boolean isAfter(TimePoint point) {
+		return isAbove(point);
+	}
+	
+	/**
+	 * 指定した日時が、この期間の終了日時を以後でないかどうかを検証する。
+	 * 
+	 * @param point 日時
+	 * @return 終了日時以後でない場合は{@code true}、そうでない場合は{@code false}
+	 * @see #isBelow(TimePoint)
+	 */
+	public boolean isBefore(TimePoint point) {
+		return isBelow(point);
+	}
+	
+	/**
+	 * この期間の長さを取得する。
+	 * 
+	 * @return 長さ
+	 */
+	public Duration length() {
+		long difference = end().millisecondsFromEpoc - start().millisecondsFromEpoc;
+		return Duration.milliseconds(difference);
+	}
+	
+	/**
+	 * この期間と同じ型を持つ、新しい期間を生成する。
+	 * 
+	 * @param start 下側限界値. 限界値がない場合は、{@code null}
+	 * @param isStartClosed 下限値を期間に含む（閉じた下側限界）場合は{@code true}を指定する
+	 * @param end 上側限界値. 限界値がない場合は、{@code null}
+	 * @param isEndClosed 上限値を期間に含む（閉じた上側限界）場合は{@code true}を指定する
+	 * @return 新しい期間
+	 */
+	@Override
+	public Interval<TimePoint> newOfSameType(TimePoint start, boolean isStartClosed, TimePoint end, boolean isEndClosed) {
+		return new TimeInterval(start, isStartClosed, end, isEndClosed);
+	}
+	
+	/**
+	 * この期間の開始日時を取得する。
+	 * 
+	 * @return この期間の開始日時. 下側限界がない場合は {@code null}
+	 */
+	public TimePoint start() {
+		return lowerLimit();
 	}
 	
 	/**
@@ -307,10 +346,12 @@ public class TimeInterval extends Interval<TimePoint> {
 			TimeInterval next = segmentLength.startingFrom(start());
 			
 
+			@Override
 			public boolean hasNext() {
 				return TimeInterval.this.covers(next);
 			}
 			
+			@Override
 			public TimeInterval next() {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
@@ -320,42 +361,5 @@ public class TimeInterval extends Interval<TimePoint> {
 				return current;
 			}
 		};
-	}
-	
-	/**
-	 * この期間の開始日時を取得する。
-	 * 
-	 * @return この期間の開始日時. 下側限界がない場合は {@code null}
-	 */
-	public TimePoint start() {
-		return lowerLimit();
-	}
-	
-	/**
-	 * この期間の終了日時を取得する。
-	 * 
-	 * @return この期間の終了日時. 上側限界がない場合は {@code null}
-	 */
-	public TimePoint end() {
-		return upperLimit();
-	}
-	
-	/**
-	 * この期間と与えた期間 {@code interval} の積集合（共通部分）を返す。
-	 * 
-	 * <p>共通部分が存在しない場合は、空の区間を返す。</p>
-	 * 
-	 * @param interval 比較対象の期間
-	 * @return 積集合（共通部分）
-	 */
-	public TimeInterval intersect(TimeInterval interval) {
-		return (TimeInterval) super.intersect(interval);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	TimeInterval() {
 	}
 }

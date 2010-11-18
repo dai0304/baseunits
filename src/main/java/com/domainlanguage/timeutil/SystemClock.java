@@ -11,7 +11,6 @@ import java.util.Date;
 import com.domainlanguage.time.TimePoint;
 import com.domainlanguage.time.TimeSource;
 
-
 /**
  * システム時計に基づき、現在の時刻を返すクラス。
  * 
@@ -32,16 +31,18 @@ public final class SystemClock implements TimeSource {
 		// THINK なぜ INSTANCE を直接返さないのか？ 謎だ。
 		return new TimeSource() {
 			
+			@Override
 			public TimePoint now() {
 				return INSTANCE.now();
 			}
 		};
 	}
 	
-	public TimePoint now() {
-		return TimePoint.from(new Date());
+	private SystemClock() {
 	}
 	
-	private SystemClock() {
+	@Override
+	public TimePoint now() {
+		return TimePoint.from(new Date());
 	}
 }

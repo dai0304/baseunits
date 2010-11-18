@@ -12,7 +12,6 @@ import static org.junit.Assert.assertThat;
 import com.domainlanguage.tests.CannedResponseServer;
 import com.domainlanguage.time.TimePoint;
 import com.domainlanguage.time.TimeSource;
-import com.domainlanguage.timeutil.NISTClient;
 
 import org.junit.After;
 import org.junit.Before;

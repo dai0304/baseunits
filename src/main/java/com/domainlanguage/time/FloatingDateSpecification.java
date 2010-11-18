@@ -22,11 +22,23 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 	private int occurrence;
 	
 
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 */
+	FloatingDateSpecification() {
+	}
+	
 	FloatingDateSpecification(int month, DayOfWeek dayOfWeek, int occurrence) {
 		Validate.notNull(dayOfWeek);
 		this.month = month;
 		this.dayOfWeek = dayOfWeek;
 		this.occurrence = occurrence;
+	}
+	
+	@Override
+	public boolean isSatisfiedBy(CalendarDate date) {
+		return ofYear(date.breachEncapsulationOf_year()).equals(date);
 	}
 	
 	@Override
@@ -36,18 +48,6 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 		int dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (dayOfWeekOffset < 0 ? 8 : 1);
 		int date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek;
 		return CalendarDate.date(year, month, date);
-	}
-	
-	@Override
-	public boolean isSatisfiedBy(CalendarDate date) {
-		return ofYear(date.breachEncapsulationOf_year()).equals(date);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	FloatingDateSpecification() {
 	}
 	
 	/**
@@ -63,16 +63,6 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param dayOfWeek {@link #dayOfWeek}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_DayOfWeek(DayOfWeek dayOfWeek) { // CHECKSTYLE IGNORE THIS LINE
-		this.dayOfWeek = dayOfWeek;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #month}
 	 */
 	@SuppressWarnings("unused")
@@ -83,21 +73,31 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param month {@link #month}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Month(int month) { // CHECKSTYLE IGNORE THIS LINE
-		this.month = month;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #occurrence}
 	 */
 	@SuppressWarnings("unused")
 	private int getForPersistentMapping_Occurrence() { // CHECKSTYLE IGNORE THIS LINE
 		return occurrence;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param dayOfWeek {@link #dayOfWeek}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_DayOfWeek(DayOfWeek dayOfWeek) { // CHECKSTYLE IGNORE THIS LINE
+		this.dayOfWeek = dayOfWeek;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param month {@link #month}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Month(int month) { // CHECKSTYLE IGNORE THIS LINE
+		this.month = month;
 	}
 	
 	/**

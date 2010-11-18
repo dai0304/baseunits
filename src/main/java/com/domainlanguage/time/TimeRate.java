@@ -31,6 +31,20 @@ public class TimeRate {
 	 * 
 	 * @param quantity 単位時間あたりの量
 	 * @param unit 単位時間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public TimeRate(BigDecimal quantity, Duration unit) {
+		Validate.notNull(quantity);
+		Validate.notNull(unit);
+		this.quantity = quantity;
+		this.unit = unit;
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param quantity 単位時間あたりの量
+	 * @param unit 単位時間
 	 * @throws IllegalArgumentException 引数unitに{@code null}を与えた場合
 	 * @throws NumberFormatException see {@link BigDecimal#BigDecimal(double)}
 	 */
@@ -52,17 +66,23 @@ public class TimeRate {
 	}
 	
 	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param quantity 単位時間あたりの量
-	 * @param unit 単位時間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 */
-	public TimeRate(BigDecimal quantity, Duration unit) {
-		Validate.notNull(quantity);
-		Validate.notNull(unit);
-		this.quantity = quantity;
-		this.unit = unit;
+	TimeRate() {
+	}
+	
+	@Override
+	public boolean equals(Object another) {
+		try {
+			return equals((TimeRate) another);
+		} catch (ClassCastException ex) {
+			return false;
+		}
+	}
+	
+	public boolean equals(TimeRate another) {
+		return another != null && quantity.equals(another.quantity) && unit.equals(another.unit);
 	}
 	
 	/**
@@ -85,20 +105,6 @@ public class TimeRate {
 	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
 	 * 
 	 * @param duration 時間量
-	 * @param roundRule 丸めルール
-	 * @return 絶対量
-	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundRule} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
-	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
-	 */
-	public BigDecimal over(Duration duration, Rounding roundRule) {
-		return over(duration, scale(), roundRule);
-	}
-	
-	/**
-	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
-	 * 
-	 * @param duration 時間量
 	 * @param scale
 	 * @param roundRule 丸めルール
 	 * @return 絶対量
@@ -110,19 +116,18 @@ public class TimeRate {
 		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundRule);
 	}
 	
-	@Override
-	public boolean equals(Object another) {
-		try {
-			return equals((TimeRate) another);
-		} catch (ClassCastException ex) {
-			return false;
-		}
-	}
-	
-	public boolean equals(TimeRate another) {
-		return another != null
-				&& quantity.equals(another.quantity)
-				&& unit.equals(another.unit);
+	/**
+	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
+	 * 
+	 * @param duration 時間量
+	 * @param roundRule 丸めルール
+	 * @return 絶対量
+	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
+	 * @throws ArithmeticException 引数 {@code roundRule} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
+	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
+	 */
+	public BigDecimal over(Duration duration, Rounding roundRule) {
+		return over(duration, scale(), roundRule);
 	}
 	
 	public int scale() {
@@ -141,13 +146,6 @@ public class TimeRate {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	TimeRate() {
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #quantity}
 	 */
 	@SuppressWarnings("unused")
@@ -158,21 +156,21 @@ public class TimeRate {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param quantity {@link #quantity}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Quantity(BigDecimal quantity) { // CHECKSTYLE IGNORE THIS LINE
-		this.quantity = quantity;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #unit}
 	 */
 	@SuppressWarnings("unused")
 	private Duration getForPersistentMapping_Unit() { // CHECKSTYLE IGNORE THIS LINE
 		return unit;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param quantity {@link #quantity}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Quantity(BigDecimal quantity) { // CHECKSTYLE IGNORE THIS LINE
+		this.quantity = quantity;
 	}
 	
 	/**

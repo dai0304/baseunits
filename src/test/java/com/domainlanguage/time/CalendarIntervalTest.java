@@ -16,11 +16,6 @@ import java.util.TimeZone;
 
 import com.domainlanguage.intervals.Interval;
 import com.domainlanguage.tests.SerializationTester;
-import com.domainlanguage.time.CalendarDate;
-import com.domainlanguage.time.CalendarInterval;
-import com.domainlanguage.time.Duration;
-import com.domainlanguage.time.TimeInterval;
-import com.domainlanguage.time.TimePoint;
 
 import org.junit.Test;
 

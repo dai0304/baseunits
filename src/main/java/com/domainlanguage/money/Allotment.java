@@ -12,23 +12,6 @@ public class Allotment<T> {
 		this.amount = amount;
 	}
 	
-	@Override
-	public String toString() {
-		return "" + entity + " --> " + amount;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result + ((entity == null) ? 0 : entity.hashCode());
-		return result;
-	}
-	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -61,7 +44,24 @@ public class Allotment<T> {
 		return true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+		result = prime * result + ((entity == null) ? 0 : entity.hashCode());
+		return result;
+	}
+	
 	public Allotment<T> negated() {
 		return new Allotment<T>(entity, amount.negated());
+	}
+	
+	@Override
+	public String toString() {
+		return "" + entity + " --> " + amount;
 	}
 }

@@ -16,9 +16,6 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import com.domainlanguage.tests.SerializationTester;
-import com.domainlanguage.time.Duration;
-import com.domainlanguage.time.TimeInterval;
-import com.domainlanguage.time.TimePoint;
 
 import org.junit.Test;
 
@@ -70,8 +67,8 @@ public class TimePointTest {
 		assertThat("hours in 24hr clock", TimePoint.atGMT(2004, 1, 1, 0, 0), is(expected));
 		assertThat("hours in 12hr clock", TimePoint.at12hr(2004, 1, 1, 12, AM, 0, 0, 0, gmt), is(expected));
 		assertThat("date from formatted String", TimePoint.parseGMTFrom("2004/1/1", "yyyy/MM/dd"), is(expected));
-		assertThat("pm hours in 12hr clock", TimePoint.at12hr(2004, 1, 1, 12, PM, 0, 0, 0, gmt), is(TimePoint.atGMT(
-				2004, 1, 1, 12, 0)));
+		assertThat("pm hours in 12hr clock", TimePoint.at12hr(2004, 1, 1, 12, PM, 0, 0, 0, gmt),
+				is(TimePoint.atGMT(2004, 1, 1, 12, 0)));
 	}
 	
 	/**
@@ -183,8 +180,8 @@ public class TimePointTest {
 		assertThat("same minute", TimePoint.atGMT(2000, 1, 1, 8, 0, 30, 0).isSameDayAs(thePoint, gmt), is(true));
 		assertThat("same hour", TimePoint.atGMT(2000, 1, 1, 8, 30, 0, 0).isSameDayAs(thePoint, gmt), is(true));
 		assertThat("same day", TimePoint.atGMT(2000, 1, 1, 20, 0).isSameDayAs(thePoint, gmt), is(true));
-		assertThat("midnight (in the moring), start of same day", TimePoint.atMidnightGMT(2000, 1, 1).isSameDayAs(
-				thePoint, gmt), is(true));
+		assertThat("midnight (in the moring), start of same day",
+				TimePoint.atMidnightGMT(2000, 1, 1).isSameDayAs(thePoint, gmt), is(true));
 		
 		assertThat("midnight (night), start of next day", TimePoint.atMidnightGMT(2000, 1, 2)
 			.isSameDayAs(thePoint, gmt), is(false));

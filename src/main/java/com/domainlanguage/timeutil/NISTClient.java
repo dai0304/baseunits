@@ -14,7 +14,6 @@ import com.domainlanguage.time.TimePoint;
 import com.domainlanguage.time.TimeSource;
 import com.domainlanguage.time.TimeSourceException;
 
-
 /**
  * NISTのdaytimeプロトコルクライアント。
  * 
@@ -49,6 +48,22 @@ public class NISTClient {
 	}
 	
 	/**
+	 * {@code time.nist.gov}が返す時間文字列を {@link TimePoint}型に変換する。
+	 * 
+	 * <p>例えば、{@code "55173 09-12-08 08:15:57 00 0 0 148.8 UTC(NIST) *"}等の文字列を
+	 * 入力すると、{@code "Tue Dec 08 17:15:57 JST 2009"}を表す {@link TimePoint} を返す。
+	 * 入力文字列の先頭6バイトおよび、24バイト目以降は無視する。</p>
+	 * 
+	 * @param nistRawFormattedString {@code time.nist.gov}が返す時間文字列
+	 * @return 入力に基づく{@link TimePoint}
+	 * @throws ParseException 引数nistRawFormattedStringの解析に失敗した場合
+	 */
+	protected static TimePoint asTimePoint(String nistRawFormattedString) throws ParseException {
+		String nistGist = nistRawFormattedString.substring(7, 24); // CHECKSTYLE IGNORE THIS LINE
+		return TimePoint.parseGMTFrom(nistGist, PATTERN);
+	}
+	
+	/**
 	 * ネットワーク時間に基づき現在の時刻を返す {@link TimeSource} を返す。
 	 * 
 	 * @param serverName サーバ名
@@ -58,6 +73,7 @@ public class NISTClient {
 	protected static TimeSource timeSource(final String serverName, final int port) {
 		return new TimeSource() {
 			
+			@Override
 			public TimePoint now() {
 				try {
 					return NISTClient.now(serverName, port);
@@ -80,22 +96,6 @@ public class NISTClient {
 		} finally {
 			socket.close();
 		}
-	}
-	
-	/**
-	 * {@code time.nist.gov}が返す時間文字列を {@link TimePoint}型に変換する。
-	 * 
-	 * <p>例えば、{@code "55173 09-12-08 08:15:57 00 0 0 148.8 UTC(NIST) *"}等の文字列を
-	 * 入力すると、{@code "Tue Dec 08 17:15:57 JST 2009"}を表す {@link TimePoint} を返す。
-	 * 入力文字列の先頭6バイトおよび、24バイト目以降は無視する。</p>
-	 * 
-	 * @param nistRawFormattedString {@code time.nist.gov}が返す時間文字列
-	 * @return 入力に基づく{@link TimePoint}
-	 * @throws ParseException 引数nistRawFormattedStringの解析に失敗した場合
-	 */
-	protected static TimePoint asTimePoint(String nistRawFormattedString) throws ParseException {
-		String nistGist = nistRawFormattedString.substring(7, 24); // CHECKSTYLE IGNORE THIS LINE
-		return TimePoint.parseGMTFrom(nistGist, PATTERN);
 	}
 	
 	private NISTClient() {

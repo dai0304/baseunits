@@ -23,13 +23,6 @@ import java.util.TimeZone;
 @SuppressWarnings("serial")
 public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
-	private int year;
-	
-	private int month; // 1 based: January = 1, February = 2, ...
-	
-	private int day;
-	
-
 	/**
 	 * 指定した年月日を表す、 {@link CalendarDate}のインスタンスを生成する。
 	 * 
@@ -92,6 +85,21 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return CalendarDate.from(year, month, date);
 	}
 	
+
+	private int year;
+	
+	private int month; // 1 based: January = 1, February = 2, ...
+	
+	private int day;
+	
+
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 */
+	CalendarDate() {
+	}
+	
 	CalendarDate(int year, int month, int day) {
 		this.year = year;
 		this.month = month;
@@ -99,30 +107,86 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
-	 * この日付の文字列表現を取得する。
+	 * このインスタンスが表現する日の午前0時から丸一日を期間として取得する。
 	 * 
-	 * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-MM-dd"}のパターンで整形する。</p>
+	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開区間を生成する。</p>
 	 * 
-	 * @see java.lang.Object#toString()
+	 * @param zone タイムゾーン
+	 * @return このインスタンスが表現する日の午前0時から丸一日を表現する期間
 	 */
+	public TimeInterval asTimeInterval(TimeZone zone) {
+		return TimeInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
+	}
+	
+	public CalendarMinute at(TimeOfDay timeOfDay) {
+		return CalendarMinute.dateAndTimeOfDay(this, timeOfDay);
+	}
+	
 	@Override
-	public String toString() {
-		return toString("yyyy-MM-dd"); //default for console
+	public int compareTo(CalendarDate other) {
+		if (other == null) {
+			return -1;
+		}
+		if (isBefore(other)) {
+			return -1;
+		}
+		if (isAfter(other)) {
+			return 1;
+		}
+		return 0;
 	}
 	
 	/**
-	 * この日付を、指定したパターンで整形し、その文字列表現を取得する。
+	 * この日付の曜日を返す。
 	 * 
-	 * TODO タイムゾーンについて記述
-	 * 
-	 * @param pattern パターン
-	 * @return 文字列表現
+	 * @return 曜日
 	 */
-	public String toString(String pattern) {
-		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
-		//Any timezone works, as long as the same one is used throughout.
-		TimePoint point = startAsTimePoint(arbitraryZone);
-		return point.toString(pattern, arbitraryZone);
+	public DayOfWeek dayOfWeek() {
+		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
+		return DayOfWeek.valueOf(calendar.get(Calendar.DAY_OF_WEEK));
+	}
+	
+	public boolean equals(CalendarDate other) {
+		return other != null && year == other.year && month == other.month && day == other.day;
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		try {
+			return equals((CalendarDate) object);
+		} catch (ClassCastException ex) {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return year * month * day;
+	}
+	
+	// comment-out by daisuke
+//	public CalendarDate start() {
+//		return this;
+//	}
+//
+//	public CalendarDate end() {
+//		return this;
+//	}
+	
+	/**
+	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 対象日時
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public boolean isAfter(CalendarDate other) {
+		if (other == null) {
+			return false;
+		}
+		return isBefore(other) == false && this.equals(other) == false;
 	}
 	
 	/**
@@ -154,63 +218,13 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * このインスタンスが表現する日を含む年月を表す期間を取得する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
-	 * 
-	 * @param other 対象日時
-	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return このインスタンスが表現する日を含む年月を表す期間
 	 */
-	public boolean isAfter(CalendarDate other) {
-		if (other == null) {
-			return false;
-		}
-		return isBefore(other) == false && this.equals(other) == false;
+	public CalendarInterval month() {
+		return CalendarInterval.month(year, month);
 	}
-	
-	public int compareTo(CalendarDate other) {
-		if (other == null) {
-			return -1;
-		}
-		if (isBefore(other)) {
-			return -1;
-		}
-		if (isAfter(other)) {
-			return 1;
-		}
-		return 0;
-	}
-	
-	@Override
-	public boolean equals(Object object) {
-		try {
-			return equals((CalendarDate) object);
-		} catch (ClassCastException ex) {
-			return false;
-		}
-	}
-	
-	public boolean equals(CalendarDate other) {
-		return other != null
-				&& year == other.year
-				&& month == other.month
-				&& day == other.day;
-	}
-	
-	@Override
-	public int hashCode() {
-		return year * month * day;
-	}
-	
-	// comment-out by daisuke
-//	public CalendarDate start() {
-//		return this;
-//	}
-//
-//	public CalendarDate end() {
-//		return this;
-//	}
 	
 	/**
 	 * このインスタンスが表現する日の翌日を返す。
@@ -222,30 +236,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する日の前日を返す。
+	 * このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
 	 * 
-	 * @return 前日
-	 */
-	public CalendarDate previousDay() {
-		return plusDays(-1);
-	}
-	
-	/**
-	 * このインスタンスが表現する日を含む年月を表す期間を取得する。
+	 * <p>引数の長さの単位が "日" 未満である場合は、元の日付をそのまま返す。<p>
 	 * 
-	 * @return このインスタンスが表現する日を含む年月を表す期間
+	 * @param length 時間の長さ
+	 * @return 未来の日付
 	 */
-	public CalendarInterval month() {
-		return CalendarInterval.month(year, month);
-	}
-	
-	/**
-	 * このインスタンスが表現する日を含む年を表す期間を取得する。
-	 * 
-	 * @return このインスタンスが表現する日を含む年を表す期間
-	 */
-	public CalendarInterval year() {
-		return CalendarInterval.year(year);
+	public CalendarDate plus(Duration length) {
+		return length.addedTo(this);
 	}
 	
 	/**
@@ -283,40 +282,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
+	 * このインスタンスが表現する日の前日を返す。
 	 * 
-	 * <p>引数の長さの単位が "日" 未満である場合は、元の日付をそのまま返す。<p>
-	 * 
-	 * @param length 時間の長さ
-	 * @return 未来の日付
+	 * @return 前日
 	 */
-	public CalendarDate plus(Duration length) {
-		return length.addedTo(this);
-	}
-	
-	Calendar asJavaCalendarUniversalZoneMidnight() {
-		TimeZone zone = TimeZone.getTimeZone("Universal");
-		Calendar calendar = Calendar.getInstance(zone);
-		calendar.set(Calendar.YEAR, year);
-		calendar.set(Calendar.MONTH, month - 1);
-		calendar.set(Calendar.DATE, day);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		return calendar;
-	}
-	
-	/**
-	 * このインスタンスが表現する日の午前0時から丸一日を期間として取得する。
-	 * 
-	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開区間を生成する。</p>
-	 * 
-	 * @param zone タイムゾーン
-	 * @return このインスタンスが表現する日の午前0時から丸一日を表現する期間
-	 */
-	public TimeInterval asTimeInterval(TimeZone zone) {
-		return TimeInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
+	public CalendarDate previousDay() {
+		return plusDays(-1);
 	}
 	
 	/**
@@ -340,13 +311,52 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
-	 * この日付の曜日を返す。
+	 * この日付の文字列表現を取得する。
 	 * 
-	 * @return 曜日
+	 * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-MM-dd"}のパターンで整形する。</p>
+	 * 
+	 * @see java.lang.Object#toString()
 	 */
-	public DayOfWeek dayOfWeek() {
-		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
-		return DayOfWeek.valueOf(calendar.get(Calendar.DAY_OF_WEEK));
+	@Override
+	public String toString() {
+		return toString("yyyy-MM-dd"); //default for console
+	}
+	
+	/**
+	 * この日付を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
+	 * TODO タイムゾーンについて記述
+	 * 
+	 * @param pattern パターン
+	 * @return 文字列表現
+	 */
+	public String toString(String pattern) {
+		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
+		//Any timezone works, as long as the same one is used throughout.
+		TimePoint point = startAsTimePoint(arbitraryZone);
+		return point.toString(pattern, arbitraryZone);
+	}
+	
+	/**
+	 * このインスタンスが表現する日を含む年を表す期間を取得する。
+	 * 
+	 * @return このインスタンスが表現する日を含む年を表す期間
+	 */
+	public CalendarInterval year() {
+		return CalendarInterval.year(year);
+	}
+	
+	Calendar asJavaCalendarUniversalZoneMidnight() {
+		TimeZone zone = TimeZone.getTimeZone("Universal");
+		Calendar calendar = Calendar.getInstance(zone);
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.MONTH, month - 1);
+		calendar.set(Calendar.DATE, day);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar;
 	}
 	
 	int breachEncapsulationOf_day() {
@@ -364,28 +374,11 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	CalendarDate() {
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #day}
 	 */
 	@SuppressWarnings("unused")
 	private int getForPersistentMapping_Day() { // CHECKSTYLE IGNORE THIS LINE
 		return day;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param day {@link #day}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Day(int day) { // CHECKSTYLE IGNORE THIS LINE
-		this.day = day;
 	}
 	
 	/**
@@ -401,16 +394,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param month {@link #month}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Month(int month) { // CHECKSTYLE IGNORE THIS LINE
-		this.month = month;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #year}
 	 */
 	@SuppressWarnings("unused")
@@ -421,14 +404,30 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param day {@link #day}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Day(int day) { // CHECKSTYLE IGNORE THIS LINE
+		this.day = day;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param month {@link #month}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Month(int month) { // CHECKSTYLE IGNORE THIS LINE
+		this.month = month;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @param year {@link #year}
 	 */
 	@SuppressWarnings("unused")
 	private void setForPersistentMapping_Year(int year) { // CHECKSTYLE IGNORE THIS LINE
 		this.year = year;
-	}
-	
-	public CalendarMinute at(TimeOfDay timeOfDay) {
-		return CalendarMinute.dateAndTimeOfDay(this, timeOfDay);
 	}
 }

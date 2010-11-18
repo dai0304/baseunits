@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 
-import com.domainlanguage.intervals.IntervalLimit;
-
 import org.junit.Test;
 
 /**

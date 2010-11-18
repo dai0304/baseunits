@@ -49,7 +49,7 @@ public enum TimeUnit {
 		minute,
 		second,
 		millisecond
-			};
+	};
 	
 	private static final TimeUnit[] DESCENDING_MS_BASED_FOR_DISPLAY = {
 		day,
@@ -57,19 +57,29 @@ public enum TimeUnit {
 		minute,
 		second,
 		millisecond
-			};
+	};
 	
 	private static final TimeUnit[] DESCENDING_MONTH_BASED = {
 		year,
 		quarter,
 		month
-			};
+	};
 	
 	private static final TimeUnit[] DESCENDING_MONTH_BASED_FOR_DISPLAY = {
 		year,
 		month
-			};
+	};
 	
+
+	static TimeUnit exampleForPersistentMappingTesting() {
+		return second;
+	}
+	
+	static Type exampleTypeForPersistentMappingTesting() {
+		return Type.hour;
+	}
+	
+
 	private final Type type;
 	
 	private final Type baseType;
@@ -81,28 +91,6 @@ public enum TimeUnit {
 		this.type = type;
 		this.baseType = baseType;
 		this.factor = factor;
-	}
-	
-	/**
-	 * この単位の計数の基数とすることができる最小の単位を取得する。
-	 * 
-	 * <p>例えば、分単位はミリ秒単位で計数できるが、四半期単位は（一ヶ月の長さが毎月異なるため）月単位までしか計数できない。</p>
-	 * 
-	 * @return この単位の計数の基数とすることができる最小の単位
-	 */
-	TimeUnit baseUnit() {
-		return baseType.equals(Type.millisecond) ? millisecond : month;
-	}
-	
-	/**
-	 * この単位で表される値を、ミリ秒単位に変換できるかどうかを検証する。
-	 * 
-	 * <p>例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）ミリ秒単位に変換できない。</p>
-	 * 
-	 * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public boolean isConvertibleToMilliseconds() {
-		return isConvertibleTo(millisecond);
 	}
 	
 	/**
@@ -127,14 +115,15 @@ public enum TimeUnit {
 //        return -1;
 //    }
 	
-	int javaCalendarConstantForBaseType() {
-		if (baseType.equals(Type.millisecond)) {
-			return Calendar.MILLISECOND;
-		}
-		if (baseType.equals(Type.month)) {
-			return Calendar.MONTH;
-		}
-		return 0;
+	/**
+	 * この単位で表される値を、ミリ秒単位に変換できるかどうかを検証する。
+	 * 
+	 * <p>例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）ミリ秒単位に変換できない。</p>
+	 * 
+	 * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
+	 */
+	public boolean isConvertibleToMilliseconds() {
+		return isConvertibleTo(millisecond);
 	}
 	
 	@Override
@@ -142,13 +131,15 @@ public enum TimeUnit {
 		return type.name();
 	}
 	
-	String toString(long quantity) {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(quantity);
-		buffer.append(" ");
-		buffer.append(type.name());
-		buffer.append(quantity == 1 ? "" : "s");
-		return buffer.toString();
+	/**
+	 * この単位の計数の基数とすることができる最小の単位を取得する。
+	 * 
+	 * <p>例えば、分単位はミリ秒単位で計数できるが、四半期単位は（一ヶ月の長さが毎月異なるため）月単位までしか計数できない。</p>
+	 * 
+	 * @return この単位の計数の基数とすることができる最小の単位
+	 */
+	TimeUnit baseUnit() {
+		return baseType.equals(Type.millisecond) ? millisecond : month;
 	}
 	
 	/**
@@ -167,6 +158,20 @@ public enum TimeUnit {
 	 */
 	TimeUnit[] descendingUnitsForDisplay() {
 		return isConvertibleToMilliseconds() ? DESCENDING_MS_BASED_FOR_DISPLAY : DESCENDING_MONTH_BASED_FOR_DISPLAY;
+	}
+	
+	int getFactor() {
+		return factor.value;
+	}
+	
+	int javaCalendarConstantForBaseType() {
+		if (baseType.equals(Type.millisecond)) {
+			return Calendar.MILLISECOND;
+		}
+		if (baseType.equals(Type.month)) {
+			return Calendar.MONTH;
+		}
+		return 0;
 	}
 	
 	/**
@@ -188,22 +193,13 @@ public enum TimeUnit {
 		return descending[index + 1];
 	}
 	
-
-	static enum Type {
-		millisecond,
-		second,
-		minute,
-		hour,
-		day,
-		week,
-		month,
-		quarter,
-		year;
-	}
-	
-
-	int getFactor() {
-		return factor.value;
+	String toString(long quantity) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(quantity);
+		buffer.append(" ");
+		buffer.append(type.name());
+		buffer.append(quantity == 1 ? "" : "s");
+		return buffer.toString();
 	}
 	
 	/**
@@ -239,11 +235,8 @@ public enum TimeUnit {
 		return type;
 	}
 	
-	static TimeUnit exampleForPersistentMappingTesting() {
-		return second;
-	}
-	
-	static Type exampleTypeForPersistentMappingTesting() {
-		return Type.hour;
+
+	static enum Type {
+		millisecond, second, minute, hour, day, week, month, quarter, year;
 	}
 }

@@ -37,22 +37,51 @@ public class Money implements Comparable<Money>, Serializable {
 	
 	private static final Rounding DEFAULT_ROUNDING_MODE = Rounding.HALF_EVEN;
 	
-	private BigDecimal amount;
-	
-	private Currency currency;
-	
 
 	/**
-	 * The constructor does not complex computations and requires simple, inputs
-	 * consistent with the class invariant. Other creation methods are available
-	 * for convenience.
+	 * This creation method is safe to use. It will adjust scale, but will not
+	 * round off the amount.
 	 */
-	public Money(BigDecimal amount, Currency currency) {
-		if (amount.scale() != currency.getDefaultFractionDigits()) {
-			throw new IllegalArgumentException("Scale of amount does not match currency");
+	public static Money dollars(BigDecimal amount) {
+		return Money.valueOf(amount, USD);
+	}
+	
+	/**
+	 * WARNING: Because of the indefinite precision of double, this method must
+	 * round off the value.
+	 */
+	public static Money dollars(double amount) {
+		return Money.valueOf(amount, USD);
+	}
+	
+	/**
+	 * This creation method is safe to use. It will adjust scale, but will not
+	 * round off the amount.
+	 */
+	public static Money euros(BigDecimal amount) {
+		return Money.valueOf(amount, EUR);
+	}
+	
+	/**
+	 * WARNING: Because of the indefinite precision of double, this method must
+	 * round off the value.
+	 */
+	public static Money euros(double amount) {
+		return Money.valueOf(amount, EUR);
+	}
+	
+	public static Money sum(Collection<Money> monies) {
+		//TODO Return Default Currency
+		if (monies.isEmpty()) {
+			return Money.dollars(0.00);
 		}
-		this.currency = currency;
-		this.amount = amount;
+		Iterator<Money> iterator = monies.iterator();
+		Money sum = iterator.next();
+		while (iterator.hasNext()) {
+			Money each = iterator.next();
+			sum = sum.plus(each);
+		}
+		return sum;
 	}
 	
 	/**
@@ -89,35 +118,11 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * WARNING: Because of the indefinite precision of double, this method must
-	 * round off the value.
-	 */
-	public static Money dollars(double amount) {
-		return Money.valueOf(amount, USD);
-	}
-	
-	/**
 	 * This creation method is safe to use. It will adjust scale, but will not
 	 * round off the amount.
 	 */
-	public static Money dollars(BigDecimal amount) {
-		return Money.valueOf(amount, USD);
-	}
-	
-	/**
-	 * WARNING: Because of the indefinite precision of double, this method must
-	 * round off the value.
-	 */
-	public static Money euros(double amount) {
-		return Money.valueOf(amount, EUR);
-	}
-	
-	/**
-	 * This creation method is safe to use. It will adjust scale, but will not
-	 * round off the amount.
-	 */
-	public static Money euros(BigDecimal amount) {
-		return Money.valueOf(amount, EUR);
+	public static Money yens(BigDecimal amount) {
+		return Money.valueOf(amount, JPY);
 	}
 	
 	/**
@@ -128,69 +133,34 @@ public class Money implements Comparable<Money>, Serializable {
 		return Money.valueOf(amount, JPY);
 	}
 	
-	/**
-	 * This creation method is safe to use. It will adjust scale, but will not
-	 * round off the amount.
-	 */
-	public static Money yens(BigDecimal amount) {
-		return Money.valueOf(amount, JPY);
+	public static Money zero(Currency currency) {
+		return Money.valueOf(0.0, currency);
 	}
 	
-	public static Money sum(Collection<Money> monies) {
-		//TODO Return Default Currency
-		if (monies.isEmpty()) {
-			return Money.dollars(0.00);
+
+	private BigDecimal amount;
+	
+	private Currency currency;
+	
+
+	/**
+	 * The constructor does not complex computations and requires simple, inputs
+	 * consistent with the class invariant. Other creation methods are available
+	 * for convenience.
+	 */
+	public Money(BigDecimal amount, Currency currency) {
+		if (amount.scale() != currency.getDefaultFractionDigits()) {
+			throw new IllegalArgumentException("Scale of amount does not match currency");
 		}
-		Iterator<Money> iterator = monies.iterator();
-		Money sum = iterator.next();
-		while (iterator.hasNext()) {
-			Money each = iterator.next();
-			sum = sum.plus(each);
-		}
-		return sum;
+		this.currency = currency;
+		this.amount = amount;
 	}
 	
 	/**
-	 * How best to handle access to the internals? It is needed for
-	 * database mapping, UI presentation, and perhaps a few other
-	 * uses. Yet giving public access invites people to do the
-	 * real work of the Money object elsewhere.
-	 * Here is an experimental approach, giving access with a 
-	 * warning label of sorts. Let us know how you like it.
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 */
-	BigDecimal breachEncapsulationOfAmount() {
-		return amount;
-	}
-	
-	Currency breachEncapsulationOfCurrency() {
-		return currency;
-	}
-	
-	/**
-	 * This probably should be Currency responsibility. Even then, it may need
-	 * to be customized for specialty apps because there are other cases, where
-	 * the smallest increment is not the smallest unit.
-	 */
-	Money minimumIncrement() {
-		BigDecimal increment = BigDecimal.ONE.movePointLeft(currency.getDefaultFractionDigits());
-		return Money.valueOf(increment, currency);
-	}
-	
-	Money incremented() {
-		return plus(minimumIncrement());
-	}
-	
-	boolean hasSameCurrencyAs(Money arg) {
-		return currency.equals(arg.currency);
-	}
-	
-	/**
-	 * Returns a {@link Money} whose amount is (-amount), and whose scale is this.scale().
-	 * 
-	 * @return
-	 */
-	public Money negated() {
-		return Money.valueOf(amount.negate(), currency);
+	Money() {
 	}
 	
 	/**
@@ -202,33 +172,21 @@ public class Money implements Comparable<Money>, Serializable {
 		return Money.valueOf(amount.abs(), currency);
 	}
 	
-	public boolean isNegative() {
-		return amount.compareTo(BigDecimal.ZERO) < 0;
+	public Money applying(Ratio ratio, int scale, Rounding roundingRule) {
+		BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingRule);
+		return Money.valueOf(newAmount, currency);
 	}
 	
-	public boolean isPositive() {
-		return amount.compareTo(BigDecimal.ZERO) > 0;
+	public Money applying(Ratio ratio, Rounding roundingRule) {
+		return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
 	}
 	
-	public boolean isZero() {
-		return this.equals(Money.valueOf(0.0, currency));
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @param other
-	 * @return
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public Money plus(Money other) {
-		Validate.notNull(other);
-		assertHasSameCurrencyAs(other);
-		return Money.valueOf(amount.add(other.amount), currency);
-	}
-	
-	public Money minus(Money other) {
-		return plus(other.negated());
+	@Override
+	public int compareTo(Money other) {
+		if (hasSameCurrencyAs(other) == false) {
+			throw new IllegalArgumentException("Compare is not defined between different currencies");
+		}
+		return amount.compareTo(other.amount);
 	}
 	
 	public Money dividedBy(BigDecimal divisor, Rounding roundingMode) {
@@ -249,13 +207,72 @@ public class Money implements Comparable<Money>, Serializable {
 		return Ratio.of(amount, divisor.amount);
 	}
 	
-	public Money applying(Ratio ratio, Rounding roundingRule) {
-		return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
+	public boolean equals(Money other) {
+		return other != null && hasSameCurrencyAs(other) && amount.equals(other.amount);
 	}
 	
-	public Money applying(Ratio ratio, int scale, Rounding roundingRule) {
-		BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingRule);
-		return Money.valueOf(newAmount, currency);
+	@Override
+	public boolean equals(Object other) {
+		try {
+			return equals((Money) other);
+		} catch (ClassCastException ex) {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return amount.hashCode();
+	}
+	
+	public boolean isGreaterThan(Money other) {
+		return compareTo(other) > 0;
+	}
+	
+	public boolean isLessThan(Money other) {
+		return compareTo(other) < 0;
+	}
+	
+	public boolean isNegative() {
+		return amount.compareTo(BigDecimal.ZERO) < 0;
+	}
+	
+	public boolean isPositive() {
+		return amount.compareTo(BigDecimal.ZERO) > 0;
+	}
+	
+	public boolean isZero() {
+		return this.equals(Money.valueOf(0.0, currency));
+	}
+	
+	public Money minus(Money other) {
+		return plus(other.negated());
+	}
+	
+	/**
+	 * Returns a {@link Money} whose amount is (-amount), and whose scale is this.scale().
+	 * 
+	 * @return
+	 */
+	public Money negated() {
+		return Money.valueOf(amount.negate(), currency);
+	}
+	
+	public MoneyTimeRate per(Duration duration) {
+		return new MoneyTimeRate(this, duration);
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @param other
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public Money plus(Money other) {
+		Validate.notNull(other);
+		assertHasSameCurrencyAs(other);
+		return Money.valueOf(amount.add(other.amount), currency);
 	}
 	
 	/**
@@ -278,51 +295,16 @@ public class Money implements Comparable<Money>, Serializable {
 		return Money.valueOf(amount.multiply(factor), currency, roundingMode);
 	}
 	
-	public Money times(double amount, Rounding roundingMode) {
-		return times(new BigDecimal(amount), roundingMode);
-	}
-	
 	public Money times(double amount) {
 		return times(new BigDecimal(amount));
 	}
 	
+	public Money times(double amount, Rounding roundingMode) {
+		return times(new BigDecimal(amount), roundingMode);
+	}
+	
 	public Money times(int i) {
 		return times(new BigDecimal(i));
-	}
-	
-	public int compareTo(Money other) {
-		if (hasSameCurrencyAs(other) == false) {
-			throw new IllegalArgumentException("Compare is not defined between different currencies");
-		}
-		return amount.compareTo(other.amount);
-	}
-	
-	public boolean isGreaterThan(Money other) {
-		return compareTo(other) > 0;
-	}
-	
-	public boolean isLessThan(Money other) {
-		return compareTo(other) < 0;
-	}
-	
-	@Override
-	public boolean equals(Object other) {
-		try {
-			return equals((Money) other);
-		} catch (ClassCastException ex) {
-			return false;
-		}
-	}
-	
-	public boolean equals(Money other) {
-		return other != null
-				&& hasSameCurrencyAs(other)
-				&& amount.equals(other.amount);
-	}
-	
-	@Override
-	public int hashCode() {
-		return amount.hashCode();
 	}
 	
 	@Override
@@ -334,8 +316,24 @@ public class Money implements Comparable<Money>, Serializable {
 		return currency.getSymbol(locale) + " " + amount;
 	}
 	
-	public MoneyTimeRate per(Duration duration) {
-		return new MoneyTimeRate(this, duration);
+	/**
+	 * How best to handle access to the internals? It is needed for
+	 * database mapping, UI presentation, and perhaps a few other
+	 * uses. Yet giving public access invites people to do the
+	 * real work of the Money object elsewhere.
+	 * Here is an experimental approach, giving access with a 
+	 * warning label of sorts. Let us know how you like it.
+	 */
+	BigDecimal breachEncapsulationOfAmount() {
+		return amount;
+	}
+	
+	Currency breachEncapsulationOfCurrency() {
+		return currency;
+	}
+	
+	BigDecimal getAmount() {
+		return amount;
 	}
 	
 //  TODO: Provide some currency-dependent formatting. Java 1.4 Currency doesn't
@@ -347,25 +345,32 @@ public class Money implements Comparable<Money>, Serializable {
 //      return currency.getFormat().format(amount());
 //  }
 	
-	BigDecimal getAmount() {
-		return amount;
-	}
-	
 	Currency getCurrency() {
 		return currency;
+	}
+	
+	boolean hasSameCurrencyAs(Money arg) {
+		return currency.equals(arg.currency);
+	}
+	
+	Money incremented() {
+		return plus(minimumIncrement());
+	}
+	
+	/**
+	 * This probably should be Currency responsibility. Even then, it may need
+	 * to be customized for specialty apps because there are other cases, where
+	 * the smallest increment is not the smallest unit.
+	 */
+	Money minimumIncrement() {
+		BigDecimal increment = BigDecimal.ONE.movePointLeft(currency.getDefaultFractionDigits());
+		return Money.valueOf(increment, currency);
 	}
 	
 	private void assertHasSameCurrencyAs(Money aMoney) {
 		if (hasSameCurrencyAs(aMoney) == false) {
 			throw new IllegalArgumentException(aMoney.toString() + " is not same currency as " + this.toString());
 		}
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	Money() {
 	}
 	
 	/**
@@ -381,16 +386,6 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param amount {@link #amount}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Amount(BigDecimal amount) { // CHECKSTYLE IGNORE THIS LINE
-		this.amount = amount;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #currency}
 	 */
 	@SuppressWarnings("unused")
@@ -401,15 +396,21 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param amount {@link #amount}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Amount(BigDecimal amount) { // CHECKSTYLE IGNORE THIS LINE
+		this.amount = amount;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @param currency {@link #currency}
 	 */
 	@SuppressWarnings("unused")
 	private void setForPersistentMapping_Currency(Currency currency) { // CHECKSTYLE IGNORE THIS LINE
 		this.currency = currency;
-	}
-	
-	public static Money zero(Currency currency) {
-		return Money.valueOf(0.0, currency);
 	}
 	
 }

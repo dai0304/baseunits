@@ -16,8 +16,6 @@ public class MinuteOfHour {
 	
 	private static final int MAX = 59;
 	
-	final int value;
-	
 
 	/**
 	 * インスタンスを生成する。
@@ -30,6 +28,15 @@ public class MinuteOfHour {
 		return new MinuteOfHour(initial);
 	}
 	
+	@SuppressWarnings("unused")
+	private static Class<?> getPrimitivePersistenceMappingType() {
+		return Integer.TYPE;
+	}
+	
+
+	final int value;
+	
+
 	private MinuteOfHour(int initial) {
 		if (initial < MIN || initial > MAX) {
 			throw new IllegalArgumentException("Illegal value for minute: " + initial
@@ -38,16 +45,16 @@ public class MinuteOfHour {
 		value = initial;
 	}
 	
+	public boolean equals(MinuteOfHour another) {
+		return value == another.value;
+	}
+	
 	@Override
 	public boolean equals(Object another) {
 		if (!(another instanceof MinuteOfHour)) {
 			return false;
 		}
 		return equals((MinuteOfHour) another);
-	}
-	
-	public boolean equals(MinuteOfHour another) {
-		return value == another.value;
 	}
 	
 	@Override
@@ -63,17 +70,12 @@ public class MinuteOfHour {
 		return value < another.value;
 	}
 	
-	public int value() {
-		return value;
-	}
-	
 	@Override
 	public String toString() {
 		return String.valueOf(value);
 	}
 	
-	@SuppressWarnings("unused")
-	private static Class<?> getPrimitivePersistenceMappingType() {
-		return Integer.TYPE;
+	public int value() {
+		return value;
 	}
 }

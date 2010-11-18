@@ -35,12 +35,31 @@ public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMa
 		keyValues = new HashMap<Interval<K>, V>();
 	}
 	
+	@Override
+	public boolean containsIntersectingKey(Interval<K> otherInterval) {
+		return intersectingKeys(otherInterval).isEmpty() == false;
+	}
+	
+	@Override
+	public boolean containsKey(K key) {
+		return findKeyIntervalContaining(key) != null;
+	}
+	
+	@Override
+	public V get(K key) {
+		Interval<K> keyInterval = findKeyIntervalContaining(key);
+		//		if (keyInterval == null) return null;
+		return keyValues.get(keyInterval);
+	}
+	
+	@Override
 	public void put(Interval<K> keyInterval, V value) {
 		Validate.notNull(keyInterval);
 		remove(keyInterval);
 		keyValues.put(keyInterval, value);
 	}
 	
+	@Override
 	public void remove(Interval<K> keyInterval) {
 		Validate.notNull(keyInterval);
 		List<Interval<K>> intervalSequence = intersectingKeys(keyInterval);
@@ -59,16 +78,6 @@ public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMa
 		}
 	}
 	
-	public V get(K key) {
-		Interval<K> keyInterval = findKeyIntervalContaining(key);
-		//		if (keyInterval == null) return null;
-		return keyValues.get(keyInterval);
-	}
-	
-	public boolean containsKey(K key) {
-		return findKeyIntervalContaining(key) != null;
-	}
-	
 	private Interval<K> findKeyIntervalContaining(K key) {
 		if (key == null) {
 			return null;
@@ -80,6 +89,16 @@ public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMa
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return {@link #keyValues}
+	 */
+	@SuppressWarnings("unused")
+	private Map<Interval<K>, V> getForPersistentMapping_KeyValues() { // CHECKSTYLE IGNORE THIS LINE
+		return keyValues;
 	}
 	
 	/**
@@ -101,20 +120,6 @@ public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMa
 			}
 		}
 		return intervalSequence;
-	}
-	
-	public boolean containsIntersectingKey(Interval<K> otherInterval) {
-		return intersectingKeys(otherInterval).isEmpty() == false;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #keyValues}
-	 */
-	@SuppressWarnings("unused")
-	private Map<Interval<K>, V> getForPersistentMapping_KeyValues() { // CHECKSTYLE IGNORE THIS LINE
-		return keyValues;
 	}
 	
 	/**

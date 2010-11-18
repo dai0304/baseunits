@@ -17,16 +17,16 @@ public class Tally {
 		this(Arrays.asList(moneies));
 	}
 	
+	public Currency currency() {
+		return monies.get(0).breachEncapsulationOfCurrency();
+	}
+	
 	public Money net() {
 		Money sum = Money.zero(currency());
 		for (Money money : monies) {
 			sum = sum.plus(money);
 		}
 		return sum;
-	}
-	
-	public Currency currency() {
-		return monies.get(0).breachEncapsulationOfCurrency();
 	}
 	
 }

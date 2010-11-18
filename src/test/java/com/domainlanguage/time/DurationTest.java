@@ -15,12 +15,6 @@ import java.math.BigDecimal;
 
 import com.domainlanguage.base.Rounding;
 import com.domainlanguage.tests.SerializationTester;
-import com.domainlanguage.time.CalendarDate;
-import com.domainlanguage.time.CalendarInterval;
-import com.domainlanguage.time.Duration;
-import com.domainlanguage.time.TimeInterval;
-import com.domainlanguage.time.TimePoint;
-import com.domainlanguage.time.TimeUnit;
 
 import org.junit.Test;
 

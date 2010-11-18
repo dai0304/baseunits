@@ -14,9 +14,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import com.domainlanguage.tests.SerializationTester;
-import com.domainlanguage.time.Duration;
-import com.domainlanguage.time.TimeInterval;
-import com.domainlanguage.time.TimePoint;
 
 import org.junit.Test;
 

@@ -13,9 +13,6 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import com.domainlanguage.intervals.Interval;
-import com.domainlanguage.intervals.IntervalSequence;
-
 import org.junit.Test;
 
 /**

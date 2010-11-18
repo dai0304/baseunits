@@ -10,10 +10,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-import com.domainlanguage.intervals.Interval;
-import com.domainlanguage.intervals.IntervalMap;
-import com.domainlanguage.intervals.LinearIntervalMap;
-
 import org.junit.Test;
 
 /**

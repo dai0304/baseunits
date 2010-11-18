@@ -16,8 +16,6 @@ public class HourOfDay {
 	
 	private static final int MAX = 23;
 	
-	final int value;
-	
 
 	/**
 	 * インスタンスを生成する。
@@ -56,6 +54,15 @@ public class HourOfDay {
 		return hour + translatedAmPm;
 	}
 	
+	@SuppressWarnings("unused")
+	private static Class<?> getPrimitivePersistenceMappingType() {
+		return Integer.TYPE;
+	}
+	
+
+	final int value;
+	
+
 	private HourOfDay(int initial) {
 		if (initial < MIN || initial > MAX) {
 			throw new IllegalArgumentException("Illegal value for 24 hour: " + initial
@@ -64,16 +71,16 @@ public class HourOfDay {
 		value = initial;
 	}
 	
+	public boolean equals(HourOfDay another) {
+		return value == another.value;
+	}
+	
 	@Override
 	public boolean equals(Object another) {
 		if (another instanceof HourOfDay == false) {
 			return false;
 		}
 		return equals((HourOfDay) another);
-	}
-	
-	public boolean equals(HourOfDay another) {
-		return value == another.value;
 	}
 	
 	@Override
@@ -89,17 +96,12 @@ public class HourOfDay {
 		return value < another.value;
 	}
 	
-	public int value() {
-		return value;
-	}
-	
 	@Override
 	public String toString() {
 		return String.valueOf(value);
 	}
 	
-	@SuppressWarnings("unused")
-	private static Class<?> getPrimitivePersistenceMappingType() {
-		return Integer.TYPE;
+	public int value() {
+		return value;
 	}
 }

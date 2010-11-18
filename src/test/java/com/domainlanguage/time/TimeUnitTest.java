@@ -14,7 +14,6 @@ import static org.junit.Assert.assertThat;
 import java.util.Calendar;
 
 import com.domainlanguage.tests.SerializationTester;
-import com.domainlanguage.time.TimeUnit;
 
 import org.junit.Test;
 

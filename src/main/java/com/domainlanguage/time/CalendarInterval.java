@@ -14,7 +14,6 @@ import java.util.TimeZone;
 import com.domainlanguage.intervals.Interval;
 import com.domainlanguage.util.ImmutableIterator;
 
-
 /**
  * 期間（日付の区間）を表すクラス。
  * 
@@ -24,6 +23,30 @@ import com.domainlanguage.util.ImmutableIterator;
  */
 @SuppressWarnings("serial")
 public abstract class CalendarInterval extends Interval<CalendarDate> {
+	
+	/**
+	 * 開始日より、下側限界のみを持つ期間を生成する。
+	 * 
+	 * <p>開始日は期間に含む（閉じている）区間である。</p>
+	 * 
+	 * @param startDate 開始日（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @return 期間
+	 */
+	public static CalendarInterval everFrom(CalendarDate startDate) {
+		return inclusive(startDate, null);
+	}
+	
+	/**
+	 * 終了日より、上側限界のみを持つ期間を生成する。
+	 * 
+	 * <p>終了日は期間に含む（閉じている）区間である。</p>
+	 * 
+	 * @param endDate 終了日（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @return 期間
+	 */
+	public static CalendarInterval everPreceding(CalendarDate endDate) {
+		return inclusive(null, endDate);
+	}
 	
 	/**
 	 * 開始日と終了日より、期間を生成する。
@@ -76,20 +99,6 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 指定した年の元旦からその年の大晦日までの、期間を生成する。
-	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
-	 * 
-	 * @param year 開始日の年
-	 * @return 期間
-	 */
-	public static CalendarInterval year(int year) {
-		CalendarDate startDate = CalendarDate.date(year, 1, 1);
-		CalendarDate endDate = CalendarDate.date(year + 1, 1, 1).plusDays(-1);
-		return inclusive(startDate, endDate);
-	}
-	
-	/**
 	 * 開始日と期間の長さより、期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
@@ -110,27 +119,17 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 開始日より、下側限界のみを持つ期間を生成する。
+	 * 指定した年の元旦からその年の大晦日までの、期間を生成する。
 	 * 
-	 * <p>開始日は期間に含む（閉じている）区間である。</p>
+	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @param startDate 開始日（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param year 開始日の年
 	 * @return 期間
 	 */
-	public static CalendarInterval everFrom(CalendarDate startDate) {
-		return inclusive(startDate, null);
-	}
-	
-	/**
-	 * 終了日より、上側限界のみを持つ期間を生成する。
-	 * 
-	 * <p>終了日は期間に含む（閉じている）区間である。</p>
-	 * 
-	 * @param endDate 終了日（上側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @return 期間
-	 */
-	public static CalendarInterval everPreceding(CalendarDate endDate) {
-		return inclusive(null, endDate);
+	public static CalendarInterval year(int year) {
+		CalendarDate startDate = CalendarDate.date(year, 1, 1);
+		CalendarDate endDate = CalendarDate.date(year + 1, 1, 1).plusDays(-1);
+		return inclusive(startDate, endDate);
 	}
 	
 	/**
@@ -143,12 +142,131 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	 */
 	public abstract TimeInterval asTimeInterval(TimeZone zone);
 	
+	/**
+	 * この期間の終了日を起点として、前回の日付の前日を
+	 * この期間の開始日を超過しない範囲で順次取得する反復子を取得する。
+	 * 
+	 * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
+	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * <ol>
+	 *   <li>2009/01/04</li>
+	 *   <li>2009/01/03</li>
+	 *   <li>2009/01/02</li>
+	 *   <li>2009/01/01</li>
+	 * </ol>
+	 * </p>
+	 * 
+	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+	 * 
+	 * <p>この期間が開始日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * {@code true}を返すので、無限ループに注意すること。</p>
+	 * 
+	 * @return 日付の反復子
+	 * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
+	 */
+	public Iterator<CalendarDate> daysInReverseIterator() {
+		if (hasUpperLimit() == false) {
+			throw new IllegalStateException();
+		}
+		final CalendarDate start = upperLimit();
+		final CalendarDate end = lowerLimit();
+		return new ImmutableIterator<CalendarDate>() {
+			
+			CalendarDate next = start;
+			
+
+			@Override
+			public boolean hasNext() {
+				return next.isBefore(end) == false;
+			}
+			
+			@Override
+			public CalendarDate next() {
+				if (hasNext() == false) {
+					throw new NoSuchElementException();
+				}
+				CalendarDate current = next;
+				next = next.plusDays(-1);
+				return current;
+			}
+		};
+	}
+	
+	/**
+	 * この期間の開始日を起点として、前回の日付の翌日を
+	 * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
+	 * 
+	 * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
+	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * <ol>
+	 *   <li>2009/01/01</li>
+	 *   <li>2009/01/02</li>
+	 *   <li>2009/01/03</li>
+	 *   <li>2009/01/04</li>
+	 * </ol>
+	 * </p>
+	 * 
+	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+	 * 
+	 * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * {@code true}を返すので、無限ループに注意すること。</p>
+	 * 
+	 * @return 日付の反復子
+	 * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
+	 */
+	public Iterator<CalendarDate> daysIterator() {
+		if (hasLowerLimit() == false) {
+			throw new IllegalStateException();
+		}
+		final CalendarDate start = lowerLimit();
+		final CalendarDate end = upperLimit();
+		return new ImmutableIterator<CalendarDate>() {
+			
+			CalendarDate next = start;
+			
+
+			@Override
+			public boolean hasNext() {
+				return next.isAfter(end) == false;
+			}
+			
+			@Override
+			public CalendarDate next() {
+				if (hasNext() == false) {
+					throw new NoSuchElementException();
+				}
+				CalendarDate current = next;
+				next = next.plusDays(1);
+				return current;
+			}
+		};
+	}
+	
+	/**
+	 * 終了日を取得する。
+	 * 
+	 * @return 終了日
+	 */
+	public CalendarDate end() {
+		return upperLimit();
+	}
+	
+	public boolean equals(CalendarInterval other) {
+		return other != null && upperLimit().equals(other.upperLimit()) && lowerLimit().equals(other.lowerLimit());
+	}
+	
 	@Override
-	public Interval<CalendarDate> newOfSameType(CalendarDate lower, boolean isLowerClosed, CalendarDate upper,
-			boolean isUpperClosed) {
-		CalendarDate includedLower = isLowerClosed ? (CalendarDate) lower : lower.plusDays(1);
-		CalendarDate includedUpper = isUpperClosed ? (CalendarDate) upper : upper.plusDays(-1);
-		return inclusive(includedLower, includedUpper);
+	public boolean equals(Object object) {
+		try {
+			return equals((CalendarInterval) object);
+		} catch (ClassCastException ex) {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return lowerLimit().hashCode();
 	}
 	
 	/**
@@ -176,44 +294,6 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 開始日を取得する。
-	 * 
-	 * @return 開始日
-	 */
-	public CalendarDate start() {
-		return lowerLimit();
-	}
-	
-	/**
-	 * 終了日を取得する。
-	 * 
-	 * @return 終了日
-	 */
-	public CalendarDate end() {
-		return upperLimit();
-	}
-	
-	@Override
-	public boolean equals(Object object) {
-		try {
-			return equals((CalendarInterval) object);
-		} catch (ClassCastException ex) {
-			return false;
-		}
-	}
-	
-	public boolean equals(CalendarInterval other) {
-		return other != null
-				&& upperLimit().equals(other.upperLimit())
-				&& lowerLimit().equals(other.lowerLimit());
-	}
-	
-	@Override
-	public int hashCode() {
-		return lowerLimit().hashCode();
-	}
-	
-	/**
 	 * この期間の日数としての長さを取得する。
 	 * 
 	 * @return 期間の長さ
@@ -221,6 +301,18 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	 */
 	public Duration length() {
 		return Duration.days(lengthInDaysInt());
+	}
+	
+	/**
+	 * この期間が、日数にして何日の長さがあるかを取得する。
+	 * 
+	 * @return 日数
+	 */
+	public int lengthInDaysInt() {
+		Calendar calStart = start().asJavaCalendarUniversalZoneMidnight();
+		Calendar calEnd = end().plusDays(1).asJavaCalendarUniversalZoneMidnight();
+		long diffMillis = calEnd.getTimeInMillis() - calStart.getTimeInMillis();
+		return (int) (diffMillis / TimeUnitConversionFactor.millisecondsPerDay.value);
 	}
 	
 	/**
@@ -250,16 +342,21 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 		return monthDiff;
 	}
 	
+	@Override
+	public Interval<CalendarDate> newOfSameType(CalendarDate lower, boolean isLowerClosed, CalendarDate upper,
+			boolean isUpperClosed) {
+		CalendarDate includedLower = isLowerClosed ? (CalendarDate) lower : lower.plusDays(1);
+		CalendarDate includedUpper = isUpperClosed ? (CalendarDate) upper : upper.plusDays(-1);
+		return inclusive(includedLower, includedUpper);
+	}
+	
 	/**
-	 * この期間が、日数にして何日の長さがあるかを取得する。
+	 * 開始日を取得する。
 	 * 
-	 * @return 日数
+	 * @return 開始日
 	 */
-	public int lengthInDaysInt() {
-		Calendar calStart = start().asJavaCalendarUniversalZoneMidnight();
-		Calendar calEnd = end().plusDays(1).asJavaCalendarUniversalZoneMidnight();
-		long diffMillis = calEnd.getTimeInMillis() - calStart.getTimeInMillis();
-		return (int) (diffMillis / TimeUnitConversionFactor.millisecondsPerDay.value);
+	public CalendarDate start() {
+		return lowerLimit();
 	}
 	
 	/**
@@ -302,112 +399,18 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 			CalendarInterval next = segmentLength.startingFrom(start());
 			
 
+			@Override
 			public boolean hasNext() {
 				return CalendarInterval.this.covers(next);
 			}
 			
+			@Override
 			public CalendarInterval next() {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
 				}
 				CalendarInterval current = next;
 				next = segmentLength.startingFrom(next.end().plusDays(1));
-				return current;
-			}
-		};
-	}
-	
-	/**
-	 * この期間の開始日を起点として、前回の日付の翌日を
-	 * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
-	 * 
-	 * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
-	 * その戻り値の反復子からは、以下の要素が取得できる。
-	 * <ol>
-	 *   <li>2009/01/01</li>
-	 *   <li>2009/01/02</li>
-	 *   <li>2009/01/03</li>
-	 *   <li>2009/01/04</li>
-	 * </ol>
-	 * </p>
-	 * 
-	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
-	 * 
-	 * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
-	 * {@code true}を返すので、無限ループに注意すること。</p>
-	 * 
-	 * @return 日付の反復子
-	 * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
-	 */
-	public Iterator<CalendarDate> daysIterator() {
-		if (hasLowerLimit() == false) {
-			throw new IllegalStateException();
-		}
-		final CalendarDate start = lowerLimit();
-		final CalendarDate end = upperLimit();
-		return new ImmutableIterator<CalendarDate>() {
-			
-			CalendarDate next = start;
-			
-
-			public boolean hasNext() {
-				return next.isAfter(end) == false;
-			}
-			
-			public CalendarDate next() {
-				if (hasNext() == false) {
-					throw new NoSuchElementException();
-				}
-				CalendarDate current = next;
-				next = next.plusDays(1);
-				return current;
-			}
-		};
-	}
-	
-	/**
-	 * この期間の終了日を起点として、前回の日付の前日を
-	 * この期間の開始日を超過しない範囲で順次取得する反復子を取得する。
-	 * 
-	 * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
-	 * その戻り値の反復子からは、以下の要素が取得できる。
-	 * <ol>
-	 *   <li>2009/01/04</li>
-	 *   <li>2009/01/03</li>
-	 *   <li>2009/01/02</li>
-	 *   <li>2009/01/01</li>
-	 * </ol>
-	 * </p>
-	 * 
-	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
-	 * 
-	 * <p>この期間が開始日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
-	 * {@code true}を返すので、無限ループに注意すること。</p>
-	 * 
-	 * @return 日付の反復子
-	 * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
-	 */
-	public Iterator<CalendarDate> daysInReverseIterator() {
-		if (hasUpperLimit() == false) {
-			throw new IllegalStateException();
-		}
-		final CalendarDate start = upperLimit();
-		final CalendarDate end = lowerLimit();
-		return new ImmutableIterator<CalendarDate>() {
-			
-			CalendarDate next = start;
-			
-
-			public boolean hasNext() {
-				return next.isBefore(end) == false;
-			}
-			
-			public CalendarDate next() {
-				if (hasNext() == false) {
-					throw new NoSuchElementException();
-				}
-				CalendarDate current = next;
-				next = next.plusDays(-1);
 				return current;
 			}
 		};

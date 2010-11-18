@@ -30,17 +30,6 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	}
 	
 	/**
-	 * この区間列の要素をあらわすイテレータを取得する。
-	 * 
-	 * <p>各要素は、昇順にソートされている。</p>
-	 * 
-	 * @see java.lang.Iterable#iterator()
-	 */
-	public Iterator<Interval<T>> iterator() {
-		return intervals.iterator();
-	}
-	
-	/**
 	 * 区間列に{@link Interval 区間}を追加する。
 	 * 
 	 * @param interval 追加する{@link Interval 区間}
@@ -51,12 +40,23 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	}
 	
 	/**
-	 * 区間列の要素が空であるかどうかを検証する。
+	 * 全ての要素区間を内包する、最小の区間を返す。
 	 * 
-	 * @return 空である場合は{@code true}、そうでない場合は{@code false}
+	 * @return 全ての要素区間を内包する、最小の区間. 要素がない場合は {@code null} 
 	 */
-	public boolean isEmpty() {
-		return intervals.isEmpty();
+	public Interval<T> extent() {
+		if (intervals.isEmpty()) {
+			return null;
+		}
+		//TODO: Add a creation method to Interval for empty(), if it can be
+		// polymorphic.
+		if (intervals.size() == 1) {
+			return intervals.get(0);
+		}
+		Interval<T> left = intervals.get(0);
+		Interval<T> right = intervals.get(intervals.size() - 1);
+		return left.newOfSameType(left.lowerLimit(), left.includesLowerLimit(), right.upperLimit(),
+				right.includesUpperLimit());
 	}
 	
 	/**
@@ -102,26 +102,24 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	}
 	
 	/**
-	 * 全ての要素区間を内包する、最小の区間を返す。
+	 * 区間列の要素が空であるかどうかを検証する。
 	 * 
-	 * @return 全ての要素区間を内包する、最小の区間. 要素がない場合は {@code null} 
+	 * @return 空である場合は{@code true}、そうでない場合は{@code false}
 	 */
-	public Interval<T> extent() {
-		if (intervals.isEmpty()) {
-			return null;
-		}
-		//TODO: Add a creation method to Interval for empty(), if it can be
-		// polymorphic.
-		if (intervals.size() == 1) {
-			return intervals.get(0);
-		}
-		Interval<T> left = intervals.get(0);
-		Interval<T> right = intervals.get(intervals.size() - 1);
-		return left.newOfSameType(
-				left.lowerLimit(),
-				left.includesLowerLimit(),
-				right.upperLimit(),
-				right.includesUpperLimit());
+	public boolean isEmpty() {
+		return intervals.isEmpty();
+	}
+	
+	/**
+	 * この区間列の要素をあらわすイテレータを取得する。
+	 * 
+	 * <p>各要素は、昇順にソートされている。</p>
+	 * 
+	 * @see java.lang.Iterable#iterator()
+	 */
+	@Override
+	public Iterator<Interval<T>> iterator() {
+		return intervals.iterator();
 	}
 	
 	/**

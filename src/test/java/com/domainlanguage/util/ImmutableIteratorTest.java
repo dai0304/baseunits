@@ -10,8 +10,6 @@ import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 
-import com.domainlanguage.util.ImmutableIterator;
-
 import org.junit.Test;
 
 /**
@@ -30,10 +28,12 @@ public class ImmutableIteratorTest {
 	public void test01_Remove() throws Exception {
 		Iterator<Void> iterator = new ImmutableIterator<Void>() {
 			
+			@Override
 			public boolean hasNext() {
 				return true;
 			}
 			
+			@Override
 			public Void next() {
 				return null;
 			}

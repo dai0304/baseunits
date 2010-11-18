@@ -12,8 +12,6 @@ import static org.junit.Assert.fail;
 import java.math.BigDecimal;
 
 import com.domainlanguage.base.Rounding;
-import com.domainlanguage.money.Money;
-import com.domainlanguage.money.MoneyTimeRate;
 import com.domainlanguage.time.Duration;
 
 import org.junit.Test;

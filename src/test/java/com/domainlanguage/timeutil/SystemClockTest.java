@@ -15,7 +15,6 @@ import java.util.Date;
 import com.domainlanguage.time.Duration;
 import com.domainlanguage.time.TimePoint;
 import com.domainlanguage.time.TimeSource;
-import com.domainlanguage.timeutil.SystemClock;
 
 import org.junit.Test;
 

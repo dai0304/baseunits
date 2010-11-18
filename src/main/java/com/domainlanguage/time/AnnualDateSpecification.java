@@ -11,10 +11,7 @@ import java.util.NoSuchElementException;
 
 import com.domainlanguage.util.ImmutableIterator;
 
-
 public abstract class AnnualDateSpecification extends DateSpecification {
-	
-	public abstract CalendarDate ofYear(int year);
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
@@ -38,10 +35,12 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 			int year = next.breachEncapsulationOf_year();
 			
 
+			@Override
 			public boolean hasNext() {
 				return next != null;
 			}
 			
+			@Override
 			public CalendarDate next() {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
@@ -56,4 +55,6 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 			}
 		};
 	}
+	
+	public abstract CalendarDate ofYear(int year);
 }

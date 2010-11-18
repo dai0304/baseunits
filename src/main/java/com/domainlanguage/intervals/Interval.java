@@ -35,13 +35,19 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>>, Serializable {
 	
-	/** 下側限界 */
-	private IntervalLimit<T> lowerLimitObject;
+	/**
+	 * 下側限界のみを持つ区間を生成する。
+	 * 
+	 * <p>下側限界値は区間に含む（閉じている）区間である。</p>
+	 * 
+	 * @param <T> 限界値の型
+	 * @param lower 下側限界値. {@code null}の場合は、限界がないことを表す
+	 * @return 区間
+	 */
+	public static <T extends Comparable<T>>Interval<T> andMore(T lower) {
+		return closed(lower, null);
+	}
 	
-	/** 上側限界 */
-	private IntervalLimit<T> upperLimitObject;
-	
-
 	/**
 	 * 閉区間を生成する。
 	 * 
@@ -87,18 +93,31 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
-	 * @param lower 下側限界
-	 * @param upper 上側限界
-	 * @throws IllegalArgumentException {@code lower.isLower() == false}または {@code uppser.isUpper() == false} の場合
-	 * @throws IllegalArgumentException 下限値が上限値より大きい場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * 上側限界のみを持つ区間を生成する。
+	 * 
+	 * <p>上側限界値は区間に含む（閉じている）区間である。</p>
+	 * 
+	 * @param <T> 限界値の型
+	 * @param upper 上側限界値. {@code null}の場合は、限界がないことを表す
+	 * @return 区間
 	 */
-	Interval(IntervalLimit<T> lower, IntervalLimit<T> upper) {
-		Validate.notNull(lower);
-		Validate.notNull(upper);
-		assertLowerIsLessThanOrEqualUpper(lower, upper);
-		this.lowerLimitObject = lower;
-		this.upperLimitObject = upper;
+	public static <T extends Comparable<T>>Interval<T> upTo(T upper) {
+		return closed(null, upper);
+	}
+	
+
+	/** 下側限界 */
+	private IntervalLimit<T> lowerLimitObject;
+	
+	/** 上側限界 */
+	private IntervalLimit<T> upperLimitObject;
+	
+
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 */
+	protected Interval() {
 	}
 	
 	/**
@@ -115,93 +134,176 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
-	 * 上側限界値を取得する。
-	 * 
-	 * <p>Warning: This method should generally be used for display
-	 * purposes and interactions with closely coupled classes.
-	 * Look for (or add) other methods to do computations.</p>
-	 * 
-	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
-	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
-	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-	 * このクラスに新しいメソッドを追加することを検討すること。</p>
-	 * 
-	 * @return 上側限界値. 限界がない場合は、{@code null}
+	 * @param lower 下側限界
+	 * @param upper 上側限界
+	 * @throws IllegalArgumentException {@code lower.isLower() == false}または {@code uppser.isUpper() == false} の場合
+	 * @throws IllegalArgumentException 下限値が上限値より大きい場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public T upperLimit() {
-		return upperLimitObject.getValue();
+	Interval(IntervalLimit<T> lower, IntervalLimit<T> upper) {
+		Validate.notNull(lower);
+		Validate.notNull(upper);
+		assertLowerIsLessThanOrEqualUpper(lower, upper);
+		this.lowerLimitObject = lower;
+		this.upperLimitObject = upper;
 	}
 	
 	/**
-	 * 上側限界が閉じているかどうかを取得する。
+	 * 区間の比較を行う。
 	 * 
-	 * <p>Warning: This method should generally be used for display
-	 * purposes and interactions with closely coupled classes.
-	 * Look for (or add) other methods to do computations.</p>
+	 * <p>区間は、限界の開閉にかかわらず、上側限界値が小さい方を「小さい」と判断する。
+	 * 上側限界値が一致している場合、下側限界が閉じている方を「小さい」と判断する。
+	 * さらに下側限界の開閉が一致している場合、下側限界値が小さい方を「小さい」と判断する。
+	 * 上側下側両方の限界値が一致し、下側限界の開閉も一致している場合同一と判断する。</p>
 	 * 
-	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
-	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
-	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-	 * このクラスに新しいメソッドを追加することを検討すること。</p>
+	 * THINK 上側限界の開閉には影響されない？ これでいいの？
 	 * 
-	 * @return 上側限界値が閉じている場合は{@code true}、そうでない場合は{@code false}
+	 * @param other 比較対象
+	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public boolean includesUpperLimit() {
-		return upperLimitObject.isClosed();
+	@Override
+	public int compareTo(Interval<T> other) {
+		Validate.notNull(other);
+		if (upperLimit().equals(other.upperLimit()) == false) {
+			return upperLimit().compareTo(other.upperLimit());
+		}
+		if (includesLowerLimit() && other.includesLowerLimit() == false) {
+			return -1;
+		}
+		if (includesLowerLimit() == false && other.includesLowerLimit()) {
+			return 1;
+		}
+		return lowerLimit().compareTo(other.lowerLimit());
 	}
 	
 	/**
-	 * 上側限界があるかどうかを取得する。
+	 * この区間の<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
 	 * 
-	 * <p>Warning: This method should generally be used for display
-	 * purposes and interactions with closely coupled classes.
-	 * Look for (or add) other methods to do computations.</p>
+	 * <p>この区間と与えた区間に共通部分がない場合は、 {@code other} を要素とする要素数1の区間列を返す。
+	 * 与えた区間が、この区間を完全に内包する場合は、2つの区間に分かれるため、要素数が2の区間列を返す。
+	 * 逆にこの区間が、与えた区間を完全に内包する場合は、要素数0の区間列を返す。
+	 * 上記以外の場合、この区間の補区間と与えた区間の共通部分を要素とする要素数1の区間列を返す。</p>
 	 * 
-	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
-	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
-	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-	 * このクラスに新しいメソッドを追加することを検討すること。</p>
+	 * TODO 数学的意味は？
 	 * 
-	 * @return 上側限界がある場合は{@code true}、そうでない場合は{@code false}
+	 * @param other 対照となる区間
+	 * @return 補区間と対照区間の共通部分のリスト
+	 * @see <a href="http://en.wikipedia.org/wiki/Set_theoretic_complement">complement (wikipedia)</a>
 	 */
-	public boolean hasUpperLimit() {
-		return upperLimit() != null;
+	public List<Interval<T>> complementRelativeTo(Interval<T> other) {
+		List<Interval<T>> intervalSequence = new ArrayList<Interval<T>>();
+		if (this.intersects(other) == false) {
+			intervalSequence.add(other);
+			return intervalSequence;
+		}
+		Interval<T> left = leftComplementRelativeTo(other);
+		if (left != null) {
+			intervalSequence.add(left);
+		}
+		Interval<T> right = rightComplementRelativeTo(other);
+		if (right != null) {
+			intervalSequence.add(right);
+		}
+		return intervalSequence;
 	}
 	
 	/**
-	 * 下側限界値を取得する。
+	 * この区間が、指定した区間 {@code other}を完全に内包するかどうかを検証する。
 	 * 
-	 * <p>Warning: This method should generally be used for display
-	 * purposes and interactions with closely coupled classes.
-	 * Look for (or add) other methods to do computations.</p>
-	 * 
-	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
-	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
-	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-	 * このクラスに新しいメソッドを追加することを検討すること。</p>
-	 * 
-	 * @return 下側限界値. 限界がない場合は、{@code null}
+	 * @param other 区間
+	 * @return 完全に内包する場合は{@code true}、そうでない場合は{@code false}
 	 */
-	public T lowerLimit() {
-		return lowerLimitObject.getValue();
+	public boolean covers(Interval<T> other) {
+		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
+		boolean lowerPass = this.includes(other.lowerLimit()) || (lowerComparison == 0 && !other.includesLowerLimit());
+		int upperComparison = upperLimit().compareTo(other.upperLimit());
+		boolean upperPass = this.includes(other.upperLimit()) || (upperComparison == 0 && !other.includesUpperLimit());
+		return lowerPass && upperPass;
 	}
 	
 	/**
-	 * 下側限界が閉じているかどうかを取得する。
+	 * この区間と同じ限界値を持つ、新しい開区間を生成する。
 	 * 
-	 * <p>Warning: This method should generally be used for display
-	 * purposes and interactions with closely coupled classes.
-	 * Look for (or add) other methods to do computations.</p>
-	 * 
-	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
-	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
-	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
-	 * このクラスに新しいメソッドを追加することを検討すること。</p>
-	 * 
-	 * @return 下側限界が閉じている場合は{@code true}、そうでない場合は{@code false}
+	 * @return 新しい開区間
 	 */
-	public boolean includesLowerLimit() {
-		return lowerLimitObject.isClosed();
+	public Interval<T> emptyOfSameType() {
+		return newOfSameType(lowerLimit(), false, lowerLimit(), false);
+	}
+	
+	/**
+	 * この区間と、与えた区間 {@code other}の同一性を検証する。
+	 * 
+	 * <p>両者が共に空の区間であった場合は{@code true}、どちらか一方のみが空の区間であった場合は {@code false}を返す。
+	 * 両者とも単一要素区間であった場合は、両者の下側限界値を比較し、一致した場合は {@code true}を返す。
+	 * また、TODO</p>
+	 * 
+	 * @param other 比較対象の区間
+	 * @return 同一である場合は{@code true}、そうでない場合は{@code false}
+	 */
+	public boolean equals(Interval<T> other) {
+		if (other == null) {
+			return false;
+		}
+		
+		boolean thisEmpty = this.isEmpty();
+		boolean otherEmpty = other.isEmpty();
+		if (thisEmpty & otherEmpty) {
+			return true;
+		}
+		if (thisEmpty ^ otherEmpty) {
+			return false;
+		}
+		
+		boolean thisSingle = this.isSingleElement();
+		boolean otherSingle = other.isSingleElement();
+		if (thisSingle & otherSingle) {
+			return this.lowerLimit().equals(other.lowerLimit());
+		}
+		if (thisSingle ^ otherSingle) {
+			return false;
+		}
+		
+		return compareTo(other) == 0;
+	}
+	
+	/**
+	 * このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public boolean equals(Object other) {
+		try {
+			return equals((Interval<T>) other);
+		} catch (ClassCastException ex) {
+			return false;
+		}
+	}
+	
+	/**
+	 * この区間と与えた区間 {@code other} の間にある区間を取得する。
+	 * 
+	 * <p>例えば、[3, 5) と [10, 20) の gap は、[5, 19) である。
+	 * 2つの区間が共通部分を持つ場合は、空の区間を返す。</p>
+	 * 
+	 * @param other 比較対象の区間
+	 * @return ギャップ区間
+	 */
+	public Interval<T> gap(Interval<T> other) {
+		if (this.intersects(other)) {
+			return this.emptyOfSameType();
+		}
+		
+		return newOfSameType(lesserOfUpperLimits(other), lesserOfUpperIncludedInUnion(other) == false,
+				greaterOfLowerLimits(other), greaterOfLowerIncludedInUnion(other) == false);
+	}
+	
+	@Override
+	public int hashCode() {
+		return lowerLimit().hashCode() ^ upperLimit().hashCode();
 	}
 	
 	/**
@@ -223,25 +325,21 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
-	 * この区間と同じ型{@code T}を持つ、新しい区間を生成する。
+	 * 上側限界があるかどうかを取得する。
 	 * 
-	 * @param lower 下側限界値. 限界値がない場合は、{@code null}
-	 * @param isLowerClosed 下限値を区間に含む（閉じた下側限界）場合は{@code true}を指定する
-	 * @param upper 上側限界値. 限界値がない場合は、{@code null}
-	 * @param isUpperClosed 上限値を区間に含む（閉じた上側限界）場合は{@code true}を指定する
-	 * @return 新しい区間
-	 */
-	public Interval<T> newOfSameType(T lower, boolean isLowerClosed, T upper, boolean isUpperClosed) {
-		return new Interval<T>(lower, isLowerClosed, upper, isUpperClosed);
-	}
-	
-	/**
-	 * この区間と同じ限界値を持つ、新しい開区間を生成する。
+	 * <p>Warning: This method should generally be used for display
+	 * purposes and interactions with closely coupled classes.
+	 * Look for (or add) other methods to do computations.</p>
 	 * 
-	 * @return 新しい開区間
+	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+	 * このクラスに新しいメソッドを追加することを検討すること。</p>
+	 * 
+	 * @return 上側限界がある場合は{@code true}、そうでない場合は{@code false}
 	 */
-	public Interval<T> emptyOfSameType() {
-		return newOfSameType(lowerLimit(), false, lowerLimit(), false);
+	public boolean hasUpperLimit() {
+		return upperLimit() != null;
 	}
 	
 	/**
@@ -255,26 +353,104 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
-	 * この区間が、指定した区間 {@code other}を完全に内包するかどうかを検証する。
+	 * 下側限界が閉じているかどうかを取得する。
 	 * 
-	 * @param other 区間
-	 * @return 完全に内包する場合は{@code true}、そうでない場合は{@code false}
+	 * <p>Warning: This method should generally be used for display
+	 * purposes and interactions with closely coupled classes.
+	 * Look for (or add) other methods to do computations.</p>
+	 * 
+	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+	 * このクラスに新しいメソッドを追加することを検討すること。</p>
+	 * 
+	 * @return 下側限界が閉じている場合は{@code true}、そうでない場合は{@code false}
 	 */
-	public boolean covers(Interval<T> other) {
-		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
-		boolean lowerPass = this.includes(other.lowerLimit()) || (lowerComparison == 0 && !other.includesLowerLimit());
-		int upperComparison = upperLimit().compareTo(other.upperLimit());
-		boolean upperPass = this.includes(other.upperLimit()) || (upperComparison == 0 && !other.includesUpperLimit());
-		return lowerPass && upperPass;
+	public boolean includesLowerLimit() {
+		return lowerLimitObject.isClosed();
 	}
 	
 	/**
-	 * この区間が開区間であるかどうかを検証する。
+	 * 上側限界が閉じているかどうかを取得する。
 	 * 
-	 * @return 開区間である場合は{@code true}、そうでない場合（半開区間を含む）は{@code false}
+	 * <p>Warning: This method should generally be used for display
+	 * purposes and interactions with closely coupled classes.
+	 * Look for (or add) other methods to do computations.</p>
+	 * 
+	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+	 * このクラスに新しいメソッドを追加することを検討すること。</p>
+	 * 
+	 * @return 上側限界値が閉じている場合は{@code true}、そうでない場合は{@code false}
 	 */
-	public boolean isOpen() {
-		return includesLowerLimit() == false && includesUpperLimit() == false;
+	public boolean includesUpperLimit() {
+		return upperLimitObject.isClosed();
+	}
+	
+	/**
+	 * この区間と与えた区間 {@code other} の積集合（共通部分）を返す。
+	 * 
+	 * <p>共通部分が存在しない場合は、空の区間を返す。</p>
+	 * 
+	 * @param other 比較対象の区間
+	 * @return 積集合（共通部分）
+	 */
+	public Interval<T> intersect(Interval<T> other) {
+		T intersectLowerBound = greaterOfLowerLimits(other);
+		T intersectUpperBound = lesserOfUpperLimits(other);
+		if (intersectLowerBound.compareTo(intersectUpperBound) > 0) {
+			return emptyOfSameType();
+		}
+		return newOfSameType(intersectLowerBound, greaterOfLowerIncludedInIntersection(other), intersectUpperBound,
+				lesserOfUpperIncludedInIntersection(other));
+	}
+	
+	/**
+	 * この区間と、与えた区間 {{@code other}の間に共通部分が存在するかどうか検証する。
+	 * 
+	 * @param other 対象区間
+	 * @return 共通部分が存在する場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public boolean intersects(Interval<T> other) {
+		Validate.notNull(other);
+		int comparison = greaterOfLowerLimits(other).compareTo(lesserOfUpperLimits(other));
+		if (comparison < 0) {
+			return true;
+		}
+		if (comparison > 0) {
+			return false;
+		}
+		return greaterOfLowerIncludedInIntersection(other) && lesserOfUpperIncludedInIntersection(other);
+	}
+	
+	/**
+	 * 指定した値 {@code value} が、この区間の下側限界を超過していないかどうかを検証する。
+	 * 
+	 * @param value 値
+	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
+	 */
+	public boolean isAbove(T value) {
+		if (hasLowerLimit() == false) {
+			return false;
+		}
+		int comparison = lowerLimit().compareTo(value);
+		return comparison > 0 || (comparison == 0 && !includesLowerLimit());
+	}
+	
+	/**
+	 * 指定した値 {@code value} が、この区間の上側限界を超過していないかどうかを検証する。
+	 * 
+	 * @param value 値
+	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
+	 */
+	public boolean isBelow(T value) {
+		if (hasUpperLimit() == false) {
+			return false;
+		}
+		int comparison = upperLimit().compareTo(value);
+		return comparison < 0 || (comparison == 0 && !includesUpperLimit());
 	}
 	
 	/**
@@ -301,6 +477,15 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
+	 * この区間が開区間であるかどうかを検証する。
+	 * 
+	 * @return 開区間である場合は{@code true}、そうでない場合（半開区間を含む）は{@code false}
+	 */
+	public boolean isOpen() {
+		return includesLowerLimit() == false && includesUpperLimit() == false;
+	}
+	
+	/**
 	 * この区間が単一要素区間であるかどうかを検証する。
 	 * 
 	 * <p>単一要素区間は、上側下側の両限界を持ち、さらにそれらの限界値が同値であり、かつ、開区間ではないことを示す。
@@ -320,60 +505,34 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
-	 * 指定した値 {@code value} が、この区間の上側限界を超過していないかどうかを検証する。
+	 * 下側限界値を取得する。
 	 * 
-	 * @param value 値
-	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
+	 * <p>Warning: This method should generally be used for display
+	 * purposes and interactions with closely coupled classes.
+	 * Look for (or add) other methods to do computations.</p>
+	 * 
+	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+	 * このクラスに新しいメソッドを追加することを検討すること。</p>
+	 * 
+	 * @return 下側限界値. 限界がない場合は、{@code null}
 	 */
-	public boolean isBelow(T value) {
-		if (hasUpperLimit() == false) {
-			return false;
-		}
-		int comparison = upperLimit().compareTo(value);
-		return comparison < 0 || (comparison == 0 && !includesUpperLimit());
+	public T lowerLimit() {
+		return lowerLimitObject.getValue();
 	}
 	
 	/**
-	 * 指定した値 {@code value} が、この区間の下側限界を超過していないかどうかを検証する。
+	 * この区間と同じ型{@code T}を持つ、新しい区間を生成する。
 	 * 
-	 * @param value 値
-	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
+	 * @param lower 下側限界値. 限界値がない場合は、{@code null}
+	 * @param isLowerClosed 下限値を区間に含む（閉じた下側限界）場合は{@code true}を指定する
+	 * @param upper 上側限界値. 限界値がない場合は、{@code null}
+	 * @param isUpperClosed 上限値を区間に含む（閉じた上側限界）場合は{@code true}を指定する
+	 * @return 新しい区間
 	 */
-	public boolean isAbove(T value) {
-		if (hasLowerLimit() == false) {
-			return false;
-		}
-		int comparison = lowerLimit().compareTo(value);
-		return comparison > 0 || (comparison == 0 && !includesLowerLimit());
-	}
-	
-	/**
-	 * 区間の比較を行う。
-	 * 
-	 * <p>区間は、限界の開閉にかかわらず、上側限界値が小さい方を「小さい」と判断する。
-	 * 上側限界値が一致している場合、下側限界が閉じている方を「小さい」と判断する。
-	 * さらに下側限界の開閉が一致している場合、下側限界値が小さい方を「小さい」と判断する。
-	 * 上側下側両方の限界値が一致し、下側限界の開閉も一致している場合同一と判断する。</p>
-	 * 
-	 * THINK 上側限界の開閉には影響されない？ これでいいの？
-	 * 
-	 * @param other 比較対象
-	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	public int compareTo(Interval<T> other) {
-		Validate.notNull(other);
-		if (upperLimit().equals(other.upperLimit()) == false) {
-			return upperLimit().compareTo(other.upperLimit());
-		}
-		if (includesLowerLimit() && other.includesLowerLimit() == false) {
-			return -1;
-		}
-		if (includesLowerLimit() == false && other.includesLowerLimit()) {
-			return 1;
-		}
-		return lowerLimit().compareTo(other.lowerLimit());
+	public Interval<T> newOfSameType(T lower, boolean isLowerClosed, T upper, boolean isUpperClosed) {
+		return new Interval<T>(lower, isLowerClosed, upper, isUpperClosed);
 	}
 	
 	/**
@@ -404,20 +563,21 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
-	 * この区間と与えた区間 {@code other} の下側限界値のうち、より小さい（限界の広い、制約の小さい）限界値を返す。
+	 * 上側限界値を取得する。
 	 * 
-	 * @param other 比較対象の限界値
-	 * @return より小さい限界値. この区間に下側限界がない場合は {@code null}
+	 * <p>Warning: This method should generally be used for display
+	 * purposes and interactions with closely coupled classes.
+	 * Look for (or add) other methods to do computations.</p>
+	 * 
+	 * <p>警告：このメソッドは一般的に、この値の表示目的および、このクラスと結合度の高いクラスとの
+	 * インタラクションに使用する。不用意なこのメソッドの使用は、このクラスとクライアント側のクラスの
+	 * 結合度をいたずらに高めてしまうことを表す。この値を計算に使用したい場合は、他の適切なメソッドを探すか、
+	 * このクラスに新しいメソッドを追加することを検討すること。</p>
+	 * 
+	 * @return 上側限界値. 限界がない場合は、{@code null}
 	 */
-	private T lesserOfLowerLimits(Interval<T> other) {
-		if (lowerLimit() == null) {
-			return null;
-		}
-		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
-		if (lowerComparison <= 0) {
-			return this.lowerLimit();
-		}
-		return other.lowerLimit();
+	public T upperLimit() {
+		return upperLimitObject.getValue();
 	}
 	
 	/**
@@ -458,6 +618,42 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		return other.upperLimit();
 	}
 	
+	private void assertLowerIsLessThanOrEqualUpper(IntervalLimit<T> lower, IntervalLimit<T> upper) {
+		if (!(lower.isLower() && upper.isUpper() && lower.compareTo(upper) <= 0)) {
+			throw new IllegalArgumentException(lower + " is not before or equal to " + upper);
+		}
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return lowerLimit
+	 */
+	@SuppressWarnings("unused")
+	private T getForPersistentMapping_LowerLimit() { // CHECKSTYLE IGNORE THIS LINE
+		return lowerLimitObject.getForPersistentMapping_Value();
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return upperLimit
+	 */
+	@SuppressWarnings("unused")
+	private T getForPersistentMapping_UpperLimit() { // CHECKSTYLE IGNORE THIS LINE
+		return upperLimitObject.getForPersistentMapping_Value();
+	}
+	
+	private boolean greaterOfLowerIncludedInIntersection(Interval<T> other) {
+		T limit = greaterOfLowerLimits(other);
+		return this.includes(limit) && other.includes(limit);
+	}
+	
+	private boolean greaterOfLowerIncludedInUnion(Interval<T> other) {
+		T limit = greaterOfLowerLimits(other);
+		return this.includes(limit) || other.includes(limit);
+	}
+	
 	/**
 	 * この区間と与えた区間 {@code other} の上側限界値のうち、より大きい（限界の広い、制約の小さい）限界値を返す。
 	 * 
@@ -475,172 +671,24 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		return other.upperLimit();
 	}
 	
-	private boolean greaterOfLowerIncludedInIntersection(Interval<T> other) {
-		T limit = greaterOfLowerLimits(other);
-		return this.includes(limit) && other.includes(limit);
-	}
-	
-	private boolean lesserOfUpperIncludedInIntersection(Interval<T> other) {
-		T limit = lesserOfUpperLimits(other);
-		return this.includes(limit) && other.includes(limit);
-	}
-	
-	private boolean greaterOfLowerIncludedInUnion(Interval<T> other) {
-		T limit = greaterOfLowerLimits(other);
-		return this.includes(limit) || other.includes(limit);
-	}
-	
-	private boolean lesserOfUpperIncludedInUnion(Interval<T> other) {
-		T limit = lesserOfUpperLimits(other);
-		return this.includes(limit) || other.includes(limit);
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return {@code true} if closed, {@code false} otherwise
+	 */
+	@SuppressWarnings("unused")
+	private boolean isForPersistentMapping_IncludesLowerLimit() { // CHECKSTYLE IGNORE THIS LINE
+		return !lowerLimitObject.isForPersistentMapping_Closed();
 	}
 	
 	/**
-	 * このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @return {@code true} closed, {@code false} otherwise
 	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public boolean equals(Object other) {
-		try {
-			return equals((Interval<T>) other);
-		} catch (ClassCastException ex) {
-			return false;
-		}
-	}
-	
-	/**
-	 * この区間と、与えた区間 {@code other}の同一性を検証する。
-	 * 
-	 * <p>両者が共に空の区間であった場合は{@code true}、どちらか一方のみが空の区間であった場合は {@code false}を返す。
-	 * 両者とも単一要素区間であった場合は、両者の下側限界値を比較し、一致した場合は {@code true}を返す。
-	 * また、TODO</p>
-	 * 
-	 * @param other 比較対象の区間
-	 * @return 同一である場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public boolean equals(Interval<T> other) {
-		if (other == null) {
-			return false;
-		}
-		
-		boolean thisEmpty = this.isEmpty();
-		boolean otherEmpty = other.isEmpty();
-		if (thisEmpty & otherEmpty) {
-			return true;
-		}
-		if (thisEmpty ^ otherEmpty) {
-			return false;
-		}
-		
-		boolean thisSingle = this.isSingleElement();
-		boolean otherSingle = other.isSingleElement();
-		if (thisSingle & otherSingle) {
-			return this.lowerLimit().equals(other.lowerLimit());
-		}
-		if (thisSingle ^ otherSingle) {
-			return false;
-		}
-		
-		return compareTo(other) == 0;
-	}
-	
-	@Override
-	public int hashCode() {
-		return lowerLimit().hashCode() ^ upperLimit().hashCode();
-	}
-	
-	/**
-	 * この区間と、与えた区間 {{@code other}の間に共通部分が存在するかどうか検証する。
-	 * 
-	 * @param other 対象区間
-	 * @return 共通部分が存在する場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public boolean intersects(Interval<T> other) {
-		Validate.notNull(other);
-		int comparison = greaterOfLowerLimits(other).compareTo(lesserOfUpperLimits(other));
-		if (comparison < 0) {
-			return true;
-		}
-		if (comparison > 0) {
-			return false;
-		}
-		return greaterOfLowerIncludedInIntersection(other) && lesserOfUpperIncludedInIntersection(other);
-	}
-	
-	/**
-	 * この区間と与えた区間 {@code other} の積集合（共通部分）を返す。
-	 * 
-	 * <p>共通部分が存在しない場合は、空の区間を返す。</p>
-	 * 
-	 * @param other 比較対象の区間
-	 * @return 積集合（共通部分）
-	 */
-	public Interval<T> intersect(Interval<T> other) {
-		T intersectLowerBound = greaterOfLowerLimits(other);
-		T intersectUpperBound = lesserOfUpperLimits(other);
-		if (intersectLowerBound.compareTo(intersectUpperBound) > 0) {
-			return emptyOfSameType();
-		}
-		return newOfSameType(
-				intersectLowerBound,
-				greaterOfLowerIncludedInIntersection(other),
-				intersectUpperBound,
-				lesserOfUpperIncludedInIntersection(other));
-	}
-	
-	/**
-	 * この区間と与えた区間 {@code other} の間にある区間を取得する。
-	 * 
-	 * <p>例えば、[3, 5) と [10, 20) の gap は、[5, 19) である。
-	 * 2つの区間が共通部分を持つ場合は、空の区間を返す。</p>
-	 * 
-	 * @param other 比較対象の区間
-	 * @return ギャップ区間
-	 */
-	public Interval<T> gap(Interval<T> other) {
-		if (this.intersects(other)) {
-			return this.emptyOfSameType();
-		}
-		
-		return newOfSameType(
-				lesserOfUpperLimits(other),
-				lesserOfUpperIncludedInUnion(other) == false,
-				greaterOfLowerLimits(other),
-				greaterOfLowerIncludedInUnion(other) == false);
-	}
-	
-	/**
-	 * この区間の<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
-	 * 
-	 * <p>この区間と与えた区間に共通部分がない場合は、 {@code other} を要素とする要素数1の区間列を返す。
-	 * 与えた区間が、この区間を完全に内包する場合は、2つの区間に分かれるため、要素数が2の区間列を返す。
-	 * 逆にこの区間が、与えた区間を完全に内包する場合は、要素数0の区間列を返す。
-	 * 上記以外の場合、この区間の補区間と与えた区間の共通部分を要素とする要素数1の区間列を返す。</p>
-	 * 
-	 * TODO 数学的意味は？
-	 * 
-	 * @param other 対照となる区間
-	 * @return 補区間と対照区間の共通部分のリスト
-	 * @see <a href="http://en.wikipedia.org/wiki/Set_theoretic_complement">complement (wikipedia)</a>
-	 */
-	public List<Interval<T>> complementRelativeTo(Interval<T> other) {
-		List<Interval<T>> intervalSequence = new ArrayList<Interval<T>>();
-		if (this.intersects(other) == false) {
-			intervalSequence.add(other);
-			return intervalSequence;
-		}
-		Interval<T> left = leftComplementRelativeTo(other);
-		if (left != null) {
-			intervalSequence.add(left);
-		}
-		Interval<T> right = rightComplementRelativeTo(other);
-		if (right != null) {
-			intervalSequence.add(right);
-		}
-		return intervalSequence;
+	@SuppressWarnings("unused")
+	private boolean isForPersistentMapping_IncludesUpperLimit() { // CHECKSTYLE IGNORE THIS LINE
+		return !upperLimitObject.isForPersistentMapping_Closed();
 	}
 	
 	private Interval<T> leftComplementRelativeTo(Interval<T> other) {
@@ -650,11 +698,35 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		if (lowerLimit().equals(other.lowerLimit()) && !other.includesLowerLimit()) {
 			return null;
 		}
-		return newOfSameType(
-				other.lowerLimit(),
-				other.includesLowerLimit(),
-				this.lowerLimit(),
+		return newOfSameType(other.lowerLimit(), other.includesLowerLimit(), this.lowerLimit(),
 				!this.includesLowerLimit());
+	}
+	
+	/**
+	 * この区間と与えた区間 {@code other} の下側限界値のうち、より小さい（限界の広い、制約の小さい）限界値を返す。
+	 * 
+	 * @param other 比較対象の限界値
+	 * @return より小さい限界値. この区間に下側限界がない場合は {@code null}
+	 */
+	private T lesserOfLowerLimits(Interval<T> other) {
+		if (lowerLimit() == null) {
+			return null;
+		}
+		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
+		if (lowerComparison <= 0) {
+			return this.lowerLimit();
+		}
+		return other.lowerLimit();
+	}
+	
+	private boolean lesserOfUpperIncludedInIntersection(Interval<T> other) {
+		T limit = lesserOfUpperLimits(other);
+		return this.includes(limit) && other.includes(limit);
+	}
+	
+	private boolean lesserOfUpperIncludedInUnion(Interval<T> other) {
+		T limit = lesserOfUpperLimits(other);
+		return this.includes(limit) || other.includes(limit);
 	}
 	
 	private Interval<T> rightComplementRelativeTo(Interval<T> other) {
@@ -664,57 +736,8 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		if (upperLimit().equals(other.upperLimit()) && !other.includesUpperLimit()) {
 			return null;
 		}
-		return newOfSameType(
-				this.upperLimit(),
-				!this.includesUpperLimit(),
-				other.upperLimit(),
+		return newOfSameType(this.upperLimit(), !this.includesUpperLimit(), other.upperLimit(),
 				other.includesUpperLimit());
-	}
-	
-	private void assertLowerIsLessThanOrEqualUpper(IntervalLimit<T> lower, IntervalLimit<T> upper) {
-		if (!(lower.isLower() && upper.isUpper() && lower.compareTo(upper) <= 0)) {
-			throw new IllegalArgumentException(lower + " is not before or equal to " + upper);
-		}
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	protected Interval() {
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return lowerLimit
-	 */
-	@SuppressWarnings("unused")
-	private T getForPersistentMapping_LowerLimit() { // CHECKSTYLE IGNORE THIS LINE
-		return lowerLimitObject.getForPersistentMapping_Value();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param value lowerLimit
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_LowerLimit(T value) { // CHECKSTYLE IGNORE THIS LINE
-		if (lowerLimitObject == null) {
-			lowerLimitObject = IntervalLimit.lower(true, value);
-		}
-		lowerLimitObject.setForPersistentMapping_Value(value);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@code true} if closed, {@code false} otherwise
-	 */
-	@SuppressWarnings("unused")
-	private boolean isForPersistentMapping_IncludesLowerLimit() { // CHECKSTYLE IGNORE THIS LINE
-		return !lowerLimitObject.isForPersistentMapping_Closed();
 	}
 	
 	/**
@@ -733,11 +756,27 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return upperLimit
+	 * @param value {@code true} if closed, {@code false} otherwise
 	 */
 	@SuppressWarnings("unused")
-	private T getForPersistentMapping_UpperLimit() { // CHECKSTYLE IGNORE THIS LINE
-		return upperLimitObject.getForPersistentMapping_Value();
+	private void setForPersistentMapping_IncludesUpperLimit(boolean value) { // CHECKSTYLE IGNORE THIS LINE
+		if (upperLimitObject == null) {
+			upperLimitObject = IntervalLimit.upper(value, null);
+		}
+		upperLimitObject.setForPersistentMapping_Closed(!value);
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param value lowerLimit
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_LowerLimit(T value) { // CHECKSTYLE IGNORE THIS LINE
+		if (lowerLimitObject == null) {
+			lowerLimitObject = IntervalLimit.lower(true, value);
+		}
+		lowerLimitObject.setForPersistentMapping_Value(value);
 	}
 	
 	/**
@@ -751,54 +790,5 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 			upperLimitObject = IntervalLimit.upper(true, value);
 		}
 		upperLimitObject.setForPersistentMapping_Value(value);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@code true} closed, {@code false} otherwise
-	 */
-	@SuppressWarnings("unused")
-	private boolean isForPersistentMapping_IncludesUpperLimit() { // CHECKSTYLE IGNORE THIS LINE
-		return !upperLimitObject.isForPersistentMapping_Closed();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param value {@code true} if closed, {@code false} otherwise
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_IncludesUpperLimit(boolean value) { // CHECKSTYLE IGNORE THIS LINE
-		if (upperLimitObject == null) {
-			upperLimitObject = IntervalLimit.upper(value, null);
-		}
-		upperLimitObject.setForPersistentMapping_Closed(!value);
-	}
-	
-	/**
-	 * 上側限界のみを持つ区間を生成する。
-	 * 
-	 * <p>上側限界値は区間に含む（閉じている）区間である。</p>
-	 * 
-	 * @param <T> 限界値の型
-	 * @param upper 上側限界値. {@code null}の場合は、限界がないことを表す
-	 * @return 区間
-	 */
-	public static <T extends Comparable<T>>Interval<T> upTo(T upper) {
-		return closed(null, upper);
-	}
-	
-	/**
-	 * 下側限界のみを持つ区間を生成する。
-	 * 
-	 * <p>下側限界値は区間に含む（閉じている）区間である。</p>
-	 * 
-	 * @param <T> 限界値の型
-	 * @param lower 下側限界値. {@code null}の場合は、限界がないことを表す
-	 * @return 区間
-	 */
-	public static <T extends Comparable<T>>Interval<T> andMore(T lower) {
-		return closed(lower, null);
 	}
 }

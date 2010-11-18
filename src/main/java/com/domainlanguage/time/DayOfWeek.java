@@ -30,14 +30,6 @@ public enum DayOfWeek {
 	/** 土曜日 */
 	SATURDAY(Calendar.SATURDAY);
 	
-	/** {@link Calendar}に定義されている定数値 */
-	public final int value;
-	
-
-	DayOfWeek(int value) {
-		this.value = value;
-	}
-	
 	/**
 	 * {@link Calendar}に定義されている定数値から、インスタンスを取得する。
 	 * 
@@ -51,6 +43,15 @@ public enum DayOfWeek {
 			}
 		}
 		return null;
+	}
+	
+
+	/** {@link Calendar}に定義されている定数値 */
+	public final int value;
+	
+
+	DayOfWeek(int value) {
+		this.value = value;
 	}
 	
 }

@@ -4,8 +4,6 @@ import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.domainlanguage.time.CalendarDate;
-
 /**
  * dates are taken from: http://www.opm.gov/fedhol/index.htm note: when a
  * holiday falls on a non-workday -- Saturday or Sunday -- the holiday usually
@@ -55,7 +53,7 @@ class _HolidayDates {
 		"2006/09/04", /* Labor Day */
 		"2006/11/23", /* Thanksgiving Day */
 		"2006/12/25", /* Christmas Day, December 25 */
-			};
+	};
 	
 
 	static Set<CalendarDate> defaultHolidays() {

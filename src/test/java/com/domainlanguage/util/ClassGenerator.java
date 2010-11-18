@@ -25,6 +25,7 @@ public abstract class ClassGenerator {
 	public ClassGenerator() {
 		this(new ClassFilter() {
 			
+			@Override
 			public boolean accepts(Class<?> klass) {
 				return true;
 			}
@@ -50,8 +51,7 @@ public abstract class ClassGenerator {
 	protected abstract void next(Class<?> klass) throws Exception;
 	
 	private String convertToClassName(String fileName) {
-		String minusPostFix = fileName.substring(0, fileName.length()
-				- CLASS_POST_FIX.length());
+		String minusPostFix = fileName.substring(0, fileName.length() - CLASS_POST_FIX.length());
 		String changeToPeriods = minusPostFix.replace(File.separatorChar, '.');
 		// this might seem redundant, but jars always have / no matter the
 		// platform
@@ -89,8 +89,7 @@ public abstract class ClassGenerator {
 				searchInDirectory(root, next);
 			} else if (next.getName().toLowerCase().endsWith(CLASS_POST_FIX)) {
 				String fullFileName = next.getAbsolutePath();
-				String fileName = fullFileName.substring(root.getAbsolutePath()
-					.length() + 1);
+				String fileName = fullFileName.substring(root.getAbsolutePath().length() + 1);
 				doNext(convertToClassName(fileName));
 			}
 		}
@@ -105,8 +104,7 @@ public abstract class ClassGenerator {
 			Enumeration<JarEntry> enumeration = jar.entries();
 			while (enumeration.hasMoreElements()) {
 				JarEntry next = enumeration.nextElement();
-				if (next.getName().toLowerCase().endsWith(CLASS_POST_FIX)
-						&& next.getName().indexOf('$') == -1) {
+				if (next.getName().toLowerCase().endsWith(CLASS_POST_FIX) && next.getName().indexOf('$') == -1) {
 					doNext(convertToClassName(next.getName()));
 				}
 			}

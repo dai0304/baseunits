@@ -13,6 +13,7 @@ import org.junit.Test;
 
 public class TimeAndMoneyDomainClassFilter implements ClassFilter {
 	
+	@Override
 	public boolean accepts(Class<?> klass) {
 		try {
 			if (isTestCase(klass)) {
@@ -34,6 +35,23 @@ public class TimeAndMoneyDomainClassFilter implements ClassFilter {
 		return klass.getName().indexOf('$') > -1;
 	}
 	
+	private boolean isTestCase(Class<?> klass) {
+		if (klass.getAnnotation(Test.class) != null) {
+			return true;
+		}
+		Class<?> superclass = klass.getSuperclass();
+		if (superclass == null) {
+			return false;
+		}
+		if (superclass == Object.class) {
+			return false;
+		}
+		if (superclass == TestCase.class) {
+			return true;
+		}
+		return isTestCase(superclass);
+	}
+	
 	private boolean isTimeAndMoney(Class<?> klass) {
 		if (klass == null) {
 			return false;
@@ -50,22 +68,5 @@ public class TimeAndMoneyDomainClassFilter implements ClassFilter {
 			}
 		}
 		return result;
-	}
-	
-	private boolean isTestCase(Class<?> klass) {
-		if (klass.getAnnotation(Test.class) != null) {
-			return true;
-		}
-		Class<?> superclass = klass.getSuperclass();
-		if (superclass == null) {
-			return false;
-		}
-		if (superclass == Object.class) {
-			return false;
-		}
-		if (superclass == TestCase.class) {
-			return true;
-		}
-		return isTestCase(superclass);
 	}
 }

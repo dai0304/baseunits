@@ -31,20 +31,15 @@ import org.apache.commons.lang.Validate;
 public class Ratio {
 	
 	/**
-	 * 分子
+	 * インスタンスを生成する。
 	 * 
-	 * {@link Ratio} は immutableオブジェクトであるが、永続化用の変更器のために、finalとしていない。
+	 * @param fractional 分数
+	 * @return 与えた分数であらわされる比率
 	 */
-	private BigDecimal numerator;
+	public static Ratio of(BigDecimal fractional) {
+		return new Ratio(fractional, BigDecimal.valueOf(1));
+	}
 	
-	/**
-	 * 分母
-	 * 
-	 * {@link Ratio} は immutableオブジェクトであるが、永続化用の変更器のために、finalとしていない。
-	 */
-	private BigDecimal denominator;
-	
-
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -67,16 +62,22 @@ public class Ratio {
 		return new Ratio(BigDecimal.valueOf(numerator), BigDecimal.valueOf(denominator));
 	}
 	
+
 	/**
-	 * インスタンスを生成する。
+	 * 分子
 	 * 
-	 * @param fractional 分数
-	 * @return 与えた分数であらわされる比率
+	 * {@link Ratio} は immutableオブジェクトであるが、永続化用の変更器のために、finalとしていない。
 	 */
-	public static Ratio of(BigDecimal fractional) {
-		return new Ratio(fractional, BigDecimal.valueOf(1));
-	}
+	private BigDecimal numerator;
 	
+	/**
+	 * 分母
+	 * 
+	 * {@link Ratio} は immutableオブジェクトであるが、永続化用の変更器のために、finalとしていない。
+	 */
+	private BigDecimal denominator;
+	
+
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -86,6 +87,13 @@ public class Ratio {
 	public Ratio(BigDecimal numerator, BigDecimal denominator) {
 		this.numerator = numerator;
 		this.denominator = denominator;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 */
+	Ratio() {
 	}
 	
 	/**
@@ -128,9 +136,7 @@ public class Ratio {
 	 * @see #equals(Object)
 	 */
 	public boolean equals(Ratio other) {
-		return other != null
-				&& numerator.equals(other.numerator)
-				&& denominator.equals(other.denominator);
+		return other != null && numerator.equals(other.numerator) && denominator.equals(other.denominator);
 	}
 	
 	/**
@@ -185,13 +191,6 @@ public class Ratio {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	Ratio() {
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #denominator}
 	 */
 	@SuppressWarnings("unused")
@@ -202,21 +201,21 @@ public class Ratio {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param denominator {@link #denominator}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Denominator(BigDecimal denominator) { // CHECKSTYLE IGNORE THIS LINE
-		this.denominator = denominator;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #numerator}
 	 */
 	@SuppressWarnings("unused")
 	private BigDecimal getForPersistentMapping_Numerator() { // CHECKSTYLE IGNORE THIS LINE
 		return numerator;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param denominator {@link #denominator}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_Denominator(BigDecimal denominator) { // CHECKSTYLE IGNORE THIS LINE
+		this.denominator = denominator;
 	}
 	
 	/**

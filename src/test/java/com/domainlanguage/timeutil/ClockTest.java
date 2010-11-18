@@ -16,7 +16,6 @@ import java.util.TimeZone;
 import com.domainlanguage.time.CalendarDate;
 import com.domainlanguage.time.TimePoint;
 import com.domainlanguage.time.TimeSource;
-import com.domainlanguage.timeutil.Clock;
 
 import org.junit.After;
 import org.junit.Test;
@@ -117,6 +116,7 @@ public class ClockTest {
 	private TimeSource dummyTimeSource(final TimePoint returnValueForNow) {
 		return new TimeSource() {
 			
+			@Override
 			public TimePoint now() {
 				return returnValueForNow;
 			}

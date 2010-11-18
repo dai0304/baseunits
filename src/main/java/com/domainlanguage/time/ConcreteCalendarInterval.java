@@ -11,13 +11,6 @@ import java.util.TimeZone;
 @SuppressWarnings("serial")
 class ConcreteCalendarInterval extends CalendarInterval {
 	
-	/** 開始日（閉じた限界） */
-	private CalendarDate start;
-	
-	/** 終了日（開いた限界） */
-	private CalendarDate end;
-	
-
 	/**
 	 * 開始日と終了日より、期間を生成する。
 	 * 
@@ -30,6 +23,27 @@ class ConcreteCalendarInterval extends CalendarInterval {
 	 */
 	static ConcreteCalendarInterval from(CalendarDate start, CalendarDate end) {
 		return new ConcreteCalendarInterval(start, end);
+	}
+	
+	private static void assertStartIsBeforeEnd(CalendarDate start, CalendarDate end) {
+		if (start != null && end != null && start.compareTo(end) > 0) {
+			throw new IllegalArgumentException(start + " is not before or equal to " + end);
+		}
+	}
+	
+
+	/** 開始日（閉じた限界） */
+	private CalendarDate start;
+	
+	/** 終了日（開いた限界） */
+	private CalendarDate end;
+	
+
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 */
+	ConcreteCalendarInterval() {
 	}
 	
 	ConcreteCalendarInterval(CalendarDate start, CalendarDate end) {
@@ -46,27 +60,13 @@ class ConcreteCalendarInterval extends CalendarInterval {
 	}
 	
 	@Override
-	public CalendarDate upperLimit() {
-		return end;
-	}
-	
-	@Override
 	public CalendarDate lowerLimit() {
 		return start;
 	}
 	
-	private static void assertStartIsBeforeEnd(CalendarDate start,
-			CalendarDate end) {
-		if (start != null && end != null && start.compareTo(end) > 0) {
-			throw new IllegalArgumentException(start + " is not before or equal to " + end);
-		}
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	ConcreteCalendarInterval() {
+	@Override
+	public CalendarDate upperLimit() {
+		return end;
 	}
 	
 	/**
@@ -82,21 +82,21 @@ class ConcreteCalendarInterval extends CalendarInterval {
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param end {@link #end}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_End(CalendarDate end) { // CHECKSTYLE IGNORE THIS LINE
-		this.end = end;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
 	 * @return {@link #start}
 	 */
 	@SuppressWarnings("unused")
 	private CalendarDate getForPersistentMapping_Start() { // CHECKSTYLE IGNORE THIS LINE
 		return start;
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 * @param end {@link #end}
+	 */
+	@SuppressWarnings("unused")
+	private void setForPersistentMapping_End(CalendarDate end) { // CHECKSTYLE IGNORE THIS LINE
+		this.end = end;
 	}
 	
 	/**

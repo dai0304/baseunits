@@ -11,9 +11,6 @@ import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
 
-import com.domainlanguage.base.Ratio;
-import com.domainlanguage.base.Rounding;
-
 import org.junit.Test;
 
 /**

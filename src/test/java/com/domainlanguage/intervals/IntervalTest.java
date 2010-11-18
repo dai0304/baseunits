@@ -13,8 +13,6 @@ import static org.junit.Assert.fail;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.domainlanguage.intervals.Interval;
-import com.domainlanguage.intervals.IntervalLimit;
 import com.domainlanguage.tests.SerializationTester;
 
 import org.junit.Test;
