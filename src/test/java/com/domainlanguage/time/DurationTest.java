@@ -270,18 +270,43 @@ public class DurationTest {
 	/**
 	 * {@link Duration#compareTo(Duration)}のテスト。
 	 * 
-	 * TODO: More edge cases and exceptions (like nonconvertable units).
-	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test16_Compare() throws Exception {
+		// convertable units
 		Duration oneHour = Duration.hours(1);
 		Duration twoHours = Duration.hours(2);
 		Duration sixtyMinutes = Duration.minutes(60);
+		Duration sixtyMinutesAndOneMillisec = Duration.daysHoursMinutesSecondsMilliseconds(0, 0, 60, 0, 1);
 		assertThat(oneHour.compareTo(twoHours), is(lessThan(0)));
 		assertThat(oneHour.compareTo(sixtyMinutes), is(0));
 		assertThat(twoHours.compareTo(oneHour), is(greaterThan(0)));
+		assertThat(oneHour.compareTo(sixtyMinutesAndOneMillisec), is(lessThan(0)));
+		
+		// nonconvertable units
+		Duration twoQuarters = Duration.quarters(2);
+		try {
+			oneHour.compareTo(twoQuarters);
+			fail();
+		} catch (ClassCastException e) {
+			// success
+		}
+		
+		Duration threeHundredsAndSixtyFiveDays = Duration.days(365);
+		Duration anYear = Duration.years(1);
+		try {
+			threeHundredsAndSixtyFiveDays.compareTo(anYear);
+			fail();
+		} catch (ClassCastException e) {
+			// success
+		}
+		
+		// nonconvertable units but zero
+		Duration zeroMonths = Duration.months(0);
+		Duration zeroMillisecs = Duration.milliseconds(0);
+		assertThat(twoHours.compareTo(zeroMonths), is(greaterThan(0)));
+		assertThat(zeroMonths.compareTo(zeroMillisecs), is(0));
 	}
 	
 	/**

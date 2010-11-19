@@ -27,9 +27,9 @@ public class FindAppointmentTime {
 	 * keys, then taking the complement of that, then asking for the iterator of
 	 * Duration matching desired appointment duration.
 	 * 
-	 * IntervalSequence keys = map.getKeys(); IntervalSequence available =
-	 * keys.intersect(desiredInterval).gaps(); Iterator it =
-	 * available.iterate(desiredDuration);
+	 * IntervalSequence keys = map.getKeys();
+	 * IntervalSequence available = keys.intersect(desiredInterval).gaps();
+	 * Iterator it = available.iterate(desiredDuration);
 	 *  
 	 */
 	@Test

@@ -276,8 +276,6 @@ public class Duration implements Comparable<Duration>, Serializable {
 	/**
 	 * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の差を返す。
 	 * 
-	 * <p>ただし、返す結果の単位は、 TODO</p>
-	 * 
 	 * @param other 期間
 	 * @return 時間量の差
 	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
@@ -312,8 +310,6 @@ public class Duration implements Comparable<Duration>, Serializable {
 	
 	/**
 	 * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の和を返す。
-	 * 
-	 * <p>ただし、返す結果の単位は、 TODO</p>
 	 * 
 	 * @param other 期間
 	 * @return 時間量の和

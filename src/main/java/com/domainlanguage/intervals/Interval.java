@@ -61,6 +61,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		return new Interval<T>(lower, true, upper, true);
 	}
 	
+//	public static <T extends Comparable<T>>Interval<T> empty(T someValue) {
+//		return new Interval<T>(someValue, false, someValue, false);
+//	}
+	
 	/**
 	 * 開区間を生成する。
 	 * 
@@ -191,8 +195,6 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * 逆にこの区間が、与えた区間を完全に内包する場合は、要素数0の区間列を返す。
 	 * 上記以外の場合、この区間の補区間と与えた区間の共通部分を要素とする要素数1の区間列を返す。</p>
 	 * 
-	 * TODO 数学的意味は？
-	 * 
 	 * @param other 対照となる区間
 	 * @return 補区間と対照区間の共通部分のリスト
 	 * @see <a href="http://en.wikipedia.org/wiki/Set_theoretic_complement">complement (wikipedia)</a>
@@ -246,7 +248,8 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * 
 	 * <p>両者が共に空の区間であった場合は{@code true}、どちらか一方のみが空の区間であった場合は {@code false}を返す。
 	 * 両者とも単一要素区間であった場合は、両者の下側限界値を比較し、一致した場合は {@code true}を返す。
-	 * また、TODO</p>
+	 * また、TODO
+	 * {@code other}が{@code null}であった場合は、必ず{@code false}を返す。</p>
 	 * 
 	 * @param other 比較対象の区間
 	 * @return 同一である場合は{@code true}、そうでない場合は{@code false}

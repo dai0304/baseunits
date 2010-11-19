@@ -317,6 +317,8 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
 	 * 
+	 * <p>丸めモードは {@link Rounding#HALF_EVEN} を適用する。</p>
+	 * 
 	 * @param divisor 除数
 	 * @return 金額
 	 */
@@ -489,6 +491,8 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * この金額に{@code factor}を掛けた金額を返す。
 	 * 
+	 * <p>丸めモードは {@link Rounding#HALF_EVEN} を適用する。</p>
+	 * 
 	 * TODO: Many apps require carrying extra precision in intermediate
 	 * calculations. The use of Ratio is a beginning, but need a comprehensive
 	 * solution. Currently, an invariant of Money is that the scale is the
@@ -520,6 +524,8 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * この金額に{@code amount}を掛けた金額を返す。
 	 * 
+	 * <p>丸めモードは {@link Rounding#HALF_EVEN} を適用する。</p>
+	 * 
 	 * @param amount 係数
 	 * @return 掛けた金額
 	 */
@@ -540,6 +546,8 @@ public class Money implements Comparable<Money>, Serializable {
 	
 	/**
 	 * この金額に{@code amount}を掛けた金額を返す。
+	 * 
+	 * <p>丸めモードは {@link Rounding#HALF_EVEN} を適用する。</p>
 	 * 
 	 * @param amount 係数
 	 * @return 掛けた金額
@@ -589,8 +597,7 @@ public class Money implements Comparable<Money>, Serializable {
 		return amount;
 	}
 	
-//  TODO: Provide some currency-dependent formatting. Java 1.4 Currency doesn't
-//  do it.
+//  TODO: Provide some currency-dependent formatting. Java 1.4 Currency doesn't do it.
 //  public String formatString() {
 //      return currency.formatString(amount());
 //  }

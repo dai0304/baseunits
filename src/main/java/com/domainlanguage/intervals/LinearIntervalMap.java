@@ -17,8 +17,6 @@ import org.apache.commons.lang.Validate;
 /**
  * 線形{@link IntervalMap}実装クラス。
  * 
- * TODO なんのこっちゃ
- * 
  * @param <K> キーとなる区間が表現する型
  * @param <V> 値の型
  * @author daisuke

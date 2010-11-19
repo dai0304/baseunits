@@ -197,9 +197,6 @@ public class CalendarIntervalTest {
 		assertThat(may1.compareTo(may1_may1.start()), is(0));
 		assertThat(may1_may1.start().compareTo(may1), is(0));
 		CalendarInterval may1_may2 = CalendarInterval.inclusive(may1, may2);
-		// THINK generics導入により壊れたところ。ただ本来できてはいけない比較？
-		// ClassCastExceptionで-1が返る実装になっていた
-//        assertThat(may1.compareTo(may1_may2) < 0, is(true));
 		assertThat(may1_may2.compareTo(may1_may1) > 0, is(true));
 	}
 	

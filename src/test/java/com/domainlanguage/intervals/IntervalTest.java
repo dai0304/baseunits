@@ -284,11 +284,16 @@ public class IntervalTest {
 		assertThat(c4_6c.covers(c1_10c), is(false));
 		assertThat(c1_10c.covers(c4_6c), is(true));
 		assertThat(c5_10c.covers(c5_10c), is(true));
-		Interval<BigDecimal> halfOpen5_10 = Interval.over(new BigDecimal(5), false, new BigDecimal(10), true);
-		assertThat("closed incl left-open", c5_10c.covers(halfOpen5_10), is(true));
-		assertThat("left-open incl left-open", halfOpen5_10.covers(halfOpen5_10), is(true));
-		assertThat("left-open doesn't include closed", halfOpen5_10.covers(c5_10c), is(false));
-		//TODO: Need to test other half-open case and full-open case.
+		
+		Interval<BigDecimal> o5_10c = Interval.over(new BigDecimal(5), false, new BigDecimal(10), true);
+		assertThat("closed incl left-open", c5_10c.covers(o5_10c), is(true));
+		assertThat("left-open incl left-open", o5_10c.covers(o5_10c), is(true));
+		assertThat("left-open doesn't include closed", o5_10c.covers(c5_10c), is(false));
+		
+		Interval<BigDecimal> o1_10o = Interval.over(new BigDecimal(1), false, new BigDecimal(10), false);
+		assertThat(c5_10c.covers(o1_10o), is(false));
+		assertThat(o1_10o.covers(o1_10o), is(true));
+		assertThat(o1_10o.covers(c5_10c), is(false));
 	}
 	
 	/**

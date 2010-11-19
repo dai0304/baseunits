@@ -47,9 +47,11 @@ public class AppointmentCalendarTest {
 		cal.add(shortEvent);
 		cal.add(longEvent);
 		
+		assertThat(cal.dailyScheduleFor(CalendarDate.date(2004, 6, 6)).size(), is(0));
 		assertThat(cal.dailyScheduleFor(CalendarDate.date(2004, 6, 7)).size(), is(2));
 		assertThat(cal.dailyScheduleFor(CalendarDate.date(2004, 6, 8)).size(), is(1));
-		assertThat(cal.dailyScheduleFor(CalendarDate.date(2004, 6, 6)).size(), is(0));
+		assertThat(cal.dailyScheduleFor(CalendarDate.date(2004, 6, 9)).size(), is(1));
+		assertThat(cal.dailyScheduleFor(CalendarDate.date(2004, 6, 10)).size(), is(0));
 	}
 	
 }

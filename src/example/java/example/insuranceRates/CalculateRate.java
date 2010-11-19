@@ -32,6 +32,7 @@ import org.junit.Test;
  */
 public class CalculateRate {
 	
+	/** 契約日 */
 	private static final CalendarDate policyEffectiveDate = CalendarDate.date(2004, 11, 7);
 	
 
@@ -41,12 +42,12 @@ public class CalculateRate {
 	@Test
 	@Ignore
 	public void testLookUpMoreComplicated() {
-//		BusinessCalendar paymentCalendar = null;
+//		BusinessCalendar paymentCalendar = new BusinessCalendar();
 //		CalendarInterval paymentQuarter = paymentCalendar.currentQuarter();
 //		
 //		CalendarDate birthdate = null;
-//		Duration age = birthdate.until(paymentQuarter.start()).duration();
-//		Rate rate = insuranceSchedule.get(age);
+//		Duration age = birthdate.through(paymentQuarter.start()).length();
+//		Rate rate = insuranceSchedule().get(age);
 //		Money quarterlyPayment = rate.times(Duration.quarters(1));
 //		CalendarDate effectiveDate = null;
 //		CalendarInterval remainingQuarter = paymentQuarter.cropForwardFrom(effectiveDate);
@@ -67,18 +68,25 @@ public class CalculateRate {
 	}
 	
 	/**
-	 * Example.
+	 * 初月の日割り計算の例。
 	 */
 	@Test
 	public void testProrateFirstMonth() {
+		// 月額 150.00 USD
 		Money monthlyPremium = Money.dollars(150.00);
+		
+		// 契約月の残り期間
 		CalendarInterval entireMonth = policyEffectiveDate.month();
 		CalendarInterval remainderOfMonth = policyEffectiveDate.through(entireMonth.end());
+		
+		// 契約月の残り日数 ÷ 契約月の全日数
 		Ratio partOfPayment = Ratio.of(remainderOfMonth.lengthInDaysInt(), entireMonth.lengthInDaysInt());
+		
+		// 切り捨てで日割り適用
 		Money firstPayment = monthlyPremium.applying(partOfPayment, Rounding.DOWN);
 		assertThat(firstPayment, is(Money.dollars(120.00)));
 		
-		//Alternative, equivalent calculation
+		// Alternative, equivalent calculation
 		partOfPayment = remainderOfMonth.length().dividedBy(entireMonth.length());
 		firstPayment = Proration.partOfWhole(monthlyPremium, partOfPayment);
 		assertThat(firstPayment, is(Money.dollars(120.00)));
@@ -90,7 +98,7 @@ public class CalculateRate {
 	@Test
 	public void testQuarterlyPremiumPayment() {
 		MoneyTimeRate premium = Money.dollars(150.00).per(Duration.months(1));
-		Money quarterlyPayment = premium.over(Duration.months(3));
+		Money quarterlyPayment = premium.over(Duration.quarters(1));
 		assertThat(quarterlyPayment, is(Money.dollars(450.00)));
 	}
 	

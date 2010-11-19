@@ -71,6 +71,7 @@ public final class Proration {
 		Validate.notNull(ratio);
 		int scale = defaultScaleForIntermediateCalculations(total);
 		BigDecimal multiplier = ratio.decimalValue(scale, Rounding.DOWN);
+		System.out.println(multiplier);
 		return total.times(multiplier, Rounding.DOWN);
 	}
 	
@@ -196,7 +197,7 @@ public final class Proration {
 	}
 	
 	private static int defaultScaleForIntermediateCalculations(Money total) {
-		return total.getCurrency().getDefaultFractionDigits() + 1;
+		return total.getAmount().precision() + 2;
 	}
 	
 	private Proration() {
