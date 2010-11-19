@@ -5,6 +5,13 @@ import java.util.Collection;
 
 import org.apache.commons.lang.Validate;
 
+/**
+ * {@link MoneyFan}の集合。
+ * 
+ * @param <T> 割り当ての対象
+ * @version $Id$
+ * @author daisuke
+ */
 public class FanTally<T> {
 	
 	Collection<MoneyFan<T>> fans;
@@ -32,6 +39,11 @@ public class FanTally<T> {
 		this(Arrays.asList(fan));
 	}
 	
+	/**
+	 * 要素の {@link MoneyFan}を全てマージしたものを返す。
+	 * 
+	 * @return {@link MoneyFan}
+	 */
 	public MoneyFan<T> net() {
 		MoneyFan<T> sum = new MoneyFan<T>();
 		for (MoneyFan<T> fan : fans) {
@@ -40,6 +52,11 @@ public class FanTally<T> {
 		return sum;
 	}
 	
+	/**
+	 * 要素の {@link MoneyFan}が含む {@link Allotment}の合計額を返す。
+	 * 
+	 * @return 合計額
+	 */
 	public Money total() {
 		return net().total();
 	}

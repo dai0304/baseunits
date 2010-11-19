@@ -151,7 +151,7 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
-	 * 区間の比較を行う。
+	 * 区間同士の比較を行う。
 	 * 
 	 * <p>区間は、限界の開閉にかかわらず、上側限界値が小さい方を「小さい」と判断する。
 	 * 上側限界値が一致している場合、下側限界が閉じている方を「小さい」と判断する。
@@ -482,8 +482,8 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * @return 空である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public boolean isEmpty() {
-		//TODO: Consider explicit empty interval
-		//A 'degenerate' interval is an empty set, {}.
+		// TODO: Consider explicit empty interval
+		// A 'degenerate' interval is an empty set, {}.
 		return isOpen() && upperLimit().equals(lowerLimit());
 	}
 	

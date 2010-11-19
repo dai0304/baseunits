@@ -6,8 +6,6 @@
 
 package example.doctorAppointments;
 
-import java.util.TimeZone;
-
 import org.junit.Test;
 
 /**
@@ -36,8 +34,8 @@ public class FindAppointmentTime {
 	 */
 	@Test
 	public void testFindAvailableTime() {
-		TimeZone pt = TimeZone.getTimeZone("America/Los_Angeles");
-		AppointmentCalendar calendar = new AppointmentCalendar(pt);
+//		TimeZone pt = TimeZone.getTimeZone("America/Los_Angeles");
+//		AppointmentCalendar calendar = new AppointmentCalendar(pt);
 		
 		/**
 		  calendar.addHolidays(aCompositeSpec);

@@ -89,7 +89,7 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	}
 	
 	/**
-	 * 限界の比較を行う。
+	 * 限界同士の比較を行う。
 	 * 
 	 * <p>限界は、限界値が一致していた場合は、限界の開閉や上下にかかわらず同値と判断する。
 	 * また、両者が無限限界であった場合も同様に限界の開閉や上下にかかわらず同値と判断する。</p>

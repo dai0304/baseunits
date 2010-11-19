@@ -281,6 +281,13 @@ public class Money implements Comparable<Money>, Serializable {
 		return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
 	}
 	
+	/**
+	 * 金額同士の比較を行う。
+	 * 
+	 * @param other 比較対象
+	 * @return {@link Comparable#compareTo(Object)}に準じる
+	 * @throws ClassCastException 比較対象の通貨単位が異なり、かつ双方の量がどちらも0ではない場合
+	 */
 	@Override
 	public int compareTo(Money other) {
 		if (other == null) {

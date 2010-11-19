@@ -92,7 +92,7 @@ public class IntervalSequenceTest {
 	}
 	
 	/**
-	 * 飛び石区間を含んだ{@link IntervalSequence}のテスト。
+	 * {@link IntervalSequence#gaps()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

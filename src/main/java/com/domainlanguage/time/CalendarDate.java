@@ -365,14 +365,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * この日付を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
-	 * TODO タイムゾーンについて記述
-	 * 
 	 * @param pattern パターン
 	 * @return 文字列表現
 	 */
 	public String toString(String pattern) {
+		// Any timezone works, as long as the same one is used throughout.
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
-		//Any timezone works, as long as the same one is used throughout.
 		TimePoint point = startAsTimePoint(arbitraryZone);
 		return point.toString(pattern, arbitraryZone);
 	}

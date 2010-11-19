@@ -42,14 +42,14 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	/**
 	 * 全ての要素区間を内包する、最小の区間を返す。
 	 * 
-	 * @return 全ての要素区間を内包する、最小の区間. 要素がない場合は {@code null} 
+	 * @return 全ての要素区間を内包する、最小の区間
+	 * @throws IllegalStateException 要素が1つもない場合
 	 */
 	public Interval<T> extent() {
 		if (intervals.isEmpty()) {
-			return null;
+			// TODO: Add a creation method to Interval for empty(), if it can be polymorphic.
+			throw new IllegalStateException();
 		}
-		//TODO: Add a creation method to Interval for empty(), if it can be
-		// polymorphic.
 		if (intervals.size() == 1) {
 			return intervals.get(0);
 		}
@@ -60,7 +60,7 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	}
 	
 	/**
-	 * TODO 詳細定義
+	 * 要素区間の補区間をあらわす区間列を返す。但し、片側に限界のない区間は含まない。
 	 * 
 	 * @return ギャップ区間の列
 	 */
@@ -81,7 +81,9 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	}
 	
 	/**
-	 * TODO 詳細定義
+	 * 全ての要素区間の共通区間を区間列として返す。
+	 * 
+	 * <p>区間数が2つ未満の場合は、空の区間列を返す。</p>
 	 * 
 	 * @return 共通区間の列
 	 */

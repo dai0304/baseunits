@@ -338,6 +338,14 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		return CalendarDate.from(this, zone);
 	}
 	
+	/**
+	 * 瞬間同士の比較を行う。
+	 * 
+	 * <p>過去の方を「小さい」と判断する。</p>
+	 * 
+	 * @param otherPoint 比較対象
+	 * @return {@link Comparable#compareTo(Object)}に準じる
+	 */
 	@Override
 	public int compareTo(TimePoint otherPoint) {
 		if (otherPoint == null) {

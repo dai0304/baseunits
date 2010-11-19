@@ -214,11 +214,15 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * TODO 詳細定義
+	 * 時間量同士の比較を行う。
+	 * 
+	 * <p>基本単位(baseUnit)で比較し、時間量の少ない方を「小さい」と判断する。
+	 * {@code null}を与えた場合は、必ず{@code null}の方が「大きい」と判断する。
+	 * 同じ基本単位に変換できない場合は {@link ClassCastException}をスローする。</p>
 	 * 
 	 * @param other 比較対照
 	 * @return {@link Comparable#compareTo(Object)}に準じる
-	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合.
+	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合.
 	 * 	例えば「1ヶ月間」と「30日間」は比較不能
 	 */
 	@Override
@@ -226,7 +230,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 		if (other == null) {
 			return -1;
 		}
-		assertConvertible(other);
+		assertConvertible(other, new ClassCastException());
 		long difference = inBaseUnits() - other.inBaseUnits();
 		if (difference > 0) {
 			return 1;
@@ -276,14 +280,14 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param other 期間
 	 * @return 時間量の差
-	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合
+	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
 	 * @throws IllegalArgumentException 引数otherの長さが、このオブジェクトよりも長い場合
 	 */
 	public Duration minus(Duration other) {
 		assertConvertible(other);
 		assertGreaterThanOrEqualTo(other);
 		long newQuantity = inBaseUnits() - other.inBaseUnits();
-		return new Duration(newQuantity, unit.baseUnit());
+		return new Duration(newQuantity, other.quantity == 0 ? unit.baseUnit() : other.unit.baseUnit());
 	}
 	
 	/**
@@ -313,12 +317,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param other 期間
 	 * @return 時間量の和
-	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できない場合
+	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
 	 */
 	public Duration plus(Duration other) {
 		assertConvertible(other);
 		long newQuantity = inBaseUnits() + other.inBaseUnits();
-		return new Duration(newQuantity, unit.baseUnit());
+		return new Duration(newQuantity, other.quantity == 0 ? unit.baseUnit() : other.unit.baseUnit());
 	}
 	
 	/**
@@ -449,8 +453,13 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	private void assertConvertible(Duration other) {
-		if (other.unit.isConvertibleTo(unit) == false) {
-			throw new IllegalArgumentException(other.toString() + " is not convertible to: " + toString());
+		assertConvertible(other, new IllegalArgumentException(other.toString() + " is not convertible to: "
+				+ toString()));
+	}
+	
+	private void assertConvertible(Duration other, RuntimeException e) {
+		if (other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) {
+			throw e;
 		}
 	}
 	
