@@ -13,7 +13,7 @@ import org.junit.Test;
 public class AllotmentTest {
 	
 	/**
-	 * TODO for daisuke
+	 * 等価性検証。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -33,7 +33,7 @@ public class AllotmentTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 正負転換検証。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

@@ -1,5 +1,12 @@
 package com.domainlanguage.money;
 
+/**
+ * 割り当てをあらわす。
+ * 
+ * @param <T> 割り当て対象
+ * @version $Id$
+ * @author daisuke
+ */
 public class Allotment<T> {
 	
 	T entity;
@@ -7,6 +14,12 @@ public class Allotment<T> {
 	Money amount;
 	
 
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param entity 割り当て対象
+	 * @param amount 割り当て量
+	 */
 	public Allotment(T entity, Money amount) {
 		this.entity = entity;
 		this.amount = amount;
@@ -28,14 +41,14 @@ public class Allotment<T> {
 			if (other.amount != null) {
 				return false;
 			}
-		} else if (!amount.equals(other.amount)) {
+		} else if (amount.equals(other.amount) == false) {
 			return false;
 		}
 		if (entity == null) {
 			if (other.entity != null) {
 				return false;
 			}
-		} else if (!entity.equals(other.entity)) {
+		} else if (entity.equals(other.entity) == false) {
 			return false;
 		}
 		return true;
@@ -50,6 +63,11 @@ public class Allotment<T> {
 		return result;
 	}
 	
+	/**
+	 * 割り当て量の正負を反転させた新しい割り当てを返す。
+	 * 
+	 * @return 割り当て
+	 */
 	public Allotment<T> negated() {
 		return new Allotment<T>(entity, amount.negated());
 	}

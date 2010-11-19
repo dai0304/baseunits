@@ -134,6 +134,8 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
+	 * インスタンスを生成する。
+	 * 
 	 * @param lower 下側限界
 	 * @param upper 上側限界
 	 * @throws IllegalArgumentException {@code lower.isLower() == false}または {@code uppser.isUpper() == false} の場合

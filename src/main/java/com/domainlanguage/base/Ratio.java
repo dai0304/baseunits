@@ -14,7 +14,7 @@ import org.apache.commons.lang.Validate;
 /**
  * {@link Ratio}は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
  * 
- * このクラスの利点は、比率の計算を遅延評価できることにある。
+ * <p>このクラスの利点は、比率の計算を遅延評価できることにある。</p>
  * 
  * Ratio represents the unitless division of two quantities of the same type.
  * The key to its usefulness is that it defers the calculation of a decimal
@@ -124,38 +124,46 @@ public class Ratio {
 	 * <p>{@code 2/3} と {@code 4/6} は、評価結果としては同一であるが、分母同士、分子同士が
 	 * 異なるため、このメソッドでは {@code true} と判断されず、 {@code false} となる。
 	 * 
+	 * @param obj 比較対象オブジェクト
+	 * @return 同一の場合は{@code true}、そうでない場合は{@code false}
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object anObject) {
-		try {
-			return equals((Ratio) anObject);
-		} catch (ClassCastException ex) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Ratio other = (Ratio) obj;
+		if (denominator == null) {
+			if (other.denominator != null) {
+				return false;
+			}
+		} else if (!denominator.equals(other.denominator)) {
+			return false;
+		}
+		if (numerator == null) {
+			if (other.numerator != null) {
+				return false;
+			}
+		} else if (!numerator.equals(other.numerator)) {
+			return false;
+		}
+		return true;
 	}
 	
-	/**
-	 * このオブジェクトと、与えたオブジェクトの同一性を検証する。
-	 * 
-	 * @param other 比較対象オブジェクト
-	 * @return 同一の場合は{@code true}、そうでない場合は{@code false}
-	 * @see #equals(Object)
-	 */
-	public boolean equals(Ratio other) {
-		return other != null && numerator.equals(other.numerator) && denominator.equals(other.denominator);
-	}
-	
-	/**
-	 * このオブジェクトのハッシュ値を取得する。
-	 * 
-	 * TODO equalsとの整合性がとれていない？
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
-		return numerator.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((denominator == null) ? 0 : denominator.hashCode());
+		result = prime * result + ((numerator == null) ? 0 : numerator.hashCode());
+		return result;
 	}
 	
 	/**
