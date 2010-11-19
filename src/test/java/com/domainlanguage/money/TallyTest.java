@@ -13,7 +13,7 @@ import org.junit.Test;
 public class TallyTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Tally#net()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

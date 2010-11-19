@@ -48,6 +48,9 @@ public class DurationTest {
 		TimePoint dec22At1 = TimePoint.atGMT(2003, 12, 22, 01, 0, 0, 0);
 		Duration twoDays = Duration.days(2);
 		assertThat(twoDays.addedTo(dec20At1), is(dec22At1));
+		
+		Duration fourtyEightHours = Duration.hours(48);
+		assertThat(fourtyEightHours.addedTo(dec20At1), is(dec22At1));
 	}
 	
 	/**
@@ -74,6 +77,9 @@ public class DurationTest {
 		TimePoint dec18At1 = TimePoint.atGMT(2003, 12, 18, 01, 0, 0, 0);
 		Duration twoDays = Duration.days(2);
 		assertThat(twoDays.subtractedFrom(dec20At1), is(dec18At1));
+		
+		Duration fourtyEightHours = Duration.hours(48);
+		assertThat(fourtyEightHours.subtractedFrom(dec20At1), is(dec18At1));
 	}
 	
 	/**
@@ -228,14 +234,10 @@ public class DurationTest {
 		Duration complicatedDuration = Duration.daysHoursMinutesSecondsMilliseconds(5, 4, 3, 2, 1);
 		assertThat(complicatedDuration.toNormalizedString(), is("5 days, 4 hours, 3 minutes, 2 seconds, 1 millisecond"));
 		assertThat(Duration.days(365).toNormalizedString(), is("52 weeks, 1 day"));
-		
-		assertThat(Duration.quarters(3).toNormalizedString(), is("3 quarters"));
-		assertThat(Duration.quarters(4).toNormalizedString(), is("1 year"));
-		assertThat(Duration.quarters(8).toNormalizedString(), is("2 years"));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#toNormalizedString()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -243,22 +245,32 @@ public class DurationTest {
 	public void test14_ToNormalizedStringMonthBased() throws Exception {
 		assertThat(Duration.months(2).toNormalizedString(), is("2 months"));
 		assertThat(Duration.months(16).toNormalizedString(), is("1 year, 1 quarter, 1 month"));
+		
+		assertThat(Duration.quarters(3).toNormalizedString(), is("3 quarters"));
+		assertThat(Duration.quarters(4).toNormalizedString(), is("1 year"));
+		assertThat(Duration.quarters(8).toNormalizedString(), is("2 years"));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#toString()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test15_ToString() throws Exception {
 		assertThat(Duration.weeks(3).toString(), is("21 days")); //Weeks are not conventional to read.
+		assertThat(Duration.months(2).toNormalizedString(), is("2 months"));
 		assertThat(Duration.months(16).toString(), is("1 year, 4 months")); //Quarters are not conventionalto read.
+		assertThat(Duration.quarters(3).toString(), is("9 months"));
+		assertThat(Duration.quarters(4).toString(), is("1 year"));
+		assertThat(Duration.quarters(5).toString(), is("1 year, 3 months"));
+		assertThat(Duration.quarters(8).toString(), is("2 years"));
 	}
 	
-	// TODO: More edge cases and exceptions (like nonconvertable units).
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#compareTo(Duration)}のテスト。
+	 * 
+	 * TODO: More edge cases and exceptions (like nonconvertable units).
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -273,7 +285,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#startingFrom(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -286,7 +298,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#startingFrom(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -299,7 +311,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#normalizedUnit()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

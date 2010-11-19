@@ -42,7 +42,7 @@ public class IntervalSequenceTest {
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalSequence#iterator()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -67,7 +67,7 @@ public class IntervalSequenceTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalSequence#add(Interval)}が順不同で行われた場合の{@link IntervalSequence}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -92,7 +92,7 @@ public class IntervalSequenceTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 飛び石区間を含んだ{@link IntervalSequence}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -119,7 +119,7 @@ public class IntervalSequenceTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 重なる区間を含んだ{@link IntervalSequence}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -143,7 +143,7 @@ public class IntervalSequenceTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalSequence#intersections()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -169,7 +169,7 @@ public class IntervalSequenceTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalSequence#extent()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

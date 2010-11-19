@@ -7,7 +7,7 @@ import java.util.Currency;
 import org.apache.commons.lang.Validate;
 
 /**
- * TODO for daisuke
+ * 同じ通貨単位の金額の集合をあらわすクラス。
  * 
  * @version $Id$
  * @author daisuke

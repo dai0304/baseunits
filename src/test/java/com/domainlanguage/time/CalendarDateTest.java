@@ -27,6 +27,10 @@ public class CalendarDateTest {
 	
 	private CalendarDate mar13 = CalendarDate.from(2003, 3, 13);
 	
+	private CalendarDate may1 = CalendarDate.date(2004, 5, 1);
+	
+	private CalendarDate may20 = CalendarDate.date(2004, 5, 20);
+	
 	private TimeZone gmt = TimeZone.getTimeZone("Universal");
 	
 	private TimeZone ct = TimeZone.getTimeZone("America/Chicago");
@@ -226,6 +230,16 @@ public class CalendarDateTest {
 		assertThat(actual.get(Calendar.AM_PM), is(expected.get(Calendar.AM_PM)));
 		assertThat(actual.get(Calendar.HOUR_OF_DAY), is(expected.get(Calendar.HOUR_OF_DAY)));
 		assertThat(actual, is(expected));
+	}
+	
+	/**
+	 * {@link CalendarDate#plusDays(int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test15_DaysAdd() throws Exception {
+		assertThat(may1.plusDays(19), is(may20));
 	}
 	
 }

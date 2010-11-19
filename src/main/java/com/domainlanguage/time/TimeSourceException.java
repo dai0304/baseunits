@@ -19,9 +19,8 @@ package com.domainlanguage.time;
 import java.io.IOException;
 
 /**
- * TODO for daisuke
+ * 現在時刻の取得に失敗したことをあらわす例外。
  * 
- * @since TODO for daisuke
  * @version $Id$
  * @author daisuke
  */

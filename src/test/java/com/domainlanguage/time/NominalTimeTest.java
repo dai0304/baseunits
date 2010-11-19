@@ -12,13 +12,19 @@ import java.util.TimeZone;
 
 import org.junit.Test;
 
+/**
+ * 時間記述のなんとなくテスト。
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class NominalTimeTest {
 	
 	private static final TimeZone HONOLULU_TIME = TimeZone.getTimeZone("Pacific/Honolulu");
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate}と{@link TimeOfDay}を結合するテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -32,7 +38,7 @@ public class NominalTimeTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMinute#asTimePoint(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

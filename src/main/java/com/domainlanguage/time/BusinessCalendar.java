@@ -181,10 +181,8 @@ public class BusinessCalendar {
 	 * 
 	 * @param day 基準日
 	 * @return 営業日
-	 * @deprecated TODO
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	@Deprecated
 	public CalendarDate nearestBusinessDay(CalendarDate day) {
 		if (isBusinessDay(day)) {
 			return day;

@@ -183,8 +183,6 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * <p>このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。<p>
 	 * 
-	 * TODO 48時間、とした場合も、単位が「時間」であるため、日付は更新されない。これでいいのか？
-	 * 
 	 * @param day 元となる日付
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
@@ -288,7 +286,9 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この期間を1単位で表せる最大の時間単位を求める。
+	 * 
+	 * <p>例えば、1〜23時間, 25〜47時間は hours だが、24時間, 48時間は days である。</p>
 	 * 
 	 * @return 時間単位
 	 */
@@ -364,8 +364,6 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * <p>このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。<p>
 	 * 
-	 * TODO 48時間、とした場合も、単位が「時間」であるため、日付は更新されない。これでいいのか？
-	 * 
 	 * @param day 元となる日付
 	 * @return このオブジェクトが表現する長さのを引いた、過去の日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
@@ -397,14 +395,20 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この時間量の文字列表現を返す。
 	 * 
-	 * @return 時間単位をあらわす文字列
+	 * @return 時間量の文字列表現
 	 */
 	public String toNormalizedString() {
 		return toNormalizedString(unit.descendingUnits());
 	}
 	
+	/**
+	 * この時間量の文字列表現を返す。
+	 * 
+	 * @return 時間量の文字列表現
+	 * @see #toNormalizedString()
+	 */
 	@Override
 	public String toString() {
 		return toNormalizedString(unit.descendingUnitsForDisplay());

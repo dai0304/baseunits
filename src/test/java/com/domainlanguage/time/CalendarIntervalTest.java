@@ -95,24 +95,12 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * {@link CalendarDate#plusDays(int)}のテスト。
-	 * 
-	 * THINK 居場所違う？
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test05_DaysAdd() throws Exception {
-		assertThat(may1.plusDays(19), is(may20));
-	}
-	
-	/**
 	 * {@link CalendarInterval#daysIterator()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test06_DaysIterator() throws Exception {
+	public void test05_DaysIterator() throws Exception {
 		Iterator<CalendarDate> iterator = CalendarInterval.inclusive(may1, may3).daysIterator();
 		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(may1));
@@ -130,7 +118,7 @@ public class CalendarIntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test07_SubintervalIterator() throws Exception {
+	public void test06_SubintervalIterator() throws Exception {
 		CalendarInterval may1_3 = CalendarInterval.inclusive(may1, may3);
 		Iterator<CalendarInterval> iterator = may1_3.subintervalIterator(Duration.days(1));
 		assertThat(iterator.hasNext(), is(true));
@@ -169,7 +157,7 @@ public class CalendarIntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test08_Length() throws Exception {
+	public void test07_Length() throws Exception {
 		assertThat(may1.through(may3).length(), is(Duration.days(3)));
 		CalendarInterval may2002_july2004 = CalendarInterval.inclusive(2002, 5, 1, 2004, 7, 1);
 		// (5/1/2002-4/30/2003) 365 days + (-4/30/2004) 366 + (5/1-7/31) 31+30+1 = 793 days
@@ -184,7 +172,7 @@ public class CalendarIntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test09_Complements() throws Exception {
+	public void test08_Complements() throws Exception {
 		CalendarInterval may1Onward = CalendarInterval.inclusive(may1, null);
 		CalendarInterval may2Onward = CalendarInterval.inclusive(may2, null);
 		List<Interval<CalendarDate>> complementList = may2Onward.complementRelativeTo(may1Onward);
@@ -202,7 +190,7 @@ public class CalendarIntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test10_SingleDateCalendarIntervalCompare() throws Exception {
+	public void test09_SingleDateCalendarIntervalCompare() throws Exception {
 		CalendarInterval may1_may1 = CalendarInterval.inclusive(may1, may1);
 		assertThat(may1_may1.start(), is(may1));
 		assertThat(may1_may1.end(), is(may1));
@@ -221,7 +209,7 @@ public class CalendarIntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test11_EverFromToString() throws Exception {
+	public void test10_EverFromToString() throws Exception {
 		CalendarDate x = CalendarDate.from(2007, 6, 5);
 		CalendarInterval i = CalendarInterval.everFrom(x);
 		assertThat(i.toString(), is("[2007-06-05, Infinity]"));
@@ -235,7 +223,7 @@ public class CalendarIntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test12_BackwardCalendarIvalIntersection() throws Exception {
+	public void test11_BackwardCalendarIvalIntersection() throws Exception {
 		try {
 			CalendarInterval.inclusive(2001, 1, 1, 1776, 7, 4);
 			fail();
@@ -250,7 +238,7 @@ public class CalendarIntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test13_StartingFrom() throws Exception {
+	public void test12_StartingFrom() throws Exception {
 		CalendarInterval d1 = CalendarInterval.startingFrom(may1, Duration.days(2));
 		CalendarInterval expected1 = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 2);
 		assertThat(d1, is(expected1));

@@ -59,7 +59,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -69,7 +69,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#valueOf(double, Currency)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -82,7 +82,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 円単位 {@link Money} のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -96,7 +96,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#Money(BigDecimal, Currency)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -113,7 +113,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#dividedBy(double)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -124,7 +124,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#times(double)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -136,7 +136,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#times(double, Rounding)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -147,7 +147,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#times(BigDecimal, Rounding)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -159,7 +159,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#minimumIncrement()}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -170,7 +170,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#plus(Money)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -185,7 +185,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#dividedBy(Money)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -212,7 +212,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -224,7 +224,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#isGreaterThan(Money)}, {@link Money#isLessThan(Money)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -238,11 +238,12 @@ public class MoneyTest {
 			d15.isGreaterThan(e2_51);
 			fail();
 		} catch (ClassCastException correctBehavior) {
+			// success
 		}
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -252,7 +253,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -263,7 +264,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -274,7 +275,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#hashCode()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -285,7 +286,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#negated()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -296,7 +297,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#isPositive()}, {@link Money#isNegative()}, {@link Money#isZero()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -310,7 +311,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#toString(Locale)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -327,7 +328,7 @@ public class MoneyTest {
 	//	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money}インスタンス生成時の丸めテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -338,7 +339,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#minus(Money)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -348,7 +349,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#applying(Ratio, int, Rounding)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -360,7 +361,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#incremented()}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -371,7 +372,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * TODO
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
