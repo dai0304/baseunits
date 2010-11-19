@@ -88,7 +88,6 @@ public class ClockTest {
 		Clock.setDefaultTimeZone(pt);
 		assertThat(Clock.today(), is(CalendarDate.date(2004, 11, 30)));
 		assertThat(Clock.now(), is(dec1_5am_gmt));
-		
 	}
 	
 	/**

@@ -34,7 +34,7 @@ public class Clock {
 	 * @return 日付の算出に使用する {@link TimeZone}
 	 */
 	public static TimeZone defaultTimeZone() {
-		//There is no reasonable automatic default.
+		// There is no reasonable automatic default.
 		return defaultTimeZone;
 	}
 	

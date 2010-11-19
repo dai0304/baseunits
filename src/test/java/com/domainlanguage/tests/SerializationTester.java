@@ -32,7 +32,7 @@ public class SerializationTester {
 	 */
 	public static void assertCanBeSerialized(Object serializable) {
 		if (Serializable.class.isInstance(serializable) == false) {
-			fail("Object doesn't implement java.io.Serializable interface");
+			fail("Object doesn't implement java.io.Serializable interface: " + serializable.getClass());
 		}
 		
 		ObjectOutputStream out = null;

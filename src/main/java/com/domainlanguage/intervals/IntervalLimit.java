@@ -156,6 +156,11 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 		return result;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("<%s %s %s>", lower ? "lower" : "upper", closed ? "closed" : "open", value);
+	}
+	
 	/**
 	 * Only for use by persistence mapping frameworks
 	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>

@@ -71,7 +71,6 @@ public final class Proration {
 		Validate.notNull(ratio);
 		int scale = defaultScaleForIntermediateCalculations(total);
 		BigDecimal multiplier = ratio.decimalValue(scale, Rounding.DOWN);
-		System.out.println(multiplier);
 		return total.times(multiplier, Rounding.DOWN);
 	}
 	

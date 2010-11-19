@@ -120,12 +120,8 @@ public class MoneyLanguageExampleTest {
 		assertThat(salaryPayments[10], is(Money.dollars(1538.46)));
 		assertThat(salaryPayments[12], is(Money.dollars(1538.46)));
 		
-		System.out.println("80000*36/52=" + Money.dollars(80000.00).times(36).dividedBy(52));
-		System.out.println("80000/52*36=" + Money.dollars(80000.00).dividedBy(52).times(36));
-		
 		// TODO: Following currently fails. May be a problem in proration.
-		Money totalSalaryEarned = Proration.partOfWhole(Money.dollars(80000.00), 36, 52);
-		System.out.println(totalSalaryEarned);
+//		Money totalSalaryEarned = Proration.partOfWhole(Money.dollars(80000.00), 36, 52);
 //		assertThat(totalSalaryEarned, is(Money.dollars(1538.46).times(36)/*55384.56*/)));
 	}
 	
