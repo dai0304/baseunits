@@ -29,8 +29,20 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 	FloatingDateSpecification() {
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param month 月を表す正数（1〜12）
+	 * @param dayOfWeek 曜日
+	 * @param occurrence 周回数（1〜5）
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code dayOfWeek}に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code occurrence}が1〜5の範囲ではない場合
+	 */
 	FloatingDateSpecification(int month, DayOfWeek dayOfWeek, int occurrence) {
+		Validate.isTrue(1 <= month && month <= 12);
 		Validate.notNull(dayOfWeek);
+		Validate.isTrue(1 <= occurrence && occurrence <= 5);
 		this.month = month;
 		this.dayOfWeek = dayOfWeek;
 		this.occurrence = occurrence;

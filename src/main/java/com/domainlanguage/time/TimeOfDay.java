@@ -18,11 +18,11 @@ import java.util.TimeZone;
 public class TimeOfDay {
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した時分を表す、{@link TimeOfDay}のインスタンスを生成する。
 	 * 
-	 * @param hour 時
-	 * @param minute 分
-	 * @return
+	 * @param hour 時をあらわす正数（0〜23）
+	 * @param minute 分をあらわす正数（0〜59）
+	 * @return {@link TimeOfDay}
 	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
 	 */
@@ -43,11 +43,26 @@ public class TimeOfDay {
 	TimeOfDay() {
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param hour 時をあらわす正数（0〜23）
+	 * @param minute 分をあらわす正数（0〜59）
+	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜23の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code minute}の値が0〜59の範囲ではない場合
+	 */
 	private TimeOfDay(int hour, int minute) {
 		this.hour = HourOfDay.of(hour);
 		this.minute = MinuteOfHour.of(minute);
 	}
 	
+	/**
+	 * 指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+	 * 
+	 * @param date 年月日
+	 * @param timeZone タイムゾーン
+	 * @return 瞬間
+	 */
 	public TimePoint asTimePointGiven(CalendarDate date, TimeZone timeZone) {
 		CalendarMinute timeOfDayOnDate = on(date);
 		return timeOfDayOnDate.asTimePoint(timeZone);
@@ -69,14 +84,14 @@ public class TimeOfDay {
 			if (other.hour != null) {
 				return false;
 			}
-		} else if (!hour.equals(other.hour)) {
+		} else if (hour.equals(other.hour) == false) {
 			return false;
 		}
 		if (minute == null) {
 			if (other.minute != null) {
 				return false;
 			}
-		} else if (!minute.equals(other.minute)) {
+		} else if (minute.equals(other.minute) == false) {
 			return false;
 		}
 		return true;
@@ -91,14 +106,36 @@ public class TimeOfDay {
 		return result;
 	}
 	
+	/**
+	 * このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。
+	 * 
+	 * <p>等価の場合は{@code false}を返す。</p>
+	 * 
+	 * @param another 基準時分
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 */
 	public boolean isAfter(TimeOfDay another) {
-		return hour.isAfter(another.hour) || hour.equals(another) && minute.isAfter(another.minute);
+		return hour.isAfter(another.hour) || (hour.equals(another.hour) && minute.isAfter(another.minute));
 	}
 	
+	/**
+	 * このインスタンスがあらわす時分が、指定した時分よりも過去であるかどうか調べる。
+	 * 
+	 * <p>等価の場合は{@code false}を返す。</p>
+	 * 
+	 * @param another 基準時分
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 */
 	public boolean isBefore(TimeOfDay another) {
-		return hour.isBefore(another.hour) || hour.equals(another) && minute.isBefore(another.minute);
+		return hour.isBefore(another.hour) || (hour.equals(another.hour) && minute.isBefore(another.minute));
 	}
 	
+	/**
+	 * 指定した年月日における、このインスタンスがあらわす時分について {@link CalendarMinute} 型のインスタンスを返す。
+	 * 
+	 * @param date 年月日
+	 * @return {@link CalendarMinute}
+	 */
 	public CalendarMinute on(CalendarDate date) {
 		return CalendarMinute.dateAndTimeOfDay(date, this);
 	}
@@ -108,12 +145,20 @@ public class TimeOfDay {
 		return hour.toString() + ":" + minute.toString();
 	}
 	
-	int getHour() {
+	int breachEncapsulationOf_hour() { // CHECKSTYLE IGNORE THIS LINE
 		return hour.value();
 	}
 	
-	int getMinute() {
+	int breachEncapsulationOf_minute() { // CHECKSTYLE IGNORE THIS LINE
 		return minute.value();
+	}
+	
+	HourOfDay hour() {
+		return hour;
+	}
+	
+	MinuteOfHour minute() {
+		return minute;
 	}
 	
 	/**

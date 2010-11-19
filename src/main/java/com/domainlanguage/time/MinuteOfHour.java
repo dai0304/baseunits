@@ -23,7 +23,7 @@ public class MinuteOfHour {
 	 * インスタンスを生成する。
 	 * 
 	 * @param initial 分をあらわす正数
-	 * @return 分
+	 * @return 分（0〜59）
 	 * @throws IllegalArgumentException 引数の値が0〜59の範囲ではない場合
 	 */
 	public static MinuteOfHour of(int initial) {
@@ -73,6 +73,8 @@ public class MinuteOfHour {
 	/**
 	 * 同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来かどうか調べる。
 	 * 
+	 * <p>等価である場合は{@code false}を返す。</p>
+	 * 
 	 * @param another 基準分
 	 * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
@@ -84,6 +86,8 @@ public class MinuteOfHour {
 	
 	/**
 	 * 同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去かどうか調べる。
+	 * 
+	 * <p>等価である場合は{@code false}を返す。</p>
 	 * 
 	 * @param another 基準分
 	 * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}

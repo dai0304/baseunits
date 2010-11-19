@@ -6,6 +6,8 @@
 
 package com.domainlanguage.time;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * X月Y日、を表す日付仕様。
  * 
@@ -25,7 +27,17 @@ class FixedDateSpecification extends AnnualDateSpecification {
 	FixedDateSpecification() {
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param month 月を表す正数（1〜12）
+	 * @param day 日を表す正数（1〜31）
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 */
 	FixedDateSpecification(int month, int day) {
+		Validate.isTrue(1 <= month && month <= 12);
+		Validate.isTrue(1 <= day && day <= 31); // CHECKSTYLE IGNORE THIS LINE
 		this.month = month;
 		this.day = day;
 	}

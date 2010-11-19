@@ -41,14 +41,14 @@ public class SerializationTester {
 		try {
 			out = new ObjectOutputStream(byteArrayOut);
 			out.writeObject(serializable);
-			out.close(); //this shouldn't matter
+			out.close(); // this shouldn't matter
 			byteArrayIn = new ByteArrayInputStream(byteArrayOut.toByteArray());
 			in = new ObjectInputStream(byteArrayIn);
 			Object deserialized = in.readObject();
 			if (serializable.equals(deserialized) == false) {
 				fail("Reconstituted object is expected to be equal to serialized");
 			}
-			in.close(); //this shouldn't matter
+			in.close(); // this shouldn't matter
 		} catch (Exception e) {
 			fail("Exception while serializing: " + e);
 		}

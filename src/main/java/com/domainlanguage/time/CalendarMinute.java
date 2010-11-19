@@ -11,19 +11,21 @@ import java.util.TimeZone;
 import org.apache.commons.lang.Validate;
 
 /**
- * 特定のカレンダー上の「日時」を表すクラス。
+ * カレンダー上の特定の「年月日時分」を表すクラス。
  * 
- * <p>{@link Date}と異なり、分未満（秒以下）の概念を持っていない。また、{@link TimePoint}と異なり、1分間全ての範囲を表し、
- * 特定の瞬間をモデリングしたものではない。</p>
+ * <p>{@link Date}と異なり、分未満（秒以下）の概念を持っていない。また、{@link TimePoint}と異なり、
+ * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  * 
  * @author daisuke
  */
 public class CalendarMinute {
 	
 	/**
+	 * 指定した年月日を時分表す、{@link CalendarMinute}のインスタンスを生成する。
+	 * 
 	 * @param aDate 年月日
 	 * @param aTime 時分
-	 * @return
+	 * @return {@link CalendarMinute}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static CalendarMinute dateAndTimeOfDay(CalendarDate aDate, TimeOfDay aTime) {
@@ -32,6 +34,20 @@ public class CalendarMinute {
 		return new CalendarMinute(aDate, aTime);
 	}
 	
+	/**
+	 * 指定した年月日を時分表す、{@link CalendarMinute}のインスタンスを生成する。
+	 * 
+	 * @param year 西暦年をあらわす数
+	 * @param month 月をあらわす正数（1〜12）
+	 * @param day 日をあらわす正数（1〜31）
+	 * @param hour 時をあらわす正数（0〜23）
+	 * @param minute 分をあらわす正数（0〜59）
+	 * @return {@link CalendarMinute}
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
+	 */
 	public static CalendarMinute dateHourAndMinute(int year, int month, int day, int hour, int minute) {
 		return new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.hourAndMinute(hour, minute));
 	}
@@ -56,30 +72,19 @@ public class CalendarMinute {
 		this.time = time;
 	}
 	
+	/**
+	 * 指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+	 * 
+	 * @param timeZone タイムゾーン
+	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public TimePoint asTimePoint(TimeZone timeZone) {
+		Validate.notNull(timeZone);
 		return TimePoint.at(date.breachEncapsulationOf_year(), date.breachEncapsulationOf_month(),
-				date.breachEncapsulationOf_day(), time.getHour(), time.getMinute(), 0, 0, timeZone);
+				date.breachEncapsulationOf_day(), time.breachEncapsulationOf_hour(),
+				time.breachEncapsulationOf_minute(), 0, 0, timeZone);
 	}
-	
-//	public boolean equals(CalendarMinute another) {
-//		if (another == null) {
-//			return false;
-//		}
-//		return date.equals(another.date) && time.equals(another.time);
-//	}
-//	
-//	@Override
-//	public boolean equals(Object anotherObject) {
-//		if (anotherObject instanceof CalendarMinute == false) {
-//			return false;
-//		}
-//		return equals((CalendarMinute) anotherObject);
-//	}
-//	
-//	@Override
-//	public int hashCode() {
-//		return date.hashCode() ^ time.hashCode();
-//	}
 	
 	@Override
 	public boolean equals(Object obj) {

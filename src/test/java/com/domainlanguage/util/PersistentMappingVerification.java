@@ -143,13 +143,13 @@ public class PersistentMappingVerification {
 		} catch (NoSuchMethodException ex) {
 			addToProblems(klass.toString() + " has no default constructor");
 		} catch (IllegalArgumentException ex) {
-			addToProblems(constructor.toString() + " had an illegal argument exception");
+			addToProblems(constructor + " had an illegal argument exception");
 		} catch (InstantiationException ex) {
-			addToProblems(constructor.toString() + " had an instantion exception");
+			addToProblems(constructor + " had an instantion exception");
 		} catch (IllegalAccessException ex) {
-			addToProblems(constructor.toString() + " had an illegal access exception");
+			addToProblems(constructor + " had an illegal access exception");
 		} catch (InvocationTargetException ex) {
-			addToProblems(constructor.toString() + " had an invocation exception");
+			addToProblems(constructor + " had an invocation exception");
 		}
 	}
 	
@@ -203,11 +203,11 @@ public class PersistentMappingVerification {
 		} catch (NoSuchMethodException ex) {
 			addToProblems(ex.getMessage() + "does not exist");
 		} catch (IllegalArgumentException ex) {
-			addToProblems(getter.toString() + " had an illegal argument exception");
+			addToProblems(getter + " had an illegal argument exception");
 		} catch (IllegalAccessException ex) {
-			addToProblems(getter.toString() + " had an illegal access exception");
+			addToProblems(getter + " had an illegal access exception");
 		} catch (InvocationTargetException ex) {
-			addToProblems(getter.toString() + " had an invocation target exception");
+			addToProblems(getter + " had an invocation target exception");
 		}
 		return actual;
 	}
@@ -228,11 +228,11 @@ public class PersistentMappingVerification {
 		} catch (NoSuchMethodException ex) {
 			addToProblems(ex.getMessage() + "does not exist");
 		} catch (IllegalArgumentException ex) {
-			addToProblems(setter.toString() + " had an illegal argument exception");
+			addToProblems(setter + " had an illegal argument exception");
 		} catch (IllegalAccessException ex) {
-			addToProblems(setter.toString() + " had an illegal access exception");
+			addToProblems(setter + " had an illegal access exception");
 		} catch (InvocationTargetException ex) {
-			addToProblems(setter.toString() + " had an invocation target exception");
+			addToProblems(setter + " had an invocation target exception");
 		}
 	}
 	
@@ -307,7 +307,8 @@ public class PersistentMappingVerification {
 	
 	private boolean isPrimitivePersistenceMappingType(Class<?> klass) {
 		try {
-			return klass.getDeclaredMethod(GET_PRIMITIVE_PERSISTENCE_MAPPING_TYPE) != null;
+			klass.getDeclaredMethod(GET_PRIMITIVE_PERSISTENCE_MAPPING_TYPE);
+			return true;
 		} catch (SecurityException ex) {
 			return false;
 		} catch (NoSuchMethodException ex) {

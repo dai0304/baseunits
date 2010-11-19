@@ -25,7 +25,7 @@ import org.apache.commons.lang.Validate;
 public class TimeInterval extends Interval<TimePoint> {
 	
 	/**
-	 * 開始日時と終了日時より、閉期間を生成する。
+	 * 開始日時と終了日時より、閉期間を返す。
 	 * 
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
@@ -37,7 +37,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 開始日時より、下側限界のみを持つ期間を生成する。
+	 * 開始日時より、下側限界のみを持つ期間を返す。
 	 * 
 	 * <p>開始日時は期間に含む（閉じている）区間である。</p>
 	 * 
@@ -49,7 +49,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 終了日時より、上側限界のみを持つ期間を生成する。
+	 * 終了日時より、上側限界のみを持つ期間を返す。
 	 * 
 	 * <p>終了日時は期間に含まない（開いている）区間である。</p>
 	 * 
@@ -61,7 +61,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 開始日時と終了日時より、開期間を生成する。
+	 * 開始日時と終了日時より、開期間を返す。
 	 * 
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
@@ -73,7 +73,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 開始日時と終了日時より、期間を生成する。
+	 * 開始日時と終了日時より、期間を返す。
 	 * 
 	 * <p>主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。</p>
 	 * 
@@ -89,9 +89,9 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 開始日時と終了日時より、期間を生成する。
+	 * 開始日時と終了日時より、期間を返す。
 	 * 
-	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
+	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。</p>
 	 * 
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
@@ -104,7 +104,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 終了日時と期間の長さより、期間を生成する。
+	 * 終了日時と期間の長さより、期間を返す。
 	 * 
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
@@ -121,7 +121,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 終了日時と期間の長さより、期間を生成する。
+	 * 終了日時と期間の長さより、期間を返す。
 	 * 
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param length 期間の長さ
@@ -136,7 +136,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 開始日時と期間の長さより、期間を生成する。
+	 * 開始日時と期間の長さより、期間を返す。
 	 * 
 	 * @param start 開始日時（下側限界値）
 	 * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
@@ -153,9 +153,9 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * 開始日時と期間の長さより、期間を生成する。
+	 * 開始日時と期間の長さより、期間を返す。
 	 * 
-	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
+	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。</p>
 	 * 
 	 * @param start 開始日時（下側限界値）
 	 * @param length 期間の長さ
@@ -170,7 +170,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * インスタンスを生成する。
+	 * インスタンスを返す。
 	 * 
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param startIncluded 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
@@ -290,7 +290,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * この期間と同じ型を持つ、新しい期間を生成する。
+	 * この期間と同じ型を持つ、新しい期間を返す。
 	 * 
 	 * @param start 下側限界値. 限界値がない場合は、{@code null}
 	 * @param isStartClosed 下限値を期間に含む（閉じた下側限界）場合は{@code true}を指定する

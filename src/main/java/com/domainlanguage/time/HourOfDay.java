@@ -23,7 +23,7 @@ public class HourOfDay {
 	 * インスタンスを生成する。
 	 * 
 	 * @param initial 時をあらわす正数
-	 * @return 時
+	 * @return 時（0〜23）
 	 * @throws IllegalArgumentException 引数の値が0〜23の範囲ではない場合
 	 */
 	public static HourOfDay of(int initial) {
@@ -35,7 +35,7 @@ public class HourOfDay {
 	 * 
 	 * @param initial 時をあらわす正数
 	 * @param amPm 午前午後を表す文字列
-	 * @return 時
+	 * @return 時（0〜23）
 	 * @throws IllegalArgumentException 引数initialの値が0〜11の範囲ではない場合
 	 * @throws IllegalArgumentException 引数am_pmの値が AM, PM ではない場合
 	 */

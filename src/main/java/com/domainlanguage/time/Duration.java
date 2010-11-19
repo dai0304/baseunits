@@ -285,6 +285,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 		return new Duration(newQuantity, unit.baseUnit());
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return 時間単位
+	 */
 	public TimeUnit normalizedUnit() {
 		TimeUnit[] units = unit.descendingUnits();
 		long baseAmount = inBaseUnits();
@@ -389,6 +394,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 		return addAmountToTimePoint(-1 * inBaseUnits(), point);
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return 時間単位をあらわす文字列
+	 */
 	public String toNormalizedString() {
 		return toNormalizedString(unit.descendingUnits());
 	}

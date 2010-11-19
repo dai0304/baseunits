@@ -16,10 +16,10 @@ import java.util.TimeZone;
 import org.apache.commons.lang.Validate;
 
 /**
- * 特定のカレンダー上の「日」を表すクラス。
+ * カレンダー上の特定の「年月日」を表すクラス。
  * 
- * <p>{@link Date}と異なり、時間の概念を持っていない。また、{@link TimePoint}と異なり、1日(24時間)間全ての範囲を表し、
- * 特定の瞬間をモデリングしたものではない。</p>
+ * <p>{@link Date}と異なり、時間の概念を持っていない。また、{@link TimePoint}と異なり、
+ * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  * 
  * @author daisuke
  */
@@ -27,24 +27,28 @@ import org.apache.commons.lang.Validate;
 public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
 	/**
-	 * 指定した年月日を表す、 {@link CalendarDate}のインスタンスを生成する。
+	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
-	 * @param year 年
-	 * @param month 月（1〜12）
-	 * @param day 日
+	 * @param year 西暦年をあらわす数
+	 * @param month 月をあらわす正数（1〜12）
+	 * @param day 日をあらわす正数（1〜31）
 	 * @return {@link CalendarDate}
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 */
 	public static CalendarDate date(int year, int month, int day) {
 		return CalendarDate.from(year, month, day);
 	}
 	
 	/**
-	 * 指定した年月日を表す、 {@link CalendarDate}のインスタンスを生成する。
+	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
-	 * @param year 年
-	 * @param month 月（1〜12）
-	 * @param day 日
+	 * @param year 西暦年をあらわす数
+	 * @param month 月をあらわす正数（1〜12）
+	 * @param day 日をあらわす正数（1〜31）
 	 * @return {@link CalendarDate}
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 */
 	public static CalendarDate from(int year, int month, int day) {
 		CalendarDate result = new CalendarDate(year, month, day);
@@ -53,7 +57,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月日を表す、 {@link CalendarDate}のインスタンスを生成する。
+	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
 	 * @param dateString 年月日を表す文字列 
 	 * @param pattern 解析パターン文字列
@@ -84,9 +88,9 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	static CalendarDate _from(Calendar calendar) { // CHECKSTYLE IGNORE THIS LINE
-		//Use timezone already set in calendar.
+		// Use timezone already set in calendar.
 		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH) + 1; //T&M Lib counts January as 1
+		int month = calendar.get(Calendar.MONTH) + 1; // T&M Lib counts January as 1
 		int date = calendar.get(Calendar.DATE);
 		return CalendarDate.from(year, month, date);
 	}
@@ -94,7 +98,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 
 	private int year;
 	
-	private int month; // 1 based: January = 1, February = 2, ...
+	/** 1 based: January = 1, February = 2, ... */
+	private int month;
 	
 	private int day;
 	

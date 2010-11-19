@@ -270,17 +270,7 @@ public class MoneyTest {
 	@Test
 	public void test16_EqualsNull() throws Exception {
 		Money d2_51a = Money.dollars(2.51);
-		Object objectNull = null;
-		assertThat(d2_51a.equals(objectNull), is(false));
-		
-		//This next test seems just like the previous, but it's not
-		//The Java Compiler early binds message sends and
-		//it will bind the next call to equals(Money) and
-		//the previous will bind to equals(Object)
-		//I renamed the original equals(Money) to
-		//equalsMoney(Money) to prevent wrong binding.
-		Money moneyNull = null;
-		assertThat(d2_51a.equals(moneyNull), is(false));
+		assertThat(d2_51a.equals(null), is(false));
 	}
 	
 	/**

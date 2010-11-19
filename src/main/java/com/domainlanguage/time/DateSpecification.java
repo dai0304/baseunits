@@ -18,8 +18,10 @@ public abstract class DateSpecification {
 	/**
 	 * 日付仕様のインスタンスを生成する。
 	 * 
-	 * @param month 月
-	 * @param day 日
+	 * @param month 月を表す正数（1〜12）
+	 * @param day 日を表す正数（1〜31）
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 * @return 日付仕様
 	 */
 	public static DateSpecification fixed(int month, int day) {
@@ -29,9 +31,9 @@ public abstract class DateSpecification {
 	/**
 	 * X月の第Y◎曜日仕様のインスタンスを生成する。
 	 * 
-	 * @param month 月
+	 * @param month 月を表す正数（1〜12）
 	 * @param dayOfWeek 曜日
-	 * @param n 周回数
+	 * @param n 周回数（1〜5）
 	 * @return 日付仕様
 	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
 	 */
@@ -40,10 +42,10 @@ public abstract class DateSpecification {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した期間の中で、この日付仕様を満たす最初の年月日を返す。
 	 * 
-	 * @param interval
-	 * @return
+	 * @param interval 期間
+	 * @return 年月日。但し、仕様を満たす日がなかった場合は{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public abstract CalendarDate firstOccurrenceIn(CalendarInterval interval);
@@ -57,10 +59,10 @@ public abstract class DateSpecification {
 	public abstract boolean isSatisfiedBy(CalendarDate date);
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した期間の中で、この日付仕様を満たす年月日を順次取得する反復子を返す。
 	 * 
-	 * @param interval
-	 * @return
+	 * @param interval 期間
+	 * @return 反復子
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public abstract Iterator<CalendarDate> iterateOver(CalendarInterval interval);

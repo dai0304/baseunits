@@ -372,10 +372,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
 	 * 
-	 * @param interval
-	 * @return
+	 * @param interval 基準期間
+	 * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isAfter(TimeInterval interval) {
@@ -398,10 +398,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
 	 * 
-	 * @param interval
-	 * @return
+	 * @param interval 基準期間
+	 * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isBefore(TimeInterval interval) {
@@ -492,6 +492,14 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		return format.format(asJavaUtilDate());
 	}
 	
+	/**
+	 * このインスタンスがあらわす瞬間を開始瞬間、{@code end}を終了瞬間とする、期間を返す。
+	 * 
+	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
+	 * 
+	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @return {@link TimeInterval}
+	 */
 	public TimeInterval until(TimePoint end) {
 		return TimeInterval.over(this, end);
 	}

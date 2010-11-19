@@ -24,6 +24,11 @@ import org.junit.Test;
  */
 public class IntervalTest {
 	
+	/**
+	 * 永続化マッピングテスト用の {@link IntervalLimit} を返す。
+	 * 
+	 * @return {@link IntervalLimit}
+	 */
 	public static IntervalLimit<Integer> exampleLimitForPersistentMappingTesting() {
 		return IntervalLimit.upper(true, 78);
 	}
