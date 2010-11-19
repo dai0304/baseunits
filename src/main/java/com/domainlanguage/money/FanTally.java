@@ -3,13 +3,21 @@ package com.domainlanguage.money;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
+
 public class FanTally<T> {
 	
 	List<MoneyFan<T>> fans;
 	
 
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param fans
+	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
+	 */
 	public FanTally(List<MoneyFan<T>> fans) {
-		super();
+		Validate.noNullElements(fans);
 		this.fans = fans;
 	}
 	

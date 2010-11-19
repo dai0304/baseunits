@@ -96,7 +96,15 @@ public class MoneyFan<T> {
 		return new MoneyFan<T>(negatedAllotments);
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param added
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public MoneyFan<T> plus(MoneyFan<T> added) {
+		Validate.notNull(added);
 		Set<T> allEntities = new HashSet<T>();
 		for (Allotment<T> allotment : allotments) {
 			allEntities.add(allotment.entity);

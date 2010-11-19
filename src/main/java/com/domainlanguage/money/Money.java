@@ -89,14 +89,14 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Collection}に含む全ての金額の合計金額を返す。
 	 * 
-	 * @param monies
-	 * @return
+	 * @param monies 金額の集合
+	 * @return 合計金額
 	 * @throws ClassCastException 引数の通貨単位の中に通貨単位が異なるものを含む場合
 	 */
 	public static Money sum(Collection<Money> monies) {
-		//TODO Return Default Currency
+		// TODO Return Default Currency
 		if (monies.isEmpty()) {
 			return Money.dollars(0.00);
 		}
@@ -113,6 +113,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * This creation method is safe to use. It will adjust scale, but will not
 	 * round off the amount.
 	 * 
+	 * @param amount 量
+	 * @param currency 通貨単位
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Money valueOf(BigDecimal amount, Currency currency) {
@@ -124,6 +127,10 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * For convenience, an amount can be rounded to create a Money.
 	 * 
+	 * @param rawAmount 量
+	 * @param currency 通貨単位
+	 * @param roundingMode 丸めルール
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Money valueOf(BigDecimal rawAmount, Currency currency, Rounding roundingMode) {
@@ -138,6 +145,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * WARNING: Because of the indefinite precision of double, this method must
 	 * round off the value.
 	 * 
+	 * @param dblAmount 量
+	 * @param currency 通貨単位
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Money valueOf(double dblAmount, Currency currency) {
@@ -149,6 +159,10 @@ public class Money implements Comparable<Money>, Serializable {
 	 * Because of the indefinite precision of double, this method must round off
 	 * the value. This method gives the client control of the rounding mode.
 	 * 
+	 * @param dblAmount 量
+	 * @param currency 通貨単位
+	 * @param roundingMode 丸めルール
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Money valueOf(double dblAmount, Currency currency, Rounding roundingMode) {
@@ -183,10 +197,10 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した通貨単位を持つ、量が0の金額を返す。
 	 * 
-	 * @param currency
-	 * @return
+	 * @param currency 通貨単位
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Money zero(Currency currency) {
@@ -205,6 +219,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * consistent with the class invariant. Other creation methods are available
 	 * for convenience.
 	 * 
+	 * @param amount 量
+	 * @param currency 通貨単位
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money(BigDecimal amount, Currency currency) {
@@ -227,19 +243,19 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * Returns a {@link Money} whose amount is the absolute amount of this {@link Money}, and whose scale is this.scale().
 	 * 
-	 * @return
+	 * @return 絶対金額
 	 */
 	public Money abs() {
 		return Money.valueOf(amount.abs(), currency);
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この金額に対して、指定した{@code ratio}の割合の金額を返す。
 	 * 
-	 * @param ratio
-	 * @param scale
-	 * @param roundingRule
-	 * @return
+	 * @param ratio 割合
+	 * @param scale スケール
+	 * @param roundingRule 丸めルール
+	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money applying(Ratio ratio, int scale, Rounding roundingRule) {
@@ -250,11 +266,11 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この金額に対して、指定した{@code ratio}の割合の金額を返す。
 	 * 
-	 * @param ratio
-	 * @param roundingRule
-	 * @return
+	 * @param ratio 割合
+	 * @param roundingRule 丸めルール
+	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money applying(Ratio ratio, Rounding roundingRule) {
@@ -273,11 +289,11 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
 	 * 
-	 * @param divisor
-	 * @param roundingMode
-	 * @return
+	 * @param divisor 除数
+	 * @param roundingMode 丸めルール
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money dividedBy(BigDecimal divisor, Rounding roundingMode) {
@@ -287,16 +303,22 @@ public class Money implements Comparable<Money>, Serializable {
 		return Money.valueOf(newAmount, currency);
 	}
 	
+	/**
+	 * この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
+	 * 
+	 * @param divisor 除数
+	 * @return 金額
+	 */
 	public Money dividedBy(double divisor) {
 		return dividedBy(divisor, DEFAULT_ROUNDING_MODE);
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
 	 * 
-	 * @param divisor
-	 * @param roundingMode
-	 * @return
+	 * @param divisor 除数
+	 * @param roundingMode 丸めルール
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money dividedBy(double divisor, Rounding roundingMode) {
@@ -304,40 +326,64 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この金額の、{@code divisor}に対する割合を返す。
 	 * 
-	 * @param divisor
-	 * @return
+	 * @param divisor 除数
+	 * @return 割合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 */
 	public Ratio dividedBy(Money divisor) {
+		Validate.notNull(divisor);
 		assertHasSameCurrencyAs(divisor);
 		return Ratio.of(amount, divisor.amount);
 	}
 	
-	public boolean equals(Money other) {
-		return other != null && hasSameCurrencyAs(other) && amount.equals(other.amount);
-	}
-	
 	@Override
-	public boolean equals(Object other) {
-		try {
-			return equals((Money) other);
-		} catch (ClassCastException ex) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Money other = (Money) obj;
+		if (amount == null) {
+			if (other.amount != null) {
+				return false;
+			}
+		} else if (!amount.equals(other.amount)) {
+			return false;
+		}
+		if (currency == null) {
+			if (other.currency != null) {
+				return false;
+			}
+		} else if (hasSameCurrencyAs(other) == false) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return amount.hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
+		return result;
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * このインスタンがあらわす金額が、{@code other}よりも大きいかどうか調べる。
 	 * 
-	 * @param other
-	 * @return
+	 * <p>等価の場合は{@code false}とする。</p>
+	 * 
+	 * @param other 基準金額
+	 * @return 大きい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 */
 	public boolean isGreaterThan(Money other) {
@@ -345,33 +391,54 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * このインスタンがあらわす金額が、{@code other}よりも小さいかどうか調べる。
 	 * 
-	 * @param other
-	 * @return
+	 * <p>等価の場合は{@code false}とする。</p>
+	 * 
+	 * @param other 基準金額
+	 * @return 小さい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 */
 	public boolean isLessThan(Money other) {
 		return compareTo(other) < 0;
 	}
 	
+	/**
+	 * このインスタンがあらわす金額が、負の金額かどうか調べる。
+	 * 
+	 * <p>ゼロの場合は{@code false}とする。</p>
+	 * 
+	 * @return 負の金額である場合は{@code true}、そうでない場合は{@code false}
+	 */
 	public boolean isNegative() {
 		return amount.compareTo(BigDecimal.ZERO) < 0;
 	}
 	
+	/**
+	 * このインスタンがあらわす金額が、正の金額かどうか調べる。
+	 * 
+	 * <p>ゼロの場合は{@code false}とする。</p>
+	 * 
+	 * @return 正の金額である場合は{@code true}、そうでない場合は{@code false}
+	 */
 	public boolean isPositive() {
 		return amount.compareTo(BigDecimal.ZERO) > 0;
 	}
 	
+	/**
+	 * このインスタンがあらわす金額が、ゼロかどうか調べる。
+	 * 
+	 * @return ゼロである場合は{@code true}、そうでない場合は{@code false}
+	 */
 	public boolean isZero() {
-		return this.equals(Money.valueOf(0.0, currency));
+		return equals(Money.valueOf(0.0, currency));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この金額から{@code other}を差し引いた金額を返す。
 	 * 
-	 * @param other
-	 * @return
+	 * @param other 金額
+	 * @return 差し引き金額
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
@@ -383,17 +450,17 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * Returns a {@link Money} whose amount is (-amount), and whose scale is this.scale().
 	 * 
-	 * @return
+	 * @return 金額
 	 */
 	public Money negated() {
 		return Money.valueOf(amount.negate(), currency);
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した時間量に対する、この金額の割合を返す。
 	 * 
-	 * @param duration
-	 * @return
+	 * @param duration 時間量
+	 * @return 割合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public MoneyTimeRate per(Duration duration) {
@@ -402,10 +469,10 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * TODO
+	 * この金額に{@code other}を足した金額を返す。
 	 * 
-	 * @param other
-	 * @return
+	 * @param other 金額
+	 * @return 足した金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 */
@@ -416,35 +483,65 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
+	 * この金額に{@code factor}を掛けた金額を返す。
+	 * 
 	 * TODO: Many apps require carrying extra precision in intermediate
 	 * calculations. The use of Ratio is a beginning, but need a comprehensive
 	 * solution. Currently, an invariant of Money is that the scale is the
 	 * currencies standard scale, but this will probably have to be suspended or
 	 * elaborated in intermediate calcs, or handled with defered calculations
 	 * like Ratio.
+	 * 
+	 * @param factor 係数
+	 * @return 掛けた金額
 	 */
 	public Money times(BigDecimal factor) {
 		return times(factor, DEFAULT_ROUNDING_MODE);
 	}
 	
 	/**
+	 * この金額に{@code factor}を掛けた金額を返す。
+	 * 
 	 * TODO: BigDecimal.multiply() scale is sum of scales of two multiplied
 	 * numbers. So what is scale of times?
+	 * 
+	 * @param factor 係数
+	 * @param roundingMode 丸めルール
+	 * @return 掛けた金額
 	 */
 	public Money times(BigDecimal factor, Rounding roundingMode) {
 		return Money.valueOf(amount.multiply(factor), currency, roundingMode);
 	}
 	
+	/**
+	 * この金額に{@code amount}を掛けた金額を返す。
+	 * 
+	 * @param amount 係数
+	 * @return 掛けた金額
+	 */
 	public Money times(double amount) {
 		return times(new BigDecimal(amount));
 	}
 	
+	/**
+	 * この金額に{@code amount}を掛けた金額を返す。
+	 * 
+	 * @param amount 係数
+	 * @param roundingMode 丸めルール
+	 * @return 掛けた金額
+	 */
 	public Money times(double amount, Rounding roundingMode) {
 		return times(new BigDecimal(amount), roundingMode);
 	}
 	
-	public Money times(int i) {
-		return times(new BigDecimal(i));
+	/**
+	 * この金額に{@code amount}を掛けた金額を返す。
+	 * 
+	 * @param amount 係数
+	 * @return 掛けた金額
+	 */
+	public Money times(int amount) {
+		return times(new BigDecimal(amount));
 	}
 	
 	@Override
@@ -452,7 +549,15 @@ public class Money implements Comparable<Money>, Serializable {
 		return currency.getSymbol() + " " + amount;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param locale
+	 * @return
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public String toString(Locale locale) {
+		Validate.notNull(locale);
 		return currency.getSymbol(locale) + " " + amount;
 	}
 	
@@ -463,6 +568,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * real work of the Money object elsewhere.
 	 * Here is an experimental approach, giving access with a 
 	 * warning label of sorts. Let us know how you like it.
+	 * 
+	 * @return amount
 	 */
 	BigDecimal breachEncapsulationOfAmount() {
 		return amount;
@@ -501,6 +608,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * This probably should be Currency responsibility. Even then, it may need
 	 * to be customized for specialty apps because there are other cases, where
 	 * the smallest increment is not the smallest unit.
+	 * 
+	 * @return 
 	 */
 	Money minimumIncrement() {
 		BigDecimal increment = BigDecimal.ONE.movePointLeft(currency.getDefaultFractionDigits());

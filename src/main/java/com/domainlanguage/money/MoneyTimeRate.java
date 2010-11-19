@@ -13,6 +13,14 @@ import com.domainlanguage.time.TimeRate;
 
 import org.apache.commons.lang.Validate;
 
+/**
+ * 単位時間あたりの金額（時間量に対する金額の割合）をあらわすクラス。
+ * 
+ * <p>例えば時給、人月単価など。</p>
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class MoneyTimeRate {
 	
 	private TimeRate rate;
@@ -23,8 +31,8 @@ public class MoneyTimeRate {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param money
-	 * @param duration
+	 * @param money 金額
+	 * @param duration 時間量
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public MoneyTimeRate(Money money, Duration duration) {
@@ -80,10 +88,10 @@ public class MoneyTimeRate {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 時間量に対してこの割合を適用した場合の金額を返す。
 	 * 
-	 * @param duration
-	 * @return
+	 * @param duration 時間量
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money over(Duration duration) {
@@ -92,12 +100,12 @@ public class MoneyTimeRate {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 時間量に対してこの割合を適用した場合の金額を返す。
 	 * 
-	 * @param duration
-	 * @param scale
-	 * @param roundRule
-	 * @return
+	 * @param duration 時間量
+	 * @param scale スケール
+	 * @param roundRule 丸めルール
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money over(Duration duration, int scale, Rounding roundRule) {
@@ -107,11 +115,11 @@ public class MoneyTimeRate {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 時間量に対してこの割合を適用した場合の金額を返す。
 	 * 
-	 * @param duration
-	 * @param roundRule
-	 * @return
+	 * @param duration 時間量
+	 * @param roundRule 丸めルール
+	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money over(Duration duration, Rounding roundRule) {

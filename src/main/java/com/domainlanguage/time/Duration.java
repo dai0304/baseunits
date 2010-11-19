@@ -16,6 +16,8 @@ import org.apache.commons.lang.Validate;
 /**
  * 時間量（時間の長さ・期間の長さなど）を表すクラス。
  * 
+ * <p>負の時間量は表現しない。</p>
+ * 
  * @author daisuke
  */
 @SuppressWarnings("serial")
