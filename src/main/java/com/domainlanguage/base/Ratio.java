@@ -48,6 +48,7 @@ public class Ratio {
 	 * @param denominator 分母
 	 * @return 引数に与えた分子、分母からなる比
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
 	 */
 	public static Ratio of(BigDecimal numerator, BigDecimal denominator) {
 		return new Ratio(numerator, denominator);
@@ -59,6 +60,7 @@ public class Ratio {
 	 * @param numerator 分子
 	 * @param denominator 分母
 	 * @return 引数に与えた分子、分母からなる比率
+	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
 	 */
 	public static Ratio of(long numerator, long denominator) {
 		return new Ratio(BigDecimal.valueOf(numerator), BigDecimal.valueOf(denominator));
@@ -86,10 +88,14 @@ public class Ratio {
 	 * @param numerator 分子
 	 * @param denominator 分母
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
 	 */
 	public Ratio(BigDecimal numerator, BigDecimal denominator) {
 		Validate.notNull(numerator);
 		Validate.notNull(denominator);
+		if (denominator.equals(BigDecimal.ZERO)) {
+			throw new ArithmeticException("denominator is zero");
+		}
 		this.numerator = numerator;
 		this.denominator = denominator;
 	}

@@ -52,6 +52,7 @@ public final class Proration {
 	 * @param whole 全体量をあらわす値
 	 * @return 部分の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws ArithmeticException 引数{@code whole}が0だった場合
 	 */
 	public static Money partOfWhole(Money total, long portion, long whole) {
 		return partOfWhole(total, Ratio.of(portion, whole));

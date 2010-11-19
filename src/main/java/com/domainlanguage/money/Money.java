@@ -91,14 +91,17 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * {@link Collection}に含む全ての金額の合計金額を返す。
 	 * 
+	 * <p>合計金額の通貨単位は、 {@code monies}の要素の（共通した）通貨単位となるが、
+	 * {@link Collection}が空の場合は、現在のデフォルトロケールにおける通貨単位で、量が0のインスタンスを返す。</p>
+	 * 
 	 * @param monies 金額の集合
 	 * @return 合計金額
-	 * @throws ClassCastException 引数の通貨単位の中に通貨単位が異なるものを含む場合
+	 * @throws ClassCastException 引数の通貨単位の中に通貨単位が異なるものを含む場合。
+	 * 				ただし、量が0の金額については通貨単位を考慮しないので例外は発生しない。
 	 */
 	public static Money sum(Collection<Money> monies) {
-		// TODO Return Default Currency
 		if (monies.isEmpty()) {
-			return Money.dollars(0.00);
+			return Money.zero(Currency.getInstance(Locale.getDefault()));
 		}
 		Iterator<Money> iterator = monies.iterator();
 		Money sum = iterator.next();
@@ -333,6 +336,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @return 割合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @throws ArithmeticException 引数{@code divisor}の量が0だった場合
 	 */
 	public Ratio dividedBy(Money divisor) {
 		Validate.notNull(divisor);
@@ -352,18 +356,10 @@ public class Money implements Comparable<Money>, Serializable {
 			return false;
 		}
 		Money other = (Money) obj;
-		if (amount == null) {
-			if (other.amount != null) {
-				return false;
-			}
-		} else if (!amount.equals(other.amount)) {
+		if (!amount.equals(other.amount)) {
 			return false;
 		}
-		if (currency == null) {
-			if (other.currency != null) {
-				return false;
-			}
-		} else if (hasSameCurrencyAs(other) == false) {
+		if (hasSameCurrencyAs(other) == false) {
 			return false;
 		}
 		return true;
@@ -373,8 +369,8 @@ public class Money implements Comparable<Money>, Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
+		result = prime * result + amount.hashCode();
+		result = prime * result + currency.hashCode();
 		return result;
 	}
 	
@@ -600,7 +596,7 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	boolean hasSameCurrencyAs(Money arg) {
-		return currency.equals(arg.currency);
+		return currency.equals(arg.currency) || arg.amount.equals(BigDecimal.ZERO) || amount.equals(BigDecimal.ZERO);
 	}
 	
 	/**

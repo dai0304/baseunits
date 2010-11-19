@@ -244,6 +244,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 割合
 	 * @throws IllegalArgumentException 引数divisorの単位を、このオブジェクトの単位に変換できない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws ArithmeticException 引数{@code divisor}が0だった場合
 	 */
 	public Ratio dividedBy(Duration divisor) {
 		Validate.notNull(divisor);

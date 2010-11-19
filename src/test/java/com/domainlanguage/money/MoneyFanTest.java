@@ -3,6 +3,9 @@ package com.domainlanguage.money;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.Test;
 
 /**
@@ -19,39 +22,63 @@ public class MoneyFanTest {
 	@Test
 	public void test01_RoommateExample() throws Exception {
 		//apportionment, assignment, attribution, post, assignation, allotment, slice
-		MoneyFan<String> electricBill = new MoneyFan<String>(new Allotment<String>("Joe", Money.dollars(65.00)));
+		Collection<Allotment<String>> c;
 		
-		MoneyFan<String> rent =
-				new MoneyFan<String>(new Allotment<String>("Mary", Money.dollars(650)), new Allotment<String>("Jill",
-						Money.dollars(650)), new Allotment<String>("Joe", Money.dollars(650)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Joe", Money.dollars(65.00)));
+		MoneyFan<String> electricBill = new MoneyFan<String>(c);
+		
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Mary", Money.dollars(650)));
+		c.add(new Allotment<String>("Jill", Money.dollars(650)));
+		c.add(new Allotment<String>("Joe", Money.dollars(650)));
+		MoneyFan<String> rent = new MoneyFan<String>(c);
 		
 		assertThat(rent.total(), is(Money.dollars(1950)));
 		
-		MoneyFan<String> groceries =
-				new MoneyFan<String>(new Allotment<String>("Mary", Money.dollars(12)), new Allotment<String>("Jill",
-						Money.dollars(344)), new Allotment<String>("Joe", Money.dollars(256)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Mary", Money.dollars(12)));
+		c.add(new Allotment<String>("Jill", Money.dollars(344)));
+		c.add(new Allotment<String>("Joe", Money.dollars(256)));
+		MoneyFan<String> groceries = new MoneyFan<String>(c);
 		
 		assertThat(groceries.total(), is(Money.dollars(612)));
 		
-		MoneyFan<String> internetAccess = new MoneyFan<String>(new Allotment<String>("Mary", Money.dollars(45.00)));
-		MoneyFan<String> newSofa = new MoneyFan<String>(new Allotment<String>("Joe", Money.dollars(857.00)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Mary", Money.dollars(45.00)));
+		MoneyFan<String> internetAccess = new MoneyFan<String>(c);
 		
-		MoneyFan<String> jillReimbursesJoeForSofa =
-				new MoneyFan<String>(new Allotment<String>("Jill", Money.dollars(285.67)), new Allotment<String>("Joe",
-						Money.dollars(-285.67)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Joe", Money.dollars(857.00)));
+		MoneyFan<String> newSofa = new MoneyFan<String>(c);
+		
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jill", Money.dollars(285.67)));
+		c.add(new Allotment<String>("Joe", Money.dollars(-285.67)));
+		MoneyFan<String> jillReimbursesJoeForSofa = new MoneyFan<String>(c);
 		
 		MoneyFan<String> netSofaContributions = newSofa.plus(jillReimbursesJoeForSofa);
-		MoneyFan<String> expectedNetSofaContributions =
-				new MoneyFan<String>(new Allotment<String>("Jill", Money.dollars(285.67)), new Allotment<String>("Joe",
-						Money.dollars(571.33)));
+		
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jill", Money.dollars(285.67)));
+		c.add(new Allotment<String>("Joe", Money.dollars(571.33)));
+		MoneyFan<String> expectedNetSofaContributions = new MoneyFan<String>(c);
 		assertThat(netSofaContributions, is(expectedNetSofaContributions));
 		
-		FanTally<String> outlays =
-				new FanTally<String>(electricBill, rent, groceries, internetAccess, newSofa, jillReimbursesJoeForSofa);
+		Collection<MoneyFan<String>> c2 = new ArrayList<MoneyFan<String>>();
+		c2.add(electricBill);
+		c2.add(rent);
+		c2.add(groceries);
+		c2.add(internetAccess);
+		c2.add(newSofa);
+		c2.add(jillReimbursesJoeForSofa);
+		FanTally<String> outlays = new FanTally<String>(c2);
 		
-		MoneyFan<String> expectedNet =
-				new MoneyFan<String>(new Allotment<String>("Mary", Money.dollars(707)), new Allotment<String>("Jill",
-						Money.dollars(1279.67)), new Allotment<String>("Joe", Money.dollars(1542.33)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Mary", Money.dollars(707)));
+		c.add(new Allotment<String>("Jill", Money.dollars(1279.67)));
+		c.add(new Allotment<String>("Joe", Money.dollars(1542.33)));
+		MoneyFan<String> expectedNet = new MoneyFan<String>(c);
 		
 		assertThat(outlays.net(), is(expectedNet));
 		
@@ -65,25 +92,30 @@ public class MoneyFanTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MoneyFan#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test02_Equals() throws Exception {
-		MoneyFan<String> aFan =
-				new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(285.67)), new Allotment<String>(
-						"Jill", Money.dollars(-285.67)));
+		Collection<Allotment<String>> c;
 		
-		MoneyFan<String> anotherFan =
-				new MoneyFan<String>(new Allotment<String>("Jill", Money.dollars(-285.67)), new Allotment<String>(
-						"Jack", Money.dollars(285.67)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jack", Money.dollars(285.67)));
+		c.add(new Allotment<String>("Jill", Money.dollars(-285.67)));
+		MoneyFan<String> aFan = new MoneyFan<String>(c);
+		
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jill", Money.dollars(-285.67)));
+		c.add(new Allotment<String>("Jack", Money.dollars(285.67)));
+		MoneyFan<String> anotherFan = new MoneyFan<String>(c);
 		
 		assertThat(anotherFan, is(aFan));
 		
-		MoneyFan<String> yetAnotherFan =
-				new MoneyFan<String>(new Allotment<String>("Jill", Money.dollars(-285.67)), new Allotment<String>(
-						"Jack", Money.dollars(285.68)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jill", Money.dollars(-285.67)));
+		c.add(new Allotment<String>("Jack", Money.dollars(285.68)));
+		MoneyFan<String> yetAnotherFan = new MoneyFan<String>(c);
 		
 		assertThat(aFan.equals(yetAnotherFan), is(false));
 	}
@@ -95,16 +127,21 @@ public class MoneyFanTest {
 	 */
 	@Test
 	public void test03_Plus() throws Exception {
+		Collection<Allotment<String>> c;
+		
 		MoneyFan<String> jack17 = new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(17)));
 		MoneyFan<String> jill13 = new MoneyFan<String>(new Allotment<String>("Jill", Money.dollars(13)));
-		MoneyFan<String> jack17Jill13 =
-				new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(17)), new Allotment<String>("Jill",
-						Money.dollars(13)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jack", Money.dollars(17)));
+		c.add(new Allotment<String>("Jill", Money.dollars(13)));
+		MoneyFan<String> jack17Jill13 = new MoneyFan<String>(c);
 		assertThat(jack17.plus(jill13), is(jack17Jill13));
 		
-		MoneyFan<String> jack34Jill13 =
-				new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(34)), new Allotment<String>("Jill",
-						Money.dollars(13)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jack", Money.dollars(34)));
+		c.add(new Allotment<String>("Jill", Money.dollars(13)));
+		MoneyFan<String> jack34Jill13 = new MoneyFan<String>(c);
+		
 		assertThat(jack17.plus(jack17Jill13), is(jack34Jill13));
 		
 		assertThat(jack17.plus(jack17Jill13), is(jack17Jill13.plus(jack17)));
@@ -117,13 +154,17 @@ public class MoneyFanTest {
 	 */
 	@Test
 	public void test04_Negation() throws Exception {
-		MoneyFan<String> positive =
-				new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(285.67)), new Allotment<String>(
-						"Jill", Money.dollars(-285.67)));
+		Collection<Allotment<String>> c;
 		
-		MoneyFan<String> negative =
-				new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(-285.67)), new Allotment<String>(
-						"Jill", Money.dollars(285.67)));
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jack", Money.dollars(285.67)));
+		c.add(new Allotment<String>("Jill", Money.dollars(-285.67)));
+		MoneyFan<String> positive = new MoneyFan<String>(c);
+		
+		c = new ArrayList<Allotment<String>>();
+		c.add(new Allotment<String>("Jack", Money.dollars(-285.67)));
+		c.add(new Allotment<String>("Jill", Money.dollars(285.67)));
+		MoneyFan<String> negative = new MoneyFan<String>(c);
 		
 		assertThat(positive.negated(), is(negative));
 	}
@@ -136,13 +177,10 @@ public class MoneyFanTest {
 	@Test
 	public void test05_Minus() throws Exception {
 		MoneyFan<String> jack = new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(285.67)));
-		
 		MoneyFan<String> lessJack = new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(10.00)));
-		
 		MoneyFan<String> differenceJack = new MoneyFan<String>(new Allotment<String>("Jack", Money.dollars(275.67)));
 		
 		assertThat(jack.minus(lessJack), is(differenceJack));
-		
 		assertThat(jack.minus(jack), is(new MoneyFan<String>()));
 	}
 	

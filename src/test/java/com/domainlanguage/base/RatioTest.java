@@ -9,6 +9,7 @@ package com.domainlanguage.base;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 
@@ -57,6 +58,19 @@ public class RatioTest {
 		
 		result = rManyDigits.decimalValue(7, Rounding.HALF_UP);
 		assertThat(result, is(new BigDecimal("3.0003333")));
+		
+		try {
+			Ratio.of(0, 0);
+			fail();
+		} catch (ArithmeticException e) {
+			// success
+		}
+		try {
+			Ratio.of(10, 0);
+			fail();
+		} catch (ArithmeticException e) {
+			// success
+		}
 	}
 	
 	/**

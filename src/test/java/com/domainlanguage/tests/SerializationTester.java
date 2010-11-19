@@ -28,7 +28,7 @@ public class SerializationTester {
 	 * シリアライズできるかどうか検証する。
 	 * 
 	 * @param serializable シリアライズ対象オブジェクト
-	 * @throws Exception シリアライズに失敗した場合
+	 * @throws AssertionError シリアライズに失敗した場合
 	 */
 	public static void assertCanBeSerialized(Object serializable) {
 		if (Serializable.class.isInstance(serializable) == false) {

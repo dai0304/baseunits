@@ -15,7 +15,7 @@ package com.domainlanguage.util;
 //	
 //
 //	/**
-//	 * TODO for daisuke
+//	 * テスト実行。
 //	 * 
 //	 * @throws Exception 例外が発生した場合
 //	 */

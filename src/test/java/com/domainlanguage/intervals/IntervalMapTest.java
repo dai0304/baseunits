@@ -63,7 +63,7 @@ public class IntervalMapTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalMap#remove(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -80,7 +80,7 @@ public class IntervalMapTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalMap#put(Interval, Object)}で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -103,7 +103,7 @@ public class IntervalMapTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalMap#put(Interval, Object)}で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -128,7 +128,7 @@ public class IntervalMapTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalMap#put(Interval, Object)}で割り当て区間が重複した場合、後勝ちになることを確認するテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

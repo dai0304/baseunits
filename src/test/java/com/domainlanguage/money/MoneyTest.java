@@ -43,6 +43,10 @@ public class MoneyTest {
 	
 	private Money d100;
 	
+	private Money d0;
+	
+	private Money y0;
+	
 
 	/**
 	 * テストを初期化する。
@@ -56,6 +60,8 @@ public class MoneyTest {
 		e2_51 = Money.valueOf(new BigDecimal("2.51"), EUR);
 		y50 = Money.valueOf(new BigDecimal("50"), JPY);
 		d100 = Money.valueOf(new BigDecimal("100.0"), USD);
+		d0 = Money.valueOf(BigDecimal.ZERO, USD);
+		y0 = Money.valueOf(BigDecimal.ZERO, JPY);
 	}
 	
 	/**
@@ -182,6 +188,11 @@ public class MoneyTest {
 		} catch (ClassCastException e) {
 			// success
 		}
+		
+		assertThat(d15.plus(d0), is(d15));
+		assertThat(d15.plus(y0), is(d15));
+		assertThat(d0.plus(y0), is(d0));
+		assertThat(y0.plus(d0), is(y0));
 	}
 	
 	/**
@@ -321,17 +332,11 @@ public class MoneyTest {
 		assertThat(d15.toString(Locale.UK), is("USD 15.00"));
 	}
 	
-	// TODO: Formatted printing of Money
-	//	public void testLocalPrinting() {
-	//		assertThat(d15.localString(), is("$15.00"));
-	//		assertThat(m2_51.localString(), is("2,51 DM"));
-	//	}
-	
 	/**
-	 * {@link Money}インスタンス生成時の丸めテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
+		 * {@link Money}インスタンス生成時の丸めテスト。
+		 * 
+		 * @throws Exception 例外が発生した場合
+		 */
 	@Test
 	public void test21_Round() throws Exception {
 		Money dRounded = Money.dollars(1.2350);
@@ -372,7 +377,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO
+	 * 最小単位以下の金額（例えば日本で言う「銭」）に関するテスト。現在この仕様は存在しない。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -385,5 +390,16 @@ public class MoneyTest {
 //        Money wholeMoney = someFee.times(4);
 //        assertThat(wholeMoney, is(Money.dollars(0.01)));
 	}
+	
+//	/**
+//	 * TODO: Formatted printing of Money
+//	 * 
+//	 * @throws Exception 例外が発生した場合
+//	 */
+//	@Test
+//	public void test26_LocalPrinting() {
+//		assertThat(d15.localString(), is("$15.00"));
+//		assertThat(m2_51.localString(), is("2,51 DM"));
+//	}
 	
 }

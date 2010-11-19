@@ -1,7 +1,8 @@
 package com.domainlanguage.money;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,26 +23,37 @@ public class MoneyFan<T> {
 
 	/**
 	 * インスタンスを生成する。
-	 * 
-	 * @param allotments 割り当ての集合。 {@link Set}の仕様と同様、重複は排除される。
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public MoneyFan(Allotment<T>... allotments) {
-		Validate.noNullElements(allotments);
-		Set<Allotment<T>> setOfAllotments = new HashSet<Allotment<T>>();
-		setOfAllotments.addAll(Arrays.asList(allotments));
-		this.allotments = setOfAllotments;
+	@SuppressWarnings("unchecked")
+	public MoneyFan() {
+		this.allotments = Collections.EMPTY_SET;
 	}
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param allotments 割り当ての{@link Set}
+	 * @param allotment 割り当ての要素（単一）
 	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
 	 */
-	public MoneyFan(Set<Allotment<T>> allotments) {
+	public MoneyFan(Allotment<T> allotment) {
+		Validate.notNull(allotment);
+		this.allotments = new HashSet<Allotment<T>>();
+		this.allotments.add(allotment);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param allotments 割り当ての集合。 {@link Set}の仕様と同様、重複は排除される。
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public MoneyFan(Collection<Allotment<T>> allotments) {
 		Validate.noNullElements(allotments);
-		this.allotments = allotments;
+		Set<Allotment<T>> setOfAllotments = new HashSet<Allotment<T>>();
+		for (Allotment<T> allotment : allotments) {
+			setOfAllotments.add(allotment);
+		}
+		this.allotments = setOfAllotments;
 	}
 	
 	/**

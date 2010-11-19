@@ -158,7 +158,8 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * さらに下側限界の開閉が一致している場合、下側限界値が小さい方を「小さい」と判断する。
 	 * 上側下側両方の限界値が一致し、下側限界の開閉も一致している場合同一と判断する。</p>
 	 * 
-	 * TODO other == null の時
+	 * <p>{@code other == null}の時、{@code null}よりも自分が大きいと判断する。</p>
+	 * 
 	 * THINK 上側限界の開閉には影響されない？ これでいいの？
 	 * 
 	 * @param other 比較対象

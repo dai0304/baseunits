@@ -6,33 +6,40 @@
 
 package example.doctorAppointments;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TimeZone;
 
-import com.domainlanguage.time.*;
+import com.domainlanguage.time.CalendarDate;
+import com.domainlanguage.time.TimeInterval;
 
 class AppointmentCalendar {
-    TimeZone defaultZone;
-    Set events = new HashSet();
-    
-    AppointmentCalendar(TimeZone zone) {
-        defaultZone = zone;
-    }
+	
+	TimeZone defaultZone;
+	
+	Set<Appointment> events = new HashSet<Appointment>();
+	
 
-    void add(Appointment anEvent) {
-        events.add(anEvent);
-    }
-
-    List dailyScheduleFor(CalendarDate calDate) {
-        List daysAppointments = new ArrayList();
-        TimeInterval day = calDate.asTimeInterval(defaultZone);
-        Iterator it = events.iterator();
-        while (it.hasNext()) {
-            Appointment event = (Appointment) it.next();
-            if (event.getTimeInterval().intersects(day)) {
-                daysAppointments.add(event);
-            }
-        }
-        return daysAppointments;
-    }
-    
+	AppointmentCalendar(TimeZone zone) {
+		defaultZone = zone;
+	}
+	
+	void add(Appointment anEvent) {
+		events.add(anEvent);
+	}
+	
+	List<Appointment> dailyScheduleFor(CalendarDate calDate) {
+		List<Appointment> daysAppointments = new ArrayList<Appointment>();
+		TimeInterval day = calDate.asTimeInterval(defaultZone);
+		
+		for (Appointment event : events) {
+			if (event.getTimeInterval().intersects(day)) {
+				daysAppointments.add(event);
+			}
+		}
+		return daysAppointments;
+	}
+	
 }

@@ -6,15 +6,18 @@
 
 package example.doctorAppointments;
 
-import com.domainlanguage.time.*;
+import com.domainlanguage.time.TimeInterval;
 
 class Appointment {
-    private TimeInterval timeInterval;
+	
+	private TimeInterval timeInterval;
+	
 
-    public Appointment(TimeInterval interval) {
-        timeInterval=interval;
-    }
-    public TimeInterval getTimeInterval() {
-        return timeInterval;
-    }
+	public Appointment(TimeInterval interval) {
+		timeInterval = interval;
+	}
+	
+	public TimeInterval getTimeInterval() {
+		return timeInterval;
+	}
 }
