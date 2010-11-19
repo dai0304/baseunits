@@ -7,6 +7,7 @@
 package com.domainlanguage.base;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
@@ -21,7 +22,16 @@ import org.junit.Test;
 public class RatioTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link BigDecimal}で構成する{@link Ratio}の挙動テスト。
+	 * 
+	 * <ul>
+	 *   <li>{@code 3/2}であらわす割合について、小数点第1位までで丸めなかった場合は1.5である。</li>
+	 *   <li>{@code 10/3}であらわす割合について、小数点第3位までで切り捨てた場合は3.333である。</li>
+	 *   <li>{@code 10/3}であらわす割合について、小数点第3位までで切り上げた場合は3.334である。</li>
+	 *   <li>{@code 9.001/3}であらわす割合（3.00033…）について、小数点第6位までで切り上げた場合は3.000334である。</li>
+	 *   <li>{@code 9.001/3}であらわす割合（3.00033…）について、小数点第7位までで切り上げた場合は3.0003334である。</li>
+	 *   <li>{@code 9.001/3}であらわす割合（3.00033…）について、小数点第7位までで四捨五入した場合は3.0003333である。</li>
+	 * </ul>
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -50,7 +60,9 @@ public class RatioTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@code long}で構成する{@link Ratio}の挙動テスト。
+	 * 
+	 * <p>{@code 9001/3000}であらわす割合（3.00033…）について、小数点第6位までで切り上げた場合は3.000334である。</p>
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -62,7 +74,7 @@ public class RatioTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Ratio#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -71,10 +83,13 @@ public class RatioTest {
 		assertThat(Ratio.of(100, 200).equals(Ratio.of(100, 200)), is(true));
 		assertThat(Ratio.of(100, 200), is(Ratio.of(100, 200)));
 		assertThat(Ratio.of(new BigDecimal("100"), new BigDecimal("200")), is(Ratio.of(100, 200)));
+		
+		// THINK 等価なんだけどな。
+		assertThat(Ratio.of(100, 200), is(not(Ratio.of(10, 20))));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Ratio#times(BigDecimal)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -86,7 +101,7 @@ public class RatioTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Ratio#times(Ratio)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

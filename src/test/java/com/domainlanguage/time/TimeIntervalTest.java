@@ -36,7 +36,7 @@ public class TimeIntervalTest {
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -47,7 +47,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#isBefore(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -61,7 +61,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#isAfter(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -75,7 +75,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#includes(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -90,7 +90,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#isBefore(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -104,7 +104,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#isAfter(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -118,7 +118,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#includes(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -133,7 +133,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#includes(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -148,7 +148,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#startingFrom(TimePoint, Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -162,7 +162,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#preceding(TimePoint, Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -175,7 +175,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#over(TimePoint, TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -195,7 +195,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#startingFrom(TimePoint, Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -215,7 +215,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#everFrom(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -228,7 +228,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#everPreceding(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -241,7 +241,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#open(TimePoint, TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -258,7 +258,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#daysIterator()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -278,7 +278,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#subintervalIterator(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -333,7 +333,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeInterval#intersects(com.domainlanguage.intervals.Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

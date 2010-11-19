@@ -15,7 +15,7 @@ import org.junit.Test;
 public class IntervalLimitTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalLimit#compareTo(IntervalLimit)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

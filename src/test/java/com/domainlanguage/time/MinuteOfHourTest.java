@@ -19,7 +19,7 @@ import org.junit.Test;
 public class MinuteOfHourTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#of(int)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -30,7 +30,7 @@ public class MinuteOfHourTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#of(int)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -38,29 +38,29 @@ public class MinuteOfHourTest {
 	public void test02_IllegalLessThanZero() throws Exception {
 		try {
 			MinuteOfHour.of(-1);
+			fail();
 		} catch (IllegalArgumentException ex) {
-			return;
+			// success
 		}
-		fail("Illegal Argument Not Caught");
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#of(int)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test03_GreaterThan() throws Exception {
 		try {
-			HourOfDay.of(60);
+			MinuteOfHour.of(60);
+			fail();
 		} catch (IllegalArgumentException ex) {
-			return;
+			// success
 		}
-		fail("Illegal Argument Not Caught");
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#isAfter(MinuteOfHour)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -72,7 +72,7 @@ public class MinuteOfHourTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#isAfter(MinuteOfHour)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -84,7 +84,7 @@ public class MinuteOfHourTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#isAfter(MinuteOfHour)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -96,7 +96,7 @@ public class MinuteOfHourTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#isBefore(MinuteOfHour)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -108,7 +108,7 @@ public class MinuteOfHourTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#isBefore(MinuteOfHour)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -120,7 +120,7 @@ public class MinuteOfHourTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#isBefore(MinuteOfHour)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

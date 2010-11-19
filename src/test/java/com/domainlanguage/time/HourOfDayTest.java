@@ -19,7 +19,7 @@ import org.junit.Test;
 public class HourOfDayTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#of(int)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -29,7 +29,7 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#value(int, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -40,7 +40,7 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#of(int)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -48,14 +48,14 @@ public class HourOfDayTest {
 	public void test03_24IllegalLessThanZero() throws Exception {
 		try {
 			HourOfDay.of(-1);
+			fail();
 		} catch (IllegalArgumentException ex) {
-			return;
+			// success
 		}
-		fail("Illegal Argument Not Caught");
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#of(int)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -63,14 +63,14 @@ public class HourOfDayTest {
 	public void test04_24GreaterThan() throws Exception {
 		try {
 			HourOfDay.of(24);
+			fail();
 		} catch (IllegalArgumentException ex) {
-			return;
+			// success
 		}
-		fail("Illegal Argument Not Caught");
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#value(int, String)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -78,14 +78,14 @@ public class HourOfDayTest {
 	public void test05_12IllegalLessThanZero() throws Exception {
 		try {
 			HourOfDay.value(-1, "PM");
+			fail();
 		} catch (IllegalArgumentException ex) {
-			return;
+			// success
 		}
-		fail("Illegal Argument Not Caught");
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#value(int, String)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -93,14 +93,14 @@ public class HourOfDayTest {
 	public void test06_12GreaterThan() throws Exception {
 		try {
 			HourOfDay.value(13, "AM");
+			fail();
 		} catch (IllegalArgumentException ex) {
-			return;
+			// success
 		}
-		fail("Illegal Argument Not Caught");
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#value(int, String)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -108,14 +108,14 @@ public class HourOfDayTest {
 	public void test07_12BadAmPm() throws Exception {
 		try {
 			HourOfDay.value(5, "FD");
+			fail();
 		} catch (IllegalArgumentException ex) {
-			return;
+			// success
 		}
-		fail("Illegal Argument Not Caught");
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#isAfter(HourOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -127,7 +127,7 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#isAfter(HourOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -139,7 +139,7 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#isAfter(HourOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -151,7 +151,7 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#isBefore(HourOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -163,7 +163,7 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#isBefore(HourOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -175,7 +175,7 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link HourOfDay#isBefore(HourOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

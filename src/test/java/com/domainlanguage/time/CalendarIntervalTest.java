@@ -48,7 +48,7 @@ public class CalendarIntervalTest {
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -58,7 +58,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#asTimeInterval(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -69,7 +69,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#includes(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -83,7 +83,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#equals(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -95,7 +95,9 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#plusDays(int)}のテスト。
+	 * 
+	 * THINK 居場所違う？
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -105,7 +107,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#daysIterator()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -123,7 +125,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#subintervalIterator(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -162,7 +164,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#length()} {@link CalendarInterval#lengthInMonths()} のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -177,7 +179,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -195,7 +197,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#compareTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -214,7 +216,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#everFrom(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -226,7 +228,8 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval}のインスタンス生成テスト。
+	 * 
 	 * [ 1792849 ] ConcreteCalendarInterval allows misordered limits
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -242,7 +245,7 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarInterval#startingFrom(CalendarDate, Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

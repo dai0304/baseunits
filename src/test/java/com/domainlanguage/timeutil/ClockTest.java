@@ -7,7 +7,6 @@
 package com.domainlanguage.timeutil;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -35,6 +34,7 @@ public class ClockTest {
 	
 	TimeZone ct = TimeZone.getTimeZone("America/Chicago");
 	
+	/** 現在時間を問われた時、常に{@code dec1_5am_gmt}を返す {@link TimeSource} */
 	TimeSource dummySourceDec1_5h = dummyTimeSource(dec1_5am_gmt);
 	
 
@@ -49,7 +49,7 @@ public class ClockTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Clock#now()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -59,25 +59,21 @@ public class ClockTest {
 		assertThat(Clock.now(), is(dec1_5am_gmt));
 	}
 	
-	//[ 1466694 ] Clock.now() should use default TimeSource
+	//
 	/**
-	 * TODO for daisuke
+	 * {@link Clock#now()}で例外が発生しないこと。
+	 * 
+	 * [ 1466694 ] Clock.now() should use default TimeSource
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test02_NowDoesntBreak() throws Exception {
-		Exception possibleNullPointerException = null;
-		try {
-			Clock.now();
-		} catch (Exception exceptionalEvent) {
-			possibleNullPointerException = exceptionalEvent;
-		}
-		assertThat(possibleNullPointerException, is(nullValue()));
+		Clock.now();
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Clock#setDefaultTimeZone(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -96,7 +92,7 @@ public class ClockTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Clock#today()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

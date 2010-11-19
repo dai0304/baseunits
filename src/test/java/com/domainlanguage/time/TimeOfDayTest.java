@@ -35,7 +35,7 @@ public class TimeOfDayTest {
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#on(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -46,7 +46,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#on(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -57,7 +57,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#on(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -68,7 +68,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -82,7 +82,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#hashCode()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -96,7 +96,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#isAfter(TimeOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -109,7 +109,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#isAfter(TimeOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -123,7 +123,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#isAfter(TimeOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -136,7 +136,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#isBefore(TimeOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -149,7 +149,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#isBefore(TimeOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -163,7 +163,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#isBefore(TimeOfDay)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -176,35 +176,35 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#breachEncapsulationOfHour()}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test12_GetHour() throws Exception {
-		assertThat(midnight.breachEncapsulationOf_hour(), is(0));
-		assertThat(morning.breachEncapsulationOf_hour(), is(10));
-		assertThat(noon.breachEncapsulationOf_hour(), is(12));
-		assertThat(afternoon.breachEncapsulationOf_hour(), is(15));
-		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOf_hour(), is(23));
+		assertThat(midnight.breachEncapsulationOfHour(), is(0));
+		assertThat(morning.breachEncapsulationOfHour(), is(10));
+		assertThat(noon.breachEncapsulationOfHour(), is(12));
+		assertThat(afternoon.breachEncapsulationOfHour(), is(15));
+		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfHour(), is(23));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#breachEncapsulationOfMinute()}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test13_GetMinute() throws Exception {
-		assertThat(midnight.breachEncapsulationOf_minute(), is(0));
-		assertThat(morning.breachEncapsulationOf_minute(), is(20));
-		assertThat(noon.breachEncapsulationOf_minute(), is(0));
-		assertThat(afternoon.breachEncapsulationOf_minute(), is(40));
-		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOf_minute(), is(58));
+		assertThat(midnight.breachEncapsulationOfMinute(), is(0));
+		assertThat(morning.breachEncapsulationOfMinute(), is(20));
+		assertThat(noon.breachEncapsulationOfMinute(), is(0));
+		assertThat(afternoon.breachEncapsulationOfMinute(), is(40));
+		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfMinute(), is(58));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#asTimePointGiven(CalendarDate, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

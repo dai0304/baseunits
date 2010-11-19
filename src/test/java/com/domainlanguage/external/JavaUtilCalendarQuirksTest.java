@@ -21,7 +21,7 @@ import org.junit.Test;
 public class JavaUtilCalendarQuirksTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Calendar#set(int, int)}で {@link Calendar#HOUR} を設定した場合の挙動確認。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -44,7 +44,7 @@ public class JavaUtilCalendarQuirksTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Calendar#set(int, int)}で {@link Calendar#HOUR_OF_DAY} を設定した場合の挙動確認。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

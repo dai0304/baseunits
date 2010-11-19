@@ -145,11 +145,11 @@ public class TimeOfDay {
 		return hour.toString() + ":" + minute.toString();
 	}
 	
-	int breachEncapsulationOf_hour() { // CHECKSTYLE IGNORE THIS LINE
+	int breachEncapsulationOfHour() {
 		return hour.value();
 	}
 	
-	int breachEncapsulationOf_minute() { // CHECKSTYLE IGNORE THIS LINE
+	int breachEncapsulationOfMinute() {
 		return minute.value();
 	}
 	

@@ -60,24 +60,24 @@ public class IntervalTest {
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link Interval}のインスタンス生成テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test01_Assertions() throws Exception {
-		//Redundant, maybe, but with all the compiler default
-		//confusion at the moment, I decided to throw this in.
+		// Redundant, maybe, but with all the compiler default
+		// confusion at the moment, I decided to throw this in.
 		try {
 			Interval.closed(new BigDecimal(2.0), new BigDecimal(1.0));
 			fail("Lower bound mustn't be above upper bound.");
 		} catch (IllegalArgumentException e) {
-			//Correct. Do nothing.
+			// success
 		}
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#upTo(Comparable)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -91,7 +91,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#andMore(Comparable)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -106,7 +106,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#newOfSameType(Comparable, boolean, Comparable, boolean)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -120,7 +120,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -130,7 +130,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#toString()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -143,7 +143,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#isBelow(Comparable)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -159,7 +159,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#includes(Comparable)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -175,7 +175,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval}の開閉の境界挙動テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -191,7 +191,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#isEmpty()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -204,7 +204,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#intersects(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -225,7 +225,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#intersect(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -247,7 +247,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#greaterOfLowerLimits(Interval)}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -260,7 +260,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#lesserOfUpperLimits(Interval)}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -273,7 +273,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#covers(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -292,7 +292,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#gap(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -310,7 +310,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -324,7 +324,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -338,7 +338,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -353,7 +353,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -368,7 +368,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -382,7 +382,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -395,7 +395,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -407,7 +407,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -424,7 +424,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -438,7 +438,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#isSingleElement()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -452,7 +452,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#equals(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -465,7 +465,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#emptyOfSameType()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -475,7 +475,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

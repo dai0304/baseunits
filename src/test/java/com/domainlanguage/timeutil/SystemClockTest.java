@@ -26,7 +26,7 @@ import org.junit.Test;
 public class SystemClockTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link SystemClock#timeSource()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

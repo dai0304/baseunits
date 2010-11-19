@@ -46,7 +46,7 @@ public class TimePointTest {
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -56,7 +56,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * GMTにおける {@link TimePoint}インスタンス生成テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -72,7 +72,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint}インスタンス生成テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -101,7 +101,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#toString(String, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -114,7 +114,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#asJavaUtilDate()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -125,7 +125,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#backToMidnight(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -138,7 +138,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#parseGMTFrom(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -151,7 +151,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -166,7 +166,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#isSameDayAs(TimePoint, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -191,7 +191,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#isBefore(TimePoint)}, {@link TimePoint#isAfter(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -212,7 +212,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#plus(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -223,7 +223,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#minus(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -233,10 +233,10 @@ public class TimePointTest {
 		assertThat(dec21_2003.minus(twoDays), is(dec19_2003));
 	}
 	
-	// This is only an integration test. The primary responsibility is in
-	// TimePeriod
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#isBefore(TimeInterval)}, {@link TimePoint#isAfter(TimeInterval)}のテスト。
+	 * 
+	 * This is only an integration test. The primary responsibility is in {@link TimeInterval}.
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -252,7 +252,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#nextDay()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -262,7 +262,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#compareTo(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -273,12 +273,15 @@ public class TimePointTest {
 		assertThat(dec20_2003.compareTo(dec20_2003), is(0));
 	}
 	
-	// This test verifies bug #1336072 fix
-	// The problem is Duration.days(25) overflowed and became negative
-	// on a conversion from a long to int in the bowels of the model.
-	// We made the conversion unnecessary
+	// 
+	// 
+	// 
+	// 
 	/**
-	 * TODO for daisuke
+	 * This test verifies bug #1336072 fix
+	 * The problem is Duration.days(25) overflowed and became negative
+	 * on a conversion from a long to int in the bowels of the model.
+	 * We made the conversion unnecessary
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -292,8 +295,6 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
-	 * 
 	 * TimePoint.at() ignores the minute parameter.
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -307,7 +308,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#at(int, int, int, int, int, int, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

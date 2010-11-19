@@ -9,7 +9,9 @@ package com.domainlanguage.time;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 
@@ -26,7 +28,7 @@ import org.junit.Test;
 public class DurationTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -36,7 +38,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#addedTo(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -49,7 +51,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#addedTo(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -62,7 +64,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#subtractedFrom(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -75,7 +77,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#subtractedFrom(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -92,7 +94,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#subtractedFrom(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -113,7 +115,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#addedTo(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -134,7 +136,7 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#inBaseUnits()}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -145,7 +147,10 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#equals(Object)}のテスト。
+	 * 
+	 * <p>単位が違っていても、baseUnit換算できちんと比較できること。
+	 * baseUnitに互換性がなければ、必ず{@code false}となること。</p>
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -153,10 +158,16 @@ public class DurationTest {
 	public void test09_Equals() throws Exception {
 		assertThat(Duration.hours(48), is(Duration.days(2)));
 		assertThat(Duration.quarters(4), is(Duration.years(1)));
+		assertThat(Duration.months(6), is(Duration.quarters(2)));
+		
+		assertThat(Duration.months(1), is(not(Duration.days(28))));
+		assertThat(Duration.months(1), is(not(Duration.days(29))));
+		assertThat(Duration.months(1), is(not(Duration.days(30))));
+		assertThat(Duration.months(1), is(not(Duration.days(31))));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#plus(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -164,10 +175,17 @@ public class DurationTest {
 	public void test10_Add() throws Exception {
 		assertThat(Duration.hours(24).plus(Duration.days(1)), is(Duration.days(2)));
 		assertThat(Duration.months(1).plus(Duration.quarters(1)), is(Duration.months(4)));
+		
+		try {
+			Duration.days(1).plus(Duration.months(1));
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#minus(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -175,10 +193,17 @@ public class DurationTest {
 	public void test11_Subtract() throws Exception {
 		assertThat(Duration.days(3).minus(Duration.hours(24)), is(Duration.days(2)));
 		assertThat(Duration.quarters(1).minus(Duration.months(1)), is(Duration.months(2)));
+		
+		try {
+			Duration.months(2).plus(Duration.days(3));
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#dividedBy(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -188,16 +213,25 @@ public class DurationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Duration#toNormalizedString()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test13_ToNormalizedString() throws Exception {
+		assertThat(Duration.minutes(0).toNormalizedString(), is(""));
+		assertThat(Duration.days(0).toNormalizedString(), is(""));
+		
+		assertThat(Duration.days(1).toNormalizedString(), is("1 day"));
 		assertThat(Duration.days(2).toNormalizedString(), is("2 days"));
+		
 		Duration complicatedDuration = Duration.daysHoursMinutesSecondsMilliseconds(5, 4, 3, 2, 1);
 		assertThat(complicatedDuration.toNormalizedString(), is("5 days, 4 hours, 3 minutes, 2 seconds, 1 millisecond"));
 		assertThat(Duration.days(365).toNormalizedString(), is("52 weeks, 1 day"));
+		
+		assertThat(Duration.quarters(3).toNormalizedString(), is("3 quarters"));
+		assertThat(Duration.quarters(4).toNormalizedString(), is("1 year"));
+		assertThat(Duration.quarters(8).toNormalizedString(), is("2 years"));
 	}
 	
 	/**

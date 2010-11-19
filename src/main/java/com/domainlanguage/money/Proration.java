@@ -21,7 +21,20 @@ import org.apache.commons.lang.Validate;
  */
 public final class Proration {
 	
+	/**
+	 * 指定した金額を{@code n}等分した金額の配列を返す。
+	 * 
+	 * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
+	 * 
+	 * <p>例えば、53円を5人で等分した場合は、<code>{11, 11, 11, 10, 10}</code>となる。</p>
+	 * 
+	 * @param total 合計金額
+	 * @param n 分割数
+	 * @return 分割結果
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public static Money[] dividedEvenlyIntoParts(Money total, int n) {
+		Validate.notNull(total);
 		Money lowResult = total.dividedBy(BigDecimal.valueOf(n), Rounding.DOWN);
 		Money[] lowResults = new Money[n];
 		for (int i = 0; i < n; i++) {
@@ -31,17 +44,51 @@ public final class Proration {
 		return distributeRemainderOver(lowResults, remainder);
 	}
 	
+	/**
+	 * {@code total}のうち、{@code portion / whole}の割合の金額を返す。割り切れない場合は切り捨てる。
+	 * 
+	 * @param total 合計額
+	 * @param portion 部分量をあらわす値
+	 * @param whole 全体量をあらわす値
+	 * @return 部分の金額
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public static Money partOfWhole(Money total, long portion, long whole) {
 		return partOfWhole(total, Ratio.of(portion, whole));
 	}
 	
+	/**
+	 * {@code total}のうち、{@code ratio}の割合の金額を返す。割り切れない場合は切り捨てる。
+	 * 
+	 * @param total 合計額
+	 * @param ratio 割合
+	 * @return 指定した割合の金額
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public static Money partOfWhole(Money total, Ratio ratio) {
+		Validate.notNull(total);
+		Validate.notNull(ratio);
 		int scale = defaultScaleForIntermediateCalculations(total);
 		BigDecimal multiplier = ratio.decimalValue(scale, Rounding.DOWN);
 		return total.times(multiplier, Rounding.DOWN);
 	}
 	
+	/**
+	 * 指定した金額を{@code proportions}であらわす割合で分割した金額の配列を返す。
+	 * 
+	 * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
+	 * 
+	 * <p>例えば、52円を1:3:1で等分した場合は、<code>{11, 31, 10}</code>となる。</p>
+	 * 
+	 * @param total 合計金額
+	 * @param proportions 比数の配列
+	 * @return 分割結果
+	 * @throws IllegalArgumentException 引数{@code total}に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code proportions}またはその要素に{@code null}を与えた場合
+	 */
 	public static Money[] proratedOver(Money total, BigDecimal[] proportions) {
+		Validate.notNull(total);
+		Validate.noNullElements(proportions);
 		Money[] simpleResult = new Money[proportions.length];
 		int scale = defaultScaleForIntermediateCalculations(total);
 		Ratio[] ratios = ratios(proportions);
@@ -53,7 +100,21 @@ public final class Proration {
 		return distributeRemainderOver(simpleResult, remainder);
 	}
 	
+	/**
+	 * 指定した金額を{@code proportions}であらわす割合で分割した金額の配列を返す。
+	 * 
+	 * <p>但し、割り切れなかった分（余り）は、最小単位金額に分割し、配列の頭から順に上乗せする。</p>
+	 * 
+	 * <p>例えば、52円を1:3:1で等分した場合は、<code>{11, 31, 10}</code>となる。</p>
+	 * 
+	 * @param total 合計金額
+	 * @param longProportions 比数の配列
+	 * @return 分割結果
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public static Money[] proratedOver(Money total, long[] longProportions) {
+		Validate.notNull(total);
+		Validate.notNull(longProportions);
 		BigDecimal[] proportions = new BigDecimal[longProportions.length];
 		for (int i = 0; i < longProportions.length; i++) {
 			proportions[i] = BigDecimal.valueOf(longProportions[i]);
@@ -77,13 +138,14 @@ public final class Proration {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 比数の配列を割合の配列に変換する。
 	 * 
-	 * @param proportions
-	 * @return
+	 * @param proportions 比の配列
+	 * @return 割合の配列
 	 * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
 	 */
 	static Ratio[] ratios(BigDecimal[] proportions) {
+		Validate.noNullElements(proportions);
 		BigDecimal total = sum(proportions);
 		Ratio[] ratios = new Ratio[proportions.length];
 		for (int i = 0; i < ratios.length; i++) {
@@ -108,7 +170,17 @@ public final class Proration {
 		return sum;
 	}
 	
+	/**
+	 * {@code elements}の要素の和を返す。
+	 * 
+	 * @param elements 配列
+	 * @return 和
+	 * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code elements}の要素数が0の場合
+	 */
 	static Money sum(Money[] elements) {
+		Validate.noNullElements(elements);
+		Validate.isTrue(elements.length > 0);
 		Money sum = Money.valueOf(0, elements[0].getCurrency());
 		for (Money element : elements) {
 			sum = sum.plus(element);

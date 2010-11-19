@@ -20,7 +20,12 @@ import org.junit.Test;
 public class IntervalMapTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IntervalMap}に対する参照メソッドのテスト。
+	 * 
+	 * <ul>
+	 *   <li>{@link IntervalMap#containsKey(Comparable)}</li>
+	 *   <li>{@link IntervalMap#get(Comparable)}</li>
+	 * </ul>
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

@@ -23,16 +23,26 @@ import org.junit.Test;
  */
 public class TimeUnitTest {
 	
+	/**
+	 * 永続化マッピングテスト用の {@link TimeUnit} を返す。
+	 * 
+	 * @return 永続化マッピングテスト用の {@link TimeUnit}
+	 */
 	public static TimeUnit exampleForPersistentMappingTesting() {
 		return TimeUnit.second;
 	}
 	
+	/**
+	 * 永続化マッピングテスト用の {@link TimeUnit.Type} を返す。
+	 * 
+	 * @return 永続化マッピングテスト用の {@link TimeUnit.Type}
+	 */
 	public static TimeUnit.Type exampleTypeForPersistentMappingTesting() {
 		return TimeUnit.Type.hour;
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeUnit}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -42,7 +52,7 @@ public class TimeUnitTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeUnit#toString()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -52,7 +62,7 @@ public class TimeUnitTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeUnit#isConvertibleToMilliseconds()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -67,7 +77,7 @@ public class TimeUnitTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeUnit#compareTo(TimeUnit)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -89,7 +99,7 @@ public class TimeUnitTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeUnit#javaCalendarConstantForBaseType()}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -105,7 +115,7 @@ public class TimeUnitTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeUnit#isConvertibleTo(TimeUnit)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -120,7 +130,7 @@ public class TimeUnitTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeUnit#nextFinerUnit()}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

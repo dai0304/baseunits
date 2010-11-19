@@ -24,7 +24,7 @@ import org.junit.Test;
 public class DateSpecificationTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link FixedDateSpecification}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -40,7 +40,7 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link FloatingDateSpecification}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -71,7 +71,7 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link DateSpecification#firstOccurrenceIn(CalendarInterval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -89,7 +89,7 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link DateSpecification#iterateOver(CalendarInterval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

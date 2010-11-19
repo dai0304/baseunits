@@ -399,15 +399,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return calendar;
 	}
 	
-	int breachEncapsulationOf_day() { // CHECKSTYLE IGNORE THIS LINE
+	int breachEncapsulationOfDay() {
 		return day;
 	}
 	
-	int breachEncapsulationOf_month() { // CHECKSTYLE IGNORE THIS LINE
+	int breachEncapsulationOfMonth() {
 		return month;
 	}
 	
-	int breachEncapsulationOf_year() { // CHECKSTYLE IGNORE THIS LINE
+	int breachEncapsulationOfYear() {
 		return year;
 	}
 	

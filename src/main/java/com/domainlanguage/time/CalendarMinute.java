@@ -81,9 +81,9 @@ public class CalendarMinute {
 	 */
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
-		return TimePoint.at(date.breachEncapsulationOf_year(), date.breachEncapsulationOf_month(),
-				date.breachEncapsulationOf_day(), time.breachEncapsulationOf_hour(),
-				time.breachEncapsulationOf_minute(), 0, 0, timeZone);
+		return TimePoint.at(date.breachEncapsulationOfYear(), date.breachEncapsulationOfMonth(),
+				date.breachEncapsulationOfDay(), time.breachEncapsulationOfHour(),
+				time.breachEncapsulationOfMinute(), 0, 0, timeZone);
 	}
 	
 	@Override

@@ -17,6 +17,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * {@link NISTClient}のテスト。
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class NISTServerTimeSourceTest {
 	
 	private static final TimePoint EXPECTED_TIME_POINT = TimePoint.from(1124679473000l);
@@ -48,7 +54,7 @@ public class NISTServerTimeSourceTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link NISTClient#timeSource(String, int)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -61,7 +67,7 @@ public class NISTServerTimeSourceTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link NISTClient#asTimePoint(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

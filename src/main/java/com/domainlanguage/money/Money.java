@@ -222,12 +222,13 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param amount 量
 	 * @param currency 通貨単位
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code amount}のスケールと引数{@code currency}のfraction digitsが一致しない場合
 	 */
 	public Money(BigDecimal amount, Currency currency) {
 		Validate.notNull(amount);
 		Validate.notNull(currency);
 		if (amount.scale() != currency.getDefaultFractionDigits()) {
-			throw new IllegalArgumentException("Scale of amount does not match currency"); // TODO @throws
+			throw new IllegalArgumentException("Scale of amount does not match currency");
 		}
 		this.currency = currency;
 		this.amount = amount;
@@ -550,13 +551,15 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定したロケールにおける、単位つきの金額表現の文字列を返す。
 	 * 
-	 * @param locale
-	 * @return
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @param locale ロケール。{@code null}の場合は {@link Locale#getDefault()} を利用する。
+	 * @return 金額の文字列表現
 	 */
 	public String toString(Locale locale) {
+		if (locale == null) {
+			locale = Locale.getDefault();
+		}
 		Validate.notNull(locale);
 		return currency.getSymbol(locale) + " " + amount;
 	}
@@ -600,16 +603,25 @@ public class Money implements Comparable<Money>, Serializable {
 		return currency.equals(arg.currency);
 	}
 	
+	/**
+	 * この金額に、最小の単位金額を足した金額、つまりこの金額よりも1ステップ分大きな金額を返す。
+	 * 
+	 * @return この金額よりも1ステップ分大きな金額
+	 */
 	Money incremented() {
 		return plus(minimumIncrement());
 	}
 	
 	/**
+	 * 最小の単位金額を返す。
+	 * 
+	 * <p>例えば、日本円は1円であり、US$は1セント（つまり0.01ドル）である。</p>
+	 * 
 	 * This probably should be Currency responsibility. Even then, it may need
 	 * to be customized for specialty apps because there are other cases, where
 	 * the smallest increment is not the smallest unit.
 	 * 
-	 * @return 
+	 * @return 最小の単位金額
 	 */
 	Money minimumIncrement() {
 		BigDecimal increment = BigDecimal.ONE.movePointLeft(currency.getDefaultFractionDigits());

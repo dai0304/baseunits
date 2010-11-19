@@ -19,7 +19,7 @@ import org.junit.Test;
 public class ProrationTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#proratedOver(Money, long[])}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -35,7 +35,7 @@ public class ProrationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#proratedOver(Money, long[])}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -51,7 +51,7 @@ public class ProrationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#proratedOver(Money, long[])}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -80,7 +80,7 @@ public class ProrationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#proratedOver(Money, long[])}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -96,7 +96,7 @@ public class ProrationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#dividedEvenlyIntoParts(Money, int)}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -114,7 +114,7 @@ public class ProrationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#dividedEvenlyIntoParts(Money, int)}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -128,7 +128,7 @@ public class ProrationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#distributeRemainderOver(Money[], Money)}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -147,7 +147,7 @@ public class ProrationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#sum(Money[])}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -162,7 +162,7 @@ public class ProrationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Proration#partOfWhole(Money, long, long)}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

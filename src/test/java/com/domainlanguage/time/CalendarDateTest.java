@@ -33,7 +33,7 @@ public class CalendarDateTest {
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -43,7 +43,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#isBefore(CalendarDate)} と {@link CalendarDate#isAfter(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -58,7 +58,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#startAsTimePoint(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -70,7 +70,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#asTimeInterval(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -84,7 +84,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#toString(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -96,7 +96,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#from(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -108,7 +108,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#from(TimePoint, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -120,18 +120,18 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test08_Includes() throws Exception {
+	public void test08_Equals() throws Exception {
 		assertThat(feb17.equals(feb17), is(true));
 		assertThat(feb17.equals(mar13), is(false));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#dayOfWeek()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -144,7 +144,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#nextDay()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -156,7 +156,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#previousDay()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -168,7 +168,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#month()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -193,7 +193,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#toString()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -204,7 +204,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarDate#asJavaCalendarUniversalZoneMidnight()}のテスト。（内部API）
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

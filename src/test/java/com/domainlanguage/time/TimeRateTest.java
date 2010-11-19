@@ -23,7 +23,7 @@ import org.junit.Test;
 public class TimeRateTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeRate}のインスタンス生成テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -34,7 +34,7 @@ public class TimeRateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeRate#over(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -45,11 +45,12 @@ public class TimeRateTest {
 			rate.over(Duration.minutes(1));
 			fail("ArtithmeticException should have been thrown. This case requires rounding.");
 		} catch (ArithmeticException expected) {
+			// success
 		}
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeRate#over(Duration, Rounding)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -60,7 +61,7 @@ public class TimeRateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeRate#over(Duration, int, Rounding)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -71,7 +72,7 @@ public class TimeRateTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeRate#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
