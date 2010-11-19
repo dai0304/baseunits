@@ -1,7 +1,9 @@
 package com.domainlanguage.money;
 
+import org.apache.commons.lang.Validate;
+
 /**
- * 割り当てをあらわす。
+ * 何かに対するお金の割り当てをあらわす。
  * 
  * @param <T> 割り当て対象
  * @version $Id$
@@ -19,8 +21,11 @@ public class Allotment<T> {
 	 * 
 	 * @param entity 割り当て対象
 	 * @param amount 割り当て量
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Allotment(T entity, Money amount) {
+		Validate.notNull(entity);
+		Validate.notNull(amount);
 		this.entity = entity;
 		this.amount = amount;
 	}
@@ -37,18 +42,10 @@ public class Allotment<T> {
 			return false;
 		}
 		final Allotment<?> other = (Allotment<?>) obj;
-		if (amount == null) {
-			if (other.amount != null) {
-				return false;
-			}
-		} else if (amount.equals(other.amount) == false) {
+		if (amount.equals(other.amount) == false) {
 			return false;
 		}
-		if (entity == null) {
-			if (other.entity != null) {
-				return false;
-			}
-		} else if (entity.equals(other.entity) == false) {
+		if (entity.equals(other.entity) == false) {
 			return false;
 		}
 		return true;

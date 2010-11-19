@@ -10,11 +10,12 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import junit.framework.AssertionFailedError;
+import org.apache.commons.io.IOUtils;
 
 /**
  * シリアライズのテストを行う、ヘルパークラス。
@@ -27,7 +28,7 @@ public class SerializationTester {
 	 * シリアライズできるかどうか検証する。
 	 * 
 	 * @param serializable シリアライズ対象オブジェクト
-	 * @throws AssertionFailedError シリアライズに成功しなかった場合
+	 * @throws Exception シリアライズに失敗した場合
 	 */
 	public static void assertCanBeSerialized(Object serializable) {
 		if (Serializable.class.isInstance(serializable) == false) {
@@ -41,16 +42,20 @@ public class SerializationTester {
 		try {
 			out = new ObjectOutputStream(byteArrayOut);
 			out.writeObject(serializable);
-			out.close(); // this shouldn't matter
+			
 			byteArrayIn = new ByteArrayInputStream(byteArrayOut.toByteArray());
 			in = new ObjectInputStream(byteArrayIn);
 			Object deserialized = in.readObject();
 			if (serializable.equals(deserialized) == false) {
 				fail("Reconstituted object is expected to be equal to serialized");
 			}
-			in.close(); // this shouldn't matter
-		} catch (Exception e) {
-			fail("Exception while serializing: " + e);
+		} catch (IOException e) {
+			fail(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			fail(e.getMessage());
+		} finally {
+			IOUtils.closeQuietly(out);
+			IOUtils.closeQuietly(in);
 		}
 	}
 	

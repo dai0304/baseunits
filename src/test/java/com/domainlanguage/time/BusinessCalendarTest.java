@@ -101,7 +101,6 @@ public class BusinessCalendarTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	@SuppressWarnings("deprecation")
 	public void test05_NearestBusinessDay() throws Exception {
 		CalendarDate saturday = CalendarDate.from(2004, 1, 10);
 		CalendarDate sunday = saturday.nextDay();

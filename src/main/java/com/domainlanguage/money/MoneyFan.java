@@ -8,6 +8,13 @@ import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 
+/**
+ * 割り当ての集合。
+ * 
+ * @param <T> 割り当て対象
+ * @version $Id$
+ * @author daisuke
+ */
 public class MoneyFan<T> {
 	
 	private Set<Allotment<T>> allotments;
@@ -16,7 +23,7 @@ public class MoneyFan<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param allotments
+	 * @param allotments 割り当ての集合。 {@link Set}の仕様と同様、重複は排除される。
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public MoneyFan(Allotment<T>... allotments) {
@@ -29,7 +36,7 @@ public class MoneyFan<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param allotments
+	 * @param allotments 割り当ての{@link Set}
 	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
 	 */
 	public MoneyFan(Set<Allotment<T>> allotments) {
@@ -37,6 +44,12 @@ public class MoneyFan<T> {
 		this.allotments = allotments;
 	}
 	
+	/**
+	 * {@link MoneyFan}が保持する {@link Allotment}のうち、割り当て対象が {@code anEntity}であるものを返す。
+	 * 
+	 * @param anEntity 割り当て対象
+	 * @return {@link Allotment}。見つからなかった場合は{@code null}
+	 */
 	public Allotment<T> allotment(T anEntity) {
 		for (Allotment<T> allotment : allotments) {
 			if (allotment.entity.equals(anEntity)) {
@@ -58,11 +71,7 @@ public class MoneyFan<T> {
 			return false;
 		}
 		final MoneyFan<?> other = (MoneyFan<?>) obj;
-		if (allotments == null) {
-			if (other.allotments != null) {
-				return false;
-			}
-		} else if (allotments.equals(other.allotments) == false) {
+		if (allotments.equals(other.allotments) == false) {
 			return false;
 		}
 		return true;
@@ -70,17 +79,14 @@ public class MoneyFan<T> {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((allotments == null) ? 0 : allotments.hashCode());
-		return result;
+		return allotments.hashCode();
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この{@link MoneyFan}から{@code subtracted}を引いた差を返す。
 	 * 
-	 * @param subtracted
-	 * @return
+	 * @param subtracted {@link MoneyFan}
+	 * @return {@link MoneyFan}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public MoneyFan<T> minus(MoneyFan<T> subtracted) {
@@ -88,6 +94,12 @@ public class MoneyFan<T> {
 		return plus(subtracted.negated());
 	}
 	
+	/**
+	 * この {@link MoneyFan}の {@link Allotment}を {@link Allotment#negated()}した {@link Set}で構成される
+	 * 新しい {@link MoneyFan}を返す。
+	 * 
+	 * @return {@link MoneyFan}
+	 */
 	public MoneyFan<T> negated() {
 		Set<Allotment<T>> negatedAllotments = new HashSet<Allotment<T>>();
 		for (Allotment<T> allotment : allotments) {
@@ -97,10 +109,12 @@ public class MoneyFan<T> {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この{@link MoneyFan}に{@code added}を足した和を返す。
 	 * 
-	 * @param added
-	 * @return
+	 * <p>同じ割り当て対象に対する割当額は、マージする。また、割当額が0の {@link Allotment} は取り除く。</p>
+	 * 
+	 * @param added {@link MoneyFan}
+	 * @return {@link MoneyFan}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public MoneyFan<T> plus(MoneyFan<T> added) {
@@ -131,6 +145,11 @@ public class MoneyFan<T> {
 		return "" + allotments;
 	}
 	
+	/**
+	 * 全ての割り当ての合計額を返す。
+	 * 
+	 * @return 合計額
+	 */
 	public Money total() {
 		return asTally().net();
 	}
@@ -143,6 +162,12 @@ public class MoneyFan<T> {
 		return new Tally(moneies);
 	}
 	
+	/**
+	 * このインスタンスが保持する {@link Allotment} のうち、割り当て金額が{@code 0}であるものを取り除いた
+	 * 新しい {@link MoneyFan}を返す。
+	 * 
+	 * @return {@link MoneyFan}
+	 */
 	private MoneyFan<T> withoutZeros() {
 		Set<Allotment<T>> nonZeroAllotments = new HashSet<Allotment<T>>();
 		for (Allotment<T> allotment : allotments) {

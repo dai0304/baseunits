@@ -21,6 +21,12 @@ public class FanTally<T> {
 		this.fans = fans;
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param fans
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public FanTally(MoneyFan<T>... fans) {
 		this(Arrays.asList(fans));
 	}

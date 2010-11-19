@@ -89,7 +89,7 @@ public class MoneyFanTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MoneyFan#plus(MoneyFan)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -111,7 +111,7 @@ public class MoneyFanTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MoneyFan#negated()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -129,7 +129,7 @@ public class MoneyFanTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MoneyFan#minus(MoneyFan)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
