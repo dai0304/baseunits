@@ -18,11 +18,20 @@ import com.domainlanguage.time.TimePoint;
 
 import org.junit.Test;
 
+/**
+ * Example.
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class RecurringAppointmentScenario {
 	
 	private static final TimeZone HONOLULU_TIME = TimeZone.getTimeZone("Pacific/Honolulu");
 	
 
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testDailyMeetingAlert() {
 		/**

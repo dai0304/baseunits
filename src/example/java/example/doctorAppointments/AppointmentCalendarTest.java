@@ -18,8 +18,17 @@ import com.domainlanguage.time.TimePoint;
 
 import org.junit.Test;
 
+/**
+ * Example.
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class AppointmentCalendarTest {
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testEventsForDate() {
 		TimeZone pt = TimeZone.getTimeZone("America/Los_Angeles");

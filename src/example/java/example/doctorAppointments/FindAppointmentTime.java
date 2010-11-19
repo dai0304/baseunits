@@ -6,6 +6,16 @@
 
 package example.doctorAppointments;
 
+import java.util.TimeZone;
+
+import org.junit.Test;
+
+/**
+ * Example.
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class FindAppointmentTime {
 	
 	/**
@@ -24,43 +34,44 @@ public class FindAppointmentTime {
 	 * available.iterate(desiredDuration);
 	 *  
 	 */
-	
+	@Test
 	public void testFindAvailableTime() {
-//        TimeZone pt = TimeZone.getTimeZone("America/Los_Angeles");
-//        AppointmentCalendar calendar = new AppointmentCalendar(pt);
+		TimeZone pt = TimeZone.getTimeZone("America/Los_Angeles");
+		AppointmentCalendar calendar = new AppointmentCalendar(pt);
 		
 		/**
-		 * calendar.addHolidays(aCompositeSpec);
-		 * calendar.addHoliday(thanksgiving); calendar.addHoliday(christmas);
-		 * 
-		 * calendar.addOfficeHours(intervalspecification? Monday 9am-12noon)
-		 * 
-		 * calendar.addVacation(a two week CalendarInterval, 'Maui!')
-		 * 
-		 * 
-		 * calendar.addAppointment(a twenty Minute TimeInterval, 'Mr. Jones
-		 * hernia') calendar.addAppointment(a twenty minute TimeInterval, 'Mrs.
-		 * Smith's goiter');
-		 * 
-		 * Iterator available = calendar.availableAppointmentIterator(Duration,
-		 * DateInterval or TimeInterval);
-		 * 
-		 * assertEquals(timeInterval, available.next());
-		 * assertEquals(timeInterval, available.next());
-		 * assertEquals(timeInterval, available.next());
-		 * assertEquals(timeInterval, available.next());
-		 * addAppointment(chosenInterval, "Mr. Johnson's obsessive, compulsive
-		 * disorder");
-		 *  
+		  calendar.addHolidays(aCompositeSpec);
+		  calendar.addHoliday(thanksgiving);
+		  calendar.addHoliday(christmas);
+		  
+		  calendar.addOfficeHours(intervalspecification? Monday 9am-12noon)
+		  
+		  calendar.addVacation(a two week CalendarInterval, 'Maui!')
+		  
+		  
+		  calendar.addAppointment(a twenty Minute TimeInterval, 'Mr. Jones hernia')
+		  calendar.addAppointment(a twenty minute TimeInterval, 'Mrs. Smith's goiter');
+		  
+		  Iterator available = calendar.availableAppointmentIterator(Duration, DateInterval or TimeInterval);
+		  
+		  assertEquals(timeInterval, available.next());
+		  assertEquals(timeInterval, available.next());
+		  assertEquals(timeInterval, available.next());
+		  assertEquals(timeInterval, available.next());
+		  addAppointment(chosenInterval, "Mr. Johnson's obsessive, compulsive disorder");
+		   
 		 */
 	}
 	
+	/**
+	 * Example.
+	 */
+	@Test
 	public void testReportSchedule() {
 //        TimeZone pt = TimeZone.getTimeZone("America/Los_Angeles");
 //        AppointmentCalendar calendar = new AppointmentCalendar(pt);
-//List appointments = calendar.dailySchedule(aCalendarDate);
-//assertEquals(#, appointments.size());
-//assertEquals(aTimePoint,
-// ((Appointment)appointments.get(0)).startTime());
+//        List appointments = calendar.dailySchedule(aCalendarDate);
+//        assertEquals(#, appointments.size());
+//        assertEquals(aTimePoint, ((Appointment)appointments.get(0)).startTime());
 	}
 }

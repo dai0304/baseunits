@@ -20,6 +20,12 @@ import com.domainlanguage.time.Duration;
 
 import org.junit.Test;
 
+/**
+ * Example.
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class MoneyLanguageExampleTest {
 	
 	private static final Currency CAD = Currency.getInstance("CAD");
@@ -27,6 +33,9 @@ public class MoneyLanguageExampleTest {
 	private static final double GST_RATE = 0.06;
 	
 
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testMoneyBigDecimalExample() {
 		Money moneyResult = calculateGST(Money.valueOf(3.00, CAD));
@@ -36,6 +45,9 @@ public class MoneyLanguageExampleTest {
 		assertThat(bigDecimalAmount, is(new BigDecimal("0.18")));
 	}
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testMoneyExample() {
 		Money baseAmount = Money.dollars(10.03);
@@ -55,29 +67,38 @@ public class MoneyLanguageExampleTest {
 		assertThat(Money.sum(Arrays.asList(amounts)), is(Money.dollars(41.06)));
 	}
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testMoneyRateExample_1() {
-		//My consulting rate is $400 per day
+		// My consulting rate is $400 per day
 		MoneyTimeRate rate = Money.dollars(400.00).per(Duration.days(1));
 		
-		//For three days work I will earn $1200
+		// For three days work I will earn $1200
 		assertThat(rate.over(Duration.days(3)), is(Money.dollars(1200.00)));
 	}
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testMoneyRateExample_2() {
-		//Rate calculation with rounding
+		// Rate calculation with rounding
 		MoneyTimeRate rate = new MoneyTimeRate(Money.euros(100.00), Duration.minutes(3));
 		
 		assertThat(rate.over(Duration.minutes(1), Rounding.DOWN), is(Money.euros(33.33)));
 	}
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testProration() {
-		//My salary is defined as $80,000 per year. I'm paid weekly.
-		//If I work 36 weeks of a year, how much will I earn?
+		// My salary is defined as $80,000 per year. I'm paid weekly.
+		// If I work 36 weeks of a year, how much will I earn?
 		
-		//Salary rounds to 1538.46 per week.
+		// Salary rounds to 1538.46 per week.
 		Money[] salaryPayments = Proration.dividedEvenlyIntoParts(Money.dollars(80000.00), 52);
 		assertThat(salaryPayments[0], is(Money.dollars(1538.47)));
 		assertThat(salaryPayments[2], is(Money.dollars(1538.47)));
@@ -87,8 +108,8 @@ public class MoneyLanguageExampleTest {
 		assertThat(salaryPayments[10], is(Money.dollars(1538.46)));
 		assertThat(salaryPayments[12], is(Money.dollars(1538.46)));
 		
-		Money totalSalaryEarned = Proration.partOfWhole(Money.dollars(80000.00), 36, 52);
 		// TODO Following currently fails. May be a problem in proration.
+//		Money totalSalaryEarned = Proration.partOfWhole(Money.dollars(80000.00), 36, 52);
 //		assertThat(totalSalaryEarned, is(Money.dollars(55384.56)));
 	}
 	

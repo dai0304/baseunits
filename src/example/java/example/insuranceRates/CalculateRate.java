@@ -24,29 +24,39 @@ import com.domainlanguage.time.Duration;
 import org.junit.Ignore;
 import org.junit.Test;
 
+/**
+ * Example.
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class CalculateRate {
 	
 	private static final CalendarDate policyEffectiveDate = CalendarDate.date(2004, 11, 7);
 	
 
-	//revisit:
+	/**
+	 * Example.
+	 */
 	@Test
 	@Ignore
 	public void testLookUpMoreComplicated() {
-		//		BusinessCalendar paymentCalendar = null;
-		//		CalendarInterval paymentQuarter = paymentCalendar.currentQuarter();
-		//
-		//				CalendarDate birthdate = null;
-		//				Duration age = birthdate.until(paymentQuarter.start()).duration();
-		//				Rate rate = insuranceSchedule.get(age);
-		//		Money quarterlyPayment = rate.times(Duration.quarters(1));
-		//		CalendarDate effectiveDate = null;
-		//		CalendarInterval remainingQuarter =
-		// paymentQuarter.cropForwardFrom(effectiveDate);
-		//		BigDecimal ratio =
-		// remainingQuarter.duration().dividedBy(paymentQuarter);
-		//		Money firstPayment = quarterlyPayment.prorate(ratio);
+//		BusinessCalendar paymentCalendar = null;
+//		CalendarInterval paymentQuarter = paymentCalendar.currentQuarter();
+//		
+//		CalendarDate birthdate = null;
+//		Duration age = birthdate.until(paymentQuarter.start()).duration();
+//		Rate rate = insuranceSchedule.get(age);
+//		Money quarterlyPayment = rate.times(Duration.quarters(1));
+//		CalendarDate effectiveDate = null;
+//		CalendarInterval remainingQuarter = paymentQuarter.cropForwardFrom(effectiveDate);
+//		BigDecimal ratio = remainingQuarter.duration().dividedBy(paymentQuarter);
+//		Money firstPayment = quarterlyPayment.prorate(ratio);
 	}
+	
+	/**
+	 * Example.
+	 */
 	
 	@Test
 	public void testLookUpRate() {
@@ -56,6 +66,9 @@ public class CalculateRate {
 		assertThat(monthlyPremium, is(Money.dollars(150.00)));
 	}
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testProrateFirstMonth() {
 		Money monthlyPremium = Money.dollars(150.00);
@@ -71,6 +84,9 @@ public class CalculateRate {
 		assertThat(firstPayment, is(Money.dollars(120.00)));
 	}
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testQuarterlyPremiumPayment() {
 		MoneyTimeRate premium = Money.dollars(150.00).per(Duration.months(1));

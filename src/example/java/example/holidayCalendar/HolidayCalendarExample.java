@@ -19,17 +19,25 @@ import com.domainlanguage.time.Duration;
 
 import org.junit.Test;
 
+/**
+ * Example.
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class HolidayCalendarExample {
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testDeriveBirthday() {
-		//Calculate Martin Luther King, Jr.'s birthday, January 15, for the
-		// year 2005:
+		//Calculate Martin Luther King, Jr.'s birthday, January 15, for the year 2005:
 		DateSpecification mlkBirthday = DateSpecification.fixed(1, 15);
 		// Then you can do checks like
 		CalendarDate jan15_2005 = CalendarDate.from(2005, 1, 15);
 		assertThat(mlkBirthday.isSatisfiedBy(jan15_2005), is(true));
-		//Derive the date(s) for an interval
+		// Derive the date(s) for an interval
 		CalendarDate mlk2005 = mlkBirthday.firstOccurrenceIn(CalendarInterval.year(2005));
 		assertThat(mlk2005, is(jan15_2005));
 		// Calculate all the birthdays in his lifetime
@@ -42,10 +50,12 @@ public class HolidayCalendarExample {
 		assertThat(mlkLifetime.length(), is(Duration.days(14325)));
 	}
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	public void testDeriveThanksgiving() {
-		//Calculate Thanksgiving, the 4th Thursday in November, for the
-		// year 2005
+		//Calculate Thanksgiving, the 4th Thursday in November, for the year 2005
 		DateSpecification thanksgiving = DateSpecification.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
 		// With the specification, you can do checks like
 		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.date(2005, 11, 24)), is(true));

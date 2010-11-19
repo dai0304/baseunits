@@ -17,6 +17,12 @@ import com.domainlanguage.time.CalendarInterval;
 import org.junit.Ignore;
 import org.junit.Test;
 
+/**
+ * Example.
+ * 
+ * @version $Id$
+ * @author daisuke
+ */
 public class SocialSecurityBenefitExample extends TestCase {
 	
 	/*
@@ -30,7 +36,7 @@ public class SocialSecurityBenefitExample extends TestCase {
 	 * The examples are 25 years old, but the regulations are current.
 	 */
 
-	/*
+	/**
 	 * Example: (Simplified exerpt from
 	 * http://www.ssa.gov/OP_Home/cfr20/404/404-0439.htm) Worker is entitled to
 	 * an old-age insurance benefit of $200 payable for October, which is
@@ -51,6 +57,9 @@ public class SocialSecurityBenefitExample extends TestCase {
 		assertEquals(Money.dollars(66), spouseBenefit);
 	}
 	
+	/**
+	 * Example.
+	 */
 	@Test
 	@Ignore
 	public void testExcessEarnings() {
@@ -63,31 +72,32 @@ public class SocialSecurityBenefitExample extends TestCase {
 		 * amount for 1979, from $6,000 and dividing the result by 2.
 		 */
 
-		//Does beneficiary attain age 72 during the benefit year 1972?
+		// Does beneficiary attain age 72 during the benefit year 1972?
 		CalendarInterval y1979 = CalendarInterval.year(1979);
 		CalendarDate birthday72 = CalendarDate.date(1979, 7, 15);
 		assertTrue(y1979.includes(birthday72));
 		
-		//Note that all calculations are based on entire months.
-		//The proration is not based on the number of days prior to
+		// Note that all calculations are based on entire months.
+		// The proration is not based on the number of days prior to
 		// turning 72 (the exempt age). It is base on the number
 		// of months prior to the month in which he turned 72.
 		
-//        CalendarInterval subintervalOfYearSubjectToExcess = CalendarInterval.inclusive(y1979.start(), birthday72.firstOfMonth().previousDay());
-		
-//        Ratio portionOfYearSubject = subintervalOfYearSubjectToExcess.lengthInMonths().dividedBy(y1979.lengthInMonths());
-		
-//        Money earningsFor1979 = Money.dollars(12000);
-//assertEquals(Money.dollars(6000),
-// netEarningsPriorToMonthOfTurning72);
+//		CalendarInterval subintervalOfYearSubjectToExcess =
+//				CalendarInterval.inclusive(y1979.start(), birthday72.firstOfMonth().previousDay());
+//		
+//		Ratio portionOfYearSubject =
+//				subintervalOfYearSubjectToExcess.lengthInMonths().dividedBy(y1979.lengthInMonths());
+//		
+//		Money earningsFor1979 = Money.dollars(12000);
+//		assertEquals(Money.dollars(6000), netEarningsPriorToMonthOfTurning72);
 		
 		Money exemptMonthlyEarnings = Money.dollars(375);
 		Money exemptAnnualEarnings = exemptMonthlyEarnings.times(12);
 		assertEquals(Money.dollars(4500), exemptAnnualEarnings);
-//        Money annualExcessEarnings = earningsFor1979.minus(exemptAnnualEarnings);
-		
-		// Money excessEarnings = earningsFor1979.minus(exemptEarnings);
-		//		assertEquals(Money.dollars(750), excessEarnings);
+//		Money annualExcessEarnings = earningsFor1979.minus(exemptAnnualEarnings);
+//		
+//		Money excessEarnings = earningsFor1979.minus(exemptEarnings);
+//		assertEquals(Money.dollars(750), excessEarnings);
 	}
 	
 }
