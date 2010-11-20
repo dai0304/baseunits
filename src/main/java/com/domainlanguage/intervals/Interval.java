@@ -504,7 +504,6 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		if (lowerLimit() == null && other.lowerLimit() == null) {
 			return true;
 		}
-		// TODO 片方が無限だった場合
 		int comparison = greaterOfLowerLimits(other).compareTo(lesserOfUpperLimits(other));
 		if (comparison < 0) {
 			return true;

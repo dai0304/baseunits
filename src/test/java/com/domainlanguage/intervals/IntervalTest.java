@@ -46,6 +46,10 @@ public class IntervalTest {
 	
 	private Interval<BigDecimal> o1_1o = Interval.over(new BigDecimal(1), false, new BigDecimal(1), false);
 	
+	private Interval<BigDecimal> _2o = Interval.over(null, true, new BigDecimal(2), false);
+	
+	private Interval<BigDecimal> o9_ = Interval.over(new BigDecimal(9), false, null, true);
+	
 	private Interval<BigDecimal> empty = Interval.open(new BigDecimal(1), new BigDecimal(1));
 	
 	private Interval<BigDecimal> all = Interval.<BigDecimal> closed(null, null);
@@ -227,6 +231,8 @@ public class IntervalTest {
 		assertThat(c5_10c.intersects(c1_1o), is(false));
 		assertThat(c5_10c.intersects(c1_1c), is(false));
 		assertThat(c5_10c.intersects(o1_1o), is(false));
+		assertThat(c5_10c.intersects(_2o), is(false));
+		assertThat(c5_10c.intersects(o9_), is(true));
 		assertThat(c5_10c.intersects(empty), is(false));
 		assertThat(c5_10c.intersects(all), is(true));
 		
@@ -240,6 +246,8 @@ public class IntervalTest {
 		assertThat(c1_10c.intersects(c1_1o), is(true));
 		assertThat(c1_10c.intersects(c1_1c), is(true));
 		assertThat(c1_10c.intersects(o1_1o), is(false));
+		assertThat(c1_10c.intersects(_2o), is(true));
+		assertThat(c1_10c.intersects(o9_), is(true));
 		assertThat(c1_10c.intersects(empty), is(false));
 		assertThat(c1_10c.intersects(all), is(true));
 		
@@ -253,6 +261,8 @@ public class IntervalTest {
 		assertThat(c4_6c.intersects(c1_1o), is(false));
 		assertThat(c4_6c.intersects(c1_1c), is(false));
 		assertThat(c4_6c.intersects(o1_1o), is(false));
+		assertThat(c4_6c.intersects(_2o), is(false));
+		assertThat(c4_6c.intersects(o9_), is(false));
 		assertThat(c4_6c.intersects(empty), is(false));
 		assertThat(c4_6c.intersects(all), is(true));
 		
@@ -266,6 +276,8 @@ public class IntervalTest {
 		assertThat(c5_15c.intersects(c1_1o), is(false));
 		assertThat(c5_15c.intersects(c1_1c), is(false));
 		assertThat(c5_15c.intersects(o1_1o), is(false));
+		assertThat(c5_15c.intersects(_2o), is(false));
+		assertThat(c5_15c.intersects(o9_), is(true));
 		assertThat(c5_15c.intersects(empty), is(false));
 		assertThat(c5_15c.intersects(all), is(true));
 		
