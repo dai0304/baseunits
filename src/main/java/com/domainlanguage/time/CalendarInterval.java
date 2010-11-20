@@ -22,7 +22,7 @@ import com.domainlanguage.util.ImmutableIterator;
  * @author daisuke
  */
 @SuppressWarnings("serial")
-public abstract class CalendarInterval extends Interval<CalendarDate> {
+public class CalendarInterval extends Interval<CalendarDate> {
 	
 	/**
 	 * 開始日より、下側限界のみを持つ期間を生成する。
@@ -59,7 +59,7 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
 	 */
 	public static CalendarInterval inclusive(CalendarDate start, CalendarDate end) {
-		return ConcreteCalendarInterval.from(start, end);
+		return new CalendarInterval(start, end);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 			int endDay) {
 		CalendarDate startDate = CalendarDate.from(startYear, startMonth, startDay);
 		CalendarDate endDate = CalendarDate.from(endYear, endMonth, endDay);
-		return ConcreteCalendarInterval.from(startDate, endDate);
+		return new CalendarInterval(startDate, endDate);
 	}
 	
 	/**
@@ -133,6 +133,25 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
+	 * インスタンスを生成する。
+	 * 
+	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * 
+	 * @param start 開始日
+	 * @param end 終了日
+	 */
+	protected CalendarInterval(CalendarDate start, CalendarDate end) {
+		super(start, true, end, true);
+	}
+	
+	/**
+	 * Only for use by persistence mapping frameworks
+	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+	 */
+	CalendarInterval() {
+	}
+	
+	/**
 	 * この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
@@ -140,10 +159,11 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	 * @param zone タイムゾーン
 	 * @return 時間の期間
 	 */
-	public abstract TimeInterval asTimeInterval(TimeZone zone);
-	
-	@Override
-	public abstract int compareTo(Interval<CalendarDate> other);
+	public TimeInterval asTimeInterval(TimeZone zone) {
+		TimePoint startPoint = lowerLimit().asTimeInterval(zone).start();
+		TimePoint endPoint = upperLimit().asTimeInterval(zone).end();
+		return TimeInterval.over(startPoint, endPoint);
+	}
 	
 	/**
 	 * この期間の終了日を起点として、前回の日付の前日を

@@ -431,8 +431,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * 
 	 * @param value 値
 	 * @return 含まれる場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean includes(T value) {
+		Validate.notNull(value);
 		return isBelow(value) == false && isAbove(value) == false;
 	}
 	
@@ -479,8 +481,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * 
 	 * @param other 比較対象の区間
 	 * @return 積集合（共通部分）
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Interval<T> intersect(Interval<T> other) {
+		Validate.notNull(other);
 		T intersectLowerBound = greaterOfLowerLimits(other);
 		T intersectUpperBound = lesserOfUpperLimits(other);
 		if (intersectLowerBound.compareTo(intersectUpperBound) > 0) {
@@ -499,6 +503,13 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 */
 	public boolean intersects(Interval<T> other) {
 		Validate.notNull(other);
+		if (upperLimit() == null && other.upperLimit() == null) {
+			return true;
+		}
+		if (lowerLimit() == null && other.lowerLimit() == null) {
+			return true;
+		}
+		// TODO 片方が無限だった場合
 		int comparison = greaterOfLowerLimits(other).compareTo(lesserOfUpperLimits(other));
 		if (comparison < 0) {
 			return true;
@@ -514,8 +525,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * 
 	 * @param value 値
 	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isAbove(T value) {
+		Validate.notNull(value);
 		if (hasLowerLimit() == false) {
 			return false;
 		}
@@ -528,8 +541,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * 
 	 * @param value 値
 	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isBelow(T value) {
+		Validate.notNull(value);
 		if (hasUpperLimit() == false) {
 			return false;
 		}
@@ -832,7 +847,12 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	private Interval<T> leftComplementRelativeTo(Interval<T> other) {
-		if (this.includes(lesserOfLowerLimits(other))) {
+		T lesserOfLowerLimits = lesserOfLowerLimits(other);
+		if (lesserOfLowerLimits == null) {
+			// FIXME 何してるか分からないままテストを通すためだけにこのif文を作った。熟考せよ。
+			return null;
+		}
+		if (this.includes(lesserOfLowerLimits)) {
 			return null;
 		}
 		if (lowerLimit().equals(other.lowerLimit()) && !other.includesLowerLimit()) {
@@ -870,13 +890,18 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	private Interval<T> rightComplementRelativeTo(Interval<T> other) {
-		if (this.includes(greaterOfUpperLimits(other))) {
+		T greaterOfUpperLimits = greaterOfUpperLimits(other);
+		if (greaterOfUpperLimits == null) {
+			// FIXME 何してるか分からないままテストを通すためだけにこのif文を作った。熟考せよ。
 			return null;
 		}
-		if (upperLimit().equals(other.upperLimit()) && !other.includesUpperLimit()) {
+		if (this.includes(greaterOfUpperLimits)) {
 			return null;
 		}
-		return newOfSameType(this.upperLimit(), !this.includesUpperLimit(), other.upperLimit(),
+		if (upperLimit().equals(other.upperLimit()) && other.includesUpperLimit() == false) {
+			return null;
+		}
+		return newOfSameType(this.upperLimit(), this.includesUpperLimit() == false, other.upperLimit(),
 				other.includesUpperLimit());
 	}
 	

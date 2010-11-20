@@ -99,7 +99,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 開始日時が終了日時より大きい（未来である）場合
 	 */
 	public static TimeInterval over(TimePoint start, TimePoint end) {
-		//Uses the common default for time intervals, [start, end).
+		// Uses the common default for time intervals, [start, end).
 		return over(start, true, end, false);
 	}
 	
@@ -131,7 +131,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	public static TimeInterval preceding(TimePoint end, Duration length) {
 		Validate.notNull(end);
 		Validate.notNull(length);
-		//Uses the common default for time intervals, [start, end).
+		// Uses the common default for time intervals, [start, end).
 		return preceding(end, true, length, false);
 	}
 	
@@ -165,7 +165,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	public static TimeInterval startingFrom(TimePoint start, Duration length) {
 		Validate.notNull(start);
 		Validate.notNull(length);
-		//Uses the common default for time intervals, [start, end).
+		// Uses the common default for time intervals, [start, end).
 		return startingFrom(start, true, length, false);
 	}
 	
@@ -182,12 +182,12 @@ public class TimeInterval extends Interval<TimePoint> {
 		super(start, startIncluded, end, endIncluded);
 	}
 	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	TimeInterval() {
-	}
+//	/**
+//	 * Only for use by persistence mapping frameworks
+//	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
+//	 */
+//	TimeInterval() {
+//	}
 	
 	/**
 	 * この期間の開始日時を起点として、前回の日時の1日後の日時を
