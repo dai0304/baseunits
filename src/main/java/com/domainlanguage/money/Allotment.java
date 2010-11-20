@@ -11,9 +11,9 @@ import org.apache.commons.lang.Validate;
  */
 public class Allotment<T> {
 	
-	T entity;
+	final T entity;
 	
-	Money amount;
+	final Money amount;
 	
 
 	/**

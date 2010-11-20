@@ -103,14 +103,17 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	@Override
+	@Override // CHECKSTYLE IGNORE THIS LINE
 	public int compareTo(IntervalLimit<T> other) {
 		if (other == null) {
 			throw new NullPointerException();
 		}
 		
-		T otherValue = other.value;
-		if (otherValue == value) {
+		if (value == null && other.value == null) {
+			return 0;
+		}
+		
+		if (other.value == value) {
 			if (lower && other.lower) {
 				if (closed && other.closed == false) {
 					return -1;
@@ -129,14 +132,13 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 		if (value == null) {
 			return lower ? -1 : 1;
 		}
-		if (otherValue == null) {
+		if (other.value == null) {
 			return other.lower ? 1 : -1;
 		}
-		return value.compareTo(otherValue);
+		return value.compareTo(other.value);
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -147,12 +149,10 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		IntervalLimit<?> other = (IntervalLimit<?>) obj;
-		if (other.value == value) {
-			return true;
-		}
 		try {
-			return value.compareTo((T) other.value) == 0;
+			@SuppressWarnings("unchecked")
+			IntervalLimit<T> other = (IntervalLimit<T>) obj;
+			return compareTo(other) == 0;
 		} catch (ClassCastException e) {
 			return false;
 		}
@@ -168,7 +168,8 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	
 	@Override
 	public String toString() {
-		return String.format("<%s %s %s>", lower ? "lower" : "upper", closed ? "closed" : "open", value);
+		return String.format("<%s %s %s>", lower ? "lower" : "upper", closed ? "closed" : "open", value == null
+				? "Infinity" : value);
 	}
 	
 	/**

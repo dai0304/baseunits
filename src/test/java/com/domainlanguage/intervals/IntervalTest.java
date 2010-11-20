@@ -26,8 +26,6 @@ import org.junit.Test;
  */
 public class IntervalTest {
 	
-	private Interval<BigDecimal> empty = Interval.open(new BigDecimal(1), new BigDecimal(1));
-	
 	private Interval<BigDecimal> c5_10c = Interval.closed(new BigDecimal(5), new BigDecimal(10));
 	
 	private Interval<BigDecimal> c1_10c = Interval.closed(new BigDecimal(1), new BigDecimal(10));
@@ -47,6 +45,10 @@ public class IntervalTest {
 	private Interval<BigDecimal> c1_1c = Interval.over(new BigDecimal(1), true, new BigDecimal(1), true);
 	
 	private Interval<BigDecimal> o1_1o = Interval.over(new BigDecimal(1), false, new BigDecimal(1), false);
+	
+	private Interval<BigDecimal> empty = Interval.open(new BigDecimal(1), new BigDecimal(1));
+	
+	private Interval<BigDecimal> all = Interval.<BigDecimal> closed(null, null);
 	
 
 	/**
@@ -200,18 +202,83 @@ public class IntervalTest {
 	 */
 	@Test
 	public void test11_Intersects() throws Exception {
-		assertThat("c5_10c.intersects(c1_10c)", c5_10c.intersects(c1_10c), is(true));
-		assertThat("c1_10c.intersects(c5_10c)", c1_10c.intersects(c5_10c), is(true));
-		assertThat("c4_6c.intersects(c1_10c)", c4_6c.intersects(c1_10c), is(true));
-		assertThat("c1_10c.intersects(c4_6c)", c1_10c.intersects(c4_6c), is(true));
-		assertThat("c5_10c.intersects(c5_15c)", c5_10c.intersects(c5_15c), is(true));
-		assertThat("c5_15c.intersects(c1_10c)", c5_15c.intersects(c1_10c), is(true));
-		assertThat("c1_10c.intersects(c5_15c)", c1_10c.intersects(c5_15c), is(true));
-		assertThat("c1_10c.intersects(c12_16c)", c1_10c.intersects(c12_16c), is(false));
-		assertThat("c12_16c.intersects(c1_10c)", c12_16c.intersects(c1_10c), is(false));
-		assertThat("c5_10c.intersects(c5_10c)", c5_10c.intersects(c5_10c), is(true));
-		assertThat("c1_10c.intersects(o10_12c)", c1_10c.intersects(o10_12c), is(false));
-		assertThat("o10_12c.intersects(c1_10c)", o10_12c.intersects(c1_10c), is(false));
+		assertThat(c5_10c.intersects(c1_10c), is(true));
+		assertThat(c1_10c.intersects(c5_10c), is(true));
+		assertThat(c4_6c.intersects(c1_10c), is(true));
+		assertThat(c1_10c.intersects(c4_6c), is(true));
+		assertThat(c5_10c.intersects(c5_15c), is(true));
+		assertThat(c5_15c.intersects(c1_10c), is(true));
+		assertThat(c1_10c.intersects(c5_15c), is(true));
+		assertThat(c1_10c.intersects(c12_16c), is(false));
+		assertThat(c12_16c.intersects(c1_10c), is(false));
+		assertThat(c5_10c.intersects(c5_10c), is(true));
+		assertThat(c1_10c.intersects(o10_12c), is(false));
+		assertThat(o10_12c.intersects(c1_10c), is(false));
+		
+		// ---- 気を取り直して総当たりしてみよう
+		
+		assertThat(c5_10c.intersects(c5_10c), is(true));
+		assertThat(c5_10c.intersects(c1_10c), is(true));
+		assertThat(c5_10c.intersects(c4_6c), is(true));
+		assertThat(c5_10c.intersects(c5_15c), is(true));
+		assertThat(c5_10c.intersects(c12_16c), is(false));
+		assertThat(c5_10c.intersects(o10_12c), is(false));
+		assertThat(c5_10c.intersects(o1_1c), is(false));
+		assertThat(c5_10c.intersects(c1_1o), is(false));
+		assertThat(c5_10c.intersects(c1_1c), is(false));
+		assertThat(c5_10c.intersects(o1_1o), is(false));
+		assertThat(c5_10c.intersects(empty), is(false));
+		assertThat(c5_10c.intersects(all), is(true));
+		
+		assertThat(c1_10c.intersects(c5_10c), is(true));
+		assertThat(c1_10c.intersects(c1_10c), is(true));
+		assertThat(c1_10c.intersects(c4_6c), is(true));
+		assertThat(c1_10c.intersects(c5_15c), is(true));
+		assertThat(c1_10c.intersects(c12_16c), is(false));
+		assertThat(c1_10c.intersects(o10_12c), is(false));
+		assertThat(c1_10c.intersects(o1_1c), is(true));
+		assertThat(c1_10c.intersects(c1_1o), is(true));
+		assertThat(c1_10c.intersects(c1_1c), is(true));
+		assertThat(c1_10c.intersects(o1_1o), is(false));
+		assertThat(c1_10c.intersects(empty), is(false));
+		assertThat(c1_10c.intersects(all), is(true));
+		
+		assertThat(c4_6c.intersects(c5_10c), is(true));
+		assertThat(c4_6c.intersects(c1_10c), is(true));
+		assertThat(c4_6c.intersects(c4_6c), is(true));
+		assertThat(c4_6c.intersects(c5_15c), is(true));
+		assertThat(c4_6c.intersects(c12_16c), is(false));
+		assertThat(c4_6c.intersects(o10_12c), is(false));
+		assertThat(c4_6c.intersects(o1_1c), is(false));
+		assertThat(c4_6c.intersects(c1_1o), is(false));
+		assertThat(c4_6c.intersects(c1_1c), is(false));
+		assertThat(c4_6c.intersects(o1_1o), is(false));
+		assertThat(c4_6c.intersects(empty), is(false));
+		assertThat(c4_6c.intersects(all), is(true));
+		
+		assertThat(c5_15c.intersects(c5_10c), is(true));
+		assertThat(c5_15c.intersects(c1_10c), is(true));
+		assertThat(c5_15c.intersects(c4_6c), is(true));
+		assertThat(c5_15c.intersects(c5_15c), is(true));
+		assertThat(c5_15c.intersects(c12_16c), is(true));
+		assertThat(c5_15c.intersects(o10_12c), is(true));
+		assertThat(c5_15c.intersects(o1_1c), is(false));
+		assertThat(c5_15c.intersects(c1_1o), is(false));
+		assertThat(c5_15c.intersects(c1_1c), is(false));
+		assertThat(c5_15c.intersects(o1_1o), is(false));
+		assertThat(c5_15c.intersects(empty), is(false));
+		assertThat(c5_15c.intersects(all), is(true));
+		
+		// --- 疲れてきたからあと適当ｗ 総当たり達成ならず。まぁ、大丈夫やろ…。
+		
+		assertThat(c12_16c.intersects(c1_10c), is(false));
+		assertThat(o10_12c.intersects(c1_10c), is(false));
+		assertThat(o1_1c.intersects(c4_6c), is(false));
+		assertThat(c1_1o.intersects(c5_15c), is(false));
+		assertThat(c1_1c.intersects(c5_15c), is(false));
+		assertThat(o1_1o.intersects(c12_16c), is(false));
+		assertThat(empty.intersects(o10_12c), is(false));
+		assertThat(all.intersects(o10_12c), is(true));
 	}
 	
 	/**
@@ -596,15 +663,11 @@ public class IntervalTest {
 		Collections.shuffle(list); // 念のためシャッフル
 		Collections.sort(list);
 		
-//		for (int i = 0; i < list.size(); i++) {
-//			Interval<Integer> interval = list.get(i);
-//			int c = 0;
-//			if (i != 0) {
-//				c = interval.compareTo(list.get(i - 1));
-//			}
-//			System.out.printf("%3d %s%n", c, interval.toStringGraphically());
+//		for (Interval<Integer> interval : list) {
+//			System.out.print(interval.toStringGraphically());
 //		}
 		
 		// TODO さて、どうなるべきか。仕様を確定させて、assertion入れるべし
+		// ひとまず上のコメントアウトコードを実行すると、目視で状況を確認できる。
 	}
 }

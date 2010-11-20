@@ -490,7 +490,7 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 	/**
-	 * この区間と、与えた区間 {{@code other}の間に共通部分が存在するかどうか検証する。
+	 * この区間と、与えた区間{@code other}の間に共通部分が存在するかどうか検証する。
 	 * 
 	 * @param other 対象区間
 	 * @return 共通部分が存在する場合は{@code true}、そうでない場合は{@code false}
@@ -683,6 +683,9 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		if (lowerLimit() == null) {
 			return other.lowerLimit();
 		}
+		if (other.lowerLimit() == null) {
+			return lowerLimit();
+		}
 		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
 		if (lowerComparison >= 0) {
 			return this.lowerLimit();
@@ -701,6 +704,9 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		Validate.notNull(other);
 		if (upperLimit() == null) {
 			return other.upperLimit();
+		}
+		if (other.upperLimit() == null) {
+			return upperLimit();
 		}
 		int upperComparison = upperLimit().compareTo(other.upperLimit());
 		if (upperComparison <= 0) {

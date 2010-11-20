@@ -40,6 +40,12 @@ public class IntervalSequenceTest {
 	
 	private Interval<Integer> c20_20c = Interval.closed(20, 20);
 	
+	private Interval<Integer> _o18 = Interval.under(18);
+	
+	private Interval<Integer> empty = Interval.closed(0, 0);
+	
+	private Interval<Integer> all = Interval.open(null, null);
+	
 
 	/**
 	 * {@link IntervalSequence#iterator()}のテスト。
@@ -50,9 +56,12 @@ public class IntervalSequenceTest {
 	public void test01_Iterate() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		assertThat(intervalSequence.isEmpty(), is(true));
+		intervalSequence.add(empty);
 		intervalSequence.add(c5_10c);
 		intervalSequence.add(o10_12c);
 		Iterator<Interval<Integer>> it = intervalSequence.iterator();
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(empty));
 		assertThat(it.hasNext(), is(true));
 		assertThat(it.next(), is(c5_10c));
 		assertThat(it.hasNext(), is(true));
@@ -92,39 +101,12 @@ public class IntervalSequenceTest {
 	}
 	
 	/**
-	 * {@link IntervalSequence#gaps()}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test03_Gaps() throws Exception {
-		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
-		intervalSequence.add(c5_10c);
-		intervalSequence.add(o10_12c);
-		intervalSequence.add(c20_25c);
-		intervalSequence.add(o30_35o);
-		IntervalSequence<Integer> gaps = intervalSequence.gaps();
-		Iterator<Interval<Integer>> it = gaps.iterator();
-		assertThat(it.hasNext(), is(true));
-		assertThat(it.next(), is(o12_20o));
-		assertThat(it.hasNext(), is(true));
-		assertThat(it.next(), is(o25_30c));
-		assertThat(it.hasNext(), is(false));
-		try {
-			it.next();
-			fail("Should throw NoSuchElementException");
-		} catch (NoSuchElementException e) {
-			// success
-		}
-	}
-	
-	/**
 	 * 重なる区間を含んだ{@link IntervalSequence}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test04_Overlapping() throws Exception {
+	public void test03_Overlapping() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		intervalSequence.add(o10_12c);
 		intervalSequence.add(o11_20c);
@@ -148,7 +130,7 @@ public class IntervalSequenceTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test05_Intersections() throws Exception {
+	public void test04_Intersections() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		intervalSequence.add(o10_12c);
 		intervalSequence.add(o11_20c);
@@ -159,6 +141,33 @@ public class IntervalSequenceTest {
 		assertThat(it.next(), is(o11_12c));
 		assertThat(it.hasNext(), is(true));
 		assertThat(it.next(), is(c20_20c));
+		assertThat(it.hasNext(), is(false));
+		try {
+			it.next();
+			fail("Should throw NoSuchElementException");
+		} catch (NoSuchElementException e) {
+			// success
+		}
+	}
+	
+	/**
+	 * {@link IntervalSequence#gaps()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_Gaps() throws Exception {
+		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
+		intervalSequence.add(c5_10c);
+		intervalSequence.add(o10_12c);
+		intervalSequence.add(c20_25c);
+		intervalSequence.add(o30_35o);
+		
+		Iterator<Interval<Integer>> it = intervalSequence.gaps().iterator();
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(o12_20o));
+		assertThat(it.hasNext(), is(true));
+		assertThat(it.next(), is(o25_30c));
 		assertThat(it.hasNext(), is(false));
 		try {
 			it.next();
@@ -180,5 +189,11 @@ public class IntervalSequenceTest {
 		intervalSequence.add(o10_12c);
 		intervalSequence.add(c20_25c);
 		assertThat(intervalSequence.extent(), is(Interval.closed(5, 25)));
+		
+		intervalSequence.add(_o18);
+		assertThat(intervalSequence.extent(), is(Interval.closed(null, 25)));
+		
+		intervalSequence.add(all);
+		assertThat(intervalSequence.extent(), is(all));
 	}
 }

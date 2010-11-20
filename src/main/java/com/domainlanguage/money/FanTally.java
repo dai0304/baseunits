@@ -14,7 +14,7 @@ import org.apache.commons.lang.Validate;
  */
 public class FanTally<T> {
 	
-	Collection<MoneyFan<T>> fans;
+	final Collection<MoneyFan<T>> fans;
 	
 
 	/**

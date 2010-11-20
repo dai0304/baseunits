@@ -129,4 +129,32 @@ public class IntervalLimitTest {
 		assertThat(upperOpen6.compareTo(upperClose6), is(lessThan(0)));
 		assertThat(upperOpen6.compareTo(upperOpen6), is(0));
 	}
+	
+	/**
+	 * {@link IntervalLimit#equals(Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_equals() throws Exception {
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.lower(false, 10)), is(true));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.lower(false, 10)), is(false));
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.lower(true, 10)), is(false));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.lower(true, 10)), is(true));
+		
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.upper(false, 10)), is(true));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.upper(false, 10)), is(false));
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.upper(true, 10)), is(false));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.upper(true, 10)), is(true));
+		
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(false, 10)), is(true));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(false, 10)), is(true));
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(true, 10)), is(true));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(true, 10)), is(true));
+		
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(false, 10)), is(true));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(false, 10)), is(true));
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(true, 10)), is(true));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(true, 10)), is(true));
+	}
 }
