@@ -29,7 +29,7 @@ import org.apache.commons.lang.Validate;
  * check if an Integer is within a range, make an Interval. Any class of yours
  * which implements Comparable can have intervals defined this way.
  * 
- * @param <T> 区間の型
+ * @param <T> 区間要素の型
  * @author daisuke
  */
 @SuppressWarnings("serial")
@@ -150,10 +150,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	// TODO これらのフィールドにfinalつける
 	
 	/** 下側限界 */
-	private IntervalLimit<T> lowerLimitObject;
+	IntervalLimit<T> lowerLimitObject;
 	
 	/** 上側限界 */
-	private IntervalLimit<T> upperLimitObject;
+	IntervalLimit<T> upperLimitObject;
 	
 
 	/**
@@ -809,13 +809,13 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	private Interval<T> leftComplementRelativeTo(Interval<T> other) {
 		T lesserOfLowerLimits = lesserOfLowerLimits(other);
 		if (lesserOfLowerLimits == null) {
-			// FIXME 何してるか分からないままテストを通すためだけにこのif文を作った。熟考せよ。
+			// TODO 何してるか分からないままテストを通すためだけにこのif文を作った。熟考せよ。
 			return null;
 		}
 		if (this.includes(lesserOfLowerLimits)) {
 			return null;
 		}
-		if (lowerLimit().equals(other.lowerLimit()) && !other.includesLowerLimit()) {
+		if (lowerLimit().equals(other.lowerLimit()) && other.includesLowerLimit() == false) {
 			return null;
 		}
 		return newOfSameType(other.lowerLimit(), other.includesLowerLimit(), this.lowerLimit(),
@@ -852,7 +852,7 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	private Interval<T> rightComplementRelativeTo(Interval<T> other) {
 		T greaterOfUpperLimits = greaterOfUpperLimits(other);
 		if (greaterOfUpperLimits == null) {
-			// FIXME 何してるか分からないままテストを通すためだけにこのif文を作った。熟考せよ。
+			// TODO 何してるか分からないままテストを通すためだけにこのif文を作った。熟考せよ。
 			return null;
 		}
 		if (this.includes(greaterOfUpperLimits)) {
