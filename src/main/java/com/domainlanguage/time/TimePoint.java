@@ -270,18 +270,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
 
 	/** エポックからの経過ミリ秒 */
-	long millisecondsFromEpoc;
+	final long millisecondsFromEpoc;
 	
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	TimePoint() {
-	}
-	
-// BEHAVIORAL METHODS
-	
 	private TimePoint(long milliseconds) {
 		millisecondsFromEpoc = milliseconds;
 	}
@@ -511,26 +502,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public TimeInterval until(TimePoint end) {
 		return TimeInterval.over(this, end);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #millisecondsFromEpoc}
-	 */
-	@SuppressWarnings("unused")
-	private long getForPersistentMapping_MillisecondsFromEpoc() { // CHECKSTYLE IGNORE THIS LINE
-		return millisecondsFromEpoc;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param millisecondsFromEpoc {@link #millisecondsFromEpoc}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_MillisecondsFromEpoc(long millisecondsFromEpoc) { // CHECKSTYLE IGNORE THIS LINE
-		this.millisecondsFromEpoc = millisecondsFromEpoc;
 	}
 	
 }

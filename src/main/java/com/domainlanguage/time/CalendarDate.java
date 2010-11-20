@@ -96,21 +96,14 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 
-	private int year;
+	private final int year;
 	
 	/** 1 based: January = 1, February = 2, ... */
-	private int month;
+	private final int month;
 	
-	private int day;
+	private final int day;
 	
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	CalendarDate() {
-	}
-	
 	CalendarDate(int year, int month, int day) {
 		Validate.isTrue(0 < month && month <= 12);
 		Validate.isTrue(0 < day && day <= 31); // CHECKSTYLE IGNORE THIS LINE
@@ -416,65 +409,5 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
 	int breachEncapsulationOfYear() {
 		return year;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #day}
-	 */
-	@SuppressWarnings("unused")
-	private int getForPersistentMapping_Day() { // CHECKSTYLE IGNORE THIS LINE
-		return day;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #month}
-	 */
-	@SuppressWarnings("unused")
-	private int getForPersistentMapping_Month() { // CHECKSTYLE IGNORE THIS LINE
-		return month;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #year}
-	 */
-	@SuppressWarnings("unused")
-	private int getForPersistentMapping_Year() { // CHECKSTYLE IGNORE THIS LINE
-		return year;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param day {@link #day}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Day(int day) { // CHECKSTYLE IGNORE THIS LINE
-		this.day = day;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param month {@link #month}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Month(int month) { // CHECKSTYLE IGNORE THIS LINE
-		this.month = month;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param year {@link #year}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Year(int year) { // CHECKSTYLE IGNORE THIS LINE
-		this.year = year;
 	}
 }

@@ -53,18 +53,11 @@ public class CalendarMinute {
 	}
 	
 
-	private CalendarDate date;
+	private final CalendarDate date;
 	
-	private TimeOfDay time;
+	private final TimeOfDay time;
 	
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	CalendarMinute() {
-	}
-	
 	private CalendarMinute(CalendarDate date, TimeOfDay time) {
 		Validate.notNull(date);
 		Validate.notNull(time);
@@ -82,8 +75,8 @@ public class CalendarMinute {
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
 		return TimePoint.at(date.breachEncapsulationOfYear(), date.breachEncapsulationOfMonth(),
-				date.breachEncapsulationOfDay(), time.breachEncapsulationOfHour(),
-				time.breachEncapsulationOfMinute(), 0, 0, timeZone);
+				date.breachEncapsulationOfDay(), time.breachEncapsulationOfHour(), time.breachEncapsulationOfMinute(),
+				0, 0, timeZone);
 	}
 	
 	@Override
@@ -127,45 +120,5 @@ public class CalendarMinute {
 	@Override
 	public String toString() {
 		return date.toString() + " at " + time.toString();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #date}
-	 */
-	@SuppressWarnings("unused")
-	private CalendarDate getForPersistentMapping_Date() { // CHECKSTYLE IGNORE THIS LINE
-		return date;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #time}
-	 */
-	@SuppressWarnings("unused")
-	private TimeOfDay getForPersistentMapping_Time() { // CHECKSTYLE IGNORE THIS LINE
-		return time;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param date {@link #date}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Date(CalendarDate date) { // CHECKSTYLE IGNORE THIS LINE
-		this.date = date;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param time {@link #time}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Time(TimeOfDay time) { // CHECKSTYLE IGNORE THIS LINE
-		this.time = time;
 	}
 }

@@ -19,27 +19,10 @@ import org.junit.Test;
 
 /**
  * {@link TimeUnit}のテストクラス。
+ * 
  * @author daisuke
  */
 public class TimeUnitTest {
-	
-	/**
-	 * 永続化マッピングテスト用の {@link TimeUnit} を返す。
-	 * 
-	 * @return 永続化マッピングテスト用の {@link TimeUnit}
-	 */
-	public static TimeUnit exampleForPersistentMappingTesting() {
-		return TimeUnit.second;
-	}
-	
-	/**
-	 * 永続化マッピングテスト用の {@link TimeUnit.Type} を返す。
-	 * 
-	 * @return 永続化マッピングテスト用の {@link TimeUnit.Type}
-	 */
-	public static TimeUnit.Type exampleTypeForPersistentMappingTesting() {
-		return TimeUnit.Type.hour;
-	}
 	
 	/**
 	 * {@link TimeUnit}のインスタンスがシリアライズできるかどうか検証する。

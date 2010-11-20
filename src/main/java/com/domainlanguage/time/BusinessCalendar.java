@@ -37,7 +37,7 @@ public class BusinessCalendar {
 	}
 	
 
-	private Set<CalendarDate> holidays;
+	private final Set<CalendarDate> holidays;
 	
 
 	/**
@@ -225,16 +225,6 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #holidays}
-	 */
-	@SuppressWarnings("unused")
-	private Set<CalendarDate> getForPersistentMapping_Holidays() { // CHECKSTYLE IGNORE THIS LINE
-		return holidays;
-	}
-	
-	/**
 	 * {@code calendarDays}の先頭から数えて{@code numberOfDays}営業日目の日付を返す。
 	 * 
 	 * @param numberOfDays 営業日数
@@ -249,17 +239,6 @@ public class BusinessCalendar {
 			result = businessDays.next();
 		}
 		return result;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * 
-	 * @param holidays {@link #holidays}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Holidays(Set<CalendarDate> holidays) { // CHECKSTYLE IGNORE THIS LINE
-		this.holidays = holidays;
 	}
 	
 	/*

@@ -23,7 +23,7 @@ import org.apache.commons.lang.Validate;
  */
 public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMap<K, V> {
 	
-	private Map<Interval<K>, V> keyValues;
+	private final Map<Interval<K>, V> keyValues;
 	
 
 	/**
@@ -90,16 +90,6 @@ public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMa
 	}
 	
 	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #keyValues}
-	 */
-	@SuppressWarnings("unused")
-	private Map<Interval<K>, V> getForPersistentMapping_KeyValues() { // CHECKSTYLE IGNORE THIS LINE
-		return keyValues;
-	}
-	
-	/**
 	 * この写像が保持するキーとしての区間のうち、指定した区間 {@code otherInterval}と共通部分を持つ
 	 * 区間の列を取得する。
 	 * 
@@ -118,16 +108,6 @@ public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMa
 			}
 		}
 		return intervalSequence;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param keyValues {@link #keyValues}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_KeyValues(Map<Interval<K>, V> keyValues) { // CHECKSTYLE IGNORE THIS LINE
-		this.keyValues = keyValues;
 	}
 	
 }

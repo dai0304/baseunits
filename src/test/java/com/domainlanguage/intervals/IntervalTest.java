@@ -26,16 +26,6 @@ import org.junit.Test;
  */
 public class IntervalTest {
 	
-	/**
-	 * 永続化マッピングテスト用の {@link IntervalLimit} を返す。
-	 * 
-	 * @return {@link IntervalLimit}
-	 */
-	public static IntervalLimit<Integer> exampleLimitForPersistentMappingTesting() {
-		return IntervalLimit.upper(true, 78);
-	}
-	
-
 	private Interval<BigDecimal> empty = Interval.open(new BigDecimal(1), new BigDecimal(1));
 	
 	private Interval<BigDecimal> c5_10c = Interval.closed(new BigDecimal(5), new BigDecimal(10));

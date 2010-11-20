@@ -30,11 +30,6 @@ public class MinuteOfHour {
 		return new MinuteOfHour(initial);
 	}
 	
-	@SuppressWarnings("unused")
-	private static Class<?> getPrimitivePersistenceMappingType() {
-		return Integer.TYPE;
-	}
-	
 
 	final int value;
 	

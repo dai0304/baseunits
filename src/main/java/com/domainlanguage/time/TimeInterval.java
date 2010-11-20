@@ -182,13 +182,6 @@ public class TimeInterval extends Interval<TimePoint> {
 		super(start, startIncluded, end, endIncluded);
 	}
 	
-//	/**
-//	 * Only for use by persistence mapping frameworks
-//	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-//	 */
-//	TimeInterval() {
-//	}
-	
 	/**
 	 * この期間の開始日時を起点として、前回の日時の1日後の日時を
 	 * この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。

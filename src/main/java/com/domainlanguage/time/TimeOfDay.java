@@ -31,18 +31,11 @@ public class TimeOfDay {
 	}
 	
 
-	private HourOfDay hour;
+	private final HourOfDay hour;
 	
-	private MinuteOfHour minute;
+	private final MinuteOfHour minute;
 	
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	TimeOfDay() {
-	}
-	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -159,45 +152,5 @@ public class TimeOfDay {
 	
 	MinuteOfHour minute() {
 		return minute;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return value of hour
-	 */
-	@SuppressWarnings("unused")
-	private int getForPersistentMapping_Hour() { // CHECKSTYLE IGNORE THIS LINE
-		return hour.value();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return value of minute
-	 */
-	@SuppressWarnings("unused")
-	private int getForPersistentMapping_Minute() { // CHECKSTYLE IGNORE THIS LINE
-		return minute.value();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param hour value of hour
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Hour(int hour) { // CHECKSTYLE IGNORE THIS LINE
-		this.hour = HourOfDay.of(hour);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param minute value of minute
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Minute(int minute) { // CHECKSTYLE IGNORE THIS LINE
-		this.minute = MinuteOfHour.of(minute);
 	}
 }

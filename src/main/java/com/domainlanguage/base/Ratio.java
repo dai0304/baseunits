@@ -72,14 +72,14 @@ public class Ratio {
 	 * 
 	 * {@link Ratio} は immutableオブジェクトであるが、永続化用の変更器のために、finalとしていない。
 	 */
-	private BigDecimal numerator;
+	private final BigDecimal numerator;
 	
 	/**
 	 * 分母
 	 * 
 	 * {@link Ratio} は immutableオブジェクトであるが、永続化用の変更器のために、finalとしていない。
 	 */
-	private BigDecimal denominator;
+	private final BigDecimal denominator;
 	
 
 	/**
@@ -98,13 +98,6 @@ public class Ratio {
 		}
 		this.numerator = numerator;
 		this.denominator = denominator;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	Ratio() {
 	}
 	
 	/**
@@ -209,46 +202,6 @@ public class Ratio {
 	@Override
 	public String toString() {
 		return numerator.toString() + "/" + denominator;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #denominator}
-	 */
-	@SuppressWarnings("unused")
-	private BigDecimal getForPersistentMapping_Denominator() { // CHECKSTYLE IGNORE THIS LINE
-		return denominator;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #numerator}
-	 */
-	@SuppressWarnings("unused")
-	private BigDecimal getForPersistentMapping_Numerator() { // CHECKSTYLE IGNORE THIS LINE
-		return numerator;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param denominator {@link #denominator}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Denominator(BigDecimal denominator) { // CHECKSTYLE IGNORE THIS LINE
-		this.denominator = denominator;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param numerator {@link #numerator}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Numerator(BigDecimal numerator) { // CHECKSTYLE IGNORE THIS LINE
-		this.numerator = numerator;
 	}
 	
 }

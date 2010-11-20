@@ -15,20 +15,13 @@ import org.apache.commons.lang.Validate;
  */
 class FloatingDateSpecification extends AnnualDateSpecification {
 	
-	private int month;
+	private final int month;
 	
-	private DayOfWeek dayOfWeek;
+	private final DayOfWeek dayOfWeek;
 	
-	private int occurrence;
+	private final int occurrence;
 	
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	FloatingDateSpecification() {
-	}
-	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -60,65 +53,5 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 		int dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (dayOfWeekOffset < 0 ? 8 : 1);
 		int date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek;
 		return CalendarDate.date(year, month, date);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #dayOfWeek}
-	 */
-	@SuppressWarnings("unused")
-	private DayOfWeek getForPersistentMapping_DayOfWeek() { // CHECKSTYLE IGNORE THIS LINE
-		return dayOfWeek;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #month}
-	 */
-	@SuppressWarnings("unused")
-	private int getForPersistentMapping_Month() { // CHECKSTYLE IGNORE THIS LINE
-		return month;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #occurrence}
-	 */
-	@SuppressWarnings("unused")
-	private int getForPersistentMapping_Occurrence() { // CHECKSTYLE IGNORE THIS LINE
-		return occurrence;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param dayOfWeek {@link #dayOfWeek}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_DayOfWeek(DayOfWeek dayOfWeek) { // CHECKSTYLE IGNORE THIS LINE
-		this.dayOfWeek = dayOfWeek;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param month {@link #month}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Month(int month) { // CHECKSTYLE IGNORE THIS LINE
-		this.month = month;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param occurrence {@link #occurrence}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Occurrence(int occurrence) { // CHECKSTYLE IGNORE THIS LINE
-		this.occurrence = occurrence;
 	}
 }

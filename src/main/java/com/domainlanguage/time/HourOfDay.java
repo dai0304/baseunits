@@ -56,11 +56,6 @@ public class HourOfDay {
 		return hour + translatedAmPm;
 	}
 	
-	@SuppressWarnings("unused")
-	private static Class<?> getPrimitivePersistenceMappingType() {
-		return Integer.TYPE;
-	}
-	
 
 	final int value;
 	

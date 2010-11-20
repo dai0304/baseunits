@@ -55,26 +55,19 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	
 
 	/** 限界が閉じている場合 {@code true} */
-	private boolean closed;
+	private final boolean closed;
 	
 	/**
 	 * 限界値
 	 * 
 	 * {@code null}の場合は、限界がないことを表す。
 	 */
-	private T value;
+	private final T value;
 	
 	/** 下側限界を表す場合は {@code true}、上側限界を表す場合は {@code false} */
-	private boolean lower;
+	private final boolean lower;
 	
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	IntervalLimit() {
-	}
-	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -179,15 +172,6 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	}
 	
 	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #value}
-	 */
-	T getForPersistentMapping_Value() { // CHECKSTYLE IGNORE THIS LINE
-		return value;
-	}
-	
-	/**
 	 * 限界値を取得する。
 	 * 
 	 * @return 限界値. {@code null}の場合は、限界がないことを表す
@@ -203,24 +187,6 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	 */
 	boolean isClosed() {
 		return closed;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #closed}
-	 */
-	boolean isForPersistentMapping_Closed() { // CHECKSTYLE IGNORE THIS LINE
-		return closed;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #lower}
-	 */
-	boolean isForPersistentMapping_Lower() { // CHECKSTYLE IGNORE THIS LINE
-		return lower;
 	}
 	
 	/**
@@ -248,32 +214,5 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	 */
 	boolean isUpper() {
 		return lower == false;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param closed {@link #closed}
-	 */
-	void setForPersistentMapping_Closed(boolean closed) { // CHECKSTYLE IGNORE THIS LINE
-		this.closed = closed;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param lower {@link #lower}
-	 */
-	void setForPersistentMapping_Lower(boolean lower) { // CHECKSTYLE IGNORE THIS LINE
-		this.lower = lower;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param value {@link #value}
-	 */
-	void setForPersistentMapping_Value(T value) { // CHECKSTYLE IGNORE THIS LINE
-		this.value = value;
 	}
 }

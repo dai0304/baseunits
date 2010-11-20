@@ -151,9 +151,9 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 
-	private long quantity;
+	private final long quantity;
 	
-	TimeUnit unit;
+	final TimeUnit unit;
 	
 
 	/**
@@ -169,13 +169,6 @@ public class Duration implements Comparable<Duration>, Serializable {
 		assertQuantityPositiveOrZero(quantity);
 		this.quantity = quantity;
 		this.unit = unit;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	Duration() {
 	}
 	
 	/**
@@ -469,48 +462,8 @@ public class Duration implements Comparable<Duration>, Serializable {
 		}
 	}
 	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #quantity}
-	 */
-	@SuppressWarnings("unused")
-	private long getForPersistentMapping_Quantity() { // CHECKSTYLE IGNORE THIS LINE
-		return quantity;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #unit}
-	 */
-	@SuppressWarnings("unused")
-	private TimeUnit getForPersistentMapping_Unit() { // CHECKSTYLE IGNORE THIS LINE
-		return unit;
-	}
-	
 	private boolean isConvertibleTo(Duration other) {
 		return unit.isConvertibleTo(other.unit);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param quantity {@link #quantity}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Quantity(long quantity) { // CHECKSTYLE IGNORE THIS LINE
-		this.quantity = quantity;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param unit {@link #unit}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Unit(TimeUnit unit) { // CHECKSTYLE IGNORE THIS LINE
-		this.unit = unit;
 	}
 	
 	private String toNormalizedString(TimeUnit[] units) {

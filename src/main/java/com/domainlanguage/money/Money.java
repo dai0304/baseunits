@@ -212,9 +212,9 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 
-	private BigDecimal amount;
+	private final BigDecimal amount;
 	
-	private Currency currency;
+	private final Currency currency;
 	
 
 	/**
@@ -235,13 +235,6 @@ public class Money implements Comparable<Money>, Serializable {
 		}
 		this.currency = currency;
 		this.amount = amount;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	Money() {
 	}
 	
 	/**
@@ -649,46 +642,6 @@ public class Money implements Comparable<Money>, Serializable {
 		if (hasSameCurrencyAs(aMoney) == false) {
 			throw new ClassCastException(aMoney.toString() + " is not same currency as " + this.toString());
 		}
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #amount}
-	 */
-	@SuppressWarnings("unused")
-	private BigDecimal getForPersistentMapping_Amount() { // CHECKSTYLE IGNORE THIS LINE
-		return amount;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #currency}
-	 */
-	@SuppressWarnings("unused")
-	private Currency getForPersistentMapping_Currency() { // CHECKSTYLE IGNORE THIS LINE
-		return currency;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param amount {@link #amount}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Amount(BigDecimal amount) { // CHECKSTYLE IGNORE THIS LINE
-		this.amount = amount;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param currency {@link #currency}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Currency(Currency currency) { // CHECKSTYLE IGNORE THIS LINE
-		this.currency = currency;
 	}
 	
 }

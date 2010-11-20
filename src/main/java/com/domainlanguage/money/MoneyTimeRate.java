@@ -23,9 +23,9 @@ import org.apache.commons.lang.Validate;
  */
 public class MoneyTimeRate {
 	
-	private TimeRate rate;
+	private final TimeRate rate;
 	
-	private Currency currency;
+	private final Currency currency;
 	
 
 	/**
@@ -40,13 +40,6 @@ public class MoneyTimeRate {
 		Validate.notNull(duration);
 		rate = new TimeRate(money.getAmount(), duration);
 		currency = money.getCurrency();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	MoneyTimeRate() {
 	}
 	
 	@Override
@@ -131,45 +124,5 @@ public class MoneyTimeRate {
 	@Override
 	public String toString() {
 		return rate.toString();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #currency}
-	 */
-	@SuppressWarnings("unused")
-	private Currency getForPersistentMapping_Currency() { // CHECKSTYLE IGNORE THIS LINE
-		return currency;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #rate}
-	 */
-	@SuppressWarnings("unused")
-	private TimeRate getForPersistentMapping_Rate() { // CHECKSTYLE IGNORE THIS LINE
-		return rate;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param currency {@link #currency}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Currency(Currency currency) { // CHECKSTYLE IGNORE THIS LINE
-		this.currency = currency;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param rate {@link #rate}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Rate(TimeRate rate) { // CHECKSTYLE IGNORE THIS LINE
-		this.rate = rate;
 	}
 }

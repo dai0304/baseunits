@@ -147,6 +147,8 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	}
 	
 
+	// TODO これらのフィールドにfinalつける
+	
 	/** 下側限界 */
 	private IntervalLimit<T> lowerLimitObject;
 	
@@ -154,13 +156,6 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	private IntervalLimit<T> upperLimitObject;
 	
 
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	protected Interval() {
-	}
-	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -779,26 +774,6 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		}
 	}
 	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return lowerLimit
-	 */
-	@SuppressWarnings("unused")
-	private T getForPersistentMapping_LowerLimit() { // CHECKSTYLE IGNORE THIS LINE
-		return lowerLimitObject.getForPersistentMapping_Value();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return upperLimit
-	 */
-	@SuppressWarnings("unused")
-	private T getForPersistentMapping_UpperLimit() { // CHECKSTYLE IGNORE THIS LINE
-		return upperLimitObject.getForPersistentMapping_Value();
-	}
-	
 	private boolean greaterOfLowerIncludedInIntersection(Interval<T> other) {
 		T limit = greaterOfLowerLimits(other);
 		return this.includes(limit) && other.includes(limit);
@@ -824,26 +799,6 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 			return this.upperLimit();
 		}
 		return other.upperLimit();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@code true} if closed, {@code false} otherwise
-	 */
-	@SuppressWarnings("unused")
-	private boolean isForPersistentMapping_IncludesLowerLimit() { // CHECKSTYLE IGNORE THIS LINE
-		return !lowerLimitObject.isForPersistentMapping_Closed();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@code true} closed, {@code false} otherwise
-	 */
-	@SuppressWarnings("unused")
-	private boolean isForPersistentMapping_IncludesUpperLimit() { // CHECKSTYLE IGNORE THIS LINE
-		return !upperLimitObject.isForPersistentMapping_Closed();
 	}
 	
 	private Interval<T> leftComplementRelativeTo(Interval<T> other) {
@@ -903,57 +858,5 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		}
 		return newOfSameType(this.upperLimit(), this.includesUpperLimit() == false, other.upperLimit(),
 				other.includesUpperLimit());
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param value {@code true} if closed, {@code false} otherwise
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_IncludesLowerLimit(boolean value) { // CHECKSTYLE IGNORE THIS LINE
-		if (lowerLimitObject == null) {
-			lowerLimitObject = IntervalLimit.lower(value, null);
-		}
-		lowerLimitObject.setForPersistentMapping_Closed(!value);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param value {@code true} if closed, {@code false} otherwise
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_IncludesUpperLimit(boolean value) { // CHECKSTYLE IGNORE THIS LINE
-		if (upperLimitObject == null) {
-			upperLimitObject = IntervalLimit.upper(value, null);
-		}
-		upperLimitObject.setForPersistentMapping_Closed(!value);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param value lowerLimit
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_LowerLimit(T value) { // CHECKSTYLE IGNORE THIS LINE
-		if (lowerLimitObject == null) {
-			lowerLimitObject = IntervalLimit.lower(true, value);
-		}
-		lowerLimitObject.setForPersistentMapping_Value(value);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param value upperLimit
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_UpperLimit(T value) { // CHECKSTYLE IGNORE THIS LINE
-		if (upperLimitObject == null) {
-			upperLimitObject = IntervalLimit.upper(true, value);
-		}
-		upperLimitObject.setForPersistentMapping_Value(value);
 	}
 }

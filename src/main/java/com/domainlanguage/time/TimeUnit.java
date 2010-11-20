@@ -70,16 +70,6 @@ public enum TimeUnit {
 		month
 	};
 	
-
-	static TimeUnit exampleForPersistentMappingTesting() {
-		return second;
-	}
-	
-	static Type exampleTypeForPersistentMappingTesting() {
-		return Type.hour;
-	}
-	
-
 	private final Type type;
 	
 	private final Type baseType;
@@ -190,39 +180,6 @@ public enum TimeUnit {
 		buffer.append(type.name());
 		buffer.append(quantity == 1 ? "" : "s");
 		return buffer.toString();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * 
-	 * @return {@link #baseType}
-	 */
-	@SuppressWarnings("unused")
-	private Type getForPersistentMapping_BaseType() { // CHECKSTYLE IGNORE THIS LINE
-		return baseType;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * 
-	 * @return {@link #factor}
-	 */
-	@SuppressWarnings("unused")
-	private TimeUnitConversionFactor getForPersistentMapping_Factor() { // CHECKSTYLE IGNORE THIS LINE
-		return factor;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * 
-	 * @return {@link #type}
-	 */
-	@SuppressWarnings("unused")
-	private Type getForPersistentMapping_Type() { // CHECKSTYLE IGNORE THIS LINE
-		return type;
 	}
 	
 

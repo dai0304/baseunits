@@ -21,9 +21,9 @@ import org.apache.commons.lang.Validate;
  */
 public class TimeRate {
 	
-	private BigDecimal quantity;
+	private final BigDecimal quantity;
 	
-	private Duration unit;
+	private final Duration unit;
 	
 
 	/**
@@ -63,13 +63,6 @@ public class TimeRate {
 	 */
 	public TimeRate(String quantity, Duration unit) {
 		this(new BigDecimal(quantity), unit);
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	TimeRate() {
 	}
 	
 	@Override
@@ -174,45 +167,5 @@ public class TimeRate {
 		buffer.append(" per ");
 		buffer.append(unit);
 		return buffer.toString();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #quantity}
-	 */
-	@SuppressWarnings("unused")
-	private BigDecimal getForPersistentMapping_Quantity() { // CHECKSTYLE IGNORE THIS LINE
-		return quantity;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #unit}
-	 */
-	@SuppressWarnings("unused")
-	private Duration getForPersistentMapping_Unit() { // CHECKSTYLE IGNORE THIS LINE
-		return unit;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param quantity {@link #quantity}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Quantity(BigDecimal quantity) { // CHECKSTYLE IGNORE THIS LINE
-		this.quantity = quantity;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param unit {@link #unit}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Unit(Duration unit) { // CHECKSTYLE IGNORE THIS LINE
-		this.unit = unit;
 	}
 }

@@ -145,13 +145,6 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 */
-	CalendarInterval() {
-	}
-	
-	/**
 	 * この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>

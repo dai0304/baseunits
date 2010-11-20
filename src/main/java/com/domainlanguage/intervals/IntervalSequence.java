@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class IntervalSequence<T extends Comparable<T>> implements Iterable<Interval<T>> {
 	
-	List<Interval<T>> intervals;
+	final List<Interval<T>> intervals;
 	
 
 	/**
@@ -122,25 +122,5 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	@Override
 	public Iterator<Interval<T>> iterator() {
 		return intervals.iterator();
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @return {@link #intervals}
-	 */
-	@SuppressWarnings("unused")
-	private List<Interval<T>> getForPersistentMapping_Intervals() { // CHECKSTYLE IGNORE THIS LINE
-		return intervals;
-	}
-	
-	/**
-	 * Only for use by persistence mapping frameworks
-	 * <rant>These methods break encapsulation and we put them in here begrudgingly</rant>
-	 * @param intervals {@link #intervals}
-	 */
-	@SuppressWarnings("unused")
-	private void setForPersistentMapping_Intervals(List<Interval<T>> intervals) { // CHECKSTYLE IGNORE THIS LINE
-		this.intervals = intervals;
 	}
 }
