@@ -144,10 +144,19 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return CalendarMinute.dateAndTimeOfDay(this, timeOfDay);
 	}
 	
+	/**
+	 * 年月日同士の比較を行う。
+	 * 
+	 * <p>相対的に過去である方を「小さい」と判断する。</p>
+	 * 
+	 * @param other 比較対象
+	 * @return {@link Comparable#compareTo(Object)}に準じる
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 */
 	@Override
 	public int compareTo(CalendarDate other) {
 		if (other == null) {
-			return -1;
+			throw new NullPointerException();
 		}
 		if (isBefore(other)) {
 			return -1;

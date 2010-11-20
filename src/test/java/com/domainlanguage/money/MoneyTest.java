@@ -10,6 +10,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
 
@@ -241,6 +242,43 @@ public class MoneyTest {
 	 */
 	@Test
 	public void test13_Compare() throws Exception {
+		Money[] monies = new Money[] {
+			Money.dollars(0),
+			Money.dollars(10.1),
+			Money.dollars(0),
+			Money.dollars(9.99),
+			Money.dollars(-9.00),
+			Money.dollars(-10),
+			Money.dollars(10),
+		};
+		
+		Arrays.sort(monies);
+		
+		assertThat(monies[0], is(Money.dollars(-10)));
+		assertThat(monies[1], is(Money.dollars(-9.00)));
+		assertThat(monies[2], is(Money.dollars(0)));
+		assertThat(monies[3], is(Money.dollars(0)));
+		assertThat(monies[4], is(Money.dollars(9.99)));
+		assertThat(monies[5], is(Money.dollars(10)));
+		assertThat(monies[6], is(Money.dollars(10.1)));
+		
+		monies[3] = Money.euros(3);
+		
+		try {
+			Arrays.sort(monies);
+			fail();
+		} catch (ClassCastException e) {
+			// success
+		}
+	}
+	
+	/**
+	 * {@link Money#isGreaterThan(Money)}, {@link Money#isLessThan(Money)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test14_Compare_2() throws Exception {
 		assertThat(d15.isGreaterThan(d2_51), is(true));
 		assertThat(d2_51.isLessThan(d15), is(true));
 		assertThat(d15.isGreaterThan(d15), is(false));
@@ -259,7 +297,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test14_DifferentCurrencyNotEqual() throws Exception {
+	public void test15_DifferentCurrencyNotEqual() throws Exception {
 		assertThat(d2_51.equals(e2_51), is(false));
 	}
 	
@@ -269,7 +307,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test15_Equals() throws Exception {
+	public void test16_Equals() throws Exception {
 		Money d2_51a = Money.dollars(2.51);
 		assertThat(d2_51, is(d2_51a));
 	}
@@ -280,7 +318,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test16_EqualsNull() throws Exception {
+	public void test17_EqualsNull() throws Exception {
 		Money d2_51a = Money.dollars(2.51);
 		assertThat(d2_51a.equals(null), is(false));
 	}
@@ -291,7 +329,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test17_Hash() throws Exception {
+	public void test18_Hash() throws Exception {
 		Money d2_51a = Money.dollars(2.51);
 		assertThat(d2_51.hashCode(), is(d2_51a.hashCode()));
 	}
@@ -302,7 +340,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test18_Negation() throws Exception {
+	public void test19_Negation() throws Exception {
 		assertThat(d15.negated(), is(Money.dollars(-15)));
 		assertThat(e2_51.negated().negated(), is(e2_51));
 	}
@@ -313,7 +351,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test19_PositiveNegative() throws Exception {
+	public void test20_PositiveNegative() throws Exception {
 		assertThat(d15.isPositive(), is(true));
 		assertThat(Money.dollars(-10).isNegative(), is(true));
 		assertThat(Money.dollars(0).isPositive(), is(false));
@@ -327,7 +365,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test20_Print() throws Exception {
+	public void test21_Print() throws Exception {
 		assertThat(d15.toString(Locale.US), is("$ 15.00"));
 		assertThat(d15.toString(Locale.UK), is("USD 15.00"));
 	}
@@ -338,7 +376,7 @@ public class MoneyTest {
 		 * @throws Exception 例外が発生した場合
 		 */
 	@Test
-	public void test21_Round() throws Exception {
+	public void test22_Round() throws Exception {
 		Money dRounded = Money.dollars(1.2350);
 		assertThat(dRounded, is(Money.dollars(1.24)));
 	}
@@ -349,7 +387,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test22_Subtraction() throws Exception {
+	public void test23_Subtraction() throws Exception {
 		assertThat(d15.minus(d2_51), is(Money.dollars(12.49)));
 	}
 	
@@ -359,7 +397,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test23_ApplyRatio() throws Exception {
+	public void test24_ApplyRatio() throws Exception {
 		Ratio oneThird = Ratio.of(1, 3);
 		Money result = Money.dollars(100).applying(oneThird, 1, Rounding.UP);
 		assertThat(result, is(Money.dollars(33.40)));
@@ -371,7 +409,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test24_Incremented() throws Exception {
+	public void test25_Incremented() throws Exception {
 		assertThat(d2_51.incremented(), is(Money.dollars(2.52)));
 		assertThat(y50.incremented(), is(Money.valueOf(51, JPY)));
 	}
@@ -382,7 +420,7 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test25_FractionalPennies() throws Exception {
+	public void test26_FractionalPennies() throws Exception {
 //        CurrencyPolicy(USD, 0.0025); 
 //        Smallest unit.unit Any Money based on this CurrencyPolicy must be some multiple of the
 //        smallest unit. "Scale" is insufficient, because the limit is not always a number of demial places.
@@ -397,7 +435,7 @@ public class MoneyTest {
 //	 * @throws Exception 例外が発生した場合
 //	 */
 //	@Test
-//	public void test26_LocalPrinting() {
+//	public void test27_LocalPrinting() {
 //		assertThat(d15.localString(), is("$15.00"));
 //		assertThat(m2_51.localString(), is("2,51 DM"));
 //	}

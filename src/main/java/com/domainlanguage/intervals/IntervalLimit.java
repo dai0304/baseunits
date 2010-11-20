@@ -95,21 +95,22 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	 * また、両者が無限限界であった場合も同様に限界の開閉や上下にかかわらず同値と判断する。</p>
 	 * 
 	 * <p>有限限界と無限限界の比較に関して。
-	 * このオブジェクトが下側の無限限界である場合は常に「小さい」と判断し、
-	 * 逆にこのオブジェクトが上側の無限限界である場合は常に「大きい」と判断する。
-	 * 比較対象限界が無権限界である場合は、 {@link #compareTo(IntervalLimit)} の対称性の観点から結果を返す。</p>
+	 * このオブジェクトが下側の無限限界である場合は常に自身の方が「小さい」と判断し、
+	 * 逆にこのオブジェクトが上側の無限限界である場合は常に自身の方が「大きい」と判断する。
+	 * 比較対象限界が無権限界である場合は、の対称性の観点から上記の逆の結果を返す。</p>
 	 * 
 	 * <p>有限限界同士の比較に関して。
 	 * この場合は、それぞれの限界の開閉や上下にかかわらず、限界値のが小さい方を「小さい」と判断する。</p>
 	 * 
 	 * @param other 比較対象
 	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
 	public int compareTo(IntervalLimit<T> other) {
 		if (other == null) {
-			return -1;
+			throw new NullPointerException();
 		}
 		
 		T otherValue = other.value;

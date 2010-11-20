@@ -157,34 +157,48 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	/**
 	 * 区間同士の比較を行う。
 	 * 
-	 * <p>区間は、限界の開閉にかかわらず、上側限界値が小さい方を「小さい」と判断する。
+	 * <p>限界の開閉にかかわらず、上側限界値が小さい方を「小さい」と判断する。
 	 * 上側限界値が一致している場合、下側限界が閉じている方を「小さい」と判断する。
 	 * さらに下側限界の開閉が一致している場合、下側限界値が小さい方を「小さい」と判断する。
+	 * さらに下側限界値が一致している場合、上側限界が閉じている方を「小さい」と判断する。
 	 * 上側下側両方の限界値が一致し、下側限界の開閉も一致している場合同一と判断する。</p>
 	 * 
-	 * <p>{@code other == null}の時、{@code null}よりも自分が大きいと判断する。</p>
-	 * 
-	 * THINK 上側限界の開閉には影響されない？ これでいいの？
+	 * FIXME ↑評価の順番おかしくねーかー？
+	 * TODO 限界値{@code null}の考慮
 	 * 
 	 * @param other 比較対象
 	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
 	public int compareTo(Interval<T> other) {
 		if (other == null) {
-			return -1;
+			throw new NullPointerException();
 		}
 		if (upperLimit().equals(other.upperLimit()) == false) {
 			return upperLimit().compareTo(other.upperLimit());
 		}
+		
 		if (includesLowerLimit() && other.includesLowerLimit() == false) {
 			return -1;
 		}
 		if (includesLowerLimit() == false && other.includesLowerLimit()) {
 			return 1;
 		}
-		return lowerLimit().compareTo(other.lowerLimit());
+		
+		if (lowerLimit().equals(other.lowerLimit()) == false) {
+			return lowerLimit().compareTo(other.lowerLimit());
+		}
+		
+		if (includesUpperLimit() && other.includesUpperLimit() == false) {
+			return -1;
+		}
+		if (includesUpperLimit() == false && other.includesUpperLimit()) {
+			return 1;
+		}
+		
+		return 0;
 	}
 	
 	/**
@@ -246,9 +260,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	/**
 	 * この区間と、与えた区間 {@code other}の同一性を検証する。
 	 * 
-	 * <p>両者が共に空の区間であった場合は{@code true}、どちらか一方のみが空の区間であった場合は {@code false}を返す。
-	 * 両者とも単一要素区間であった場合は、両者の下側限界値を比較し、一致した場合は {@code true}を返す。
-	 * また、TODO
+	 * <p>両者が共に空の区間であった場合は{@code true}、どちらか一方のみが空の区間であった場合は{@code false}を返す。
+	 * 両者とも単一要素区間であった場合は、単一要素となる限界値同士を比較し、一致した場合は{@code true}を返す。
+	 * また、どちらか一方のみが単一要素区間であった場合は{@code false}を返す。
+	 * 
 	 * {@code other}が{@code null}であった場合は、必ず{@code false}を返す。</p>
 	 * 
 	 * @param other 比較対象の区間
@@ -562,7 +577,7 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	@Override
 	public String toString() {
 		if (isEmpty()) {
-			return "{}";
+			return "{}" + lowerLimit();
 		}
 		if (isSingleElement()) {
 			return "{" + lowerLimit().toString() + "}";
@@ -630,6 +645,50 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 			return this.upperLimit();
 		}
 		return other.upperLimit();
+	}
+	
+	/**
+	 * 区間をグラフィカルに確認するためのデバッグ用メソッド。
+	 * 
+	 * <p>単一要素区間はキャラクタ{@code @}で表示する。
+	 * 下側限界がない場合はキャラクタ{@code <}で表示し、上側限界がない場合はキャラクタ{@code >}で表示する。
+	 * 下側限界が開区間である場合はキャラクタ{@code (}、閉区間である場合はキャラクタ{@code [}で表示する。
+	 * 上側限界が開区間である場合はキャラクタ{@code )}、閉区間である場合はキャラクタ{@code ]}で表示する。
+	 * 区間内の要素はキャラクタ{@code -}で表示する。</p>
+	 * 
+	 * @return 文字列
+	 */
+	String toStringGraphically() {
+		StringBuilder sb = new StringBuilder();
+		
+		if (isEmpty()) {
+			// no output
+		} else if (isSingleElement()) {
+			for (int i = 0; i < (Integer) lowerLimit(); i++) {
+				sb.append(" ");
+			}
+			sb.append("@");
+		} else {
+			if (lowerLimit() == null) {
+				sb.append("<");
+			} else {
+				for (int i = 0; i < (Integer) lowerLimit(); i++) {
+					sb.append(" ");
+				}
+				sb.append(includesLowerLimit() ? "[" : "(");
+			}
+			
+			if (upperLimit() == null) {
+				sb.append(">");
+			} else {
+				for (int i = 0; i < (Integer) upperLimit() - (Integer) lowerLimit() - 1; i++) {
+					sb.append("-");
+				}
+				sb.append(includesUpperLimit() ? "]" : ")");
+			}
+		}
+		
+		return sb.toString();
 	}
 	
 	private void assertLowerIsLessThanOrEqualUpper(IntervalLimit<T> lower, IntervalLimit<T> upper) {

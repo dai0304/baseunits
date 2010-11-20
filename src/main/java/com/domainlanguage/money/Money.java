@@ -284,14 +284,21 @@ public class Money implements Comparable<Money>, Serializable {
 	/**
 	 * 金額同士の比較を行う。
 	 * 
+	 * <p>相対的に量が小さい方を「小さい」と判断する。通貨単位が異なる場合は {@link ClassCastException}を
+	 * スローするが、どちらか片方の量が{@code 0}である場合は例外をスローしない。</p>
+	 * 
+	 * <p>例えば{@code 10 USD}と{@code 0 JPY}は、後者の方が小さい。
+	 * また、{@code 0 USD}と{@code 0 JPY}は同じである。</p>
+	 * 
 	 * @param other 比較対象
 	 * @return {@link Comparable#compareTo(Object)}に準じる
 	 * @throws ClassCastException 比較対象の通貨単位が異なり、かつ双方の量がどちらも0ではない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	@Override
 	public int compareTo(Money other) {
 		if (other == null) {
-			return -1;
+			throw new NullPointerException();
 		}
 		if (hasSameCurrencyAs(other) == false) {
 			throw new ClassCastException("Compare is not defined between different currencies");

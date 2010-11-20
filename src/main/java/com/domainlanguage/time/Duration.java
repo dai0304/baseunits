@@ -216,21 +216,24 @@ public class Duration implements Comparable<Duration>, Serializable {
 	/**
 	 * 時間量同士の比較を行う。
 	 * 
-	 * <p>基本単位(baseUnit)で比較し、時間量の少ない方を「小さい」と判断する。
-	 * {@code null}を与えた場合は、必ず{@code null}の方が「大きい」と判断する。
-	 * 同じ基本単位に変換できない場合は {@link ClassCastException}をスローする。</p>
+	 * <p>基本単位(baseUnit)換算で比較し、時間量の少ない方を「小さい」と判断する。
+	 * 同じ基本単位に変換できない場合は{@link ClassCastException}をスローする。</p>
+	 * 
+	 * <p>例えば「1ヶ月間」と「30日間」は、同じ基本単位に変換できないため、比較不能である。</p>
 	 * 
 	 * @param other 比較対照
 	 * @return {@link Comparable#compareTo(Object)}に準じる
-	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合.
-	 * 	例えば「1ヶ月間」と「30日間」は比較不能
+	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	@Override
 	public int compareTo(Duration other) {
 		if (other == null) {
-			return -1;
+			throw new NullPointerException();
 		}
-		assertConvertible(other, new ClassCastException());
+		if (other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) {
+			throw new ClassCastException(other.toString() + " is not convertible to: " + toString());
+		}
 		long difference = inBaseUnits() - other.inBaseUnits();
 		if (difference > 0) {
 			return 1;
@@ -449,13 +452,8 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	private void assertConvertible(Duration other) {
-		assertConvertible(other, new IllegalArgumentException(other.toString() + " is not convertible to: "
-				+ toString()));
-	}
-	
-	private void assertConvertible(Duration other, RuntimeException e) {
 		if (other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) {
-			throw e;
+			throw new IllegalArgumentException(other.toString() + " is not convertible to: " + toString());
 		}
 	}
 	

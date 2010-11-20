@@ -341,15 +341,16 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/**
 	 * 瞬間同士の比較を行う。
 	 * 
-	 * <p>過去の方を「小さい」と判断する。</p>
+	 * <p>相対的に過去である方を「小さい」と判断する。</p>
 	 * 
 	 * @param otherPoint 比較対象
 	 * @return {@link Comparable#compareTo(Object)}に準じる
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	@Override
 	public int compareTo(TimePoint otherPoint) {
 		if (otherPoint == null) {
-			return -1;
+			throw new NullPointerException();
 		}
 		if (this.isBefore(otherPoint)) {
 			return -1;

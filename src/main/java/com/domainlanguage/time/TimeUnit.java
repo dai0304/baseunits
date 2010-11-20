@@ -105,19 +105,6 @@ public enum TimeUnit {
 		return baseType.equals(other.baseType);
 	}
 	
-//    public int compareTo(TimeUnit other) {
-//		if (other == null) {
-//			return -1;
-//		}
-//        if (other.baseType.equals(baseType)) {
-//            return factor.value - other.factor.value;
-//        }
-//        if (baseType.equals(Type.month)) {
-//            return 1;
-//        }
-//        return -1;
-//    }
-	
 	/**
 	 * この単位で表される値を、ミリ秒単位に変換できるかどうかを検証する。
 	 * 
