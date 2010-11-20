@@ -576,37 +576,45 @@ public class IntervalTest {
 		list.add(Interval.over(75, false, 75, false));
 		list.add(Interval.over(100, false, 100, false));
 		
-//		// 下側限界のみ区間
-//		list.add(Interval.over(0, false, null, false));
-//		list.add(Interval.over(0, true, null, false));
-//		list.add(Interval.over(25, false, null, false));
-//		list.add(Interval.over(25, true, null, false));
-//		list.add(Interval.over(50, false, null, false));
-//		list.add(Interval.over(50, true, null, false));
-//		list.add(Interval.over(75, false, null, false));
-//		list.add(Interval.over(75, true, null, false));
-//		list.add(Interval.over(100, false, null, false));
-//		list.add(Interval.over(100, true, null, false));
-//		
-//		// 上側限界のみ区間
-//		list.add(Interval.over(null, false, 0, false));
-//		list.add(Interval.over(null, false, 0, true));
-//		list.add(Interval.over(null, false, 25, false));
-//		list.add(Interval.over(null, false, 25, true));
-//		list.add(Interval.over(null, false, 50, false));
-//		list.add(Interval.over(null, false, 50, true));
-//		list.add(Interval.over(null, false, 75, false));
-//		list.add(Interval.over(null, false, 75, true));
-//		list.add(Interval.over(null, false, 100, false));
-//		list.add(Interval.over(null, false, 100, true));
-//		
-//		// freedom
-//		list.add(Interval.<Integer> over(null, false, null, false));
+		// 下側限界のみ区間
+		list.add(Interval.over(0, false, null, false));
+		list.add(Interval.over(0, true, null, false));
+		list.add(Interval.over(25, false, null, false));
+		list.add(Interval.over(25, true, null, false));
+		list.add(Interval.over(50, false, null, false));
+		list.add(Interval.over(50, true, null, false));
+		list.add(Interval.over(75, false, null, false));
+		list.add(Interval.over(75, true, null, false));
+		list.add(Interval.over(100, false, null, false));
+		list.add(Interval.over(100, true, null, false));
 		
+		// 上側限界のみ区間
+		list.add(Interval.over(null, false, 0, false));
+		list.add(Interval.over(null, false, 0, true));
+		list.add(Interval.over(null, false, 25, false));
+		list.add(Interval.over(null, false, 25, true));
+		list.add(Interval.over(null, false, 50, false));
+		list.add(Interval.over(null, false, 50, true));
+		list.add(Interval.over(null, false, 75, false));
+		list.add(Interval.over(null, false, 75, true));
+		list.add(Interval.over(null, false, 100, false));
+		list.add(Interval.over(null, false, 100, true));
+		
+		// freedom
+		list.add(Interval.<Integer> over(null, false, null, false));
+		
+		Collections.shuffle(list); // 念のためシャッフル
 		Collections.sort(list);
 		
-		for (Interval<Integer> interval : list) {
-			System.out.println(interval.toStringGraphically());
-		}
+//		for (int i = 0; i < list.size(); i++) {
+//			Interval<Integer> interval = list.get(i);
+//			int c = 0;
+//			if (i != 0) {
+//				c = interval.compareTo(list.get(i - 1));
+//			}
+//			System.out.printf("%3d %s%n", c, interval.toStringGraphically());
+//		}
+		
+		// TODO さて、どうなるべきか。仕様を確定させて、assertion入れるべし
 	}
 }

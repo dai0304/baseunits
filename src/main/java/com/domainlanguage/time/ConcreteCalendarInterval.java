@@ -8,6 +8,8 @@ package com.domainlanguage.time;
 
 import java.util.TimeZone;
 
+import com.domainlanguage.intervals.Interval;
+
 @SuppressWarnings("serial")
 class ConcreteCalendarInterval extends CalendarInterval {
 	
@@ -57,6 +59,45 @@ class ConcreteCalendarInterval extends CalendarInterval {
 		TimePoint startPoint = start.asTimeInterval(zone).start();
 		TimePoint endPoint = end.asTimeInterval(zone).end();
 		return TimeInterval.over(startPoint, endPoint);
+	}
+	
+	@Override
+	public int compareTo(Interval<CalendarDate> other) {
+		if (other == null) {
+			throw new NullPointerException();
+		}
+		
+		// 上限限界優先ロジック
+		if (isEmpty() && other.isEmpty()) {
+			assert equals(other);
+			return 0;
+		} else if (isEmpty()) {
+			assert equals(other) == false;
+			return -1;
+		} else if (other.isEmpty()) {
+			assert equals(other) == false;
+			return 1;
+		}
+		
+		int upperComparance = end.compareTo(other.upperLimit());
+		int lowerComparance = start.compareTo(other.lowerLimit());
+		return upperComparance != 0 ? upperComparance : (lowerComparance * -1);
+		
+		// 下限限界優先ロジック
+//		if (isEmpty() && other.isEmpty()) {
+//			assert equals(other);
+//			return 0;
+//		} else if (isEmpty()) {
+//			assert equals(other) == false;
+//			return 1;
+//		} else if (other.isEmpty()) {
+//			assert equals(other) == false;
+//			return -1;
+//		}
+//		
+//		int upperComparance = upperLimitObject.compareTo(other.upperLimitObject);
+//		int lowerComparance = lowerLimitObject.compareTo(other.lowerLimitObject);
+//		return lowerComparance != 0 ? lowerComparance : (upperComparance * -1);
 	}
 	
 	@Override

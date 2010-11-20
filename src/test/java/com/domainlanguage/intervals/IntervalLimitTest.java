@@ -21,8 +21,8 @@ public class IntervalLimitTest {
 	 */
 	@Test
 	public void test01_Unlimited() throws Exception {
-		IntervalLimit<Integer> lowerInf = IntervalLimit.lower(false, (Integer) null);
-		IntervalLimit<Integer> upperInf = IntervalLimit.upper(false, (Integer) null);
+		IntervalLimit<Integer> lowerInf = IntervalLimit.<Integer> lower(false, null);
+		IntervalLimit<Integer> upperInf = IntervalLimit.<Integer> upper(false, null);
 		IntervalLimit<Integer> lowerOpen2 = IntervalLimit.lower(false, 2);
 		IntervalLimit<Integer> lowerClose2 = IntervalLimit.lower(true, 2);
 		IntervalLimit<Integer> lowerOpen3 = IntervalLimit.lower(false, 3);
@@ -58,7 +58,7 @@ public class IntervalLimitTest {
 		
 		// 有限比較
 		assertThat(lowerClose2.compareTo(lowerClose2), is(0));
-		assertThat(lowerClose2.compareTo(lowerOpen2), is(0));
+		assertThat(lowerClose2.compareTo(lowerOpen2), is(lessThan(0)));
 		assertThat(lowerClose2.compareTo(lowerClose3), is(lessThan(0)));
 		assertThat(lowerClose2.compareTo(lowerOpen3), is(lessThan(0)));
 		assertThat(lowerClose2.compareTo(upperClose5), is(lessThan(0)));
@@ -66,7 +66,7 @@ public class IntervalLimitTest {
 		assertThat(lowerClose2.compareTo(upperClose6), is(lessThan(0)));
 		assertThat(lowerClose2.compareTo(upperOpen6), is(lessThan(0)));
 		
-		assertThat(lowerOpen2.compareTo(lowerClose2), is(0));
+		assertThat(lowerOpen2.compareTo(lowerClose2), is(greaterThan(0)));
 		assertThat(lowerOpen2.compareTo(lowerOpen2), is(0));
 		assertThat(lowerOpen2.compareTo(lowerClose3), is(lessThan(0)));
 		assertThat(lowerOpen2.compareTo(lowerOpen3), is(lessThan(0)));
@@ -78,7 +78,7 @@ public class IntervalLimitTest {
 		assertThat(lowerClose3.compareTo(lowerClose2), is(greaterThan(0)));
 		assertThat(lowerClose3.compareTo(lowerOpen2), is(greaterThan(0)));
 		assertThat(lowerClose3.compareTo(lowerClose3), is(0));
-		assertThat(lowerClose3.compareTo(lowerOpen3), is(0));
+		assertThat(lowerClose3.compareTo(lowerOpen3), is(lessThan(0)));
 		assertThat(lowerClose3.compareTo(upperClose5), is(lessThan(0)));
 		assertThat(lowerClose3.compareTo(upperOpen5), is(lessThan(0)));
 		assertThat(lowerClose3.compareTo(upperClose6), is(lessThan(0)));
@@ -86,7 +86,7 @@ public class IntervalLimitTest {
 		
 		assertThat(lowerOpen3.compareTo(lowerClose2), is(greaterThan(0)));
 		assertThat(lowerOpen3.compareTo(lowerOpen2), is(greaterThan(0)));
-		assertThat(lowerOpen3.compareTo(lowerClose3), is(0));
+		assertThat(lowerOpen3.compareTo(lowerClose3), is(greaterThan(0)));
 		assertThat(lowerOpen3.compareTo(lowerOpen3), is(0));
 		assertThat(lowerOpen3.compareTo(upperClose5), is(lessThan(0)));
 		assertThat(lowerOpen3.compareTo(upperOpen5), is(lessThan(0)));
@@ -98,7 +98,7 @@ public class IntervalLimitTest {
 		assertThat(upperClose5.compareTo(lowerClose3), is(greaterThan(0)));
 		assertThat(upperClose5.compareTo(lowerOpen3), is(greaterThan(0)));
 		assertThat(upperClose5.compareTo(upperClose5), is(0));
-		assertThat(upperClose5.compareTo(upperOpen5), is(0));
+		assertThat(upperClose5.compareTo(upperOpen5), is(greaterThan(0)));
 		assertThat(upperClose5.compareTo(upperClose6), is(lessThan(0)));
 		assertThat(upperClose5.compareTo(upperOpen6), is(lessThan(0)));
 		
@@ -106,7 +106,7 @@ public class IntervalLimitTest {
 		assertThat(upperOpen5.compareTo(lowerOpen2), is(greaterThan(0)));
 		assertThat(upperOpen5.compareTo(lowerClose3), is(greaterThan(0)));
 		assertThat(upperOpen5.compareTo(lowerOpen3), is(greaterThan(0)));
-		assertThat(upperOpen5.compareTo(upperClose5), is(0));
+		assertThat(upperOpen5.compareTo(upperClose5), is(lessThan(0)));
 		assertThat(upperOpen5.compareTo(upperOpen5), is(0));
 		assertThat(upperOpen5.compareTo(upperClose6), is(lessThan(0)));
 		assertThat(upperOpen5.compareTo(upperOpen6), is(lessThan(0)));
@@ -118,7 +118,7 @@ public class IntervalLimitTest {
 		assertThat(upperClose6.compareTo(upperClose5), is(greaterThan(0)));
 		assertThat(upperClose6.compareTo(upperOpen5), is(greaterThan(0)));
 		assertThat(upperClose6.compareTo(upperClose6), is(0));
-		assertThat(upperClose6.compareTo(upperOpen6), is(0));
+		assertThat(upperClose6.compareTo(upperOpen6), is(greaterThan(0)));
 		
 		assertThat(upperOpen6.compareTo(lowerClose2), is(greaterThan(0)));
 		assertThat(upperOpen6.compareTo(lowerOpen2), is(greaterThan(0)));
@@ -126,7 +126,7 @@ public class IntervalLimitTest {
 		assertThat(upperOpen6.compareTo(lowerOpen3), is(greaterThan(0)));
 		assertThat(upperOpen6.compareTo(upperClose5), is(greaterThan(0)));
 		assertThat(upperOpen6.compareTo(upperOpen5), is(greaterThan(0)));
-		assertThat(upperOpen6.compareTo(upperClose6), is(0));
+		assertThat(upperOpen6.compareTo(upperClose6), is(lessThan(0)));
 		assertThat(upperOpen6.compareTo(upperOpen6), is(0));
 	}
 }

@@ -61,6 +61,19 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		return new Interval<T>(lower, true, upper, true);
 	}
 	
+	/**
+	 * 下側限界のみを持つ区間を生成する。
+	 * 
+	 * <p>下側限界値は区間に含まない（開いている）区間である。</p>
+	 * 
+	 * @param <T> 限界値の型
+	 * @param lower 下側限界値. {@code null}の場合は、限界がないことを表す
+	 * @return 区間
+	 */
+	public static <T extends Comparable<T>>Interval<T> moreThan(T lower) {
+		return open(lower, null);
+	}
+	
 //	public static <T extends Comparable<T>>Interval<T> empty(T someValue) {
 //		return new Interval<T>(someValue, false, someValue, false);
 //	}
@@ -94,6 +107,30 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	public static <T extends Comparable<T>>Interval<T> over(T lower, boolean lowerIncluded, T upper,
 			boolean upperIncluded) {
 		return new Interval<T>(lower, lowerIncluded, upper, upperIncluded);
+	}
+	
+	/**
+	 * 単一要素区間を生成する。
+	 * 
+	 * @param element 単一要素となる値
+	 * @param <T> 限界値の型
+	 * @return 区間
+	 */
+	public static <T extends Comparable<T>>Interval<T> singleElement(T element) {
+		return closed(element, element);
+	}
+	
+	/**
+	 * 上側限界のみを持つ区間を生成する。
+	 * 
+	 * <p>上側限界値は区間に含まない（開いている）区間である。</p>
+	 * 
+	 * @param <T> 限界値の型
+	 * @param upper 上側限界値. {@code null}の場合は、限界がないことを表す
+	 * @return 区間
+	 */
+	public static <T extends Comparable<T>>Interval<T> under(T upper) {
+		return open(null, upper);
 	}
 	
 	/**
@@ -152,19 +189,28 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		assertLowerIsLessThanOrEqualUpper(lower, upper);
 		this.lowerLimitObject = lower;
 		this.upperLimitObject = upper;
+		if (isSingleElement()) {
+			if (lowerLimitObject.isClosed() == false) {
+				lowerLimitObject = IntervalLimit.lower(true, lowerLimitObject.getValue());
+			}
+			if (upperLimitObject.isClosed() == false) {
+				upperLimitObject = IntervalLimit.upper(true, upperLimitObject.getValue());
+			}
+		}
 	}
 	
 	/**
 	 * 区間同士の比較を行う。
 	 * 
-	 * <p>限界の開閉にかかわらず、上側限界値が小さい方を「小さい」と判断する。
-	 * 上側限界値が一致している場合、下側限界が閉じている方を「小さい」と判断する。
-	 * さらに下側限界の開閉が一致している場合、下側限界値が小さい方を「小さい」と判断する。
-	 * さらに下側限界値が一致している場合、上側限界が閉じている方を「小さい」と判断する。
-	 * 上側下側両方の限界値が一致し、下側限界の開閉も一致している場合同一と判断する。</p>
+	 * <p>上限限界優先ロジック：
+	 * 上限限界値がより小さい方を「小さい」と判断する。同一の場合は、下限限界値がより小さい方を「小さい」とする。
+	 * ただし、空区間は他のどんな区間よりも小さい。</p>
 	 * 
-	 * FIXME ↑評価の順番おかしくねーかー？
-	 * TODO 限界値{@code null}の考慮
+	 * <p><strike>下限限界優先ロジック：
+	 * 下限限界値がより小さい方を「小さい」と判断する。同一の場合は、上限限界値がより<strong>大きい</strong>方を「小さい」とする。
+	 * ただし、空区間は他のどんな区間よりも大きい。</strike></p>
+	 * 
+	 * <p>TODO ぶっちゃけ、仕様には迷っている。現在は上限限界優先ロジックを採用している。</p>
 	 * 
 	 * @param other 比較対象
 	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
@@ -176,29 +222,38 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		if (other == null) {
 			throw new NullPointerException();
 		}
-		if (upperLimit().equals(other.upperLimit()) == false) {
-			return upperLimit().compareTo(other.upperLimit());
-		}
 		
-		if (includesLowerLimit() && other.includesLowerLimit() == false) {
+		// 上限限界優先ロジック
+		if (isEmpty() && other.isEmpty()) {
+			assert equals(other);
+			return 0;
+		} else if (isEmpty()) {
+			assert equals(other) == false;
 			return -1;
-		}
-		if (includesLowerLimit() == false && other.includesLowerLimit()) {
+		} else if (other.isEmpty()) {
+			assert equals(other) == false;
 			return 1;
 		}
 		
-		if (lowerLimit().equals(other.lowerLimit()) == false) {
-			return lowerLimit().compareTo(other.lowerLimit());
-		}
+		int upperComparance = upperLimitObject.compareTo(other.upperLimitObject);
+		int lowerComparance = lowerLimitObject.compareTo(other.lowerLimitObject);
+		return upperComparance != 0 ? upperComparance : (lowerComparance * -1);
 		
-		if (includesUpperLimit() && other.includesUpperLimit() == false) {
-			return -1;
-		}
-		if (includesUpperLimit() == false && other.includesUpperLimit()) {
-			return 1;
-		}
-		
-		return 0;
+		// 下限限界優先ロジック
+//		if (isEmpty() && other.isEmpty()) {
+//			assert equals(other);
+//			return 0;
+//		} else if (isEmpty()) {
+//			assert equals(other) == false;
+//			return 1;
+//		} else if (other.isEmpty()) {
+//			assert equals(other) == false;
+//			return -1;
+//		}
+//		
+//		int upperComparance = upperLimitObject.compareTo(other.upperLimitObject);
+//		int lowerComparance = lowerLimitObject.compareTo(other.lowerLimitObject);
+//		return lowerComparance != 0 ? lowerComparance : (upperComparance * -1);
 	}
 	
 	/**
@@ -502,6 +557,9 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	public boolean isEmpty() {
 		// TODO: Consider explicit empty interval
 		// A 'degenerate' interval is an empty set, {}.
+		if (upperLimit() == null || lowerLimit() == null) {
+			return false;
+		}
 		return isOpen() && upperLimit().equals(lowerLimit());
 	}
 	
@@ -577,18 +635,12 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	@Override
 	public String toString() {
 		if (isEmpty()) {
-			return "{}" + lowerLimit();
+			return "{}";
 		}
 		if (isSingleElement()) {
 			return "{" + lowerLimit().toString() + "}";
 		}
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(includesLowerLimit() ? "[" : "(");
-		buffer.append(hasLowerLimit() ? lowerLimit().toString() : "Infinity");
-		buffer.append(", ");
-		buffer.append(hasUpperLimit() ? upperLimit().toString() : "Infinity");
-		buffer.append(includesUpperLimit() ? "]" : ")");
-		return buffer.toString();
+		return toStringDetail();
 	}
 	
 	/**
@@ -647,6 +699,16 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 		return other.upperLimit();
 	}
 	
+	String toStringDetail() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(includesLowerLimit() ? "[" : "(");
+		buffer.append(hasLowerLimit() ? lowerLimit().toString() : "Infinity");
+		buffer.append(", ");
+		buffer.append(hasUpperLimit() ? upperLimit().toString() : "Infinity");
+		buffer.append(includesUpperLimit() ? "]" : ")");
+		return buffer.toString();
+	}
+	
 	/**
 	 * 区間をグラフィカルに確認するためのデバッグ用メソッド。
 	 * 
@@ -661,8 +723,10 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	String toStringGraphically() {
 		StringBuilder sb = new StringBuilder();
 		
+		sb.append(" ");
+		
 		if (isEmpty()) {
-			// no output
+			sb.append("EMPTY");
 		} else if (isSingleElement()) {
 			for (int i = 0; i < (Integer) lowerLimit(); i++) {
 				sb.append(" ");
@@ -670,6 +734,7 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 			sb.append("@");
 		} else {
 			if (lowerLimit() == null) {
+				sb.deleteCharAt(0);
 				sb.append("<");
 			} else {
 				for (int i = 0; i < (Integer) lowerLimit(); i++) {
@@ -681,7 +746,9 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 			if (upperLimit() == null) {
 				sb.append(">");
 			} else {
-				for (int i = 0; i < (Integer) upperLimit() - (Integer) lowerLimit() - 1; i++) {
+				int l = lowerLimit() == null ? -1 : (Integer) lowerLimit();
+				int u = upperLimit() == null ? 100 : (Integer) upperLimit(); // CHECKSTYLE IGNORE THIS LINE
+				for (int i = 0; i < u - l - 1; i++) {
 					sb.append("-");
 				}
 				sb.append(includesUpperLimit() ? "]" : ")");

@@ -142,6 +142,9 @@ public abstract class CalendarInterval extends Interval<CalendarDate> {
 	 */
 	public abstract TimeInterval asTimeInterval(TimeZone zone);
 	
+	@Override
+	public abstract int compareTo(Interval<CalendarDate> other);
+	
 	/**
 	 * この期間の終了日を起点として、前回の日付の前日を
 	 * この期間の開始日を超過しない範囲で順次取得する反復子を取得する。

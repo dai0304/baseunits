@@ -91,16 +91,19 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	/**
 	 * 限界同士の比較を行う。
 	 * 
-	 * <p>限界は、限界値が一致していた場合は、限界の開閉や上下にかかわらず同値と判断する。
-	 * また、両者が無限限界であった場合も同様に限界の開閉や上下にかかわらず同値と判断する。</p>
+	 * <p>有限限界同士の比較に関して。
+	 * この場合は、それぞれの限界の開閉や上下にかかわらず、限界値のが小さい方を「小さい」と判断する。
+	 * 限界値が同一である場合、下側限界同士の比較である場合は閉じている方を「小さい」と判断し、
+	 * 上側限界同士の比較である場合は閉じている方を「大きい」と判断し、
+	 * 上側限界と下側限界の比較である場合は「同一」と判断する。</p>
+	 * 
+	 * <p>無限限界同士の比較に関して。
+	 * この場合は、それぞれの限界の開閉や上下にかかわらず、「同一」と判断する。</p>
 	 * 
 	 * <p>有限限界と無限限界の比較に関して。
 	 * このオブジェクトが下側の無限限界である場合は常に自身の方が「小さい」と判断し、
 	 * 逆にこのオブジェクトが上側の無限限界である場合は常に自身の方が「大きい」と判断する。
 	 * 比較対象限界が無権限界である場合は、の対称性の観点から上記の逆の結果を返す。</p>
-	 * 
-	 * <p>有限限界同士の比較に関して。
-	 * この場合は、それぞれの限界の開閉や上下にかかわらず、限界値のが小さい方を「小さい」と判断する。</p>
 	 * 
 	 * @param other 比較対象
 	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
@@ -115,6 +118,19 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 		
 		T otherValue = other.value;
 		if (otherValue == value) {
+			if (lower && other.lower) {
+				if (closed && other.closed == false) {
+					return -1;
+				} else if (closed == false && other.closed) {
+					return 1;
+				}
+			} else if (lower == false && other.lower == false) {
+				if (closed && other.closed == false) {
+					return 1;
+				} else if (closed == false && other.closed) {
+					return -1;
+				}
+			}
 			return 0;
 		}
 		if (value == null) {
