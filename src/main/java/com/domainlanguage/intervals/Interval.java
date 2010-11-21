@@ -8,6 +8,7 @@ package com.domainlanguage.intervals;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
@@ -33,7 +34,7 @@ import org.apache.commons.lang.Validate;
  * @author daisuke
  */
 @SuppressWarnings("serial")
-public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>>, Serializable {
+public class Interval<T extends Comparable<T>> implements Serializable {
 	
 	/**
 	 * 下側限界のみを持つ区間を生成する。
@@ -212,43 +213,9 @@ public class Interval<T extends Comparable<T>> implements Comparable<Interval<T>
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	@Override
 	public int compareTo(Interval<T> other) {
-		if (other == null) {
-			throw new NullPointerException();
-		}
-		
-		// 上限限界優先ロジック
-		if (isEmpty() && other.isEmpty()) {
-			assert equals(other);
-			return 0;
-		} else if (isEmpty()) {
-			assert equals(other) == false;
-			return -1;
-		} else if (other.isEmpty()) {
-			assert equals(other) == false;
-			return 1;
-		}
-		
-		int upperComparance = upperLimitObject.compareTo(other.upperLimitObject);
-		int lowerComparance = lowerLimitObject.compareTo(other.lowerLimitObject);
-		return upperComparance != 0 ? upperComparance : (lowerComparance * -1);
-		
-		// 下限限界優先ロジック
-//		if (isEmpty() && other.isEmpty()) {
-//			assert equals(other);
-//			return 0;
-//		} else if (isEmpty()) {
-//			assert equals(other) == false;
-//			return 1;
-//		} else if (other.isEmpty()) {
-//			assert equals(other) == false;
-//			return -1;
-//		}
-//		
-//		int upperComparance = upperLimitObject.compareTo(other.upperLimitObject);
-//		int lowerComparance = lowerLimitObject.compareTo(other.lowerLimitObject);
-//		return lowerComparance != 0 ? lowerComparance : (upperComparance * -1);
+		Comparator<Interval<T>> comparator = new IntervalComparatorUpperLower<T>();
+		return comparator.compare(this, other);
 	}
 	
 	/**

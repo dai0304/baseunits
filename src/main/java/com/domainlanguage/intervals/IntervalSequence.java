@@ -8,6 +8,7 @@ package com.domainlanguage.intervals;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,12 +24,24 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	
 	final List<Interval<T>> intervals;
 	
+	final Comparator<Interval<T>> comparator;
+	
 
 	/**
 	 * インスタンスを生成する。
 	 */
 	public IntervalSequence() {
+		this(new IntervalComparatorUpperLower<T>());
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param comparator コンパレータ
+	 */
+	public IntervalSequence(Comparator<Interval<T>> comparator) {
 		intervals = new ArrayList<Interval<T>>();
+		this.comparator = comparator;
 	}
 	
 	/**
@@ -38,7 +51,7 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	 */
 	public void add(Interval<T> interval) {
 		intervals.add(interval);
-		Collections.sort(intervals);
+		Collections.sort(intervals, comparator);
 	}
 	
 	/**
@@ -77,7 +90,7 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	 * @return ギャップ区間の列
 	 */
 	public IntervalSequence<T> gaps() {
-		IntervalSequence<T> gaps = new IntervalSequence<T>();
+		IntervalSequence<T> gaps = new IntervalSequence<T>(comparator);
 		if (intervals.size() < 2) {
 			return gaps;
 		}
@@ -100,7 +113,7 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	 * @return 共通区間の列
 	 */
 	public IntervalSequence<T> intersections() {
-		IntervalSequence<T> intersections = new IntervalSequence<T>();
+		IntervalSequence<T> intersections = new IntervalSequence<T>(comparator);
 		if (intervals.size() < 2) {
 			return intersections;
 		}

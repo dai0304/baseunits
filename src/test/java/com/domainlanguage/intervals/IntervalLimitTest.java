@@ -5,6 +5,10 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Test;
 
 /**
@@ -33,8 +37,8 @@ public class IntervalLimitTest {
 		IntervalLimit<Integer> upperClose6 = IntervalLimit.upper(true, 6);
 		
 		// 無限同士比較
-		assertThat(lowerInf.compareTo(upperInf), is(0));
-		assertThat(upperInf.compareTo(lowerInf), is(0));
+		assertThat(lowerInf.compareTo(upperInf), is(lessThan(0)));
+		assertThat(upperInf.compareTo(lowerInf), is(greaterThan(0)));
 		
 		// 無限有限比較
 		assertThat(lowerInf.compareTo(lowerOpen3), is(lessThan(0)));
@@ -147,14 +151,58 @@ public class IntervalLimitTest {
 		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.upper(true, 10)), is(false));
 		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.upper(true, 10)), is(true));
 		
-		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(false, 10)), is(true));
-		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(false, 10)), is(true));
-		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(true, 10)), is(true));
-		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(true, 10)), is(true));
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(false, 10)), is(false));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(false, 10)), is(false));
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(true, 10)), is(false));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(true, 10)), is(false));
 		
-		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(false, 10)), is(true));
-		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(false, 10)), is(true));
-		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(true, 10)), is(true));
-		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(true, 10)), is(true));
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(false, 10)), is(false));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(false, 10)), is(false));
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(true, 10)), is(false));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(true, 10)), is(false));
+	}
+	
+	/**
+	 * {@link IntervalLimit#compareTo(IntervalLimit)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_compare() throws Exception {
+		List<IntervalLimit<Integer>> list = new ArrayList<IntervalLimit<Integer>>();
+		list.add(IntervalLimit.<Integer> upper(false, null));
+		list.add(IntervalLimit.<Integer> upper(true, null));
+		list.add(IntervalLimit.<Integer> lower(false, null));
+		list.add(IntervalLimit.<Integer> lower(true, null));
+		list.add(IntervalLimit.lower(true, 1));
+		list.add(IntervalLimit.lower(false, 1));
+		list.add(IntervalLimit.lower(true, 5));
+		list.add(IntervalLimit.lower(false, 5));
+		list.add(IntervalLimit.upper(true, 1));
+		list.add(IntervalLimit.upper(false, 1));
+		list.add(IntervalLimit.upper(true, 5));
+		list.add(IntervalLimit.upper(false, 5));
+		
+		Collections.shuffle(list);
+		Collections.sort(list);
+		
+//		for (IntervalLimit<Integer> intervalLimit : list) {
+//			System.out.println(intervalLimit);
+//		}
+		
+		assertThat(list.get(0), is(IntervalLimit.<Integer> lower(false, null)));
+		assertThat(list.get(1), is(IntervalLimit.<Integer> lower(false, null))); // 閉じた無限限界は開いた無限限界に変換される
+		
+		assertThat(list.get(2), is(IntervalLimit.lower(true, 1)));
+		assertThat(list.get(3), is(IntervalLimit.lower(false, 1)));
+		assertThat(list.get(4), is(IntervalLimit.upper(false, 1)));
+		assertThat(list.get(5), is(IntervalLimit.upper(true, 1)));
+		assertThat(list.get(6), is(IntervalLimit.lower(true, 5)));
+		assertThat(list.get(7), is(IntervalLimit.lower(false, 5)));
+		assertThat(list.get(8), is(IntervalLimit.upper(false, 5)));
+		assertThat(list.get(9), is(IntervalLimit.upper(true, 5)));
+		
+		assertThat(list.get(10), is(IntervalLimit.<Integer> upper(false, null)));
+		assertThat(list.get(11), is(IntervalLimit.<Integer> upper(false, null))); // 閉じた無限限界は開いた無限限界に変換される
 	}
 }

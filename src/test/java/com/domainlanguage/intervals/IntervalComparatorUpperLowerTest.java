@@ -16,9 +16,6 @@
  */
 package com.domainlanguage.intervals;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -26,9 +23,8 @@ import org.apache.commons.lang.SystemUtils;
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link IntervalComparatorUpperLower}のテストクラス。
  * 
- * @since TODO for daisuke
  * @version $Id$
  * @author daisuke
  */
@@ -41,26 +37,20 @@ public class IntervalComparatorUpperLowerTest {
 	 */
 	@Test
 	public void test01_compare() throws Exception {
-		// 自然ソート順
-		List<Interval<Integer>> list1 = IntervalTest.newIntegerIntervalList();
-		Collections.sort(list1);
+		List<Interval<Integer>> list = IntervalTest.newIntegerIntervalList2();
+		Collections.sort(list, new IntervalComparatorUpperLower<Integer>());
 		
-		StringBuilder sb1 = new StringBuilder();
-		for (Interval<Integer> interval : list1) {
-			sb1.append(interval.toStringGraphically()).append(SystemUtils.LINE_SEPARATOR);
+		StringBuilder sb = new StringBuilder();
+		for (Interval<Integer> interval : list) {
+			sb.append(interval.toStringGraphically()).append(SystemUtils.LINE_SEPARATOR);
 		}
 		
-		// IntervalComparatorUpperLowerのソート順
-		List<Interval<Integer>> list2 = IntervalTest.newIntegerIntervalList();
-		Collections.sort(list2, new IntervalComparatorUpperLower<Integer>());
+		System.out.println("{upper -> lower * -1}");
+		System.out.println("           1         2         3");
+		System.out.println(" 0123456789012345678901234567890");
+		System.out.println(sb);
 		
-		StringBuilder sb2 = new StringBuilder();
-		for (Interval<Integer> interval : list2) {
-			sb2.append(interval.toStringGraphically()).append(SystemUtils.LINE_SEPARATOR);
-		}
-		
-		assertThat(sb2.toString(), is(sb1.toString()));
-		System.out.println(sb2);
+		// TODO assertion
 	}
 	
 }
