@@ -106,7 +106,9 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
+	// CHECKSTYLE:OFF
 	@Override
+	// CHECKSTYLE:ON
 	public int compareTo(IntervalLimit<T> other) {
 		if (other == null) {
 			throw new NullPointerException();
