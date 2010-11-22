@@ -12,8 +12,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang.SystemUtils;
-
 /**
  * 区間列（複数の {@link Interval 区間} の列）を表すクラス。
  * 
@@ -149,11 +147,11 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 		return intervals.iterator();
 	}
 	
-	String toStringGraphically() {
-		StringBuilder sb = new StringBuilder();
-		for (Interval<T> interval : intervals) {
-			sb.append(interval.toStringGraphically()).append(SystemUtils.LINE_SEPARATOR);
-		}
-		return sb.toString();
-	}
+//	String toStringGraphically() {
+//		StringBuilder sb = new StringBuilder();
+//		for (Interval<T> interval : intervals) {
+//			sb.append(interval.toStringGraphically()).append(SystemUtils.LINE_SEPARATOR);
+//		}
+//		return sb.toString();
+//	}
 }

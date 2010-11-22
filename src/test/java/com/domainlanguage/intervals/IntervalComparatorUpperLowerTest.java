@@ -19,7 +19,6 @@ package com.domainlanguage.intervals;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.SystemUtils;
 import org.junit.Test;
 
 /**
@@ -40,15 +39,15 @@ public class IntervalComparatorUpperLowerTest {
 		List<Interval<Integer>> list = IntervalTest.newIntegerIntervalList2();
 		Collections.sort(list, new IntervalComparatorUpperLower<Integer>());
 		
-		StringBuilder sb = new StringBuilder();
-		for (Interval<Integer> interval : list) {
-			sb.append(interval.toStringGraphically()).append(SystemUtils.LINE_SEPARATOR);
-		}
-		
-		System.out.println("{upper -> lower * -1}");
-		System.out.println("           1         2         3");
-		System.out.println(" 0123456789012345678901234567890");
-		System.out.println(sb);
+//		StringBuilder sb = new StringBuilder();
+//		for (Interval<Integer> interval : list) {
+//			sb.append(interval.toStringGraphically()).append(SystemUtils.LINE_SEPARATOR);
+//		}
+//		
+//		System.out.println("{upper -> lower * -1}");
+//		System.out.println("           1         2         3");
+//		System.out.println(" 0123456789012345678901234567890");
+//		System.out.println(sb);
 		
 		// TODO assertion
 	}

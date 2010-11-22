@@ -691,54 +691,54 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 		return buffer.toString();
 	}
 	
-	/**
-	 * 区間をグラフィカルに確認するためのデバッグ用メソッド。
-	 * 
-	 * <p>単一要素区間はキャラクタ{@code @}で表示する。
-	 * 下側限界がない場合はキャラクタ{@code <}で表示し、上側限界がない場合はキャラクタ{@code >}で表示する。
-	 * 下側限界が開区間である場合はキャラクタ{@code (}、閉区間である場合はキャラクタ{@code [}で表示する。
-	 * 上側限界が開区間である場合はキャラクタ{@code )}、閉区間である場合はキャラクタ{@code ]}で表示する。
-	 * 区間内の要素はキャラクタ{@code -}で表示する。</p>
-	 * 
-	 * @return 文字列
-	 */
-	String toStringGraphically() {
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append(" ");
-		
-		if (isEmpty()) {
-			sb.append("EMPTY");
-		} else if (isSingleElement()) {
-			for (int i = 0; i < (Integer) lowerLimit(); i++) {
-				sb.append(" ");
-			}
-			sb.append("@");
-		} else {
-			if (lowerLimit() == null) {
-				sb.deleteCharAt(0);
-				sb.append("<");
-			} else {
-				for (int i = 0; i < (Integer) lowerLimit(); i++) {
-					sb.append(" ");
-				}
-				sb.append(includesLowerLimit() ? "[" : "(");
-			}
-			
-			if (upperLimit() == null) {
-				sb.append(">");
-			} else {
-				int l = lowerLimit() == null ? -1 : (Integer) lowerLimit();
-				int u = upperLimit() == null ? 100 : (Integer) upperLimit(); // CHECKSTYLE IGNORE THIS LINE
-				for (int i = 0; i < u - l - 1; i++) {
-					sb.append("-");
-				}
-				sb.append(includesUpperLimit() ? "]" : ")");
-			}
-		}
-		
-		return sb.toString();
-	}
+//	/**
+//	 * 区間をグラフィカルに確認するためのデバッグ用メソッド。
+//	 * 
+//	 * <p>単一要素区間はキャラクタ{@code @}で表示する。
+//	 * 下側限界がない場合はキャラクタ{@code <}で表示し、上側限界がない場合はキャラクタ{@code >}で表示する。
+//	 * 下側限界が開区間である場合はキャラクタ{@code (}、閉区間である場合はキャラクタ{@code [}で表示する。
+//	 * 上側限界が開区間である場合はキャラクタ{@code )}、閉区間である場合はキャラクタ{@code ]}で表示する。
+//	 * 区間内の要素はキャラクタ{@code -}で表示する。</p>
+//	 * 
+//	 * @return 文字列
+//	 */
+//	String toStringGraphically() {
+//		StringBuilder sb = new StringBuilder();
+//		
+//		sb.append(" ");
+//		
+//		if (isEmpty()) {
+//			sb.append("EMPTY");
+//		} else if (isSingleElement()) {
+//			for (int i = 0; i < (Integer) lowerLimit(); i++) {
+//				sb.append(" ");
+//			}
+//			sb.append("@");
+//		} else {
+//			if (lowerLimit() == null) {
+//				sb.deleteCharAt(0);
+//				sb.append("<");
+//			} else {
+//				for (int i = 0; i < (Integer) lowerLimit(); i++) {
+//					sb.append(" ");
+//				}
+//				sb.append(includesLowerLimit() ? "[" : "(");
+//			}
+//			
+//			if (upperLimit() == null) {
+//				sb.append(">");
+//			} else {
+//				int l = lowerLimit() == null ? -1 : (Integer) lowerLimit();
+//				int u = upperLimit() == null ? 100 : (Integer) upperLimit(); // CHECKSTYLE IGNORE THIS LINE
+//				for (int i = 0; i < u - l - 1; i++) {
+//					sb.append("-");
+//				}
+//				sb.append(includesUpperLimit() ? "]" : ")");
+//			}
+//		}
+//		
+//		return sb.toString();
+//	}
 	
 	private void assertLowerIsLessThanOrEqualUpper(IntervalLimit<T> lower, IntervalLimit<T> upper) {
 		if ((lower.isLower() && upper.isUpper() && lower.compareTo(upper) <= 0) == false) {
