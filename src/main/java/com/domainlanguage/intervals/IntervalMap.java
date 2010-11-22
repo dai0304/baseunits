@@ -9,8 +9,6 @@ package com.domainlanguage.intervals;
 /**
  * 区間に対して値をマッピングするクラス。
  * 
- * 
- * 
  * @param <K> キーとなる区間の型
  * @param <V> 値の型
  * @author daisuke

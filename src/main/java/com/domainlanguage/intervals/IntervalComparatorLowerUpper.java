@@ -27,6 +27,22 @@ import java.util.Comparator;
  */
 public class IntervalComparatorLowerUpper<T extends Comparable<T>> implements Comparator<Interval<T>> {
 	
+	private final int lowerFactor;
+	
+	private final int upperFactor;
+	
+
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param inverseLower 下側限界の比較結果の符号を反転する場合は{@code true}、そうでない場合は{@code false}
+	 * @param inverseUpper 上側限界の比較結果の符号を反転する場合は{@code true}、そうでない場合は{@code false}
+	 */
+	public IntervalComparatorLowerUpper(boolean inverseLower, boolean inverseUpper) {
+		this.lowerFactor = inverseLower ? -1 : 1;
+		this.upperFactor = inverseUpper ? -1 : 1;
+	}
+	
 	/**
 	 * 区間同士の比較を行う。
 	 * 
@@ -56,7 +72,7 @@ public class IntervalComparatorLowerUpper<T extends Comparable<T>> implements Co
 		
 		int upperComparance = e1.upperLimitObject.compareTo(e2.upperLimitObject);
 		int lowerComparance = e1.lowerLimitObject.compareTo(e2.lowerLimitObject);
-		return lowerComparance != 0 ? lowerComparance : (upperComparance * -1);
+		return lowerComparance != 0 ? (lowerComparance + lowerFactor) : (upperComparance * upperFactor);
 	}
 	
 }

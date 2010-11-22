@@ -8,7 +8,6 @@ package com.domainlanguage.intervals;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
@@ -148,13 +147,11 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	}
 	
 
-	// TODO これらのフィールドにfinalつける
-	
 	/** 下側限界 */
-	IntervalLimit<T> lowerLimitObject;
+	final IntervalLimit<T> lowerLimitObject;
 	
 	/** 上側限界 */
-	IntervalLimit<T> upperLimitObject;
+	final IntervalLimit<T> upperLimitObject;
 	
 
 	/**
@@ -183,39 +180,18 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 		Validate.notNull(lower);
 		Validate.notNull(upper);
 		assertLowerIsLessThanOrEqualUpper(lower, upper);
-		this.lowerLimitObject = lower;
-		this.upperLimitObject = upper;
-		if (isSingleElement()) {
-			if (lowerLimitObject.isClosed() == false) {
-				lowerLimitObject = IntervalLimit.lower(true, lowerLimitObject.getValue());
+		
+		if (upper.isInfinity() == false && lower.isInfinity() == false && upper.getValue().equals(lower.getValue())
+				&& (lower.isOpen() ^ upper.isOpen())) {
+			if (lower.isOpen()) {
+				lower = IntervalLimit.lower(true, lower.getValue());
 			}
-			if (upperLimitObject.isClosed() == false) {
-				upperLimitObject = IntervalLimit.upper(true, upperLimitObject.getValue());
+			if (upper.isOpen()) {
+				upper = IntervalLimit.upper(true, upper.getValue());
 			}
 		}
-	}
-	
-	/**
-	 * 区間同士の比較を行う。
-	 * 
-	 * <p>上限限界優先ロジック：
-	 * 上限限界値がより小さい方を「小さい」と判断する。同一の場合は、下限限界値がより小さい方を「小さい」とする。
-	 * ただし、空区間は他のどんな区間よりも小さい。</p>
-	 * 
-	 * <p><strike>下限限界優先ロジック：
-	 * 下限限界値がより小さい方を「小さい」と判断する。同一の場合は、上限限界値がより<strong>大きい</strong>方を「小さい」とする。
-	 * ただし、空区間は他のどんな区間よりも大きい。</strike></p>
-	 * 
-	 * <p>TODO ぶっちゃけ、仕様には迷っている。現在は上限限界優先ロジックを採用している。</p>
-	 * 
-	 * @param other 比較対象
-	 * @return 同値であった場合は {@code 0}、このオブジェクトが比較対象よりも小さい場合は負数、大きい場合は正数
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	public int compareTo(Interval<T> other) {
-		Comparator<Interval<T>> comparator = new IntervalComparatorUpperLower<T>();
-		return comparator.compare(this, other);
+		this.lowerLimitObject = lower;
+		this.upperLimitObject = upper;
 	}
 	
 	/**
@@ -309,7 +285,8 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 			return false;
 		}
 		
-		return compareTo(other) == 0;
+		return upperLimitObject.compareTo(other.upperLimitObject) == 0
+				&& lowerLimitObject.compareTo(other.lowerLimitObject) == 0;
 	}
 	
 	/**

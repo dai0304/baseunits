@@ -209,6 +209,15 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	}
 	
 	/**
+	 * この限界が無限限界であるかどうかを検証する。
+	 * 
+	 * @return 無限限界である場合は{@code true}、そうでない場合は{@code false}
+	 */
+	boolean isInfinity() {
+		return value == null;
+	}
+	
+	/**
 	 * この限界が下側限界であるかどうかを検証する。
 	 * 
 	 * @return 下側限界値の場合は{@code true}、そうでない場合は{@code false}

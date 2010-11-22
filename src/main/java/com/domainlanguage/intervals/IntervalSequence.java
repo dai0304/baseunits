@@ -27,9 +27,11 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * TODO デフォルトの比較ロジックについて
 	 */
 	public IntervalSequence() {
-		this(new IntervalComparatorUpperLower<T>());
+		this(new IntervalComparatorUpperLower<T>(true, false));
 	}
 	
 	/**

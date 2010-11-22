@@ -30,14 +30,14 @@ import org.junit.Test;
 public class IntervalComparatorLowerUpperTest {
 	
 	/**
-	 * {@link Interval#compareTo(Interval)}のテスト。
+	 * {@link IntervalComparatorLowerUpper#compare(Interval, Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test01_compare() throws Exception {
 		List<Interval<Integer>> list = IntervalTest.newIntegerIntervalList2();
-		Collections.sort(list, new IntervalComparatorLowerUpper<Integer>());
+		Collections.sort(list, new IntervalComparatorLowerUpper<Integer>(false, true));
 		
 //		StringBuilder sb = new StringBuilder();
 //		for (Interval<Integer> interval : list) {
