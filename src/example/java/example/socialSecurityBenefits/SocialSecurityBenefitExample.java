@@ -6,13 +6,12 @@
 
 package example.socialSecurityBenefits;
 
+import jp.xet.timeandmoney.base.Ratio;
+import jp.xet.timeandmoney.base.Rounding;
+import jp.xet.timeandmoney.money.Money;
+import jp.xet.timeandmoney.time.CalendarDate;
+import jp.xet.timeandmoney.time.CalendarInterval;
 import junit.framework.TestCase;
-
-import com.domainlanguage.base.Ratio;
-import com.domainlanguage.base.Rounding;
-import com.domainlanguage.money.Money;
-import com.domainlanguage.time.CalendarDate;
-import com.domainlanguage.time.CalendarInterval;
 
 import org.junit.Ignore;
 import org.junit.Test;

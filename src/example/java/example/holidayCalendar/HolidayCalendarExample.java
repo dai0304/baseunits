@@ -11,11 +11,11 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
 
-import com.domainlanguage.time.CalendarDate;
-import com.domainlanguage.time.CalendarInterval;
-import com.domainlanguage.time.DateSpecification;
-import com.domainlanguage.time.DayOfWeek;
-import com.domainlanguage.time.Duration;
+import jp.xet.timeandmoney.time.CalendarDate;
+import jp.xet.timeandmoney.time.CalendarInterval;
+import jp.xet.timeandmoney.time.DateSpecification;
+import jp.xet.timeandmoney.time.DayOfWeek;
+import jp.xet.timeandmoney.time.Duration;
 
 import org.junit.Test;
 

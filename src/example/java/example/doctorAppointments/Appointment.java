@@ -6,7 +6,7 @@
 
 package example.doctorAppointments;
 
-import com.domainlanguage.time.TimeInterval;
+import jp.xet.timeandmoney.time.TimeInterval;
 
 class Appointment {
 	

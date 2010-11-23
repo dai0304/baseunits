@@ -10,11 +10,11 @@ import static org.junit.Assert.assertThat;
 
 import java.util.TimeZone;
 
-import com.domainlanguage.time.CalendarDate;
-import com.domainlanguage.time.CalendarMinute;
-import com.domainlanguage.time.Duration;
-import com.domainlanguage.time.TimeOfDay;
-import com.domainlanguage.time.TimePoint;
+import jp.xet.timeandmoney.time.CalendarDate;
+import jp.xet.timeandmoney.time.CalendarMinute;
+import jp.xet.timeandmoney.time.Duration;
+import jp.xet.timeandmoney.time.TimeOfDay;
+import jp.xet.timeandmoney.time.TimePoint;
 
 import org.junit.Test;
 

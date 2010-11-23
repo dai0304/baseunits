@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 
-import com.domainlanguage.time.CalendarDate;
-import com.domainlanguage.time.TimeInterval;
+import jp.xet.timeandmoney.time.CalendarDate;
+import jp.xet.timeandmoney.time.TimeInterval;
+
 
 class AppointmentCalendar {
 	
