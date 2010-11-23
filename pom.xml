@@ -10,7 +10,14 @@
   </parent>
   <groupId>jp.xet.timeandmoney</groupId>
   <artifactId>timeandmoney-remodelled</artifactId>
+  <name>Time and Money Remodelled Library</name>
   <version>1.0-SNAPSHOT</version>
+  <description>The models of Time and Money domains.</description>
+  <url>http://maven.xet.jp/site/timeandmoney-remodelled/${project.version}/</url>
+  <organization>
+    <name>Daisuke and the others.</name>
+    <url>http://d.hatena.ne.jp/daisuke-m/</url>
+  </organization>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
@@ -19,6 +26,11 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <scm>
+    <connection>scm:git:git@github.com:dai0304/timeandmoney-remodelled.git</connection>
+    <url>scm:git:git@github.com:dai0304/timeandmoney-remodelled.git</url>
+    <developerConnection>scm:git:git@github.com:dai0304/timeandmoney-remodelled.git</developerConnection>
+  </scm>
   <build>
     <plugins>
       <plugin>
@@ -90,4 +102,18 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/virtual/daisuke/public_html/release</url>
+    </repository>
+    <snapshotRepository>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/virtual/daisuke/public_html/snapshot</url>
+    </snapshotRepository>
+    <site>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/virtual/daisuke/public_html/site/timeandmoney-remodelled/${project.version}</url>
+    </site>
+  </distributionManagement>
 </project>
