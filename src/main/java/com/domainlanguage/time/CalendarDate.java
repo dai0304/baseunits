@@ -37,7 +37,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 */
 	public static CalendarDate date(int year, int month, int day) {
-		return CalendarDate.from(year, month, day);
+		return from(year, month, day);
 	}
 	
 	/**
@@ -51,9 +51,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 */
 	public static CalendarDate from(int year, int month, int day) {
-		CalendarDate result = new CalendarDate(year, month, day);
-		return result;
-		
+		return new CalendarDate(year, month, day);
 	}
 	
 	/**
