@@ -225,7 +225,7 @@ public class TimeInterval extends Interval<TimePoint> {
 
 			@Override
 			public boolean hasNext() {
-				if (hasUpperLimit()) {
+				if (hasUpperLimit() == false) {
 					return true;
 				}
 				return end().isAfter(next);
