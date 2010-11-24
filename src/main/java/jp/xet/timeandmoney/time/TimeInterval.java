@@ -268,7 +268,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * 
 	 * @param point 日時
 	 * @return 開始日時以前でない場合は{@code true}、そうでない場合は{@code false}
-	 * @see #isAbove(TimePoint)
+	 * @see Interval#isAbove(Comparable)
 	 */
 	public boolean isAfter(TimePoint point) {
 		return isAbove(point);
@@ -279,7 +279,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * 
 	 * @param point 日時
 	 * @return 終了日時以後でない場合は{@code true}、そうでない場合は{@code false}
-	 * @see #isBelow(TimePoint)
+	 * @see Interval#isBelow(Comparable)
 	 */
 	public boolean isBefore(TimePoint point) {
 		return isBelow(point);
