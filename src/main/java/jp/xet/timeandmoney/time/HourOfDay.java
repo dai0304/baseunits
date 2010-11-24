@@ -49,15 +49,24 @@ public class HourOfDay {
 	 * 
 	 * @param initial 時をあらわす正数
 	 * @param amPm 午前午後を表す文字列
-	 * @return 時（0〜23）
-	 * @throws IllegalArgumentException 引数initialの値が0〜11の範囲ではない場合
-	 * @throws IllegalArgumentException 引数am_pmの値が AM, PM ではない場合
+	 * @return 時（0〜11）
+	 * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
 	 */
 	public static HourOfDay value(int initial, String amPm) {
 		return HourOfDay.of(convertTo24hour(initial, amPm));
 	}
 	
-	private static int convertTo24hour(int hour, String amPm) {
+	/**
+	 * 午前午後記号付き12時間制の時を24時間制の値に変換する。
+	 * 
+	 * @param hour 時（0〜11）
+	 * @param amPm 午前午後を表す文字列
+	 * @return 24時間制における時
+	 * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
+	 */
+	static int convertTo24hour(int hour, String amPm) {
 		if (("AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm)) == false) {
 			throw new IllegalArgumentException("AM PM indicator invalid: " + amPm + ", please use AM or PM");
 		}

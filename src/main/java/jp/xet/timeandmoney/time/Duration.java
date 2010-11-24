@@ -213,9 +213,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param point 元となる日時
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の日時
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
 	 */
 	public TimePoint addedTo(TimePoint point) {
+		Validate.notNull(point);
 		return addAmountToTimePoint(inBaseUnits(), point);
 	}
 	
@@ -289,8 +291,10 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量の差
 	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
 	 * @throws IllegalArgumentException 引数otherの長さが、このオブジェクトよりも長い場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Duration minus(Duration other) {
+		Validate.notNull(other);
 		assertConvertible(other);
 		assertGreaterThanOrEqualTo(other);
 		long newQuantity = inBaseUnits() - other.inBaseUnits();
@@ -323,8 +327,10 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param other 期間
 	 * @return 時間量の和
 	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Duration plus(Duration other) {
+		Validate.notNull(other);
 		assertConvertible(other);
 		long newQuantity = inBaseUnits() + other.inBaseUnits();
 		return new Duration(newQuantity, other.quantity == 0 ? unit.baseUnit() : other.unit.baseUnit());
@@ -338,6 +344,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimeInterval preceding(TimePoint end) {
+		Validate.notNull(end);
 		return TimeInterval.preceding(end, this);
 	}
 	
@@ -353,6 +360,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public CalendarInterval startingFrom(CalendarDate start) {
+		Validate.notNull(start);
 		return CalendarInterval.startingFrom(start, this);
 	}
 	
@@ -366,6 +374,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimeInterval startingFrom(TimePoint start) {
+		Validate.notNull(start);
 		return TimeInterval.startingFrom(start, this);
 	}
 	
@@ -398,9 +407,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param point 元となる日時
 	 * @return このオブジェクトが表現する長さのを引いた、過去の日時
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
 	 */
 	public TimePoint subtractedFrom(TimePoint point) {
+		Validate.notNull(point);
 		return addAmountToTimePoint(-1 * inBaseUnits(), point);
 	}
 	

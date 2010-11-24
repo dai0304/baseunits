@@ -22,6 +22,8 @@ package jp.xet.timeandmoney.time;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * 特定の「時分」を表すクラス。
  * 
@@ -69,8 +71,11 @@ public class TimeOfDay {
 	 * @param date 年月日
 	 * @param timeZone タイムゾーン
 	 * @return 瞬間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimePoint asTimePointGiven(CalendarDate date, TimeZone timeZone) {
+		Validate.notNull(date);
+		Validate.notNull(timeZone);
 		CalendarMinute timeOfDayOnDate = on(date);
 		return timeOfDayOnDate.asTimePoint(timeZone);
 	}
@@ -120,8 +125,10 @@ public class TimeOfDay {
 	 * 
 	 * @param another 基準時分
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isAfter(TimeOfDay another) {
+		Validate.notNull(another);
 		return hour.isAfter(another.hour) || (hour.equals(another.hour) && minute.isAfter(another.minute));
 	}
 	
@@ -132,8 +139,10 @@ public class TimeOfDay {
 	 * 
 	 * @param another 基準時分
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isBefore(TimeOfDay another) {
+		Validate.notNull(another);
 		return hour.isBefore(another.hour) || (hour.equals(another.hour) && minute.isBefore(another.minute));
 	}
 	
@@ -142,8 +151,10 @@ public class TimeOfDay {
 	 * 
 	 * @param date 年月日
 	 * @return {@link CalendarMinute}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public CalendarMinute on(CalendarDate date) {
+		Validate.notNull(date);
 		return CalendarMinute.dateAndTimeOfDay(date, this);
 	}
 	

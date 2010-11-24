@@ -258,8 +258,10 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * 
 	 * @param interval 比較対象の期間
 	 * @return 積集合（共通部分）
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimeInterval intersect(TimeInterval interval) {
+		Validate.notNull(interval);
 		return (TimeInterval) super.intersect(interval);
 	}
 	
@@ -268,9 +270,11 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * 
 	 * @param point 日時
 	 * @return 開始日時以前でない場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Interval#isAbove(Comparable)
 	 */
 	public boolean isAfter(TimePoint point) {
+		Validate.notNull(point);
 		return isAbove(point);
 	}
 	
@@ -279,18 +283,23 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * 
 	 * @param point 日時
 	 * @return 終了日時以後でない場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Interval#isBelow(Comparable)
 	 */
 	public boolean isBefore(TimePoint point) {
+		Validate.notNull(point);
 		return isBelow(point);
 	}
 	
 	/**
 	 * この期間の長さを取得する。
 	 * 
-	 * @return 長さ
+	 * @return 長さ. もし開始日時または終了日時が存在しない（無限）場合は{@code null}を返す。
 	 */
 	public Duration length() {
+		if (end() == null || start() == null) {
+			return null;
+		}
 		long difference = end().millisecondsFromEpoc - start().millisecondsFromEpoc;
 		return Duration.milliseconds(difference);
 	}
@@ -341,8 +350,10 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @param subintervalLength 反復子が返す期間の長さ
 	 * @return 期間の反復子
 	 * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Iterator<TimeInterval> subintervalIterator(Duration subintervalLength) {
+		Validate.notNull(subintervalLength);
 		if (hasLowerLimit() == false) {
 			throw new IllegalStateException();
 		}

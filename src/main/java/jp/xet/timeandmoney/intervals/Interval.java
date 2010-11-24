@@ -128,8 +128,10 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @param element 単一要素となる値
 	 * @param <T> 限界値の型
 	 * @return 区間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static <T extends Comparable<T>>Interval<T> singleElement(T element) {
+		Validate.notNull(element);
 		return closed(element, element);
 	}
 	
@@ -268,9 +270,9 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * 
 	 * <p>両者が共に空の区間であった場合は{@code true}、どちらか一方のみが空の区間であった場合は{@code false}を返す。
 	 * 両者とも単一要素区間であった場合は、単一要素となる限界値同士を比較し、一致した場合は{@code true}を返す。
-	 * また、どちらか一方のみが単一要素区間であった場合は{@code false}を返す。
+	 * また、どちらか一方のみが単一要素区間であった場合は{@code false}を返す。</p>
 	 * 
-	 * {@code other}が{@code null}であった場合は、必ず{@code false}を返す。</p>
+	 * <p>{@code other}が{@code null}であった場合は、必ず{@code false}を返す。</p>
 	 * 
 	 * @param other 比較対象の区間
 	 * @return 同一である場合は{@code true}、そうでない場合は{@code false}

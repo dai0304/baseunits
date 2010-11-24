@@ -27,6 +27,8 @@ import jp.xet.timeandmoney.time.TimePoint;
 import jp.xet.timeandmoney.time.TimeSource;
 import jp.xet.timeandmoney.time.TimeSourceException;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * NISTのdaytimeプロトコルクライアント。
  * 
@@ -69,9 +71,11 @@ public class NISTClient {
 	 * 
 	 * @param nistRawFormattedString {@code time.nist.gov}が返す時間文字列
 	 * @return 入力に基づく{@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ParseException 引数nistRawFormattedStringの解析に失敗した場合
 	 */
 	protected static TimePoint asTimePoint(String nistRawFormattedString) throws ParseException {
+		Validate.notNull(nistRawFormattedString);
 		String nistGist = nistRawFormattedString.substring(7, 24); // CHECKSTYLE IGNORE THIS LINE
 		return TimePoint.parseGMTFrom(nistGist, PATTERN);
 	}
@@ -82,8 +86,10 @@ public class NISTClient {
 	 * @param serverName サーバ名
 	 * @param port ポート番号
 	 * @return ネットワーク時間に基づき現在の時刻を返す {@link TimeSource}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	protected static TimeSource timeSource(final String serverName, final int port) {
+		Validate.notNull(serverName);
 		return new TimeSource() {
 			
 			@Override

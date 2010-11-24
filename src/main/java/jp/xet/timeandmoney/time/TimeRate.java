@@ -128,8 +128,10 @@ public class TimeRate {
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
 	 * @throws ArithmeticException 引数{@code duration}の時間量が単位時間で割り切れない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public BigDecimal over(Duration duration) {
+		Validate.notNull(duration);
 		return over(duration, Rounding.UNNECESSARY);
 	}
 	
@@ -160,8 +162,11 @@ public class TimeRate {
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
 	 * @throws ArithmeticException 引数 {@code roundRule} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public BigDecimal over(Duration duration, Rounding roundRule) {
+		Validate.notNull(duration);
+		Validate.notNull(roundRule);
 		return over(duration, scale(), roundRule);
 	}
 	

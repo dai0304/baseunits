@@ -33,6 +33,7 @@ public interface IntervalMap<K extends Comparable<K>, V> {
 	 * 
 	 * @param interval 区間
 	 * @return 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	boolean containsIntersectingKey(Interval<K> interval);
 	

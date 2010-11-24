@@ -111,8 +111,10 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @return 合計金額
 	 * @throws ClassCastException 引数の通貨単位の中に通貨単位が異なるものを含む場合。
 	 * 				ただし、量が0の金額については通貨単位を考慮しないので例外は発生しない。
+	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
 	 */
 	public static Money sum(Collection<Money> monies) {
+		Validate.notNull(monies);
 		if (monies.isEmpty()) {
 			return Money.zero(Currency.getInstance(Locale.getDefault()));
 		}
@@ -284,6 +286,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money applying(Ratio ratio, Rounding roundingRule) {
+		Validate.notNull(ratio);
+		Validate.notNull(roundingRule);
 		return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
 	}
 	
@@ -348,6 +352,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money dividedBy(double divisor, Rounding roundingMode) {
+		Validate.notNull(roundingMode);
 		return dividedBy(new BigDecimal(divisor), roundingMode);
 	}
 	
@@ -404,6 +409,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param other 基準金額
 	 * @return 大きい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public boolean isGreaterThan(Money other) {
 		return compareTo(other) > 0;
@@ -417,6 +423,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param other 基準金額
 	 * @return 小さい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public boolean isLessThan(Money other) {
 		return compareTo(other) < 0;
@@ -529,8 +536,11 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param factor 係数
 	 * @param roundingMode 丸めルール
 	 * @return 掛けた金額
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money times(BigDecimal factor, Rounding roundingMode) {
+		Validate.notNull(factor);
+		Validate.notNull(roundingMode);
 		return Money.valueOf(amount.multiply(factor), currency, roundingMode);
 	}
 	
@@ -552,8 +562,10 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param amount 係数
 	 * @param roundingMode 丸めルール
 	 * @return 掛けた金額
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Money times(double amount, Rounding roundingMode) {
+		Validate.notNull(roundingMode);
 		return times(new BigDecimal(amount), roundingMode);
 	}
 	

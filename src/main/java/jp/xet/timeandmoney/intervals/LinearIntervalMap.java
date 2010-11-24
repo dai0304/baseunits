@@ -48,6 +48,7 @@ public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMa
 	
 	@Override
 	public boolean containsIntersectingKey(Interval<K> otherInterval) {
+		Validate.notNull(otherInterval);
 		return intersectingKeys(otherInterval).isEmpty() == false;
 	}
 	

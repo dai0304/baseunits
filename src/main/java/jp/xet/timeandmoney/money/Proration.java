@@ -68,6 +68,7 @@ public final class Proration {
 	 * @throws ArithmeticException 引数{@code whole}が0だった場合
 	 */
 	public static Money partOfWhole(Money total, long portion, long whole) {
+		Validate.notNull(total);
 		return partOfWhole(total, Ratio.of(portion, whole));
 	}
 	

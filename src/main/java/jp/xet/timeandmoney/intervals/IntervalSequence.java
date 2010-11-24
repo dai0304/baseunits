@@ -25,6 +25,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * 区間列（複数の {@link Interval 区間} の列）を表すクラス。
  * 
@@ -51,8 +53,10 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	 * インスタンスを生成する。
 	 * 
 	 * @param comparator コンパレータ
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public IntervalSequence(Comparator<Interval<T>> comparator) {
+		Validate.notNull(comparator);
 		intervals = new ArrayList<Interval<T>>();
 		this.comparator = comparator;
 	}
@@ -61,8 +65,10 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	 * 区間列に{@link Interval 区間}を追加する。
 	 * 
 	 * @param interval 追加する{@link Interval 区間}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public void add(Interval<T> interval) {
+		Validate.notNull(interval);
 		intervals.add(interval);
 		Collections.sort(intervals, comparator);
 	}
