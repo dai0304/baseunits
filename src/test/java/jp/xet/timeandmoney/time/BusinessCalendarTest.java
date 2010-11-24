@@ -222,7 +222,7 @@ public class BusinessCalendarTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 日本の祝日テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
