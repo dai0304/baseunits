@@ -225,6 +225,9 @@ public class TimeInterval extends Interval<TimePoint> {
 
 			@Override
 			public boolean hasNext() {
+				if (hasUpperLimit()) {
+					return true;
+				}
 				return end().isAfter(next);
 			}
 			
@@ -293,10 +296,11 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * この期間の長さを取得する。
 	 * 
 	 * @return 長さ. もし開始日時または終了日時が存在しない（無限）場合は{@code null}を返す。
+	 * @throws IllegalStateException この期間が開始日時（下側限界）または終了日時（下側限界）を持たない場合
 	 */
 	public Duration length() {
-		if (end() == null || start() == null) {
-			return null;
+		if (hasLowerLimit() == false || hasUpperLimit() == false) {
+			throw new IllegalStateException();
 		}
 		long difference = end().millisecondsFromEpoc - start().millisecondsFromEpoc;
 		return Duration.milliseconds(difference);

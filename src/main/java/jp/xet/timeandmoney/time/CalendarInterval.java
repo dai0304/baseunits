@@ -27,6 +27,8 @@ import java.util.TimeZone;
 import jp.xet.timeandmoney.intervals.Interval;
 import jp.xet.timeandmoney.util.ImmutableIterator;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * 期間（日付の区間）を表すクラス。
  * 
@@ -122,6 +124,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static CalendarInterval startingFrom(CalendarDate start, Duration length) {
+		Validate.notNull(start);
+		Validate.notNull(length);
 		// Uses the common default for calendar intervals, [start, end].
 		if (length.unit.compareTo(TimeUnit.day) < 0) {
 			return inclusive(start, start);
@@ -162,8 +166,10 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @param zone タイムゾーン
 	 * @return 時間の期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimeInterval asTimeInterval(TimeZone zone) {
+		Validate.notNull(zone);
 		TimePoint startPoint = lowerLimit().asTimeInterval(zone).start();
 		TimePoint endPoint = upperLimit().asTimeInterval(zone).end();
 		return TimeInterval.over(startPoint, endPoint);
@@ -272,7 +278,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	/**
 	 * 終了日を取得する。
 	 * 
-	 * @return 終了日
+	 * @return 終了日. 開始日がない場合は{@code null}
 	 */
 	public CalendarDate end() {
 		return upperLimit();
@@ -354,8 +360,12 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * この期間が、日数にして何日の長さがあるかを取得する。
 	 * 
 	 * @return 日数
+	 * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
 	 */
 	public int lengthInDaysInt() {
+		if (hasLowerLimit() == false || hasUpperLimit() == false) {
+			throw new IllegalStateException();
+		}
 		Calendar calStart = start().asJavaCalendarUniversalZoneMidnight();
 		Calendar calEnd = end().plusDays(1).asJavaCalendarUniversalZoneMidnight();
 		long diffMillis = calEnd.getTimeInMillis() - calStart.getTimeInMillis();
@@ -380,8 +390,12 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * <p>開始日と終了日が同月であれば{@code 0}となる。</p>
 	 * 
 	 * @return 月数
+	 * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
 	 */
 	public int lengthInMonthsInt() {
+		if (hasLowerLimit() == false || hasUpperLimit() == false) {
+			throw new IllegalStateException();
+		}
 		Calendar calStart = start().asJavaCalendarUniversalZoneMidnight();
 		Calendar calEnd = end().plusDays(1).asJavaCalendarUniversalZoneMidnight();
 		int yearDiff = calEnd.get(Calendar.YEAR) - calStart.get(Calendar.YEAR);
@@ -400,7 +414,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	/**
 	 * 開始日を取得する。
 	 * 
-	 * @return 開始日
+	 * @return 開始日. 開始日がない場合は{@code null}
 	 */
 	public CalendarDate start() {
 		return lowerLimit();
