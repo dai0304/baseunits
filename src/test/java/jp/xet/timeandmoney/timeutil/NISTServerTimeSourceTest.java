@@ -18,9 +18,6 @@ import org.junit.Test;
 
 /**
  * {@link NISTClient}のテスト。
- * 
- * @version $Id$
- * @author daisuke
  */
 public class NISTServerTimeSourceTest {
 	

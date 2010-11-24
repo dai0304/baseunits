@@ -14,8 +14,6 @@ import org.junit.Test;
 
 /**
  * {@link IntervalMap}のテストクラス。
- * 
- * @author daisuke
  */
 public class IntervalMapTest {
 	

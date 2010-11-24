@@ -20,9 +20,6 @@ import java.io.IOException;
 
 /**
  * 現在時刻の取得に失敗したことをあらわす例外。
- * 
- * @version $Id$
- * @author daisuke
  */
 @SuppressWarnings("serial")
 public class TimeSourceException extends RuntimeException {

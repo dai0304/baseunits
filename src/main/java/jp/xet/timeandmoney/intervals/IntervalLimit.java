@@ -38,7 +38,6 @@ import java.io.Serializable;
  * 上側限界とは、限界値以上（または超える）の値を超過とみなす限界を表す。</p>
  * 
  * @param <T> 限界の型
- * @author daisuke
  */
 @SuppressWarnings("serial")
 class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit<T>>, Serializable {

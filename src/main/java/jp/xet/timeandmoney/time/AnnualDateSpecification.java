@@ -28,9 +28,6 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 1年間に1度だけ仕様を満たす日付仕様。
- * 
- * @version $Id$
- * @author daisuke
  */
 public abstract class AnnualDateSpecification extends DateSpecification {
 	

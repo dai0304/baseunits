@@ -31,9 +31,6 @@ import org.apache.commons.lang.Validate;
  * 単位時間あたりの金額（時間量に対する金額の割合）をあらわすクラス。
  * 
  * <p>例えば時給、人月単価など。</p>
- * 
- * @version $Id$
- * @author daisuke
  */
 public class MoneyTimeRate {
 	

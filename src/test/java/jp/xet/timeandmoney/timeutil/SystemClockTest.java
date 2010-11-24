@@ -21,8 +21,6 @@ import org.junit.Test;
 
 /**
  * {@link SystemClock}のテストクラス。
- * 
- * @author daisuke
  */
 public class SystemClockTest {
 	

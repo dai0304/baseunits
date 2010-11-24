@@ -43,7 +43,6 @@ import org.apache.commons.lang.Validate;
  * which implements Comparable can have intervals defined this way.
  * 
  * @param <T> 区間要素の型
- * @author daisuke
  */
 @SuppressWarnings("serial")
 public class Interval<T extends Comparable<T>> implements Serializable {

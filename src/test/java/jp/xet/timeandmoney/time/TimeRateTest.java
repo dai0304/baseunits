@@ -17,8 +17,6 @@ import org.junit.Test;
 
 /**
  * {@link TimeRate}のテストクラス。
- * 
- * @author daisuke
  */
 public class TimeRateTest {
 	

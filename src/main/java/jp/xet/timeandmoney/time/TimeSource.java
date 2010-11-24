@@ -21,8 +21,6 @@ package jp.xet.timeandmoney.time;
 
 /**
  * 現在時刻を返す責務を表すインターフェイス。
- * 
- * @author daisuke
  */
 public interface TimeSource {
 	

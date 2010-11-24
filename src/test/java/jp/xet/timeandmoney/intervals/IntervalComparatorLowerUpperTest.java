@@ -23,9 +23,6 @@ import org.junit.Test;
 
 /**
  * {@link IntervalComparatorLowerUpper}のテストクラス。
- * 
- * @version $Id$
- * @author daisuke
  */
 public class IntervalComparatorLowerUpperTest {
 	

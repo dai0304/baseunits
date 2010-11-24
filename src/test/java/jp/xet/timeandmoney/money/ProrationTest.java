@@ -13,8 +13,6 @@ import org.junit.Test;
 
 /**
  * {@link Proration}のテストクラス。
- * 
- * @author daisuke
  */
 public class ProrationTest {
 	

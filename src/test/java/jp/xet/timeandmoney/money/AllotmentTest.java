@@ -7,8 +7,6 @@ import org.junit.Test;
 
 /**
  * {@link Allotment}のテストクラス。
- * 
- * @author daisuke
  */
 public class AllotmentTest {
 	

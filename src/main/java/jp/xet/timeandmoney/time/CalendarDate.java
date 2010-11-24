@@ -33,8 +33,6 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link Date}と異なり、時間の概念を持っていない。また、{@link TimePoint}と異なり、
  * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
- * 
- * @author daisuke
  */
 @SuppressWarnings("serial")
 public class CalendarDate implements Comparable<CalendarDate>, Serializable {

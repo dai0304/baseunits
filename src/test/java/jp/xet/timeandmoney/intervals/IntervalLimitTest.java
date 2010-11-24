@@ -13,8 +13,6 @@ import org.junit.Test;
 
 /**
  * {@link IntervalLimit}のテストクラス。
- * 
- * @author daisuke
  */
 public class IntervalLimitTest {
 	

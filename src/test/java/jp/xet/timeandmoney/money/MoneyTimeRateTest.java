@@ -18,8 +18,6 @@ import org.junit.Test;
 
 /**
  * {@link MoneyTimeRate}のテストクラス。
- * 
- * @author daisuke
  */
 public class MoneyTimeRateTest {
 	

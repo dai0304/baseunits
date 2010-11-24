@@ -31,8 +31,6 @@ import jp.xet.timeandmoney.util.ImmutableIterator;
  * 期間（日付の区間）を表すクラス。
  * 
  * <p>限界の表現には {@link CalendarDate}を利用する。</p>
- * 
- * @author daisuke
  */
 @SuppressWarnings("serial")
 public class CalendarInterval extends Interval<CalendarDate> {

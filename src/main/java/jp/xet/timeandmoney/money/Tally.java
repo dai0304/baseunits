@@ -27,9 +27,6 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 同じ通貨単位の金額の集合をあらわすクラス。
- * 
- * @version $Id$
- * @author daisuke
  */
 public class Tally {
 	

@@ -28,9 +28,6 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 比例配分の為のユーティリティ。
- * 
- * @version $Id$
- * @author daisuke
  */
 public final class Proration {
 	

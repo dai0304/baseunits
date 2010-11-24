@@ -23,8 +23,6 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 特定の「分」を表すクラス。
- * 
- * @author daisuke
  */
 public class MinuteOfHour {
 	

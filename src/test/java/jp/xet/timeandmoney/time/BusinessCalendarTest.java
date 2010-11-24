@@ -18,8 +18,6 @@ import org.junit.Test;
 
 /**
  * {@link BusinessCalendar}のテストクラス。
- * 
- * @author daisuke
  */
 public class BusinessCalendarTest {
 	

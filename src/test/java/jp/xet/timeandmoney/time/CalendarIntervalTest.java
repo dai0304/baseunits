@@ -21,8 +21,6 @@ import org.junit.Test;
 
 /**
  * {@link CalendarInterval}のテストクラス。
- * 
- * @author daisuke
  */
 public class CalendarIntervalTest {
 	

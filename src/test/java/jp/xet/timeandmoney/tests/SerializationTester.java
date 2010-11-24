@@ -19,8 +19,6 @@ import org.apache.commons.io.IOUtils;
 
 /**
  * シリアライズのテストを行う、ヘルパークラス。
- * 
- * @author daisuke
  */
 public class SerializationTester {
 	

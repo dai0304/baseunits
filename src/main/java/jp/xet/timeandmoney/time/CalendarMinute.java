@@ -29,8 +29,6 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link Date}と異なり、分未満（秒以下）の概念を持っていない。また、{@link TimePoint}と異なり、
  * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
- * 
- * @author daisuke
  */
 public class CalendarMinute {
 	

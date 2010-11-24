@@ -25,8 +25,6 @@ import java.math.BigDecimal;
  * 丸めルールを表す列挙型。
  * 
  * <p>演算の結果、数字を丸める際に適用するルールをあらわす。例えば、切り捨て,切り上げ,四捨五入など。</p>
- * 
- * @author daisuke
  */
 public enum Rounding {
 	

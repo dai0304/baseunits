@@ -7,8 +7,6 @@ import org.junit.Test;
 
 /**
  * {@link Tally}のテストクラス。
- * 
- * @author daisuke
  */
 public class TallyTest {
 	

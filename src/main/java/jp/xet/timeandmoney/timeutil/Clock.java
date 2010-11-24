@@ -29,9 +29,6 @@ import jp.xet.timeandmoney.time.TimeSource;
  * 時計を表すクラス。
  * 
  * <p>このクラスはステートを持つstaticなユーティリティクラスである。</p>
- * 
- * @version $Id$
- * @author daisuke
  */
 public final class Clock {
 	

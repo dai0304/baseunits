@@ -14,8 +14,6 @@ import org.junit.Test;
 
 /**
  * {@link TimeOfDay}のテストクラス。
- *
- * @author davem
  */
 public class TimeOfDayTest {
 	

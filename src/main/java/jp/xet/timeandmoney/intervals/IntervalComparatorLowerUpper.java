@@ -22,8 +22,6 @@ import java.util.Comparator;
  * 区間同士の比較を行うコンパレータ。下側限界による比較を優先し、同じであったら上側限界による比較を採用する。
  * 
  * @param <T> 区間要素の型
- * @version $Id$
- * @author daisuke
  */
 public class IntervalComparatorLowerUpper<T extends Comparable<T>> implements Comparator<Interval<T>> {
 	

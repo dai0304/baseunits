@@ -20,8 +20,6 @@ import org.junit.Test;
 
 /**
  * {@link TimeInterval}のテストクラス。
- * 
- * @author daisuke
  */
 public class TimeIntervalTest {
 	

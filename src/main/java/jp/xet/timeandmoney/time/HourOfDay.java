@@ -23,8 +23,6 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 特定の「時」を表すクラス。
- * 
- * @author daisuke
  */
 public class HourOfDay {
 	

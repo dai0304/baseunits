@@ -28,8 +28,6 @@ import org.apache.commons.lang.Validate;
  * {@link MoneyFan}の集合。
  * 
  * @param <T> 割り当ての対象
- * @version $Id$
- * @author daisuke
  */
 public class FanTally<T> {
 	

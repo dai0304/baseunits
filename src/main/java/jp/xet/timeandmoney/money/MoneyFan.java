@@ -32,8 +32,6 @@ import org.apache.commons.lang.Validate;
  * 割り当ての集合。
  * 
  * @param <T> 割り当て対象
- * @version $Id$
- * @author daisuke
  */
 public class MoneyFan<T> {
 	

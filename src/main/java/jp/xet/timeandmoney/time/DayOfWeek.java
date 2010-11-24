@@ -23,8 +23,6 @@ import java.util.Calendar;
 
 /**
  * 曜日を表す列挙型。
- * 
- * @author daisuke
  */
 public enum DayOfWeek {
 	

@@ -17,8 +17,6 @@ import org.junit.Test;
 
 /**
  * {@link IntervalSequence}のテストクラス。
- * 
- * @author daisuke
  */
 public class IntervalSequenceTest {
 	

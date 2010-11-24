@@ -22,8 +22,6 @@ import org.junit.Test;
 
 /**
  * {@link Duration}のテストクラス。
- * 
- * @author daisuke
  */
 public class DurationTest {
 	

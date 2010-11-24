@@ -24,9 +24,6 @@ import jp.xet.timeandmoney.time.TimeSource;
 
 /**
  * システム時計に基づき、現在の時刻を返すクラス。
- * 
- * @version $Id$
- * @author daisuke
  */
 public final class SystemClock implements TimeSource {
 	

@@ -10,8 +10,6 @@ import org.junit.Test;
 
 /**
  * {@link MoneyFan}のテストクラス。
- * 
- * @author daisuke
  */
 public class MoneyFanTest {
 	

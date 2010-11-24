@@ -18,8 +18,6 @@ import org.junit.Test;
 
 /**
  * {@link CalendarDate}のテストクラス。
- * 
- * @author daisuke
  */
 public class CalendarDateTest {
 	

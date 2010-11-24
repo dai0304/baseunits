@@ -13,8 +13,6 @@ import org.junit.Test;
 
 /**
  * {@link MinuteOfHour}のテストクラス。
- * 
- * @author daisuke
  */
 public class MinuteOfHourTest {
 	

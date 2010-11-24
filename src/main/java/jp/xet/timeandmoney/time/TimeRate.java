@@ -29,9 +29,6 @@ import org.apache.commons.lang.Validate;
  * 単位時間あたりの何らかの量（時間に対する割合）をあらわすクラス。
  * 
  * <p>例えば、時給・時速など。</p>
- * 
- * @version $Id$
- * @author daisuke
  */
 public class TimeRate {
 	

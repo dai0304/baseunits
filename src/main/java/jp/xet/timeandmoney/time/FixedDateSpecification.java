@@ -23,8 +23,6 @@ import org.apache.commons.lang.Validate;
 
 /**
  * X月Y日、を表す日付仕様。
- * 
- * @author daisuke
  */
 class FixedDateSpecification extends AnnualDateSpecification {
 	

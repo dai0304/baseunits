@@ -28,8 +28,6 @@ import org.apache.commons.lang.Validate;
  * 特定の「時分」を表すクラス。
  * 
  * <p>{@link Date}と異なり、日付の概念を持っていない。</p>
- * 
- * @author daisuke
  */
 public class TimeOfDay {
 	

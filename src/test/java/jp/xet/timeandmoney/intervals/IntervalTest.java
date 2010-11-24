@@ -21,8 +21,6 @@ import org.junit.Test;
 
 /**
  * {@link Interval}のテストクラス。
- * 
- * @author daisuke
  */
 public class IntervalTest {
 	

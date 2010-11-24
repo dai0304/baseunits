@@ -18,8 +18,6 @@ import org.junit.Test;
 
 /**
  * {@link DateSpecification}のテストクラス。
- * 
- * @author daisuke
  */
 public class DateSpecificationTest {
 	

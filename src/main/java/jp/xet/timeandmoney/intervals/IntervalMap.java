@@ -24,7 +24,6 @@ package jp.xet.timeandmoney.intervals;
  * 
  * @param <K> キーとなる区間の型
  * @param <V> 値の型
- * @author daisuke
  */
 public interface IntervalMap<K extends Comparable<K>, V> {
 	

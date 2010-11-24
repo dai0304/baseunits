@@ -13,15 +13,10 @@ import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 
-import jp.xet.timeandmoney.util.Ratio;
-import jp.xet.timeandmoney.util.Rounding;
-
 import org.junit.Test;
 
 /**
  * {@link Ratio}のテストクラス。
- * 
- * @author daisuke
  */
 public class RatioTest {
 	

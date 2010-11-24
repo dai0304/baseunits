@@ -14,9 +14,6 @@ import org.junit.Test;
 
 /**
  * 時間記述のなんとなくテスト。
- * 
- * @version $Id$
- * @author daisuke
  */
 public class NominalTimeTest {
 	

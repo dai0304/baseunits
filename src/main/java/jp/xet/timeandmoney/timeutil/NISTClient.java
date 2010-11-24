@@ -33,8 +33,6 @@ import org.apache.commons.lang.Validate;
  * NISTのdaytimeプロトコルクライアント。
  * 
  * <p>National Institute of Standards and Technology provides an Internet time server.</p>
- * 
- * @author daisuke
  */
 public class NISTClient {
 	

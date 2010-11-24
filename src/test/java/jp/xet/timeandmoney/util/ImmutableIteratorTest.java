@@ -14,8 +14,6 @@ import org.junit.Test;
 
 /**
  * {@link ImmutableIterator}のテストクラス。
- * 
- * @author daisuke
  */
 public class ImmutableIteratorTest {
 	

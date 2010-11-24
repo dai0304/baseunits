@@ -21,8 +21,6 @@ import org.junit.Test;
 
 /**
  * {@link TimePoint}のテストクラス。
- * 
- * @author daisuke
  */
 public class TimePointTest {
 	

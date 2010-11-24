@@ -23,8 +23,6 @@ import org.junit.Test;
 
 /**
  * {@link Money}のテストクラス。
- * 
- * @author daisuke
  */
 public class MoneyTest {
 	

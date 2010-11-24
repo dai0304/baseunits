@@ -36,8 +36,6 @@ import org.apache.commons.lang.Validate;
  * 金額を表すクラス。
  * 
  * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
- * 
- * @author daisuke
  */
 @SuppressWarnings("serial")
 public class Money implements Comparable<Money>, Serializable {

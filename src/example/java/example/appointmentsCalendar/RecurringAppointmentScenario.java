@@ -20,9 +20,6 @@ import org.junit.Test;
 
 /**
  * Example.
- * 
- * @version $Id$
- * @author daisuke
  */
 public class RecurringAppointmentScenario {
 	

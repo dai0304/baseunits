@@ -25,7 +25,6 @@ import java.util.Iterator;
  * 明示的に、対象のコレクションに対する操作ができないことを表す反復子。
  * 
  * @param <T> 要素の型
- * @author daisuke
  */
 public abstract class ImmutableIterator<T> implements Iterator<T> {
 	

@@ -31,8 +31,6 @@ import org.apache.commons.lang.Validate;
  * 期間（時間の区間）を表すクラス。
  * 
  * <p>限界の表現には {@link TimePoint}を利用する。</p>
- * 
- * @author daisuke
  */
 @SuppressWarnings("serial")
 public class TimeInterval extends Interval<TimePoint> {

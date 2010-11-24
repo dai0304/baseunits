@@ -31,8 +31,6 @@ import org.apache.commons.lang.Validate;
 
 /**
  * ミリ秒精度で、ある時間の一点をあらわすクラス。
- * 
- * @author daisuke
  */
 @SuppressWarnings("serial")
 public class TimePoint implements Comparable<TimePoint>, Serializable {

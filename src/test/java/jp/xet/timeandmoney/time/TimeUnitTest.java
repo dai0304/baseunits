@@ -19,8 +19,6 @@ import org.junit.Test;
 
 /**
  * {@link TimeUnit}のテストクラス。
- * 
- * @author daisuke
  */
 public class TimeUnitTest {
 	

@@ -21,8 +21,6 @@ import org.junit.Test;
 
 /**
  * {@link Clock}のテストクラス。
- * 
- * @author daisuke
  */
 public class ClockTest {
 	

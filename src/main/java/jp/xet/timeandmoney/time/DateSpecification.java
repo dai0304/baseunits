@@ -28,8 +28,6 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 日付の仕様を表現するオブジェクト。DDDのSpecificationパターンオブジェクト。
- * 
- * @author daisuke
  */
 public abstract class DateSpecification extends AbstractSpecification<CalendarDate> {
 	

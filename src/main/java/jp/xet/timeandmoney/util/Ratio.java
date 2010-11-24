@@ -37,8 +37,6 @@ import org.apache.commons.lang.Validate;
  * gives control of the precision and rounding rules to the client, when the
  * time comes to compute a decimal value for the ratio. The client typically has
  * the responsibilities that enable an appropriate choice of these parameters.<p>
- *  
- * @author Eric Evans
  */
 public class Ratio {
 	

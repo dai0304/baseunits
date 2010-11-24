@@ -32,7 +32,6 @@ import org.apache.commons.lang.Validate;
  * 
  * @param <K> キーとなる区間が表現する型
  * @param <V> 値の型
- * @author daisuke
  */
 public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMap<K, V> {
 	

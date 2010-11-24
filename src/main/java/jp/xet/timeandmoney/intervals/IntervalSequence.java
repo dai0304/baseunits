@@ -31,7 +31,6 @@ import org.apache.commons.lang.Validate;
  * 区間列（複数の {@link Interval 区間} の列）を表すクラス。
  * 
  * @param <T> {@link Interval 区間}の型
- * @author daisuke
  */
 public class IntervalSequence<T extends Comparable<T>> implements Iterable<Interval<T>> {
 	

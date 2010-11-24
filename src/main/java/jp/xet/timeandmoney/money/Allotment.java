@@ -25,8 +25,6 @@ import org.apache.commons.lang.Validate;
  * 何かに対するお金の割り当てをあらわす。
  * 
  * @param <T> 割り当て対象
- * @version $Id$
- * @author daisuke
  */
 public class Allotment<T> {
 	
