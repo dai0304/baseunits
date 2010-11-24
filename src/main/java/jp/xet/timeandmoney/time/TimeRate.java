@@ -21,7 +21,7 @@ package jp.xet.timeandmoney.time;
 
 import java.math.BigDecimal;
 
-import jp.xet.timeandmoney.base.Rounding;
+import jp.xet.timeandmoney.util.Rounding;
 
 import org.apache.commons.lang.Validate;
 

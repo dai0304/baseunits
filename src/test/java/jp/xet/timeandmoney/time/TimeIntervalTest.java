@@ -13,6 +13,7 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import jp.xet.timeandmoney.intervals.Interval;
 import jp.xet.timeandmoney.tests.SerializationTester;
 
 import org.junit.Test;
@@ -333,7 +334,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#intersects(com.domainlanguage.intervals.Interval)}のテスト。
+	 * {@link TimeInterval#intersects(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

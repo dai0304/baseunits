@@ -17,26 +17,19 @@
  * free software is distributed under the "MIT" licence. See file licence.txt.
  * For more information, see http://timeandmoney.sourceforge.net.
  */
-package jp.xet.timeandmoney.base;
+package jp.xet.timeandmoney.util;
 
 import java.math.BigDecimal;
 
 /**
  * 丸めルールを表す列挙型。
  * 
+ * <p>演算の結果、数字を丸める際に適用するルールをあらわす。例えば、切り捨て,切り上げ,四捨五入など。</p>
+ * 
  * @author daisuke
  */
 public enum Rounding {
 	
-	/**
-	 * 切り上げルール CEILING。
-	 * 
-	 * <p>正の無限大に向けて切り上げを行う丸めルールを表す。</p>
-	 * 
-	 * @see BigDecimal#ROUND_CEILING
-	 */
-	CEILING(BigDecimal.ROUND_CEILING),
-
 	/**
 	 * 切り上げルール UP。
 	 * 
@@ -54,6 +47,15 @@ public enum Rounding {
 	 * @see BigDecimal#ROUND_DOWN
 	 */
 	DOWN(BigDecimal.ROUND_DOWN),
+
+	/**
+	 * 切り上げルール CEILING。
+	 * 
+	 * <p>正の無限大に向けて切り上げを行う丸めルールを表す。</p>
+	 * 
+	 * @see BigDecimal#ROUND_CEILING
+	 */
+	CEILING(BigDecimal.ROUND_CEILING),
 
 	/**
 	 * 切り捨てルール FLOOR。

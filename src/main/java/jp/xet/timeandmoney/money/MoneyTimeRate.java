@@ -21,9 +21,9 @@ package jp.xet.timeandmoney.money;
 
 import java.util.Currency;
 
-import jp.xet.timeandmoney.base.Rounding;
 import jp.xet.timeandmoney.time.Duration;
 import jp.xet.timeandmoney.time.TimeRate;
+import jp.xet.timeandmoney.util.Rounding;
 
 import org.apache.commons.lang.Validate;
 

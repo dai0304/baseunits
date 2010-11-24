@@ -12,11 +12,11 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Currency;
 
-import jp.xet.timeandmoney.base.Rounding;
 import jp.xet.timeandmoney.money.Money;
 import jp.xet.timeandmoney.money.MoneyTimeRate;
 import jp.xet.timeandmoney.money.Proration;
 import jp.xet.timeandmoney.time.Duration;
+import jp.xet.timeandmoney.util.Rounding;
 
 import org.junit.Test;
 

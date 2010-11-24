@@ -22,7 +22,7 @@ package jp.xet.timeandmoney.time;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import jp.xet.timeandmoney.base.Ratio;
+import jp.xet.timeandmoney.util.Ratio;
 
 import org.apache.commons.lang.Validate;
 

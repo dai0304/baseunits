@@ -4,7 +4,7 @@
  * For more information, see http://timeandmoney.sourceforge.net.
  */
 
-package jp.xet.timeandmoney.base;
+package jp.xet.timeandmoney.util;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.not;
@@ -12,6 +12,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+
+import jp.xet.timeandmoney.util.Ratio;
+import jp.xet.timeandmoney.util.Rounding;
 
 import org.junit.Test;
 

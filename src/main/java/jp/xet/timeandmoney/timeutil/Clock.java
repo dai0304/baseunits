@@ -33,7 +33,7 @@ import jp.xet.timeandmoney.time.TimeSource;
  * @version $Id$
  * @author daisuke
  */
-public class Clock {
+public final class Clock {
 	
 	private static TimeSource timeSource;
 	

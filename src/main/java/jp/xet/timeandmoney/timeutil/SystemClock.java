@@ -19,8 +19,6 @@
  */
 package jp.xet.timeandmoney.timeutil;
 
-import java.util.Date;
-
 import jp.xet.timeandmoney.time.TimePoint;
 import jp.xet.timeandmoney.time.TimeSource;
 
@@ -56,6 +54,6 @@ public final class SystemClock implements TimeSource {
 	
 	@Override
 	public TimePoint now() {
-		return TimePoint.from(new Date());
+		return TimePoint.from(System.currentTimeMillis());
 	}
 }

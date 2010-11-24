@@ -19,12 +19,40 @@ import org.junit.Test;
 public class IntervalLimitTest {
 	
 	/**
+	 * {@link IntervalLimit#equals(Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Equals() throws Exception {
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.lower(false, 10)), is(true));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.lower(false, 10)), is(false));
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.lower(true, 10)), is(false));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.lower(true, 10)), is(true));
+		
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.upper(false, 10)), is(true));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.upper(false, 10)), is(false));
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.upper(true, 10)), is(false));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.upper(true, 10)), is(true));
+		
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(false, 10)), is(false));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(false, 10)), is(false));
+		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(true, 10)), is(false));
+		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(true, 10)), is(false));
+		
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(false, 10)), is(false));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(false, 10)), is(false));
+		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(true, 10)), is(false));
+		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(true, 10)), is(false));
+	}
+	
+	/**
 	 * {@link IntervalLimit#compareTo(IntervalLimit)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test01_Unlimited() throws Exception {
+	public void test02_compare() throws Exception {
 		IntervalLimit<Integer> lowerInf = IntervalLimit.<Integer> lower(false, null);
 		IntervalLimit<Integer> upperInf = IntervalLimit.<Integer> upper(false, null);
 		IntervalLimit<Integer> lowerOpen2 = IntervalLimit.lower(false, 2);
@@ -135,40 +163,12 @@ public class IntervalLimitTest {
 	}
 	
 	/**
-	 * {@link IntervalLimit#equals(Object)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test02_equals() throws Exception {
-		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.lower(false, 10)), is(true));
-		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.lower(false, 10)), is(false));
-		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.lower(true, 10)), is(false));
-		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.lower(true, 10)), is(true));
-		
-		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.upper(false, 10)), is(true));
-		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.upper(false, 10)), is(false));
-		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.upper(true, 10)), is(false));
-		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.upper(true, 10)), is(true));
-		
-		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(false, 10)), is(false));
-		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(false, 10)), is(false));
-		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.upper(true, 10)), is(false));
-		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.upper(true, 10)), is(false));
-		
-		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(false, 10)), is(false));
-		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(false, 10)), is(false));
-		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(true, 10)), is(false));
-		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(true, 10)), is(false));
-	}
-	
-	/**
 	 * {@link IntervalLimit#compareTo(IntervalLimit)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test03_compare() throws Exception {
+	public void test03_sort() throws Exception {
 		List<IntervalLimit<Integer>> list = new ArrayList<IntervalLimit<Integer>>();
 		list.add(IntervalLimit.<Integer> upper(false, null));
 		list.add(IntervalLimit.<Integer> upper(true, null));

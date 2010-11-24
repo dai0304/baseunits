@@ -14,9 +14,9 @@ import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
 
-import jp.xet.timeandmoney.base.Ratio;
-import jp.xet.timeandmoney.base.Rounding;
 import jp.xet.timeandmoney.tests.SerializationTester;
+import jp.xet.timeandmoney.util.Ratio;
+import jp.xet.timeandmoney.util.Rounding;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -15,8 +15,8 @@ import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 
-import jp.xet.timeandmoney.base.Rounding;
 import jp.xet.timeandmoney.tests.SerializationTester;
+import jp.xet.timeandmoney.util.Rounding;
 
 import org.junit.Test;
 

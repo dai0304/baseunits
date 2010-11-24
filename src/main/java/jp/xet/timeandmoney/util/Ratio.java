@@ -17,7 +17,7 @@
  * free software is distributed under the "MIT" licence. See file licence.txt.
  * For more information, see http://timeandmoney.sourceforge.net.
  */
-package jp.xet.timeandmoney.base;
+package jp.xet.timeandmoney.util;
 
 import java.math.BigDecimal;
 
@@ -28,7 +28,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>このクラスの利点は、比率の計算を遅延評価できることにある。</p>
  * 
- * Ratio represents the unitless division of two quantities of the same type.
+ * <p>Ratio represents the unitless division of two quantities of the same type.
  * The key to its usefulness is that it defers the calculation of a decimal
  * value for the ratio. An object which has responsibility for the two values in
  * the ratio and understands their quantities can create the ratio, which can
@@ -36,9 +36,9 @@ import org.apache.commons.lang.Validate;
  * required to understand the units of the quantity. At the same time, this
  * gives control of the precision and rounding rules to the client, when the
  * time comes to compute a decimal value for the ratio. The client typically has
- * the responsibilities that enable an appropriate choice of these parameters.
+ * the responsibilities that enable an appropriate choice of these parameters.<p>
  *  
- * @author  Eric Evans
+ * @author Eric Evans
  */
 public class Ratio {
 	
