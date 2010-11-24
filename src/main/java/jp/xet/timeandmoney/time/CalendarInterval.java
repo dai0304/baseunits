@@ -245,7 +245,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * {@code true}を返すので、無限ループに注意すること。</p>
 	 * 
 	 * @return 日付の反復子
-	 * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
+	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
 	 */
 	public Iterator<CalendarDate> daysIterator() {
 		if (hasLowerLimit() == false) {
@@ -443,7 +443,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @param subintervalLength 反復子が返す期間の長さ
 	 * @return 期間の反復子
-	 * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
+	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
 	 * @throws IllegalArgumentException 引数subintervalLengthの長さ単位が「日」未満の場合
 	 */
 	public Iterator<CalendarInterval> subintervalIterator(Duration subintervalLength) {
