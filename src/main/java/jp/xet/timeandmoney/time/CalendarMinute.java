@@ -60,6 +60,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
 	 */
 	public static CalendarMinute dateHourAndMinute(int year, int month, int day, int hour, int minute) {
 		return new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.hourAndMinute(hour, minute));
@@ -87,9 +88,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 */
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
-		return TimePoint.at(date.breachEncapsulationOfYear(), date.breachEncapsulationOfMonth(),
-				date.breachEncapsulationOfDay(), time.breachEncapsulationOfHour(), time.breachEncapsulationOfMinute(),
-				0, 0, timeZone);
+		return TimePoint.from(date, time, timeZone);
 	}
 	
 	@Override

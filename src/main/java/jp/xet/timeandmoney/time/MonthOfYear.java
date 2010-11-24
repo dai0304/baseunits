@@ -25,7 +25,7 @@ import java.util.GregorianCalendar;
 public enum MonthOfYear {
 	
 	/** January */
-	JAN(1, DayOfMonth.of(31), Calendar.JANUARY),
+	JAN(1, DayOfMonth.valueOf(31), Calendar.JANUARY),
 
 	/** Feburary */
 	FEB(2, null, Calendar.FEBRUARY) {
@@ -33,39 +33,39 @@ public enum MonthOfYear {
 		@Override
 		public DayOfMonth getLastDayOfThisMonth(int year) {
 			GregorianCalendar calendar = new GregorianCalendar(year, 2, 1);
-			return calendar.isLeapYear(year) ? DayOfMonth.of(29) : DayOfMonth.of(28); // CHECKSTYLE IGNORE THIS LINE
+			return calendar.isLeapYear(year) ? DayOfMonth.valueOf(29) : DayOfMonth.valueOf(28); // CHECKSTYLE IGNORE THIS LINE
 		}
 	},
 	
 	/** March */
-	MAR(3, DayOfMonth.of(31), Calendar.MARCH),
+	MAR(3, DayOfMonth.valueOf(31), Calendar.MARCH),
 
 	/** April */
-	APR(4, DayOfMonth.of(30), Calendar.APRIL),
+	APR(4, DayOfMonth.valueOf(30), Calendar.APRIL),
 
 	/** May */
-	MAY(5, DayOfMonth.of(31), Calendar.MAY),
+	MAY(5, DayOfMonth.valueOf(31), Calendar.MAY),
 
 	/** June */
-	JUN(6, DayOfMonth.of(30), Calendar.JUNE),
+	JUN(6, DayOfMonth.valueOf(30), Calendar.JUNE),
 
 	/** July */
-	JUL(7, DayOfMonth.of(31), Calendar.JULY),
+	JUL(7, DayOfMonth.valueOf(31), Calendar.JULY),
 
 	/** August */
-	AUG(8, DayOfMonth.of(31), Calendar.AUGUST),
+	AUG(8, DayOfMonth.valueOf(31), Calendar.AUGUST),
 
 	/** September */
-	SEP(9, DayOfMonth.of(30), Calendar.SEPTEMBER),
+	SEP(9, DayOfMonth.valueOf(30), Calendar.SEPTEMBER),
 
 	/** October */
-	OCT(10, DayOfMonth.of(31), Calendar.OCTOBER),
+	OCT(10, DayOfMonth.valueOf(31), Calendar.OCTOBER),
 
 	/** November */
-	NOV(11, DayOfMonth.of(30), Calendar.NOVEMBER),
+	NOV(11, DayOfMonth.valueOf(30), Calendar.NOVEMBER),
 
 	/** December */
-	DEC(12, DayOfMonth.of(31), Calendar.DECEMBER);
+	DEC(12, DayOfMonth.valueOf(31), Calendar.DECEMBER);
 	
 	/**
 	 * {@link Calendar}に定義されている定数値から、インスタンスを取得する。
@@ -98,8 +98,8 @@ public enum MonthOfYear {
 	}
 	
 
-	/** number of month */
-	public final int value;
+	/** 1 based: January = 1, February = 2, ... */
+	final int value;
 	
 	/** その月の最終日 */
 	private final DayOfMonth lastDay;
@@ -153,5 +153,9 @@ public enum MonthOfYear {
 			return false;
 		}
 		return value < other.value;
+	}
+	
+	public CalendarMonth yearMonth(int year) {
+		return CalendarMonth.from(year, this);
 	}
 }

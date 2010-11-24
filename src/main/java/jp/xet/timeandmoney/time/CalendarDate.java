@@ -38,14 +38,16 @@ import org.apache.commons.lang.Validate;
 public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
-	 * @param month
-	 * @param day
-	 * @return
+	 * @param yearMonth 年月
+	 * @param day 日
+	 * @return {@link CalendarDate}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
 	 */
-	public static CalendarDate date(CalendarMonth month, int day) {
-		return date(month.breachEncapsulationOfYear(), month.breachEncapsulationOfMonth(), day);
+	public static CalendarDate date(CalendarMonth yearMonth, DayOfMonth day) {
+		return new CalendarDate(yearMonth, day);
 	}
 	
 	/**
@@ -57,20 +59,22 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
 	 */
 	public static CalendarDate date(int year, int month, int day) {
 		return from(year, month, day);
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
-	 * @param year
-	 * @param month
-	 * @param day
-	 * @return
+	 * @param year 年
+	 * @param month 月
+	 * @param day 日
+	 * @return {@link CalendarDate}
+	 * @throws IllegalArgumentException 引数{@code day}が{@code year}年の{@code month}の月に存在しない場合
 	 */
-	public static CalendarDate date(int year, MonthOfYear month, int day) {
+	public static CalendarDate date(int year, MonthOfYear month, DayOfMonth day) {
 		return date(CalendarMonth.from(year, month), day);
 	}
 	
@@ -83,9 +87,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
 	 */
 	public static CalendarDate from(int year, int month, int day) {
-		return new CalendarDate(year, month, day);
+		return new CalendarDate(CalendarMonth.from(year, month), DayOfMonth.valueOf(day));
 	}
 	
 	/**
@@ -128,20 +133,24 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 
-	private final int year;
+	private final CalendarMonth yearMonth;
 	
-	/** 1 based: January = 1, February = 2, ... */
-	private final int month;
-	
-	private final int day;
+	private final DayOfMonth day;
 	
 
-	CalendarDate(int year, int month, int day) {
-		Validate.isTrue(0 < month && month <= 12);
-		Validate.isTrue(0 < day && day <= 31); // CHECKSTYLE IGNORE THIS LINE
-		
-		this.year = year;
-		this.month = month;
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param yearMonth 年月
+	 * @param day 日
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+	 */
+	CalendarDate(CalendarMonth yearMonth, DayOfMonth day) {
+		Validate.notNull(yearMonth);
+		Validate.notNull(day);
+		Validate.isTrue(day.isApplyable(yearMonth));
+		this.yearMonth = yearMonth;
 		this.day = day;
 	}
 	
@@ -159,16 +168,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return TimeInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
 	}
 	
-	/**
-	 * このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
-	 * 
-	 * @param timeOfDay 時
-	 * @return 日時
-	 */
-	public CalendarMinute at(TimeOfDay timeOfDay) {
-		return CalendarMinute.dateAndTimeOfDay(this, timeOfDay);
-	}
-	
 	// comment-out by daisuke
 //	public CalendarDate start() {
 //		return this;
@@ -179,12 +178,13 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 //	}
 	
 	/**
-	 * このインスタンスが表現する日を含む年月を表す{@link CalendarMonth}を取得する。
+	 * このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
 	 * 
-	 * @return このインスタンスが表現する日を含む年月を表す期間
+	 * @param timeOfDay 時
+	 * @return 日時
 	 */
-	public CalendarMonth calendarMonth() {
-		return CalendarMonth.from(year, month);
+	public CalendarMinute at(TimeOfDay timeOfDay) {
+		return CalendarMinute.dateAndTimeOfDay(this, timeOfDay);
 	}
 	
 	/**
@@ -232,13 +232,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 			return false;
 		}
 		CalendarDate other = (CalendarDate) obj;
-		if (day != other.day) {
+		if (day.equals(other.day) == false) {
 			return false;
 		}
-		if (month != other.month) {
-			return false;
-		}
-		if (year != other.year) {
+		if (yearMonth.equals(other.yearMonth) == false) {
 			return false;
 		}
 		return true;
@@ -248,9 +245,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + day;
-		result = prime * result + month;
-		result = prime * result + year;
+		result = prime * result + day.hashCode();
+		result = prime * result + yearMonth.hashCode();
 		return result;
 	}
 	
@@ -283,19 +279,13 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		if (other == null) {
 			return false;
 		}
-		if (year < other.year) {
+		if (yearMonth.isBefore(other.breachEncapsulationOfYearMonth())) {
 			return true;
 		}
-		if (year > other.year) {
+		if (yearMonth.isAfter(other.breachEncapsulationOfYearMonth())) {
 			return false;
 		}
-		if (month < other.month) {
-			return true;
-		}
-		if (month > other.month) {
-			return false;
-		}
-		return day < other.day;
+		return day.isBefore(other.day);
 	}
 	
 	/**
@@ -304,7 +294,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @return このインスタンスが表現する日を含む年月を表す期間
 	 */
 	public CalendarInterval monthCalendarInterval() {
-		return CalendarInterval.month(year, month);
+		return CalendarInterval.month(yearMonth);
 	}
 	
 	/**
@@ -380,7 +370,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 */
 	public TimePoint startAsTimePoint(TimeZone zone) {
 		Validate.notNull(zone);
-		return TimePoint.atMidnight(year, month, day, zone);
+		return TimePoint.atMidnight(this, zone);
 	}
 	
 	/**
@@ -424,15 +414,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @return このインスタンスが表現する日を含む年を表す期間
 	 */
 	public CalendarInterval year() {
-		return CalendarInterval.year(year);
+		return CalendarInterval.year(yearMonth.breachEncapsulationOfYear());
 	}
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {
 		TimeZone zone = TimeZone.getTimeZone("Universal");
 		Calendar calendar = Calendar.getInstance(zone);
-		calendar.set(Calendar.YEAR, year);
-		calendar.set(Calendar.MONTH, month - 1);
-		calendar.set(Calendar.DATE, day);
+		calendar.set(Calendar.YEAR, yearMonth.breachEncapsulationOfYear());
+		calendar.set(Calendar.MONTH, yearMonth.breachEncapsulationOfMonth().value - 1);
+		calendar.set(Calendar.DATE, day.value);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
@@ -440,15 +430,17 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return calendar;
 	}
 	
-	int breachEncapsulationOfDay() {
+	DayOfMonth breachEncapsulationOfDay() {
 		return day;
 	}
 	
-	int breachEncapsulationOfMonth() {
-		return month;
+	/**
+	 * このインスタンスが表現する日を含む年月を表す{@link CalendarMonth}を取得する。
+	 * 
+	 * @return このインスタンスが表現する日を含む年月を表す期間
+	 */
+	CalendarMonth breachEncapsulationOfYearMonth() {
+		return yearMonth;
 	}
 	
-	int breachEncapsulationOfYear() {
-		return year;
-	}
 }

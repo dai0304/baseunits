@@ -16,12 +16,15 @@
  */
 package jp.xet.timeandmoney.time;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.Validate;
 
 /**
  * 1ヶ月間の中の特定の「日」を表すクラス。
  */
-public class DayOfMonth {
+@SuppressWarnings("serial")
+public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	
 	private static final int MIN = 1;
 	
@@ -31,12 +34,16 @@ public class DayOfMonth {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param day 日をあらわす正数（1〜31）
+	 * <p>年月を利用して、範囲チェックを行う。</p>
+	 * 
+	 * @param day 日をあらわす正数
+	 * @param month 年月（チェック用）
 	 * @return {@link DayOfMonth}
 	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}の日が与えた年月に存在しない場合
 	 */
-	public static DayOfMonth of(int day) {
-		return new DayOfMonth(day);
+	public static DayOfMonth of(int day, CalendarMonth month) {
+		return new DayOfMonth(day, month);
 	}
 	
 	/**
@@ -50,9 +57,21 @@ public class DayOfMonth {
 	 * @return {@link DayOfMonth}
 	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}の値が与えた年月に適合しない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static DayOfMonth of(int year, MonthOfYear month, int day) {
-		return new DayOfMonth(year, month, day);
+		return new DayOfMonth(day, month.yearMonth(year));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param day 日をあらわす正数（1〜31）
+	 * @return {@link DayOfMonth}
+	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
+	 */
+	public static DayOfMonth valueOf(int day) {
+		return new DayOfMonth(day);
 	}
 	
 
@@ -75,21 +94,25 @@ public class DayOfMonth {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * <p>年と月を利用して、範囲チェックを行う。</p>
+	 * <p>年月を利用して、範囲チェックを行う。</p>
 	 * 
-	 * @param year 年
-	 * @param month 月
 	 * @param day 日をあらわす正数
+	 * @param month 年月
 	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code day}の値が与えた年月に適合しない場合
+	 * @throws IllegalArgumentException 引数{@code day}の日が与えた年月に存在しない場合
 	 */
-	public DayOfMonth(int year, MonthOfYear month, int day) {
+	public DayOfMonth(int day, CalendarMonth month) {
 		if (day < MIN || day > MAX) {
 			throw new IllegalArgumentException("Illegal value for day of month: " + day
 					+ ", please use a value between 1 and 31");
 		}
 		value = day;
-		Validate.isTrue(isApplyable(year, month), String.format("%d-%02d-%02d", year, month.value, day));
+		Validate.isTrue(isApplyable(month), String.format("%s-%02d is invalid.", month.toString(), day));
+	}
+	
+	@Override
+	public int compareTo(DayOfMonth o) {
+		return Integer.valueOf(value).compareTo(o.value);
 	}
 	
 	@Override

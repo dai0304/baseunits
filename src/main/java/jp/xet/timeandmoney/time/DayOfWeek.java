@@ -64,7 +64,7 @@ public enum DayOfWeek {
 	
 
 	/** {@link Calendar}に定義されている定数値 */
-	public final int value;
+	final int value;
 	
 
 	DayOfWeek(int value) {

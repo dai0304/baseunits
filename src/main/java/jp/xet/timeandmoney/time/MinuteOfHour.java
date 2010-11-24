@@ -19,12 +19,15 @@
  */
 package jp.xet.timeandmoney.time;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.Validate;
 
 /**
  * 1時間の中の特定の「分」を表すクラス。
  */
-public class MinuteOfHour {
+@SuppressWarnings("serial")
+public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	
 	private static final int MIN = 0;
 	
@@ -52,6 +55,11 @@ public class MinuteOfHour {
 					+ ", please use a value between 0 and 59");
 		}
 		value = initial;
+	}
+	
+	@Override
+	public int compareTo(MinuteOfHour o) {
+		return Integer.valueOf(value).compareTo(o.value);
 	}
 	
 	@Override

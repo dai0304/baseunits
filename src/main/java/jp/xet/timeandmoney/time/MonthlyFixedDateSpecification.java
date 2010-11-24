@@ -26,24 +26,24 @@ import org.apache.commons.lang.Validate;
  */
 class MonthlyFixedDateSpecification extends MonthlyDateSpecification {
 	
-	private final int day;
+	private final DayOfMonth day;
 	
 
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param day 日を表す正数（1〜31）
-	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 * @param day 日
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	MonthlyFixedDateSpecification(int day) {
-		Validate.isTrue(1 <= day && day <= 31); // CHECKSTYLE IGNORE THIS LINE
+	MonthlyFixedDateSpecification(DayOfMonth day) {
+		Validate.notNull(day);
 		this.day = day;
 	}
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return day == date.breachEncapsulationOfDay();
+		return day.equals(date.breachEncapsulationOfDay());
 	}
 	
 	@Override

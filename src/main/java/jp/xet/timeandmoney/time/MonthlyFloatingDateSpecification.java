@@ -49,15 +49,15 @@ class MonthlyFloatingDateSpecification extends MonthlyDateSpecification {
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return ofYearMonth(date.calendarMonth()).equals(date);
+		return ofYearMonth(date.breachEncapsulationOfYearMonth()).equals(date);
 	}
 	
 	@Override
 	public CalendarDate ofYearMonth(CalendarMonth month) {
-		CalendarDate firstOfMonth = CalendarDate.date(month, 1);
+		CalendarDate firstOfMonth = CalendarDate.date(month, DayOfMonth.valueOf(1));
 		int dayOfWeekOffset = dayOfWeek.value - firstOfMonth.dayOfWeek().value;
 		int dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (dayOfWeekOffset < 0 ? 8 : 1);
 		int date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek;
-		return CalendarDate.date(month, date);
+		return CalendarDate.date(month, DayOfMonth.of(date, month));
 	}
 }

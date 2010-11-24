@@ -38,6 +38,17 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	private static final TimeZone GMT = TimeZone.getTimeZone("Universal");
 	
 
+	public static TimePoint from(CalendarDate date, TimeOfDay time, TimeZone timeZone) {
+		return at(date.breachEncapsulationOfYearMonth(), date.breachEncapsulationOfDay(),
+				time.breachEncapsulationOfHour(), time.breachEncapsulationOfMinute(), 0, 0, timeZone);
+	}
+	
+	public static TimePoint at(CalendarMonth calendarMonth, DayOfMonth day, int hour,
+			int minute, int second, int millisecond, TimeZone zone) {
+		return at(calendarMonth.breachEncapsulationOfYear(), calendarMonth.breachEncapsulationOfMonth(),
+				day, hour, minute, second, millisecond, zone);
+	}
+	
 	/**
 	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
 	 * 
@@ -65,8 +76,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		calendar.set(Calendar.MILLISECOND, millisecond);
 		return from(calendar);
 	}
-	
-// CREATION METHODS
 	
 	/**
 	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
@@ -101,6 +110,24 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint at(int year, int month, int date, int hour, int minute, TimeZone zone) {
 		Validate.notNull(zone);
 		return at(year, month, date, hour, minute, 0, 0, zone);
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param year
+	 * @param month
+	 * @param date
+	 * @param hour
+	 * @param minute
+	 * @param second
+	 * @param millisecond
+	 * @param timeZone
+	 * @return
+	 */
+	public static TimePoint at(int year, MonthOfYear month, DayOfMonth day, int hour, int minute, int second,
+			int millisecond, TimeZone timeZone) {
+		return at(year, month.value, day.value, hour, minute, second, millisecond, timeZone);
 	}
 	
 	/**
@@ -189,6 +216,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public static TimePoint atGMT(int year, int month, int date, int hour, int minute, int second, int millisecond) {
 		return at(year, month, date, hour, minute, second, millisecond, GMT);
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param calendarDate
+	 * @param zone
+	 * @return
+	 * @since TODO
+	 */
+	public static TimePoint atMidnight(CalendarDate calendarDate, TimeZone zone) {
+		return at(calendarDate.breachEncapsulationOfYearMonth(),
+				calendarDate.breachEncapsulationOfDay(), 0, 0, 0, 0, zone);
 	}
 	
 	/**

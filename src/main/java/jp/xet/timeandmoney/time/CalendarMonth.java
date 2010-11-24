@@ -37,7 +37,7 @@ import org.apache.commons.lang.Validate;
 public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	
 	/**
-	 * 指定した年月日を表す、{@link CalendarMonth}のインスタンスを生成する。
+	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
 	 * 
 	 * @param year 西暦年をあらわす数
 	 * @param month 月をあらわす正数（1〜12）
@@ -45,22 +45,23 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 */
 	public static CalendarMonth from(int year, int month) {
+		return new CalendarMonth(year, MonthOfYear.valueOf(month));
+	}
+	
+	/**
+	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
+	 * 
+	 * @param year 年
+	 * @param month 月
+	 * @return {@link CalendarMonth}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static CalendarMonth from(int year, MonthOfYear month) {
 		return new CalendarMonth(year, month);
 	}
 	
 	/**
-	 * TODO for daisuke
-	 * 
-	 * @param year
-	 * @param month
-	 * @return
-	 */
-	public static CalendarMonth from(int year, MonthOfYear month) {
-		return new CalendarMonth(year, month.value);
-	}
-	
-	/**
-	 * 指定した年月日を表す、{@link CalendarMonth}のインスタンスを生成する。
+	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
 	 * 
 	 * @param dateString 年月を表す文字列 
 	 * @param pattern 解析パターン文字列
@@ -112,13 +113,11 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 
 	private final int year;
 	
-	/** 1 based: January = 1, February = 2, ... */
-	private final int month;
+	private final MonthOfYear month;
 	
 
-	CalendarMonth(int year, int month) {
-		Validate.isTrue(0 < month && month <= 12);
-		
+	CalendarMonth(int year, MonthOfYear month) {
+		Validate.notNull(month);
 		this.year = year;
 		this.month = month;
 	}
@@ -143,17 +142,17 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 */
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
-		return TimePoint.at(year, month, 1, 0, 0, 0, 0, timeZone);
+		return TimePoint.at(year, month, DayOfMonth.valueOf(1), 0, 0, 0, 0, timeZone);
 	}
 	
 	/**
-	 * このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
+	 * このインスタンスが表す年月で、引数{@code day}で表す日を表す年月日を返す。
 	 * 
 	 * @param day 日（1〜31）
 	 * @return 日時
+	 * @throws IllegalArgumentException 引数{@code day}がこの月に存在しない場合
 	 */
-	public CalendarDate at(int day) {
-		Validate.isTrue(1 <= day && day <= 31); // CHECKSTYLE IGNORE THIS LINE
+	public CalendarDate at(DayOfMonth day) {
 		return CalendarDate.date(year, month, day);
 	}
 	
@@ -207,7 +206,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @return {@link DayOfMonth}
 	 */
 	public CalendarDate getLastDay() {
-		return CalendarDate.date(year, month, getLastDayOfMonth().value);
+		return CalendarDate.date(year, month, getLastDayOfMonth());
 	}
 	
 	/**
@@ -216,14 +215,14 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @return {@link DayOfMonth}
 	 */
 	public DayOfMonth getLastDayOfMonth() {
-		return MonthOfYear.valueOf(month).getLastDayOfThisMonth(year);
+		return month.getLastDayOfThisMonth(year);
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + month;
+		result = prime * result + ((month == null) ? 0 : month.hashCode());
 		result = prime * result + year;
 		return result;
 	}
@@ -263,7 +262,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		if (year > other.year) {
 			return false;
 		}
-		return month < other.month;
+		return month.isBefore(other.month);
 	}
 	
 	/**
@@ -376,7 +375,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		TimeZone zone = TimeZone.getTimeZone("Universal");
 		Calendar calendar = Calendar.getInstance(zone);
 		calendar.set(Calendar.YEAR, year);
-		calendar.set(Calendar.MONTH, month - 1);
+		calendar.set(Calendar.MONTH, month.value - 1);
 		calendar.set(Calendar.DATE, 1);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -385,7 +384,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		return calendar;
 	}
 	
-	int breachEncapsulationOfMonth() {
+	MonthOfYear breachEncapsulationOfMonth() {
 		return month;
 	}
 	

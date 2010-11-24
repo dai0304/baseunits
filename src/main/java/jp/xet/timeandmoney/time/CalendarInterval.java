@@ -105,7 +105,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @return 期間
 	 */
 	public static CalendarInterval month(CalendarMonth month) {
-		CalendarDate startDate = CalendarDate.date(month, 1);
+		CalendarDate startDate = CalendarDate.date(month, DayOfMonth.of(1, month));
 		CalendarDate endDate = startDate.plusMonths(1).plusDays(-1);
 		return inclusive(startDate, endDate);
 	}
@@ -120,7 +120,20 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @return 期間
 	 */
 	public static CalendarInterval month(int year, int month) {
-		CalendarDate startDate = CalendarDate.date(year, month, 1);
+		return month(year, MonthOfYear.valueOf(month));
+	}
+	
+	/**
+	 * 指定した年月の1日からその月末までの、期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * 
+	 * @param year 開始日の年
+	 * @param month 開始日の月
+	 * @return 期間
+	 */
+	public static CalendarInterval month(int year, MonthOfYear month) {
+		CalendarDate startDate = CalendarDate.date(year, month, DayOfMonth.valueOf(1));
 		CalendarDate endDate = startDate.plusMonths(1).plusDays(-1);
 		return inclusive(startDate, endDate);
 	}

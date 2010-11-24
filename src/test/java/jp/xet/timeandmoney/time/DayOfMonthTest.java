@@ -35,23 +35,23 @@ public class DayOfMonthTest {
 	@Test
 	public void test01_create() throws Exception {
 		for (int i = 1; i <= 31; i++) {
-			DayOfMonth.of(i);
+			DayOfMonth.valueOf(i);
 		}
 		
 		try {
-			DayOfMonth.of(0);
+			DayOfMonth.valueOf(0);
 			fail();
 		} catch (IllegalArgumentException e) {
 			// success
 		}
 		try {
-			DayOfMonth.of(-1);
+			DayOfMonth.valueOf(-1);
 			fail();
 		} catch (IllegalArgumentException e) {
 			// success
 		}
 		try {
-			DayOfMonth.of(32);
+			DayOfMonth.valueOf(32);
 			fail();
 		} catch (IllegalArgumentException e) {
 			// success
@@ -101,19 +101,19 @@ public class DayOfMonthTest {
 	 */
 	@Test
 	public void test03_isAfter() throws Exception {
-		assertThat(DayOfMonth.of(1).isAfter(DayOfMonth.of(1)), is(false));
-		assertThat(DayOfMonth.of(1).isAfter(DayOfMonth.of(2)), is(false));
+		assertThat(DayOfMonth.valueOf(1).isAfter(DayOfMonth.valueOf(1)), is(false));
+		assertThat(DayOfMonth.valueOf(1).isAfter(DayOfMonth.valueOf(2)), is(false));
 		
-		assertThat(DayOfMonth.of(2).isAfter(DayOfMonth.of(1)), is(true));
-		assertThat(DayOfMonth.of(2).isAfter(DayOfMonth.of(2)), is(false));
-		assertThat(DayOfMonth.of(2).isAfter(DayOfMonth.of(3)), is(false));
+		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(1)), is(true));
+		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(2)), is(false));
+		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(3)), is(false));
 		
-		assertThat(DayOfMonth.of(3).isAfter(DayOfMonth.of(2)), is(true));
-		assertThat(DayOfMonth.of(3).isAfter(DayOfMonth.of(3)), is(false));
-		assertThat(DayOfMonth.of(3).isAfter(DayOfMonth.of(4)), is(false));
+		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(2)), is(true));
+		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(3)), is(false));
+		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(4)), is(false));
 		
-		assertThat(DayOfMonth.of(12).isAfter(DayOfMonth.of(11)), is(true));
-		assertThat(DayOfMonth.of(12).isAfter(DayOfMonth.of(12)), is(false));
+		assertThat(DayOfMonth.valueOf(12).isAfter(DayOfMonth.valueOf(11)), is(true));
+		assertThat(DayOfMonth.valueOf(12).isAfter(DayOfMonth.valueOf(12)), is(false));
 	}
 	
 	/**
@@ -123,18 +123,18 @@ public class DayOfMonthTest {
 	 */
 	@Test
 	public void test03_isBefore() throws Exception {
-		assertThat(DayOfMonth.of(1).isBefore(DayOfMonth.of(1)), is(false));
-		assertThat(DayOfMonth.of(1).isBefore(DayOfMonth.of(2)), is(true));
+		assertThat(DayOfMonth.valueOf(1).isBefore(DayOfMonth.valueOf(1)), is(false));
+		assertThat(DayOfMonth.valueOf(1).isBefore(DayOfMonth.valueOf(2)), is(true));
 		
-		assertThat(DayOfMonth.of(2).isBefore(DayOfMonth.of(1)), is(false));
-		assertThat(DayOfMonth.of(2).isBefore(DayOfMonth.of(2)), is(false));
-		assertThat(DayOfMonth.of(2).isBefore(DayOfMonth.of(3)), is(true));
+		assertThat(DayOfMonth.valueOf(2).isBefore(DayOfMonth.valueOf(1)), is(false));
+		assertThat(DayOfMonth.valueOf(2).isBefore(DayOfMonth.valueOf(2)), is(false));
+		assertThat(DayOfMonth.valueOf(2).isBefore(DayOfMonth.valueOf(3)), is(true));
 		
-		assertThat(DayOfMonth.of(3).isBefore(DayOfMonth.of(2)), is(false));
-		assertThat(DayOfMonth.of(3).isBefore(DayOfMonth.of(3)), is(false));
-		assertThat(DayOfMonth.of(3).isBefore(DayOfMonth.of(4)), is(true));
+		assertThat(DayOfMonth.valueOf(3).isBefore(DayOfMonth.valueOf(2)), is(false));
+		assertThat(DayOfMonth.valueOf(3).isBefore(DayOfMonth.valueOf(3)), is(false));
+		assertThat(DayOfMonth.valueOf(3).isBefore(DayOfMonth.valueOf(4)), is(true));
 		
-		assertThat(DayOfMonth.of(12).isBefore(DayOfMonth.of(11)), is(false));
-		assertThat(DayOfMonth.of(12).isBefore(DayOfMonth.of(12)), is(false));
+		assertThat(DayOfMonth.valueOf(12).isBefore(DayOfMonth.valueOf(11)), is(false));
+		assertThat(DayOfMonth.valueOf(12).isBefore(DayOfMonth.valueOf(12)), is(false));
 	}
 }

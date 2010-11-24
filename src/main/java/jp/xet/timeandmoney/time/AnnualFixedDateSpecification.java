@@ -26,22 +26,21 @@ import org.apache.commons.lang.Validate;
  */
 class AnnualFixedDateSpecification extends AnnualDateSpecification {
 	
-	private final int month;
+	private final MonthOfYear month;
 	
-	private final int day;
+	private final DayOfMonth day;
 	
 
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param month 月を表す正数（1〜12）
-	 * @param day 日を表す正数（1〜31）
-	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 * @param month 月
+	 * @param day 日
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	AnnualFixedDateSpecification(int month, int day) {
-		Validate.isTrue(1 <= month && month <= 12);
-		Validate.isTrue(1 <= day && day <= 31); // CHECKSTYLE IGNORE THIS LINE
+	AnnualFixedDateSpecification(MonthOfYear month, DayOfMonth day) {
+		Validate.notNull(month);
+		Validate.notNull(day);
 		this.month = month;
 		this.day = day;
 	}
@@ -49,7 +48,8 @@ class AnnualFixedDateSpecification extends AnnualDateSpecification {
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return day == date.breachEncapsulationOfDay() && month == date.breachEncapsulationOfMonth();
+		return day.equals(date.breachEncapsulationOfDay())
+				&& month == date.breachEncapsulationOfYearMonth().breachEncapsulationOfMonth();
 	}
 	
 	@Override

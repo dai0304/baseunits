@@ -94,7 +94,7 @@ public class DateSpecificationTest {
 	public void test04_NthWeekdayInEveryMonth() throws Exception {
 		DateSpecification tsubasaHoliday = DateSpecification.nthOccuranceOfWeekdayInEveryMonth(DayOfWeek.SATURDAY, 2);
 		assertThat(((MonthlyFloatingDateSpecification) tsubasaHoliday).ofYearMonth(CalendarMonth.from(2010,
-				MonthOfYear.AUG)), is(CalendarDate.date(2010, MonthOfYear.AUG, 14)));
+				MonthOfYear.AUG)), is(CalendarDate.date(2010, MonthOfYear.AUG, DayOfMonth.valueOf(14))));
 		
 		CalendarInterval apr2009 = CalendarInterval.month(CalendarMonth.from(2009, MonthOfYear.APR));
 		assertThat(tsubasaHoliday.firstOccurrenceIn(apr2009), is(CalendarDate.date(2009, 4, 11)));
@@ -106,7 +106,7 @@ public class DateSpecificationTest {
 		assertThat(tsubasaHoliday.isSatisfiedBy(CalendarDate.date(2002, 1, 13)), is(false));
 		
 		// Calculate all the Tsubasa Holiday over a three month interval.
-		CalendarInterval y2002_2004 = CalendarInterval.inclusive(2002, 4, 1, 2002, 6, 31);
+		CalendarInterval y2002_2004 = CalendarInterval.inclusive(2002, 4, 1, 2002, 6, 30);
 		assertThat(tsubasaHoliday.firstOccurrenceIn(y2002_2004), is(CalendarDate.date(2002, 4, 13)));
 		Iterator<CalendarDate> iterator = tsubasaHoliday.iterateOver(y2002_2004);
 		assertThat(iterator.hasNext(), is(true));
@@ -144,7 +144,7 @@ public class DateSpecificationTest {
 	@Test
 	public void test06_IterateThroughInterval() throws Exception {
 		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
-		CalendarInterval ylate2002_early2005 = CalendarInterval.inclusive(2002, 8, 1, 2005, 6, 31);
+		CalendarInterval ylate2002_early2005 = CalendarInterval.inclusive(2002, 8, 1, 2005, 6, 30);
 		Iterator<CalendarDate> it = independenceDay.iterateOver(ylate2002_early2005);
 		assertThat(it.hasNext(), is(true));
 		assertThat(it.next(), is(CalendarDate.date(2003, 7, 4)));

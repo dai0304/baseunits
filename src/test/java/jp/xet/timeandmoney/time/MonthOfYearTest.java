@@ -33,14 +33,14 @@ public class MonthOfYearTest {
 	 */
 	@Test
 	public void test01_basic() throws Exception {
-		assertThat(MonthOfYear.JAN.getLastDayOfThisMonth(2010), is(DayOfMonth.of(31)));
+		assertThat(MonthOfYear.JAN.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(31)));
 		
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2010), is(DayOfMonth.of(28)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2000), is(DayOfMonth.of(29)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2004), is(DayOfMonth.of(29)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(1900), is(DayOfMonth.of(28)));
+		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(28)));
+		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2000), is(DayOfMonth.valueOf(29)));
+		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2004), is(DayOfMonth.valueOf(29)));
+		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(1900), is(DayOfMonth.valueOf(28)));
 		
-		assertThat(MonthOfYear.NOV.getLastDayOfThisMonth(2010), is(DayOfMonth.of(30)));
+		assertThat(MonthOfYear.NOV.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(30)));
 	}
 	
 }
