@@ -56,6 +56,7 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
+		Validate.notNull(date);
 		return ofYear(date.breachEncapsulationOfYear()).equals(date);
 	}
 	

@@ -223,6 +223,66 @@ public class BusinessCalendarTest {
 		assertThat(it.hasNext(), is(false));
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test13_JapaneseHoliday() throws Exception {
+		BusinessCalendar calendar = new BusinessCalendar();
+		
+		// 祝日の登録
+		calendar.addHolidaySpec(DateSpecification.fixed(1, 1)); // 元旦
+		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(1, DayOfWeek.MONDAY, 2)); // 成人の日
+		calendar.addHolidaySpec(DateSpecification.fixed(2, 11)); // 建国記念日
+		calendar.addHoliday(CalendarDate.date(2010, 3, 21)); // 春分の日
+		calendar.addHolidaySpec(DateSpecification.fixed(4, 29)); // 昭和の日
+		calendar.addHolidaySpec(DateSpecification.fixed(5, 3)); // 憲法記念日
+		calendar.addHolidaySpec(DateSpecification.fixed(5, 4)); // みどりの日
+		calendar.addHolidaySpec(DateSpecification.fixed(5, 5)); // こどもの日
+		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(7, DayOfWeek.MONDAY, 3)); // 海の日
+		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(9, DayOfWeek.MONDAY, 3)); // 敬老の日
+		calendar.addHoliday(CalendarDate.date(2010, 9, 23)); // 春分の日
+		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(10, DayOfWeek.MONDAY, 2)); // 体育の日
+		calendar.addHolidaySpec(DateSpecification.fixed(11, 3)); // 文化の日
+		calendar.addHolidaySpec(DateSpecification.fixed(11, 23)); // 勤労感謝の日
+		calendar.addHolidaySpec(DateSpecification.fixed(12, 23)); // 天皇誕生日
+		
+		// それぞれの日が「営業日」にあたるかどうかチェック。
+		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 8)), is(true)); // 金曜日
+		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 9)), is(false)); // 土曜日
+		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 10)), is(false)); // 日曜日
+		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 11)), is(false)); // 月曜日体育の日
+		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 12)), is(true)); // 火曜日平日
+		
+		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 11, 22)), is(true)); // 月曜日平日
+		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 11, 23)), is(false)); // 火曜日祝日
+		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 11, 24)), is(true)); // 水曜日平日
+		
+		// 振替休日（「国民の祝日」が日曜日にあたる場合、その直後の「国民の祝日」でない日を休日とする）とか、
+		// 国民の休日（「国民の祝日」と次の「国民の祝日」の間隔が中1日しかなくその中日（なかび）が「国民の祝日」でない場合、その日を休日とする）
+		// なんかには、まだ対応していないけど、DateSpecification実装すればどうにかならんかな、と思っている。
+		
+		Iterator<CalendarDate> itr =
+				calendar.businessDaysOnly(CalendarInterval.inclusive(2010, 10, 1, 2010, 11, 30).daysIterator());
+		StringBuilder sb = new StringBuilder();
+		while (itr.hasNext()) {
+			CalendarDate calendarDate = itr.next();
+			sb.append(calendarDate).append(" ");
+		}
+		assertThat(sb.toString(), is("2010-10-01 " +
+				"2010-10-04 2010-10-05 2010-10-06 2010-10-07 2010-10-08 " +
+				"2010-10-12 2010-10-13 2010-10-14 2010-10-15 " +
+				"2010-10-18 2010-10-19 2010-10-20 2010-10-21 2010-10-22 " +
+				"2010-10-25 2010-10-26 2010-10-27 2010-10-28 2010-10-29 " +
+				"2010-11-01 2010-11-02 2010-11-04 2010-11-05 " +
+				"2010-11-08 2010-11-09 2010-11-10 2010-11-11 2010-11-12 " +
+				"2010-11-15 2010-11-16 2010-11-17 2010-11-18 2010-11-19 " +
+				"2010-11-22 2010-11-24 2010-11-25 2010-11-26 " +
+				"2010-11-29 2010-11-30 "));
+	}
+	
 	private BusinessCalendar businessCalendar() {
 		BusinessCalendar cal = new BusinessCalendar();
 		cal.addHolidays(_HolidayDates.defaultHolidays());

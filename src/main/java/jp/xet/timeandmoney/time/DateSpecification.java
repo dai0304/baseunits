@@ -19,14 +19,19 @@
  */
 package jp.xet.timeandmoney.time;
 
+import java.util.Collections;
 import java.util.Iterator;
+
+import jp.xet.timeandmoney.util.spec.AbstractSpecification;
+
+import org.apache.commons.lang.Validate;
 
 /**
  * 日付の仕様を表現するオブジェクト。DDDのSpecificationパターンオブジェクト。
  * 
  * @author daisuke
  */
-public abstract class DateSpecification {
+public abstract class DateSpecification extends AbstractSpecification<CalendarDate> {
 	
 	/**
 	 * 日付仕様のインスタンスを生成する。
@@ -39,6 +44,35 @@ public abstract class DateSpecification {
 	 */
 	public static DateSpecification fixed(int month, int day) {
 		return new FixedDateSpecification(month, day);
+	}
+	
+	/**
+	 * どの日付にもマッチしない日付仕様を返す。
+	 * 
+	 * @return 日付仕様
+	 */
+	public static DateSpecification never() {
+		return new DateSpecification() {
+			
+			@Override
+			public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
+				Validate.notNull(interval);
+				return null;
+			}
+			
+			@Override
+			public boolean isSatisfiedBy(CalendarDate date) {
+				Validate.notNull(date);
+				return false;
+			}
+			
+			@Override
+			@SuppressWarnings("unchecked")
+			public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
+				return Collections.EMPTY_LIST.iterator();
+			}
+			
+		};
 	}
 	
 	/**
@@ -68,7 +102,9 @@ public abstract class DateSpecification {
 	 * 
 	 * @param date 検証対象の日付
 	 * @return 仕様を満たす場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
+	@Override
 	public abstract boolean isSatisfiedBy(CalendarDate date);
 	
 	/**

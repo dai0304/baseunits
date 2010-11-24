@@ -19,13 +19,13 @@
  */
 package jp.xet.timeandmoney.time;
 
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 import jp.xet.timeandmoney.util.ImmutableIterator;
+import jp.xet.timeandmoney.util.spec.Specification;
 
 import org.apache.commons.lang.Validate;
 
@@ -40,17 +40,9 @@ import org.apache.commons.lang.Validate;
  */
 public class BusinessCalendar {
 	
-	/**
-	 * Should be rewritten for each particular organization
-	 *  
-	 * @return 営業日の{@link Set} 
-	 */
-	static Set<CalendarDate> defaultHolidays() {
-		return new HashSet<CalendarDate>();
-	}
-	
-
 	private final Set<CalendarDate> holidays;
+	
+	private Specification<CalendarDate> holidaySpecs;
 	
 
 	/**
@@ -58,6 +50,16 @@ public class BusinessCalendar {
 	 */
 	public BusinessCalendar() {
 		holidays = defaultHolidays();
+		holidaySpecs = defaultHolidaySpecs();
+	}
+	
+	/**
+	 * 休日として取り扱う「日」を追加する。
+	 * 
+	 * @param date 休日として取り扱う「日」 
+	 */
+	public void addHoliday(CalendarDate date) {
+		holidays.add(date);
 	}
 	
 	/**
@@ -67,6 +69,15 @@ public class BusinessCalendar {
 	 */
 	public void addHolidays(Set<CalendarDate> days) {
 		holidays.addAll(days);
+	}
+	
+	/**
+	 * 休日として取り扱う「日付仕様」を追加する。
+	 * 
+	 * @param specs 休日として取り扱う「日付仕様」 
+	 */
+	public void addHolidaySpec(Specification<CalendarDate> specs) {
+		holidaySpecs = holidaySpecs.or(specs);
 	}
 	
 	/**
@@ -135,6 +146,9 @@ public class BusinessCalendar {
 	/**
 	 * {@link CalendarDate}が営業日に当たるかどうか調べる。
 	 * 
+	 * <p>デフォルトの実装として、週末でなく休日でない日を営業日とするが、
+	 * 業態によってはオーバーライドの可能性があるので注意すること。</p>
+	 * 
 	 * @param day 日
 	 * @return 営業日に当たる場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
@@ -152,7 +166,7 @@ public class BusinessCalendar {
 	 * @return 休日に当たる場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public boolean isHoliday(CalendarDate day) {
-		return holidays.contains(day);
+		return holidays.contains(day) || holidaySpecs.isSatisfiedBy(day);
 	}
 	
 	/**
@@ -166,9 +180,8 @@ public class BusinessCalendar {
 	 */
 	public boolean isWeekend(CalendarDate day) {
 		Validate.notNull(day);
-		Calendar calday = day.asJavaCalendarUniversalZoneMidnight();
-		return (calday.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
-				|| (calday.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY);
+		DayOfWeek dow = day.dayOfWeek();
+		return dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY;
 	}
 	
 	/**
@@ -235,6 +248,24 @@ public class BusinessCalendar {
 		}
 		Iterator<CalendarDate> iterator = CalendarInterval.everFrom(startDate).daysIterator();
 		return nextNumberOfBusinessDays(numberOfDays, iterator);
+	}
+	
+	/**
+	 * Should be overriden for each particular organization
+	 *  
+	 * @return 営業日の{@link Set} 
+	 */
+	protected Set<CalendarDate> defaultHolidays() {
+		return new HashSet<CalendarDate>();
+	}
+	
+	/**
+	 * Should be overriden for each particular organization
+	 *  
+	 * @return 営業日の{@link Set} 
+	 */
+	protected DateSpecification defaultHolidaySpecs() {
+		return DateSpecification.never();
 	}
 	
 	/**

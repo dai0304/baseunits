@@ -50,6 +50,7 @@ class FixedDateSpecification extends AnnualDateSpecification {
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
+		Validate.notNull(date);
 		return day == date.breachEncapsulationOfDay() && month == date.breachEncapsulationOfMonth();
 	}
 	
