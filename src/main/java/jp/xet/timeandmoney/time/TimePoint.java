@@ -38,15 +38,26 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	private static final TimeZone GMT = TimeZone.getTimeZone("Universal");
 	
 
-	public static TimePoint from(CalendarDate date, TimeOfDay time, TimeZone timeZone) {
-		return at(date.breachEncapsulationOfYearMonth(), date.breachEncapsulationOfDay(),
-				time.breachEncapsulationOfHour(), time.breachEncapsulationOfMinute(), 0, 0, timeZone);
-	}
-	
-	public static TimePoint at(CalendarMonth calendarMonth, DayOfMonth day, int hour,
+	/**
+	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 
+	 * @param yearMonth 年月
+	 * @param date 日
+	 * @param hour 時
+	 * @param minute 分
+	 * @param second 秒
+	 * @param millisecond ミリ秒
+	 * @param zone タイムゾーン
+	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static TimePoint at(CalendarMonth yearMonth, DayOfMonth date, int hour,
 			int minute, int second, int millisecond, TimeZone zone) {
-		return at(calendarMonth.breachEncapsulationOfYear(), calendarMonth.breachEncapsulationOfMonth(),
-				day, hour, minute, second, millisecond, zone);
+		Validate.notNull(yearMonth);
+		Validate.notNull(date);
+		Validate.notNull(zone);
+		return at(yearMonth.breachEncapsulationOfYear(), yearMonth.breachEncapsulationOfMonth().value,
+				date.value, hour, minute, second, millisecond, zone);
 	}
 	
 	/**
@@ -113,21 +124,25 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
 	 * 
-	 * @param year
-	 * @param month
-	 * @param date
-	 * @param hour
-	 * @param minute
-	 * @param second
-	 * @param millisecond
-	 * @param timeZone
-	 * @return
+	 * @param year 年
+	 * @param month 月
+	 * @param date 日
+	 * @param hour 時
+	 * @param minute 分
+	 * @param second 秒
+	 * @param millisecond ミリ秒
+	 * @param zone タイムゾーン
+	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static TimePoint at(int year, MonthOfYear month, DayOfMonth day, int hour, int minute, int second,
-			int millisecond, TimeZone timeZone) {
-		return at(year, month.value, day.value, hour, minute, second, millisecond, timeZone);
+	public static TimePoint at(int year, MonthOfYear month, DayOfMonth date, int hour, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
+			int millisecond, TimeZone zone) {
+		Validate.notNull(month);
+		Validate.notNull(date);
+		Validate.notNull(zone);
+		return at(year, month.value, date.value, hour, minute, second, millisecond, zone);
 	}
 	
 	/**
@@ -219,14 +234,16 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定したタイムゾーンにおける、指定した日時の午前0時（深夜）を表すインスタンスを取得する。
 	 * 
-	 * @param calendarDate
-	 * @param zone
-	 * @return
-	 * @since TODO
+	 * @param calendarDate 日付
+	 * @param zone タイムゾーン
+	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static TimePoint atMidnight(CalendarDate calendarDate, TimeZone zone) {
+		Validate.notNull(calendarDate);
+		Validate.notNull(zone);
 		return at(calendarDate.breachEncapsulationOfYearMonth(),
 				calendarDate.breachEncapsulationOfDay(), 0, 0, 0, 0, zone);
 	}
@@ -268,6 +285,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint from(Calendar calendar) {
 		Validate.notNull(calendar);
 		return from(calendar.getTime());
+	}
+	
+	/**
+	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 
+	 * @param date 日付
+	 * @param time 時間
+	 * @param zone タイムゾーン
+	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static TimePoint from(CalendarDate date, TimeOfDay time, TimeZone zone) {
+		Validate.notNull(date);
+		Validate.notNull(time);
+		Validate.notNull(zone);
+		return at(date.breachEncapsulationOfYearMonth(), date.breachEncapsulationOfDay(),
+				time.breachEncapsulationOfHour(), time.breachEncapsulationOfMinute(), 0, 0, zone);
 	}
 	
 	/**
