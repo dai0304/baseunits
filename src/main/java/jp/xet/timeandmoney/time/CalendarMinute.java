@@ -19,6 +19,7 @@
  */
 package jp.xet.timeandmoney.time;
 
+import java.io.Serializable;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.Validate;
@@ -29,7 +30,8 @@ import org.apache.commons.lang.Validate;
  * <p>{@link java.util.Date}と異なり、分未満（秒以下）の概念を持っていない。また、{@link TimePoint}と異なり、
  * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
-public class CalendarMinute {
+@SuppressWarnings("serial")
+public class CalendarMinute implements Comparable<CalendarMinute>, Serializable {
 	
 	/**
 	 * 指定した年月日を時分表す、{@link CalendarMinute}のインスタンスを生成する。
@@ -88,6 +90,12 @@ public class CalendarMinute {
 		return TimePoint.at(date.breachEncapsulationOfYear(), date.breachEncapsulationOfMonth(),
 				date.breachEncapsulationOfDay(), time.breachEncapsulationOfHour(), time.breachEncapsulationOfMinute(),
 				0, 0, timeZone);
+	}
+	
+	@Override
+	public int compareTo(CalendarMinute arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	@Override

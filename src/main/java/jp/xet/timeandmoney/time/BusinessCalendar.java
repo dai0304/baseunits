@@ -248,7 +248,7 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * Should be overriden for each particular organization
+	 * Should be overriden for each particular organization.
 	 *  
 	 * @return 営業日の{@link Set} 
 	 */
@@ -257,7 +257,7 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * Should be overriden for each particular organization
+	 * Should be overriden for each particular organization.
 	 *  
 	 * @return 営業日の{@link Set} 
 	 */

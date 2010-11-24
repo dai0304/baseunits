@@ -22,11 +22,9 @@ package jp.xet.timeandmoney.time;
 import org.apache.commons.lang.Validate;
 
 /**
- * X月の第Y◎曜日、を表す日付仕様。
+ * 毎月の第Y◎曜日、を表す日付仕様。
  */
-class FloatingDateSpecification extends AnnualDateSpecification {
-	
-	private final int month;
+class MonthlyFloatingDateSpecification extends MonthlyDateSpecification {
 	
 	private final DayOfWeek dayOfWeek;
 	
@@ -36,18 +34,14 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param month 月を表す正数（1〜12）
 	 * @param dayOfWeek 曜日
 	 * @param occurrence 周回数（1〜5）
-	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code dayOfWeek}に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code occurrence}が1〜5の範囲ではない場合
 	 */
-	FloatingDateSpecification(int month, DayOfWeek dayOfWeek, int occurrence) {
-		Validate.isTrue(1 <= month && month <= 12);
+	MonthlyFloatingDateSpecification(DayOfWeek dayOfWeek, int occurrence) {
 		Validate.notNull(dayOfWeek);
 		Validate.isTrue(1 <= occurrence && occurrence <= 5);
-		this.month = month;
 		this.dayOfWeek = dayOfWeek;
 		this.occurrence = occurrence;
 	}
@@ -55,15 +49,15 @@ class FloatingDateSpecification extends AnnualDateSpecification {
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return ofYear(date.breachEncapsulationOfYear()).equals(date);
+		return ofYearMonth(date.calendarMonth()).equals(date);
 	}
 	
 	@Override
-	public CalendarDate ofYear(int year) {
-		CalendarDate firstOfMonth = CalendarDate.date(year, month, 1);
+	public CalendarDate ofYearMonth(CalendarMonth month) {
+		CalendarDate firstOfMonth = CalendarDate.date(month, 1);
 		int dayOfWeekOffset = dayOfWeek.value - firstOfMonth.dayOfWeek().value;
 		int dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (dayOfWeekOffset < 0 ? 8 : 1);
 		int date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek;
-		return CalendarDate.date(year, month, date);
+		return CalendarDate.date(month, date);
 	}
 }

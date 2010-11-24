@@ -101,6 +101,20 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
+	 * @param month 開始日の年月
+	 * @return 期間
+	 */
+	public static CalendarInterval month(CalendarMonth month) {
+		CalendarDate startDate = CalendarDate.date(month, 1);
+		CalendarDate endDate = startDate.plusMonths(1).plusDays(-1);
+		return inclusive(startDate, endDate);
+	}
+	
+	/**
+	 * 指定した年月の1日からその月末までの、期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * 
 	 * @param year 開始日の年
 	 * @param month 開始日の月（1〜12）
 	 * @return 期間

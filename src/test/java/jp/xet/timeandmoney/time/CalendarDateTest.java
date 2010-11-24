@@ -170,7 +170,7 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * {@link CalendarDate#month()}のテスト。
+	 * {@link CalendarDate#monthCalendarInterval()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -178,19 +178,19 @@ public class CalendarDateTest {
 	public void test12_Month() throws Exception {
 		CalendarDate nov6_2004 = CalendarDate.date(2004, 11, 6);
 		CalendarInterval nov2004 = CalendarInterval.inclusive(2004, 11, 1, 2004, 11, 30);
-		assertThat(nov6_2004.month(), is(nov2004));
+		assertThat(nov6_2004.monthCalendarInterval(), is(nov2004));
 		
 		CalendarDate dec6_2004 = CalendarDate.date(2004, 12, 6);
 		CalendarInterval dec2004 = CalendarInterval.inclusive(2004, 12, 1, 2004, 12, 31);
-		assertThat(dec6_2004.month(), is(dec2004));
+		assertThat(dec6_2004.monthCalendarInterval(), is(dec2004));
 		
 		CalendarDate feb9_2004 = CalendarDate.date(2004, 2, 9);
 		CalendarInterval feb2004 = CalendarInterval.inclusive(2004, 2, 1, 2004, 2, 29);
-		assertThat(feb9_2004.month(), is(feb2004));
+		assertThat(feb9_2004.monthCalendarInterval(), is(feb2004));
 		
 		CalendarDate feb9_2003 = CalendarDate.date(2003, 2, 9);
 		CalendarInterval feb2003 = CalendarInterval.inclusive(2003, 2, 1, 2003, 2, 28);
-		assertThat(feb9_2003.month(), is(feb2003));
+		assertThat(feb9_2003.monthCalendarInterval(), is(feb2003));
 		
 	}
 	

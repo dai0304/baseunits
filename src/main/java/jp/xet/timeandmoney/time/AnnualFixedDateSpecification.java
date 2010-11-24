@@ -22,9 +22,9 @@ package jp.xet.timeandmoney.time;
 import org.apache.commons.lang.Validate;
 
 /**
- * X月Y日、を表す日付仕様。
+ * 毎年X月Y日、を表す日付仕様。
  */
-class FixedDateSpecification extends AnnualDateSpecification {
+class AnnualFixedDateSpecification extends AnnualDateSpecification {
 	
 	private final int month;
 	
@@ -39,7 +39,7 @@ class FixedDateSpecification extends AnnualDateSpecification {
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 */
-	FixedDateSpecification(int month, int day) {
+	AnnualFixedDateSpecification(int month, int day) {
 		Validate.isTrue(1 <= month && month <= 12);
 		Validate.isTrue(1 <= day && day <= 31); // CHECKSTYLE IGNORE THIS LINE
 		this.month = month;

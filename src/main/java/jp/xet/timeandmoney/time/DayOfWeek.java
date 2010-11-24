@@ -22,7 +22,7 @@ package jp.xet.timeandmoney.time;
 import java.util.Calendar;
 
 /**
- * 曜日を表す列挙型。
+ * 1週間の中の特定の「曜日」を表す列挙型。
  */
 public enum DayOfWeek {
 	

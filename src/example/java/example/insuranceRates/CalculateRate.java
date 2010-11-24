@@ -72,7 +72,7 @@ public class CalculateRate {
 		Money monthlyPremium = Money.dollars(150.00);
 		
 		// 契約月の残り期間
-		CalendarInterval entireMonth = policyEffectiveDate.month();
+		CalendarInterval entireMonth = policyEffectiveDate.monthCalendarInterval();
 		CalendarInterval remainderOfMonth = policyEffectiveDate.through(entireMonth.end());
 		
 		// 契約月の残り日数 ÷ 契約月の全日数

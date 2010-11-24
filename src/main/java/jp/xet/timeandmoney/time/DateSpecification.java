@@ -34,6 +34,17 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	/**
 	 * 日付仕様のインスタンスを生成する。
 	 * 
+	 * @param day 日を表す正数（1〜31）
+	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 * @return 日付仕様
+	 */
+	public static DateSpecification fixed(int day) {
+		return new MonthlyFixedDateSpecification(day);
+	}
+	
+	/**
+	 * 日付仕様のインスタンスを生成する。
+	 * 
 	 * @param month 月を表す正数（1〜12）
 	 * @param day 日を表す正数（1〜31）
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
@@ -41,7 +52,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @return 日付仕様
 	 */
 	public static DateSpecification fixed(int month, int day) {
-		return new FixedDateSpecification(month, day);
+		return new AnnualFixedDateSpecification(month, day);
 	}
 	
 	/**
@@ -74,6 +85,18 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	}
 	
 	/**
+	 * 毎月第Y◎曜日仕様のインスタンスを生成する。
+	 * 
+	 * @param dayOfWeek 曜日
+	 * @param n 周回数（1〜5）
+	 * @return 日付仕様
+	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
+	 */
+	public static DateSpecification nthOccuranceOfWeekdayInEveryMonth(DayOfWeek dayOfWeek, int n) {
+		return new MonthlyFloatingDateSpecification(dayOfWeek, n);
+	}
+	
+	/**
 	 * X月の第Y◎曜日仕様のインスタンスを生成する。
 	 * 
 	 * @param month 月を表す正数（1〜12）
@@ -83,7 +106,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
 	 */
 	public static DateSpecification nthOccuranceOfWeekdayInMonth(int month, DayOfWeek dayOfWeek, int n) {
-		return new FloatingDateSpecification(month, dayOfWeek, n);
+		return new AnnualFloatingDateSpecification(month, dayOfWeek, n);
 	}
 	
 	/**

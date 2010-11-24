@@ -207,6 +207,30 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
+	 * 指定した年月に、このオブジェクトが表現する長さの時間を加えた、未来の年月を取得する。
+	 * 
+	 * <p>このオブジェクトが表現する時間の長さの単位が 月 未満である場合は、元の年月をそのまま返す。<p>
+	 * 
+	 * @param month 元となる年月
+	 * @return このオブジェクトが表現する長さの時間が経過した未来の年月
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public CalendarMonth addedTo(CalendarMonth month) {
+		Validate.notNull(month);
+//		only valid for days and larger units
+		if (unit.compareTo(TimeUnit.month) < 0) {
+			return month;
+		}
+		Calendar calendar = month.asJavaCalendarUniversalZoneMidnight();
+		if (unit.equals(TimeUnit.month)) {
+			calendar.add(Calendar.MONTH, (int) quantity);
+		} else {
+			addAmountToCalendar(inBaseUnits(), calendar);
+		}
+		return CalendarMonth.from(calendar);
+	}
+	
+	/**
 	 * 指定した日時に、このオブジェクトが表現する長さの時間を加えた、未来の日時を取得する。
 	 * 
 	 * @param point 元となる日時

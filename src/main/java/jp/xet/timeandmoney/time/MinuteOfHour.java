@@ -22,7 +22,7 @@ package jp.xet.timeandmoney.time;
 import org.apache.commons.lang.Validate;
 
 /**
- * 特定の「分」を表すクラス。
+ * 1時間の中の特定の「分」を表すクラス。
  */
 public class MinuteOfHour {
 	
