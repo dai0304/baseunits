@@ -19,7 +19,6 @@
  */
 package jp.xet.timeandmoney.time;
 
-import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.Validate;
@@ -27,7 +26,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 特定の「時分」を表すクラス。
  * 
- * <p>{@link Date}と異なり、日付の概念を持っていない。</p>
+ * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。</p>
  */
 public class TimeOfDay {
 	

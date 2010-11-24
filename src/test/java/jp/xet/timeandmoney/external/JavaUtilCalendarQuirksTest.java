@@ -14,7 +14,7 @@ import java.util.TimeZone;
 import org.junit.Test;
 
 /**
- * The purpose of these tests is to verify that java.util.Calendar is working like we
+ * The purpose of these tests is to verify that {@link java.util.Calendar} is working like we
  * expect it to. We ran into a small problem with HOUR and HOUR_OF_DAY in
  * CalendarDateTest.testConversionToJavaUtil(). These tests are mainly for peace of mind.
  */

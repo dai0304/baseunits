@@ -300,19 +300,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間をGMTとして扱い、{@link java.util.Calendar}型として取得する。
+	 * このオブジェクトが表現する瞬間をGMTとして扱い、{@link Calendar}型として取得する。
 	 * 
-	 * @return {@link java.util.Calendar}
+	 * @return {@link Calendar}
 	 */
 	public Calendar asJavaCalendar() {
 		return asJavaCalendar(GMT);
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、{@link java.util.Calendar}型として取得する。
+	 * このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、{@link Calendar}型として取得する。
 	 * 
 	 * @param zone タイムゾーン
-	 * @return {@link java.util.Calendar}
+	 * @return {@link Calendar}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public Calendar asJavaCalendar(TimeZone zone) {
@@ -323,9 +323,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間を、{@link java.util.Date}型として取得する。
+	 * このオブジェクトが表現する瞬間を、{@link Date}型として取得する。
 	 * 
-	 * @return {@link java.util.Date}
+	 * @return {@link Date}
 	 */
 	public Date asJavaUtilDate() {
 		return new Date(millisecondsFromEpoc);

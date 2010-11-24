@@ -93,10 +93,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		Validate.notNull(zone);
 		Calendar calendar = timePoint.asJavaCalendar();
 		calendar.setTimeZone(zone);
-		return CalendarDate._from(calendar);
+		return CalendarDate.from(calendar);
 	}
 	
-	static CalendarDate _from(Calendar calendar) { // CHECKSTYLE IGNORE THIS LINE
+	static CalendarDate from(Calendar calendar) { // CHECKSTYLE IGNORE THIS LINE
 		// Use timezone already set in calendar.
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH) + 1; // T&M Lib counts January as 1

@@ -203,7 +203,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 		} else {
 			addAmountToCalendar(inBaseUnits(), calendar);
 		}
-		return CalendarDate._from(calendar);
+		return CalendarDate.from(calendar);
 	}
 	
 	/**
@@ -397,7 +397,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 		} else {
 			subtractAmountFromCalendar(inBaseUnits(), calendar);
 		}
-		return CalendarDate._from(calendar);
+		return CalendarDate.from(calendar);
 	}
 	
 	/**

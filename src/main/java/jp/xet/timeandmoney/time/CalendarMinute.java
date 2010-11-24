@@ -19,7 +19,6 @@
  */
 package jp.xet.timeandmoney.time;
 
-import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.Validate;
@@ -27,7 +26,7 @@ import org.apache.commons.lang.Validate;
 /**
  * カレンダー上の特定の「年月日時分」を表すクラス。
  * 
- * <p>{@link Date}と異なり、分未満（秒以下）の概念を持っていない。また、{@link TimePoint}と異なり、
+ * <p>{@link java.util.Date}と異なり、分未満（秒以下）の概念を持っていない。また、{@link TimePoint}と異なり、
  * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  */
 public class CalendarMinute {
