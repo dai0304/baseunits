@@ -371,6 +371,8 @@ public class Money implements Comparable<Money>, Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
+		assert amount != null;
+		assert currency != null;
 		if (this == obj) {
 			return true;
 		}
@@ -381,7 +383,7 @@ public class Money implements Comparable<Money>, Serializable {
 			return false;
 		}
 		Money other = (Money) obj;
-		if (!amount.equals(other.amount)) {
+		if (amount.equals(other.amount) == false) {
 			return false;
 		}
 		if (hasSameCurrencyAs(other) == false) {
@@ -392,6 +394,8 @@ public class Money implements Comparable<Money>, Serializable {
 	
 	@Override
 	public int hashCode() {
+		assert amount != null;
+		assert currency != null;
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + amount.hashCode();

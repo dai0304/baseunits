@@ -105,7 +105,7 @@ public enum Rounding {
 	UNNECESSARY(BigDecimal.ROUND_UNNECESSARY);
 	
 	/**
-	 * {@link BigDecimal}クラスにおける int型 による定義値。
+	 * {@link BigDecimal}クラスにおける{@code int}型による定義値。
 	 */
 	public final int value;
 	

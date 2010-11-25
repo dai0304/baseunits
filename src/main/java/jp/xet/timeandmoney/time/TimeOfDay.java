@@ -79,6 +79,8 @@ public class TimeOfDay {
 	
 	@Override
 	public boolean equals(Object obj) {
+		assert hour != null;
+		assert minute != null;
 		if (this == obj) {
 			return true;
 		}
@@ -89,18 +91,10 @@ public class TimeOfDay {
 			return false;
 		}
 		TimeOfDay other = (TimeOfDay) obj;
-		if (hour == null) {
-			if (other.hour != null) {
-				return false;
-			}
-		} else if (hour.equals(other.hour) == false) {
+		if (hour.equals(other.hour) == false) {
 			return false;
 		}
-		if (minute == null) {
-			if (other.minute != null) {
-				return false;
-			}
-		} else if (minute.equals(other.minute) == false) {
+		if (minute.equals(other.minute) == false) {
 			return false;
 		}
 		return true;
@@ -110,8 +104,8 @@ public class TimeOfDay {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((hour == null) ? 0 : hour.hashCode());
-		result = prime * result + ((minute == null) ? 0 : minute.hashCode());
+		result = prime * result + hour.hashCode();
+		result = prime * result + minute.hashCode();
 		return result;
 	}
 	

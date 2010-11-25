@@ -303,7 +303,8 @@ public class Duration implements Comparable<Duration>, Serializable {
 	
 	@Override
 	public int hashCode() {
-		return (int) quantity;
+		// TODO equalsとの整合性おかしくない？
+		return (int) (quantity ^ (quantity >>> 32)); // CHECKSTYLE IGNORE THIS LINE;
 	}
 	
 	/**

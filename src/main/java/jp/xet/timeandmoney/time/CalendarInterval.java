@@ -313,10 +313,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	
 	@Override
 	public boolean equals(Object obj) {
+		// THINK オーバーライド要る？
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
+		if (super.equals(obj) == false) {
 			return false;
 		}
 		if (getClass() != obj.getClass()) {

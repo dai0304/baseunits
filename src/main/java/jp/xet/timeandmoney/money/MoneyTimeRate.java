@@ -55,6 +55,8 @@ public class MoneyTimeRate {
 	
 	@Override
 	public boolean equals(Object obj) {
+		assert rate != null;
+		assert currency != null;
 		if (this == obj) {
 			return true;
 		}
@@ -65,18 +67,10 @@ public class MoneyTimeRate {
 			return false;
 		}
 		MoneyTimeRate other = (MoneyTimeRate) obj;
-		if (currency == null) {
-			if (other.currency != null) {
-				return false;
-			}
-		} else if (!currency.equals(other.currency)) {
+		if (currency.equals(other.currency) == false) {
 			return false;
 		}
-		if (rate == null) {
-			if (other.rate != null) {
-				return false;
-			}
-		} else if (!rate.equals(other.rate)) {
+		if (rate.equals(other.rate) == false) {
 			return false;
 		}
 		return true;
@@ -84,10 +78,12 @@ public class MoneyTimeRate {
 	
 	@Override
 	public int hashCode() {
+		assert rate != null;
+		assert currency != null;
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
-		result = prime * result + ((rate == null) ? 0 : rate.hashCode());
+		result = prime * result + currency.hashCode();
+		result = prime * result + rate.hashCode();
 		return result;
 	}
 	

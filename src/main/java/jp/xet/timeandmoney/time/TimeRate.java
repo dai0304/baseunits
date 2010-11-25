@@ -78,6 +78,8 @@ public class TimeRate {
 	
 	@Override
 	public boolean equals(Object obj) {
+		assert quantity != null;
+		assert unit != null;
 		if (this == obj) {
 			return true;
 		}
@@ -88,18 +90,10 @@ public class TimeRate {
 			return false;
 		}
 		TimeRate other = (TimeRate) obj;
-		if (quantity == null) {
-			if (other.quantity != null) {
-				return false;
-			}
-		} else if (quantity.equals(other.quantity) == false) {
+		if (quantity.equals(other.quantity) == false) {
 			return false;
 		}
-		if (unit == null) {
-			if (other.unit != null) {
-				return false;
-			}
-		} else if (!unit.equals(other.unit)) {
+		if (unit.equals(other.unit) == false) {
 			return false;
 		}
 		return true;
@@ -109,8 +103,8 @@ public class TimeRate {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((quantity == null) ? 0 : quantity.hashCode());
-		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+		result = prime * result + quantity.hashCode();
+		result = prime * result + unit.hashCode();
 		return result;
 	}
 	

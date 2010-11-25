@@ -77,18 +77,10 @@ public class Ratio {
 	}
 	
 
-	/**
-	 * 分子
-	 * 
-	 * {@link Ratio} は immutableオブジェクトであるが、永続化用の変更器のために、finalとしていない。
-	 */
+	/** 分子 */
 	private final BigDecimal numerator;
 	
-	/**
-	 * 分母
-	 * 
-	 * {@link Ratio} は immutableオブジェクトであるが、永続化用の変更器のために、finalとしていない。
-	 */
+	/** 分母 */
 	private final BigDecimal denominator;
 	
 
@@ -139,6 +131,8 @@ public class Ratio {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		assert denominator != null;
+		assert numerator != null;
 		if (this == obj) {
 			return true;
 		}
@@ -149,18 +143,10 @@ public class Ratio {
 			return false;
 		}
 		Ratio other = (Ratio) obj;
-		if (denominator == null) {
-			if (other.denominator != null) {
-				return false;
-			}
-		} else if (!denominator.equals(other.denominator)) {
+		if (denominator.equals(other.denominator) == false) {
 			return false;
 		}
-		if (numerator == null) {
-			if (other.numerator != null) {
-				return false;
-			}
-		} else if (!numerator.equals(other.numerator)) {
+		if (numerator.equals(other.numerator) == false) {
 			return false;
 		}
 		return true;
@@ -168,10 +154,12 @@ public class Ratio {
 	
 	@Override
 	public int hashCode() {
+		assert denominator != null;
+		assert numerator != null;
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((denominator == null) ? 0 : denominator.hashCode());
-		result = prime * result + ((numerator == null) ? 0 : numerator.hashCode());
+		result = prime * result + denominator.hashCode();
+		result = prime * result + numerator.hashCode();
 		return result;
 	}
 	

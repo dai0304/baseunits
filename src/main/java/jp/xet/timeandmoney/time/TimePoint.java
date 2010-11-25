@@ -463,14 +463,26 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object other) {
-		//revisit: maybe use: Reflection.equalsOverClassAndNull(this, other)
-		return (other instanceof TimePoint) && ((TimePoint) other).millisecondsFromEpoc == millisecondsFromEpoc;
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		TimePoint other = (TimePoint) obj;
+		if (millisecondsFromEpoc != other.millisecondsFromEpoc) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return (int) (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)); // CHECKSTYLE IGNORE THIS LINE
+		return (int) (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)); // CHECKSTYLE IGNORE THIS LINE;
 	}
 	
 	/**

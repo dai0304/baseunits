@@ -99,6 +99,8 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	
 	@Override
 	public boolean equals(Object obj) {
+		assert date != null;
+		assert time != null;
 		if (this == obj) {
 			return true;
 		}
@@ -109,18 +111,10 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 			return false;
 		}
 		CalendarMinute other = (CalendarMinute) obj;
-		if (date == null) {
-			if (other.date != null) {
-				return false;
-			}
-		} else if (date.equals(other.date) == false) {
+		if (date.equals(other.date) == false) {
 			return false;
 		}
-		if (time == null) {
-			if (other.time != null) {
-				return false;
-			}
-		} else if (time.equals(other.time) == false) {
+		if (time.equals(other.time) == false) {
 			return false;
 		}
 		return true;
@@ -128,10 +122,12 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	
 	@Override
 	public int hashCode() {
+		assert date != null;
+		assert time != null;
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((time == null) ? 0 : time.hashCode());
+		result = prime * result + date.hashCode();
+		result = prime * result + time.hashCode();
 		return result;
 	}
 	

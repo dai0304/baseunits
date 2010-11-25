@@ -181,6 +181,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
+		assert month != null;
 		if (this == obj) {
 			return true;
 		}
@@ -191,7 +192,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 			return false;
 		}
 		CalendarMonth other = (CalendarMonth) obj;
-		if (month != other.month) {
+		if (month.equals(other.month) == false) {
 			return false;
 		}
 		if (year != other.year) {
@@ -220,9 +221,10 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	
 	@Override
 	public int hashCode() {
+		assert month != null;
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((month == null) ? 0 : month.hashCode());
+		result = prime * result + month.hashCode();
 		result = prime * result + year;
 		return result;
 	}
