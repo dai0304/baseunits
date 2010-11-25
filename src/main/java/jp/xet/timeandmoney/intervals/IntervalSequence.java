@@ -42,7 +42,8 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * TODO デフォルトの比較ロジックについて
+	 * <p>各区間のソート条件を決定する {@link Comparator} はデフォルト
+	 * （{@link IntervalComparatorUpperLower}の下位結果反転）を利用する。</p>
 	 */
 	public IntervalSequence() {
 		this(new IntervalComparatorUpperLower<T>(true, false));
@@ -51,7 +52,7 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param comparator コンパレータ
+	 * @param comparator 各区間のソート条件を決定する {@link Comparator}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public IntervalSequence(Comparator<Interval<T>> comparator) {
@@ -83,29 +84,37 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 			// TODO: Add a creation method to Interval for empty(), if it can be polymorphic.
 			throw new IllegalStateException();
 		}
+		
 		if (intervals.size() == 1) {
 			return intervals.get(0);
 		}
-		Interval<T> left = intervals.get(0);
-		Interval<T> right = intervals.get(intervals.size() - 1);
 		
-		for (Interval<T> interval : intervals) {
-			if (interval.lowerLimit() == null) {
-				left = interval;
+		Interval<T> firstInterval = intervals.get(0);
+		IntervalLimit<T> lower = firstInterval.lowerLimitObject;
+		IntervalLimit<T> upper = firstInterval.upperLimitObject;
+		for (int i = 1; i < intervals.size(); i++) {
+			Interval<T> interval = intervals.get(i);
+			if (lower.compareTo(interval.lowerLimitObject) > 0) {
+				lower = interval.lowerLimitObject;
 			}
-			if (interval.upperLimit() == null) {
-				right = interval;
+			if (upper.compareTo(interval.upperLimitObject) < 0) {
+				upper = interval.upperLimitObject;
 			}
 		}
 		
-		return left.newOfSameType(left.lowerLimit(), left.includesLowerLimit(), right.upperLimit(),
-				right.includesUpperLimit());
+		return firstInterval.newOfSameType(lower.getValue(), lower.isClosed(), upper.getValue(),
+				upper.isClosed());
 	}
 	
 	/**
-	 * 要素区間の補区間をあらわす区間列を返す。但し、片側に限界のない区間は含まない。
+	 * ソート済みの区間で、隣り合った区間同士に挟まれる区間を区間列として返す。
 	 * 
-	 * @return ギャップ区間の列
+	 * <p>結果の区間列の {@link Comparator} は、この区間列の {@link Comparator} を流用する。</p>
+	 * 
+	 * <p>区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重なっていたり接していた場合は、
+	 * その区間は結果の要素に含まない。全てが重なっている場合は、空の区間列を返す。</p>
+	 * 
+	 * @return ギャップ区間列
 	 */
 	public IntervalSequence<T> gaps() {
 		IntervalSequence<T> gaps = new IntervalSequence<T>(comparator);
@@ -124,11 +133,14 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 	}
 	
 	/**
-	 * 隣あった要素区間同士が重なっている区間を区間列として返す。
+	 * ソート済みの区間で、隣り合った区間同士が重なっている区間を区間列として返す。
 	 * 
-	 * <p>区間数が2つ未満の場合は、空の区間列を返す。</p>
+	 * <p>結果の区間列の {@link Comparator} は、この区間列の {@link Comparator} を流用する。</p>
 	 * 
-	 * @return 共通区間の列
+	 * <p>区間数が2つ未満の場合は、空の区間列を返す。また、区間同士が重ならなかったり接していた場合は、
+	 * その区間は結果の要素に含まない。全てが重ならない場合は、空の区間列を返す。</p>
+	 * 
+	 * @return 共通区間列
 	 */
 	public IntervalSequence<T> intersections() {
 		IntervalSequence<T> intersections = new IntervalSequence<T>(comparator);

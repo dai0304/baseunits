@@ -23,6 +23,8 @@ import java.util.Calendar;
 
 /**
  * 1週間の中の特定の「曜日」を表す列挙型。
+ * 
+ * <p>タイムゾーンの概念はない。</p>
  */
 public enum DayOfWeek {
 	

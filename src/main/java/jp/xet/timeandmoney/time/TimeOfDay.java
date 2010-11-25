@@ -26,7 +26,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 1日の中の特定の「時分」を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。</p>
+ * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。</p>
  */
 public class TimeOfDay {
 	

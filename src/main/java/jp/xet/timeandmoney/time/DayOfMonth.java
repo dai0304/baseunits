@@ -22,6 +22,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 1ヶ月間の中の特定の「日」を表すクラス。
+ * 
+ * <p>タイムゾーンの概念はない。</p>
  */
 @SuppressWarnings("serial")
 public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
@@ -60,7 +62,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static DayOfMonth of(int year, MonthOfYear month, int day) {
-		return new DayOfMonth(day, month.in(year));
+		return new DayOfMonth(day, month.on(year));
 	}
 	
 	/**
@@ -113,18 +115,6 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	@Override
 	public int compareTo(DayOfMonth o) {
 		return Integer.valueOf(value).compareTo(o.value);
-	}
-	
-	/**
-	 * 指定した年月のこの日を返す。
-	 * 
-	 * @param month 年月
-	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @throws IllegalArgumentException 引数{@code month}の月にこの日が存在しない場合
-	 */
-	public CalendarDate dateOf(CalendarMonth month) {
-		return CalendarDate.date(month, this);
 	}
 	
 	@Override
@@ -211,4 +201,20 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 		}
 		return value < other.value;
 	}
+	
+	/**
+	 * 指定した年月のこの日を返す。
+	 * 
+	 * @param month 年月
+	 * @return {@link CalendarDate}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code month}の月にこの日が存在しない場合
+	 */
+	public CalendarDate on(CalendarMonth month) {
+		return CalendarDate.date(month, this);
+	}
+	
+//	public DayOfYear on(MonthOfYear month) {
+//		// ...
+//	}
 }

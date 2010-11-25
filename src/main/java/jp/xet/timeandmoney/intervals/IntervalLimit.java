@@ -191,6 +191,8 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (closed ? 1231 : 1237); // CHECKSTYLE IGNORE THIS LINE
+		result = prime * result + (lower ? 1231 : 1237); // CHECKSTYLE IGNORE THIS LINE
 		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}

@@ -23,6 +23,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 1日の中の特定の「時」を表すクラス。
+ * 
+ * <p>{@link java.util.Date}と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
  */
 public class HourOfDay {
 	

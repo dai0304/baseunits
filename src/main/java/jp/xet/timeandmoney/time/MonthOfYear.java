@@ -124,16 +124,6 @@ public enum MonthOfYear {
 	}
 	
 	/**
-	 * 指定した年の、この月を表す年月を返す。
-	 * 
-	 * @param year 年
-	 * @return 年月
-	 */
-	public CalendarMonth in(int year) {
-		return CalendarMonth.from(year, this);
-	}
-	
-	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
@@ -149,6 +139,10 @@ public enum MonthOfYear {
 		return isBefore(other) == false && equals(other) == false;
 	}
 	
+//	public DayOfYear at(DayOfMonth month) {
+//		// ...
+//	}
+	
 	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
 	 * 
@@ -163,5 +157,15 @@ public enum MonthOfYear {
 			return false;
 		}
 		return value < other.value;
+	}
+	
+	/**
+	 * 指定した年の、この月を表す年月を返す。
+	 * 
+	 * @param year 年
+	 * @return 年月
+	 */
+	public CalendarMonth on(int year) {
+		return CalendarMonth.from(year, this);
 	}
 }

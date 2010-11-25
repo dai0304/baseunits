@@ -10,6 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -193,5 +194,33 @@ public class IntervalSequenceTest {
 		
 		intervalSequence.add(all);
 		assertThat(intervalSequence.extent(), is(all));
+		
+		for (IntervalSequence<Integer> seq : variousSequences()) {
+			seq.add(c5_10c);
+			seq.add(o10_12c);
+			seq.add(c20_25c);
+			assertThat(seq.extent(), is(Interval.closed(5, 25)));
+			
+			seq.add(_o18);
+			assertThat(seq.extent(), is(Interval.closed(null, 25)));
+			
+			seq.add(all);
+			assertThat(seq.extent(), is(all));
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Iterable<IntervalSequence<Integer>> variousSequences() {
+		return Arrays.asList(
+				new IntervalSequence<Integer>(new IntervalComparatorUpperLower<Integer>(false, false)),
+				new IntervalSequence<Integer>(new IntervalComparatorUpperLower<Integer>(false, true)),
+				new IntervalSequence<Integer>(new IntervalComparatorUpperLower<Integer>(true, false)),
+				new IntervalSequence<Integer>(new IntervalComparatorUpperLower<Integer>(true, true)),
+				new IntervalSequence<Integer>(new IntervalComparatorLowerUpper<Integer>(false, false)),
+				new IntervalSequence<Integer>(new IntervalComparatorLowerUpper<Integer>(false, true)),
+				new IntervalSequence<Integer>(new IntervalComparatorLowerUpper<Integer>(true, false)),
+				new IntervalSequence<Integer>(new IntervalComparatorLowerUpper<Integer>(true, true)),
+				new IntervalSequence<Integer>()
+				);
 	}
 }

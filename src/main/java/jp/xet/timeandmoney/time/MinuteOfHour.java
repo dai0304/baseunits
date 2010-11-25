@@ -25,6 +25,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 1時間の中の特定の「分」を表すクラス。
+ * 
+ * <p>{@link java.util.Date}と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
  */
 @SuppressWarnings("serial")
 public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
