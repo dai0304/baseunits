@@ -27,5 +27,26 @@ Michael Two provided valuable debugging assistance.
 Alan Lovejoy helped clarify the TimePoint/Duration/Interval distinction.
 </blockquote>
 
+<h2>一般仕様</h2>
+
+<p>各クラス・メソッドの仕様は、それぞれのAPIドキュメントに記載しているが、このライブラリ全体を通して適用する仕様を以下に示す。</p>
+
+<ul>
+  <li>このAPIは、内部の整合性が壊れた場合、java.lang.Errorをスローすることがある。</li>
+  <li>breachEncapsulationOfXXXメソッドは、そのクラスのカプセル化を壊すメソッドである。利用は推奨しない。
+  利用した場合のオブジェクトの整合性は、利用者の責任において確保すること。</li>
+  <li>このAPIは、APIドキュメントに漏れなく仕様を定義することを理想としている。
+  もしAPIを呼び出した結果、APIドキュメントに記述のない挙動をした場合、それはこのAPIのバグである。
+    <ul>
+      <li>Javadocの @throws は RuntimeException についても記述されていなければならない。 
+      つまり、Javadocに記述のない例外（RuntimeExceptionを含む）が飛んだら、バグである。</li>
+      <li>このAPIは NullPointerException をスローしない。NullPointerExceptionが飛んだらバグである。 
+      throw new NullPointerException(...); は使用しない。代わりに IllegalArgumentException を使用する。
+      ただし、APIドキュメントに @throws NullPointerException が明記してある場合は例外とする。</li>
+    </ul>
+  「仕様バグ」（Javadoc自体の記述漏れ・不整合など）と「実装バグ」（コードの不整合など）がありえる。
+  </li>
+</ul>
+
   </body>
 </html>
