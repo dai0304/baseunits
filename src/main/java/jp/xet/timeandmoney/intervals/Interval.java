@@ -195,7 +195,10 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 		Validate.notNull(upper);
 		assertLowerIsLessThanOrEqualUpper(lower, upper);
 		
-		if (upper.isInfinity() == false && lower.isInfinity() == false && upper.getValue().equals(lower.getValue())
+		// 単一要素区間であり、かつ、どちらか片方が開いている場合、両者を開く。
+		// [5, 5) や (5, 5] を [5, 5] にする。(5, 5)は空区間だから除外。
+		if (upper.isInfinity() == false && lower.isInfinity() == false
+				&& upper.getValue().equals(lower.getValue())
 				&& (lower.isOpen() ^ upper.isOpen())) {
 			if (lower.isOpen()) {
 				lower = IntervalLimit.lower(true, lower.getValue());

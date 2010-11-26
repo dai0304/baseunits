@@ -73,4 +73,8 @@ public enum DayOfWeek {
 		this.value = value;
 	}
 	
+	int breachEncapsulationOfValue() {
+		return value;
+	}
+	
 }

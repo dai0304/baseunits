@@ -26,9 +26,9 @@ import org.apache.commons.lang.Validate;
  */
 class MonthlyFloatingDateSpecification extends MonthlyDateSpecification {
 	
-	private final DayOfWeek dayOfWeek;
+	final DayOfWeek dayOfWeek;
 	
-	private final int occurrence;
+	final int occurrence;
 	
 
 	/**
@@ -49,7 +49,7 @@ class MonthlyFloatingDateSpecification extends MonthlyDateSpecification {
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return ofYearMonth(date.breachEncapsulationOfYearMonth()).equals(date);
+		return ofYearMonth(date.getCalendarMonth()).equals(date);
 	}
 	
 	@Override

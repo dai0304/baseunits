@@ -26,9 +26,9 @@ import org.apache.commons.lang.Validate;
  */
 class AnnualFixedDateSpecification extends AnnualDateSpecification {
 	
-	private final MonthOfYear month;
+	final MonthOfYear month;
 	
-	private final DayOfMonth day;
+	final DayOfMonth day;
 	
 
 	/**
@@ -49,7 +49,7 @@ class AnnualFixedDateSpecification extends AnnualDateSpecification {
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
 		return day.equals(date.breachEncapsulationOfDay())
-				&& month == date.breachEncapsulationOfYearMonth().breachEncapsulationOfMonth();
+				&& month == date.getCalendarMonth().breachEncapsulationOfMonth();
 	}
 	
 	@Override

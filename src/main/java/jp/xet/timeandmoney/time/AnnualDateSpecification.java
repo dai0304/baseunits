@@ -34,11 +34,11 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
 		Validate.notNull(interval);
-		CalendarDate firstTry = ofYear(interval.start().breachEncapsulationOfYearMonth().breachEncapsulationOfYear());
+		CalendarDate firstTry = ofYear(interval.start().getCalendarMonth().breachEncapsulationOfYear());
 		if (interval.includes(firstTry)) {
 			return firstTry;
 		}
-		CalendarDate secondTry = ofYear(interval.start().breachEncapsulationOfYearMonth().breachEncapsulationOfYear() + 1);
+		CalendarDate secondTry = ofYear(interval.start().getCalendarMonth().breachEncapsulationOfYear() + 1);
 		if (interval.includes(secondTry)) {
 			return secondTry;
 		}
@@ -52,7 +52,7 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 			
 			CalendarDate next = firstOccurrenceIn(interval);
 			
-			int year = next.breachEncapsulationOfYearMonth().breachEncapsulationOfYear();
+			int year = next.getCalendarMonth().breachEncapsulationOfYear();
 			
 
 			@Override

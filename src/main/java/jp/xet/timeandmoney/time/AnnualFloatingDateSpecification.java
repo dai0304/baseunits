@@ -26,11 +26,11 @@ import org.apache.commons.lang.Validate;
  */
 class AnnualFloatingDateSpecification extends AnnualDateSpecification {
 	
-	private final int month;
+	final int month;
 	
-	private final DayOfWeek dayOfWeek;
+	final DayOfWeek dayOfWeek;
 	
-	private final int occurrence;
+	final int occurrence;
 	
 
 	/**
@@ -55,7 +55,7 @@ class AnnualFloatingDateSpecification extends AnnualDateSpecification {
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return ofYear(date.breachEncapsulationOfYearMonth().breachEncapsulationOfYear()).equals(date);
+		return ofYear(date.getCalendarMonth().breachEncapsulationOfYear()).equals(date);
 	}
 	
 	@Override

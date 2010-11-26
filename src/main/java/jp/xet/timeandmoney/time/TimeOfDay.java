@@ -44,9 +44,9 @@ public class TimeOfDay {
 	}
 	
 
-	private final HourOfDay hour;
+	final HourOfDay hour;
 	
-	private final MinuteOfHour minute;
+	final MinuteOfHour minute;
 	
 
 	/**
@@ -155,11 +155,11 @@ public class TimeOfDay {
 	}
 	
 	int breachEncapsulationOfHour() {
-		return hour.value();
+		return hour.breachEncapsulationOfValue();
 	}
 	
 	int breachEncapsulationOfMinute() {
-		return minute.value();
+		return minute.breachEncapsulationOfValue();
 	}
 	
 	HourOfDay hour() {

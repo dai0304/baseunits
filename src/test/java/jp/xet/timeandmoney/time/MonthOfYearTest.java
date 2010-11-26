@@ -33,14 +33,14 @@ public class MonthOfYearTest {
 	 */
 	@Test
 	public void test01_basic() throws Exception {
-		assertThat(MonthOfYear.JAN.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(31)));
+		assertThat(MonthOfYear.JAN.breachEncapsulationOfLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(31)));
 		
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(28)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2000), is(DayOfMonth.valueOf(29)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2004), is(DayOfMonth.valueOf(29)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(1900), is(DayOfMonth.valueOf(28)));
+		assertThat(MonthOfYear.FEB.breachEncapsulationOfLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(28)));
+		assertThat(MonthOfYear.FEB.breachEncapsulationOfLastDayOfThisMonth(2000), is(DayOfMonth.valueOf(29)));
+		assertThat(MonthOfYear.FEB.breachEncapsulationOfLastDayOfThisMonth(2004), is(DayOfMonth.valueOf(29)));
+		assertThat(MonthOfYear.FEB.breachEncapsulationOfLastDayOfThisMonth(1900), is(DayOfMonth.valueOf(28)));
 		
-		assertThat(MonthOfYear.NOV.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(30)));
+		assertThat(MonthOfYear.NOV.breachEncapsulationOfLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(30)));
 	}
 	
 }

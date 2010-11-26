@@ -31,7 +31,7 @@ public enum MonthOfYear {
 	FEB(2, null, Calendar.FEBRUARY) {
 		
 		@Override
-		public DayOfMonth getLastDayOfThisMonth(int year) {
+		DayOfMonth breachEncapsulationOfLastDayOfThisMonth(int year) {
 			GregorianCalendar calendar = new GregorianCalendar(year, 2, 1);
 			return calendar.isLeapYear(year) ? DayOfMonth.valueOf(29) : DayOfMonth.valueOf(28); // CHECKSTYLE IGNORE THIS LINE
 		}
@@ -102,25 +102,16 @@ public enum MonthOfYear {
 	final int value;
 	
 	/** その月の最終日 */
-	private final DayOfMonth lastDay;
+	final DayOfMonth lastDayOfThisMonth;
 	
-	private final int calendarValue;
+	/** {@link Calendar#JANUARY}, {@link Calendar#FEBRUARY}, ... */
+	final int calendarValue;
 	
 
-	MonthOfYear(int month, DayOfMonth lastDay, int calendarValue) {
+	MonthOfYear(int month, DayOfMonth lastDayOfThisMonth, int calendarValue) {
 		value = month;
-		this.lastDay = lastDay;
+		this.lastDayOfThisMonth = lastDayOfThisMonth;
 		this.calendarValue = calendarValue;
-	}
-	
-	/**
-	 * その月の最終日を取得する。
-	 * 
-	 * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
-	 * @return 最終日
-	 */
-	public DayOfMonth getLastDayOfThisMonth(int year) {
-		return lastDay;
 	}
 	
 	/**
@@ -138,10 +129,6 @@ public enum MonthOfYear {
 		}
 		return isBefore(other) == false && equals(other) == false;
 	}
-	
-//	public DayOfYear at(DayOfMonth month) {
-//		// ...
-//	}
 	
 	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
@@ -167,5 +154,27 @@ public enum MonthOfYear {
 	 */
 	public CalendarMonth on(int year) {
 		return CalendarMonth.from(year, this);
+	}
+	
+	int breachEncapsulationOfCalendarValue() {
+		return calendarValue;
+	}
+	
+//	public DayOfYear at(DayOfMonth month) {
+//		// ...
+//	}
+	
+	/**
+	 * その月の最終日を取得する。
+	 * 
+	 * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
+	 * @return 最終日
+	 */
+	DayOfMonth breachEncapsulationOfLastDayOfThisMonth(int year) {
+		return lastDayOfThisMonth;
+	}
+	
+	int breachEncapsulationOfValue() {
+		return value;
 	}
 }

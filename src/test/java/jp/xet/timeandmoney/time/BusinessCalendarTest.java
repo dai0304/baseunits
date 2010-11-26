@@ -94,26 +94,57 @@ public class BusinessCalendarTest {
 	}
 	
 	/**
-	 * nearestBusinessDay(CalendarDate)のテスト。
+	 * {@link BusinessCalendar#nearestNextBusinessDay(CalendarDate)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test05_NearestBusinessDay() throws Exception {
-		CalendarDate saturday = CalendarDate.from(2004, 1, 10);
+	public void test05_NearestNextBusinessDay() throws Exception {
+		BusinessCalendar cal = businessCalendar();
+		CalendarDate friday = CalendarDate.from(2004, 1, 9);
+		CalendarDate saturday = friday.nextDay();
 		CalendarDate sunday = saturday.nextDay();
 		CalendarDate monday = sunday.nextDay();
-		assertThat(businessCalendar().nearestBusinessDay(saturday), is(monday));
-		assertThat(businessCalendar().nearestBusinessDay(sunday), is(monday));
-		assertThat(businessCalendar().nearestBusinessDay(monday), is(monday));
+		assertThat(cal.nearestNextBusinessDay(friday), is(friday));
+		assertThat(cal.nearestNextBusinessDay(saturday), is(monday));
+		assertThat(cal.nearestNextBusinessDay(sunday), is(monday));
+		assertThat(cal.nearestNextBusinessDay(monday), is(monday));
 		
 		CalendarDate newYearEve = CalendarDate.from(2004, 1, 1); // it's a
-		assertThat("it's a holiday & a thursday; wait till friday", businessCalendar().nearestBusinessDay(newYearEve),
+		assertThat("it's a holiday & a thursday; wait till friday", cal.nearestNextBusinessDay(newYearEve),
 				is(newYearEve.nextDay()));
 		
 		CalendarDate christmas = CalendarDate.from(2004, 12, 24); // it's a
-		assertThat("it's a holiday & a friday; wait till monday", businessCalendar().nearestBusinessDay(christmas),
+		assertThat("it's a holiday & a friday; wait till monday", cal.nearestNextBusinessDay(christmas),
 				is(CalendarDate.from(2004, 12, 27)));
+	}
+	
+	/**
+	 * {@link BusinessCalendar#nearestNextBusinessDay(CalendarDate)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_NearestPrevBusinessDay() throws Exception {
+		BusinessCalendar cal = businessCalendar();
+		CalendarDate tuesday = CalendarDate.from(2004, 1, 8);
+		CalendarDate friday = tuesday.nextDay();
+		CalendarDate saturday = friday.nextDay();
+		CalendarDate sunday = saturday.nextDay();
+		CalendarDate monday = sunday.nextDay();
+		assertThat(cal.nearestPrevBusinessDay(tuesday), is(tuesday));
+		assertThat(cal.nearestPrevBusinessDay(friday), is(friday));
+		assertThat(cal.nearestPrevBusinessDay(saturday), is(friday));
+		assertThat(cal.nearestPrevBusinessDay(sunday), is(friday));
+		assertThat(cal.nearestPrevBusinessDay(monday), is(monday));
+		
+		CalendarDate newYearEve = CalendarDate.from(2004, 1, 1); // it's a
+		assertThat("it's a holiday & a thursday; wait till friday", cal.nearestPrevBusinessDay(newYearEve),
+				is(newYearEve.previousDay()));
+		
+		CalendarDate christmas = CalendarDate.from(2004, 12, 26); // it's a
+		assertThat("it's a holiday & a friday; wait till monday", cal.nearestPrevBusinessDay(christmas),
+				is(CalendarDate.from(2004, 12, 23)));
 	}
 	
 	/**
@@ -141,10 +172,14 @@ public class BusinessCalendarTest {
 	 */
 	@Test
 	public void test07_NextBusinessDayOverWeekend() throws Exception {
-		CalendarDate friday = CalendarDate.from(2006, 06, 16);
+		BusinessCalendar cal = businessCalendar();
+		CalendarDate tuesday = CalendarDate.from(2006, 06, 15);
+		CalendarDate friday = tuesday.nextDay();
+		CalendarDate saturday = friday.nextDay();
 		CalendarDate monday = CalendarDate.from(2006, 06, 19);
-		CalendarDate actual = businessCalendar().nextBusinessDay(friday);
-		assertThat(actual, is(monday));
+		assertThat(cal.nextBusinessDay(tuesday), is(friday));
+		assertThat(cal.nextBusinessDay(friday), is(monday));
+		assertThat(cal.nextBusinessDay(saturday), is(monday));
 	}
 	
 	/**
@@ -168,8 +203,7 @@ public class BusinessCalendarTest {
 	@Test
 	public void test09_PlusBusinessDayZero() throws Exception {
 		CalendarDate monday = CalendarDate.from(2006, 06, 19);
-		CalendarDate actual = businessCalendar().plusBusinessDays(monday, 0);
-		assertThat(actual, is(monday));
+		assertThat(businessCalendar().plusBusinessDays(monday, 0), is(monday));
 	}
 	
 	/**
@@ -181,8 +215,7 @@ public class BusinessCalendarTest {
 	public void test10_PlusNonBusinessDayZero() throws Exception {
 		CalendarDate saturday = CalendarDate.from(2006, 06, 17);
 		CalendarDate monday = CalendarDate.from(2006, 06, 19);
-		CalendarDate actual = businessCalendar().plusBusinessDays(saturday, 0);
-		assertThat(actual, is(monday));
+		assertThat(businessCalendar().plusBusinessDays(saturday, 0), is(monday));
 		
 	}
 	
@@ -241,7 +274,7 @@ public class BusinessCalendarTest {
 		calendar.addHolidaySpec(DateSpecification.fixed(5, 5)); // こどもの日
 		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(7, DayOfWeek.MONDAY, 3)); // 海の日
 		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(9, DayOfWeek.MONDAY, 3)); // 敬老の日
-		calendar.addHoliday(CalendarDate.date(2010, 9, 23)); // 春分の日
+		calendar.addHoliday(CalendarDate.date(2010, 9, 23)); // 秋分の日
 		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(10, DayOfWeek.MONDAY, 2)); // 体育の日
 		calendar.addHolidaySpec(DateSpecification.fixed(11, 3)); // 文化の日
 		calendar.addHolidaySpec(DateSpecification.fixed(11, 23)); // 勤労感謝の日

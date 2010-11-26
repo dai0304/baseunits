@@ -37,9 +37,9 @@ import org.apache.commons.lang.Validate;
  */
 public class BusinessCalendar {
 	
-	private final Set<CalendarDate> holidays;
+	final Set<CalendarDate> holidays;
 	
-	private Specification<CalendarDate> holidaySpecs;
+	Specification<CalendarDate> holidaySpecs;
 	
 
 	/**
@@ -200,17 +200,36 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * 指定した日に最も近い営業日を取得する。
+	 * 指定した日の直近営業日を取得する。
+	 * 
+	 * <p>指定日が営業日であれば当日、そうでなければ翌営業日を返す。</p>
 	 * 
 	 * @param day 基準日
 	 * @return 営業日
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public CalendarDate nearestBusinessDay(CalendarDate day) {
+	public CalendarDate nearestNextBusinessDay(CalendarDate day) {
 		if (isBusinessDay(day)) {
 			return day;
 		} else {
 			return nextBusinessDay(day);
+		}
+	}
+	
+	/**
+	 * 指定した日の直近過去営業日を取得する。
+	 * 
+	 * <p>指定日が営業日であれば当日、そうでなければ前営業日を返す。</p>
+	 * 
+	 * @param day 基準日
+	 * @return 営業日
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public CalendarDate nearestPrevBusinessDay(CalendarDate day) {
+		if (isBusinessDay(day)) {
+			return day;
+		} else {
+			return prevBusinessDay(day);
 		}
 	}
 	
@@ -233,7 +252,7 @@ public class BusinessCalendar {
 	 * 開始日から数えて{@code numberOfDays}営業日目の日付を返す。
 	 * 
 	 * @param startDate 開始日
-	 * @param numberOfDays 営業日数（現在は正数しかサポートしない）
+	 * @param numberOfDays 営業日数（現在は正数しかサポートしない）. {@code 0}の場合、開始日を含む翌営業日を返す
 	 * @return 日付
 	 * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
 	 * @throws IllegalArgumentException 引数{@code startDate}に{@code null}を与えた場合
@@ -245,6 +264,21 @@ public class BusinessCalendar {
 		}
 		Iterator<CalendarDate> iterator = CalendarInterval.everFrom(startDate).daysIterator();
 		return nextNumberOfBusinessDays(numberOfDays, iterator);
+	}
+	
+	/**
+	 * 指定した日の前営業日を取得する。
+	 * 
+	 * @param startDate 基準日
+	 * @return 前営業日
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public CalendarDate prevBusinessDay(CalendarDate startDate) {
+		if (isBusinessDay(startDate)) {
+			return minusBusinessDays(startDate, 1);
+		} else {
+			return minusBusinessDays(startDate, 0);
+		}
 	}
 	
 	/**
@@ -261,14 +295,14 @@ public class BusinessCalendar {
 	 *  
 	 * @return 営業日の{@link Set} 
 	 */
-	protected DateSpecification defaultHolidaySpecs() {
+	protected Specification<CalendarDate> defaultHolidaySpecs() {
 		return DateSpecification.never();
 	}
 	
 	/**
 	 * {@code calendarDays}の先頭から数えて{@code numberOfDays}営業日目の日付を返す。
 	 * 
-	 * @param numberOfDays 営業日数
+	 * @param numberOfDays 営業日数. {@code 0}の場合、イテレータの先頭
 	 * @param calendarDays 日付イテレータ
 	 * @return 営業日
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合

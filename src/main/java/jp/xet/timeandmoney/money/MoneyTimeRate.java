@@ -49,8 +49,8 @@ public class MoneyTimeRate {
 	public MoneyTimeRate(Money money, Duration duration) {
 		Validate.notNull(money);
 		Validate.notNull(duration);
-		rate = new TimeRate(money.getAmount(), duration);
-		currency = money.getCurrency();
+		rate = new TimeRate(money.breachEncapsulationOfAmount(), duration);
+		currency = money.breachEncapsulationOfCurrency();
 	}
 	
 	@Override
@@ -131,5 +131,13 @@ public class MoneyTimeRate {
 	@Override
 	public String toString() {
 		return rate.toString();
+	}
+	
+	Currency breachEncapsulationOfCurrency() {
+		return currency;
+	}
+	
+	TimeRate breachEncapsulationOfRate() {
+		return rate;
 	}
 }

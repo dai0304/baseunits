@@ -183,7 +183,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isApplyable(int year, MonthOfYear month) {
-		return month.getLastDayOfThisMonth(year).isBefore(this) == false;
+		return month.breachEncapsulationOfLastDayOfThisMonth(year).isBefore(this) == false;
 	}
 	
 	/**
@@ -212,6 +212,10 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 */
 	public CalendarDate on(CalendarMonth month) {
 		return CalendarDate.date(month, this);
+	}
+	
+	int breachEncapsulationOfValue() {
+		return value;
 	}
 	
 //	public DayOfYear on(MonthOfYear month) {

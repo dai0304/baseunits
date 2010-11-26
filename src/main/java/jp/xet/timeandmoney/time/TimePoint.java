@@ -246,7 +246,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint atMidnight(CalendarDate calendarDate, TimeZone zone) {
 		Validate.notNull(calendarDate);
 		Validate.notNull(zone);
-		return at(calendarDate.breachEncapsulationOfYearMonth(),
+		return at(calendarDate.getCalendarMonth(),
 				calendarDate.breachEncapsulationOfDay(), 0, 0, 0, 0, zone);
 	}
 	
@@ -302,7 +302,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Validate.notNull(date);
 		Validate.notNull(time);
 		Validate.notNull(zone);
-		return at(date.breachEncapsulationOfYearMonth(), date.breachEncapsulationOfDay(),
+		return at(date.getCalendarMonth(), date.breachEncapsulationOfDay(),
 				time.breachEncapsulationOfHour(), time.breachEncapsulationOfMinute(), 0, 0, zone);
 	}
 	
@@ -371,8 +371,8 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	final long millisecondsFromEpoc;
 	
 
-	private TimePoint(long milliseconds) {
-		millisecondsFromEpoc = milliseconds;
+	private TimePoint(long millisecondsFromEpoc) {
+		this.millisecondsFromEpoc = millisecondsFromEpoc;
 	}
 	
 	/**
@@ -619,6 +619,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public TimeInterval until(TimePoint end) {
 		return TimeInterval.over(this, end);
+	}
+	
+	long breachEncapsulationOfMillisecondsFromEpoc() {
+		return millisecondsFromEpoc;
 	}
 	
 }

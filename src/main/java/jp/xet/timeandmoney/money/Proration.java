@@ -193,7 +193,7 @@ public final class Proration {
 	static Money sum(Money[] elements) {
 		Validate.noNullElements(elements);
 		Validate.isTrue(elements.length > 0);
-		Money sum = Money.valueOf(0, elements[0].getCurrency());
+		Money sum = Money.valueOf(0, elements[0].breachEncapsulationOfCurrency());
 		for (Money element : elements) {
 			sum = sum.plus(element);
 		}
@@ -207,7 +207,7 @@ public final class Proration {
 	}
 	
 	private static int defaultScaleForIntermediateCalculations(Money total) {
-		return total.getAmount().precision() + 2;
+		return total.breachEncapsulationOfAmount().precision() + 2;
 	}
 	
 	private Proration() {

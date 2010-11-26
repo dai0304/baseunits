@@ -27,7 +27,7 @@ import org.apache.commons.lang.Validate;
  */
 public class NotSpecification<T> extends AbstractSpecification<T> {
 	
-	private final Specification<T> spec1;
+	final Specification<T> spec1;
 	
 
 	/**

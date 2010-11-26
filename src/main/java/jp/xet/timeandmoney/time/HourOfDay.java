@@ -148,7 +148,7 @@ public class HourOfDay {
 	 * 
 	 * @return 時をあらわす正数
 	 */
-	public int value() {
+	int breachEncapsulationOfValue() {
 		return value;
 	}
 }

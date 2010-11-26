@@ -111,9 +111,9 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 
-	private final int year;
+	final int year;
 	
-	private final MonthOfYear month;
+	final MonthOfYear month;
 	
 
 	CalendarMonth(int year, MonthOfYear month) {
@@ -216,7 +216,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @return {@link DayOfMonth}
 	 */
 	public DayOfMonth getLastDayOfMonth() {
-		return month.getLastDayOfThisMonth(year);
+		return month.breachEncapsulationOfLastDayOfThisMonth(year);
 	}
 	
 	@Override

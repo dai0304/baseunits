@@ -225,9 +225,9 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 
-	private final BigDecimal amount;
+	final BigDecimal amount;
 	
-	private final Currency currency;
+	final Currency currency;
 	
 
 	/**
@@ -620,21 +620,13 @@ public class Money implements Comparable<Money>, Serializable {
 		return currency;
 	}
 	
-	BigDecimal getAmount() {
-		return amount;
-	}
-	
-//  TODO: Provide some currency-dependent formatting. Java 1.4 Currency doesn't do it.
-//  public String formatString() {
-//      return currency.formatString(amount());
-//  }
-//  public String localString() {
-//      return currency.getFormat().format(amount());
-//  }
-	
-	Currency getCurrency() {
-		return currency;
-	}
+//	BigDecimal getAmount() {
+//		return amount;
+//	}
+//	
+//	Currency getCurrency() {
+//		return currency;
+//	}
 	
 	boolean hasSameCurrencyAs(Money arg) {
 		return currency.equals(arg.currency) || arg.amount.equals(BigDecimal.ZERO) || amount.equals(BigDecimal.ZERO);
@@ -671,4 +663,11 @@ public class Money implements Comparable<Money>, Serializable {
 		}
 	}
 	
+//  TODO: Provide some currency-dependent formatting. Java 1.4 Currency doesn't do it.
+//  public String formatString() {
+//      return currency.formatString(amount());
+//  }
+//  public String localString() {
+//      return currency.getFormat().format(amount());
+//  }
 }

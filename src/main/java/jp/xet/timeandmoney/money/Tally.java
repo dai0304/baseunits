@@ -22,13 +22,14 @@ package jp.xet.timeandmoney.money;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Currency;
+import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
 
 /**
  * 同じ通貨単位の金額の集合をあらわすクラス。
  */
-public class Tally {
+public class Tally implements Iterable<Money> {
 	
 	Collection<Money> monies;
 	
@@ -71,6 +72,11 @@ public class Tally {
 	 */
 	public Currency currency() {
 		return monies.iterator().next().breachEncapsulationOfCurrency();
+	}
+	
+	@Override
+	public Iterator<Money> iterator() {
+		return monies.iterator();
 	}
 	
 	/**

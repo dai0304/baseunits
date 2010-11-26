@@ -108,8 +108,8 @@ public class MoneyTest {
 	@Test
 	public void test04_Constructor() throws Exception {
 		Money d69_99 = new Money(new BigDecimal("69.99"), USD);
-		assertThat(d69_99.getAmount(), is(new BigDecimal("69.99")));
-		assertThat(d69_99.getCurrency(), is(USD));
+		assertThat(d69_99.breachEncapsulationOfAmount(), is(new BigDecimal("69.99")));
+		assertThat(d69_99.breachEncapsulationOfCurrency(), is(USD));
 		try {
 			new Money(new BigDecimal("69.999"), USD);
 			fail("Money constructor shall never round, and shall not accept a value whose scale doesn't fit the Currency.");

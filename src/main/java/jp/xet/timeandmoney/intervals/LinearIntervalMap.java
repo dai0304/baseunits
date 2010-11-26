@@ -35,7 +35,7 @@ import org.apache.commons.lang.Validate;
  */
 public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMap<K, V> {
 	
-	private final Map<Interval<K>, V> keyValues;
+	final Map<Interval<K>, V> keyValues;
 	
 
 	/**

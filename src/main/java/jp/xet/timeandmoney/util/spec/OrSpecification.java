@@ -26,9 +26,9 @@ import org.apache.commons.lang.Validate;
  */
 public class OrSpecification<T> extends AbstractSpecification<T> {
 	
-	private final Specification<T> spec1;
+	final Specification<T> spec1;
 	
-	private final Specification<T> spec2;
+	final Specification<T> spec2;
 	
 
 	/**

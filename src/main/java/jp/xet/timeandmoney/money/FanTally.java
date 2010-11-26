@@ -21,6 +21,7 @@ package jp.xet.timeandmoney.money;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
 
@@ -29,7 +30,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @param <T> 割り当ての対象
  */
-public class FanTally<T> {
+public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	
 	final Collection<MoneyFan<T>> fans;
 	
@@ -54,6 +55,11 @@ public class FanTally<T> {
 	@SuppressWarnings("unchecked")
 	public FanTally(MoneyFan<T> fan) {
 		this(Arrays.asList(fan));
+	}
+	
+	@Override
+	public Iterator<MoneyFan<T>> iterator() {
+		return fans.iterator();
 	}
 	
 	/**

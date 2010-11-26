@@ -162,7 +162,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 
-	private final long quantity;
+	final long quantity;
 	
 	final TimeUnit unit;
 	
@@ -475,6 +475,14 @@ public class Duration implements Comparable<Duration>, Serializable {
 			addAmountToCalendar(amount, calendar);
 			return TimePoint.from(calendar);
 		}
+	}
+	
+	long breachEncapsulationOfQuantity() {
+		return quantity;
+	}
+	
+	TimeUnit breachEncapsulationOfUnit() {
+		return unit;
 	}
 	
 	long inBaseUnits() {

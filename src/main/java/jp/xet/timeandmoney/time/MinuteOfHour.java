@@ -125,7 +125,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	 * 
 	 * @return 分をあらわす正数
 	 */
-	public int value() {
+	int breachEncapsulationOfValue() {
 		return value;
 	}
 }

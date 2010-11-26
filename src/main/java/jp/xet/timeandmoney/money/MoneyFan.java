@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @param <T> 割り当て対象
  */
-public class MoneyFan<T> {
+public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	
 	private Set<Allotment<T>> allotments;
 	
@@ -109,6 +110,11 @@ public class MoneyFan<T> {
 	@Override
 	public int hashCode() {
 		return allotments.hashCode();
+	}
+	
+	@Override
+	public Iterator<Allotment<T>> iterator() {
+		return allotments.iterator();
 	}
 	
 	/**

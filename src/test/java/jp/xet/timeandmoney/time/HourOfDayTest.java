@@ -23,7 +23,7 @@ public class HourOfDayTest {
 	 */
 	@Test
 	public void test01_24Simple() throws Exception {
-		assertThat(HourOfDay.of(22).value(), is(22));
+		assertThat(HourOfDay.of(22).breachEncapsulationOfValue(), is(22));
 	}
 	
 	/**

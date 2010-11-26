@@ -67,9 +67,9 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	}
 	
 
-	private final CalendarDate date;
+	final CalendarDate date;
 	
-	private final TimeOfDay time;
+	final TimeOfDay time;
 	
 
 	private CalendarMinute(CalendarDate date, TimeOfDay time) {
@@ -80,12 +80,12 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
-	 * 
-	 * @param timeZone タイムゾーン
-	 * @return {@link TimePoint}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
+	* 指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+	* 
+	* @param timeZone タイムゾーン
+	* @return {@link TimePoint}
+	* @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	*/
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
 		return TimePoint.from(date, time, timeZone);
@@ -134,5 +134,13 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	@Override
 	public String toString() {
 		return date.toString() + " at " + time.toString();
+	}
+	
+	CalendarDate breachEncapsulationOfDate() {
+		return date;
+	}
+	
+	TimeOfDay breachEncapsulationOfTime() {
+		return time;
 	}
 }

@@ -85,13 +85,13 @@ public class Ratio {
 	
 
 	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param numerator 分子
-	 * @param denominator 分母
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
-	 */
+	* インスタンスを生成する。
+	* 
+	* @param numerator 分子
+	* @param denominator 分母
+	* @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	* @throws ArithmeticException 引数{@code denominator}が0だった場合
+	*/
 	public Ratio(BigDecimal numerator, BigDecimal denominator) {
 		Validate.notNull(numerator);
 		Validate.notNull(denominator);
@@ -200,6 +200,14 @@ public class Ratio {
 	@Override
 	public String toString() {
 		return numerator.toString() + "/" + denominator;
+	}
+	
+	BigDecimal breachEncapsulationOfDenominator() {
+		return denominator;
+	}
+	
+	BigDecimal breachEncapsulationOfNumerator() {
+		return numerator;
 	}
 	
 }

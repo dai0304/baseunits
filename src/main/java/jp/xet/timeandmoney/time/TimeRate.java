@@ -32,9 +32,9 @@ import org.apache.commons.lang.Validate;
  */
 public class TimeRate {
 	
-	private final BigDecimal quantity;
+	final BigDecimal quantity;
 	
-	private final Duration unit;
+	final Duration unit;
 	
 
 	/**
@@ -177,5 +177,13 @@ public class TimeRate {
 		buffer.append(" per ");
 		buffer.append(unit);
 		return buffer.toString();
+	}
+	
+	BigDecimal breachEncapsulationOfQuantity() {
+		return quantity;
+	}
+	
+	Duration breachEncapsulationOfUnit() {
+		return unit;
 	}
 }

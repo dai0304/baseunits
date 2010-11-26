@@ -34,12 +34,12 @@ public class Allotment<T> {
 	
 
 	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param entity 割り当て対象
-	 * @param amount 割り当て量
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
+	* インスタンスを生成する。
+	* 
+	* @param entity 割り当て対象
+	* @param amount 割り当て量
+	* @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	*/
 	public Allotment(T entity, Money amount) {
 		Validate.notNull(entity);
 		Validate.notNull(amount);
@@ -93,5 +93,13 @@ public class Allotment<T> {
 	@Override
 	public String toString() {
 		return "" + entity + " --> " + amount;
+	}
+	
+	Money breachEncapsulationOfAmount() {
+		return amount;
+	}
+	
+	T breachEncapsulationOfEntity() {
+		return entity;
 	}
 }

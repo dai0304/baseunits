@@ -243,6 +243,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return true;
 	}
 	
+	/**
+	 * このインスタンスが表現する日を含む年月を表す{@link CalendarMonth}を取得する。
+	 * 
+	 * @return このインスタンスが表現する日を含む年月を表す期間
+	 */
+	public CalendarMonth getCalendarMonth() {
+		return yearMonth;
+	}
+	
 	@Override
 	public int hashCode() {
 		assert day != null;
@@ -283,10 +292,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		if (other == null) {
 			return false;
 		}
-		if (yearMonth.isBefore(other.breachEncapsulationOfYearMonth())) {
+		if (yearMonth.isBefore(other.getCalendarMonth())) {
 			return true;
 		}
-		if (yearMonth.isAfter(other.breachEncapsulationOfYearMonth())) {
+		if (yearMonth.isAfter(other.getCalendarMonth())) {
 			return false;
 		}
 		return day.isBefore(other.day);
@@ -417,7 +426,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @return このインスタンスが表現する日を含む年を表す期間
 	 */
-	public CalendarInterval year() {
+	public CalendarInterval yearInterval() {
 		return CalendarInterval.year(yearMonth.breachEncapsulationOfYear());
 	}
 	
@@ -438,13 +447,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return day;
 	}
 	
-	/**
-	 * このインスタンスが表現する日を含む年月を表す{@link CalendarMonth}を取得する。
-	 * 
-	 * @return このインスタンスが表現する日を含む年月を表す期間
-	 */
 	CalendarMonth breachEncapsulationOfYearMonth() {
 		return yearMonth;
 	}
-	
 }
