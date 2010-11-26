@@ -17,7 +17,10 @@
 package jp.xet.timeandmoney.time;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+
+import java.util.Calendar;
 
 import org.junit.Test;
 
@@ -43,4 +46,55 @@ public class MonthOfYearTest {
 		assertThat(MonthOfYear.NOV.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(30)));
 	}
 	
+	/**
+	 * {@link MonthOfYear#calendarValueOf(int)}及び{@link MonthOfYear#valueOf(int)}によるインスタンス生成テスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_valueOf() throws Exception {
+		assertThat(MonthOfYear.calendarValueOf(Calendar.MARCH), is(MonthOfYear.MAR));
+		assertThat(MonthOfYear.calendarValueOf(Calendar.DECEMBER), is(MonthOfYear.DEC));
+		assertThat(MonthOfYear.calendarValueOf(-999), is(nullValue()));
+		
+		assertThat(MonthOfYear.valueOf(3), is(MonthOfYear.MAR));
+		assertThat(MonthOfYear.valueOf(12), is(MonthOfYear.DEC));
+		assertThat(MonthOfYear.valueOf(-999), is(nullValue()));
+	}
+	
+	/**
+	 * {@link MonthOfYear#isAfter(MonthOfYear)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_isAfter() throws Exception {
+		assertThat(MonthOfYear.JUL.isAfter(MonthOfYear.JAN), is(true));
+		assertThat(MonthOfYear.JUL.isAfter(MonthOfYear.SEP), is(false));
+		assertThat(MonthOfYear.JUL.isAfter(MonthOfYear.JUL), is(false));
+		assertThat(MonthOfYear.JUL.isAfter(null), is(false));
+	}
+	
+	/**
+	 * {@link MonthOfYear#isBefore(MonthOfYear)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_isBefore() throws Exception {
+		assertThat(MonthOfYear.JUL.isBefore(MonthOfYear.JAN), is(false));
+		assertThat(MonthOfYear.JUL.isBefore(MonthOfYear.SEP), is(true));
+		assertThat(MonthOfYear.JUL.isBefore(MonthOfYear.JUL), is(false));
+		assertThat(MonthOfYear.JUL.isBefore(null), is(false));
+	}
+	
+	/**
+	 * {@link MonthOfYear#on(int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_on() throws Exception {
+		assertThat(MonthOfYear.MAR.on(1978), is(CalendarMonth.from(1978, 3)));
+	}
 }

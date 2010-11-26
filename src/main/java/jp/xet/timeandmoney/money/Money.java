@@ -396,7 +396,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 */
 	public Ratio dividedBy(Money divisor) {
 		Validate.notNull(divisor);
-		assertHasSameCurrencyAs(divisor);
+		checkHasSameCurrencyAs(divisor);
 		return Ratio.of(amount, divisor.amount);
 	}
 	
@@ -537,7 +537,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 */
 	public Money plus(Money other) {
 		Validate.notNull(other);
-		assertHasSameCurrencyAs(other);
+		checkHasSameCurrencyAs(other);
 		return Money.valueOf(amount.add(other.amount), currency);
 	}
 	
@@ -670,7 +670,7 @@ public class Money implements Comparable<Money>, Serializable {
 		return Money.valueOf(increment, currency);
 	}
 	
-	private void assertHasSameCurrencyAs(Money aMoney) {
+	private void checkHasSameCurrencyAs(Money aMoney) {
 		if (hasSameCurrencyAs(aMoney) == false) {
 			throw new ClassCastException(aMoney.toString() + " is not same currency as " + this.toString());
 		}

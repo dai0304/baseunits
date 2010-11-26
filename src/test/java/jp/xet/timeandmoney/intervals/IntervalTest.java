@@ -292,7 +292,7 @@ public class IntervalTest {
 		assertThat(range.includes(Double.valueOf(5.5)), is(true));
 		assertThat(range.includes(Double.valueOf(-5.5)), is(true));
 		assertThat(range.includes(Double.NEGATIVE_INFINITY), is(true));
-		assertThat(!range.includes(Double.valueOf(5.5001)), is(true));
+		assertThat(range.includes(Double.valueOf(5.5001)), is(false));
 	}
 	
 	/**

@@ -409,6 +409,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
+	 * この瞬間を「時分」として返す。
+	 * 
+	 * @param zone タイムゾーン
+	 * @return 時分
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public TimeOfDay asTimeOfDay(TimeZone zone) {
+		Validate.notNull(zone);
+		Calendar calendar = asJavaCalendar(zone);
+		return TimeOfDay.hourAndMinute(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
+	}
+	
+	/**
 	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付における午前0時（深夜）の瞬間を表す {@link TimePoint}を取得する。
 	 * 
 	 * @param zone タイムゾーン
@@ -611,9 +624,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/**
 	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
-	 * @param pattern パターン
+	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @param zone タイムゾーン
-	 * @return 文字列表現
+	 * @return 整形済み時間文字列
 	 */
 	public String toString(String pattern, TimeZone zone) {
 		DateFormat format = new SimpleDateFormat(pattern);

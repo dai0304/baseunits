@@ -72,8 +72,8 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	}
 	
 	@Override
-	public int compareTo(MinuteOfHour o) {
-		return Integer.valueOf(value).compareTo(o.value);
+	public int compareTo(MinuteOfHour other) {
+		return value - other.value;
 	}
 	
 	@Override

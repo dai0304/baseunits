@@ -193,7 +193,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	Interval(IntervalLimit<T> lower, IntervalLimit<T> upper) {
 		Validate.notNull(lower);
 		Validate.notNull(upper);
-		assertLowerIsLessThanOrEqualUpper(lower, upper);
+		checkLowerIsLessThanOrEqualUpper(lower, upper);
 		
 		// 単一要素区間であり、かつ、どちらか片方が開いている場合、両者を開く。
 		// [5, 5) や (5, 5] を [5, 5] にする。(5, 5)は空区間だから除外。
@@ -251,10 +251,15 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 */
 	public boolean covers(Interval<T> other) {
 		Validate.notNull(other);
+		
 		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
-		boolean lowerPass = this.includes(other.lowerLimit()) || (lowerComparison == 0 && !other.includesLowerLimit());
+		boolean lowerPass = this.includes(other.lowerLimit())
+				|| (lowerComparison == 0 && other.includesLowerLimit() == false);
+		
 		int upperComparison = upperLimit().compareTo(other.upperLimit());
-		boolean upperPass = this.includes(other.upperLimit()) || (upperComparison == 0 && !other.includesUpperLimit());
+		boolean upperPass = this.includes(other.upperLimit())
+				|| (upperComparison == 0 && other.includesUpperLimit() == false);
+		
 		return lowerPass && upperPass;
 	}
 	
@@ -488,7 +493,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 			return false;
 		}
 		int comparison = lowerLimit().compareTo(value);
-		return comparison > 0 || (comparison == 0 && !includesLowerLimit());
+		return comparison > 0 || (comparison == 0 && includesLowerLimit() == false);
 	}
 	
 	/**
@@ -504,7 +509,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 			return false;
 		}
 		int comparison = upperLimit().compareTo(value);
-		return comparison < 0 || (comparison == 0 && !includesUpperLimit());
+		return comparison < 0 || (comparison == 0 && includesUpperLimit() == false);
 	}
 	
 	/**
@@ -734,7 +739,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 //		return sb.toString();
 //	}
 	
-	private void assertLowerIsLessThanOrEqualUpper(IntervalLimit<T> lower, IntervalLimit<T> upper) {
+	private void checkLowerIsLessThanOrEqualUpper(IntervalLimit<T> lower, IntervalLimit<T> upper) {
 		if ((lower.isLower() && upper.isUpper() && lower.compareTo(upper) <= 0) == false) {
 			throw new IllegalArgumentException(lower + " is not before or equal to " + upper);
 		}
@@ -780,7 +785,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 			return null;
 		}
 		return newOfSameType(other.lowerLimit(), other.includesLowerLimit(), this.lowerLimit(),
-				!this.includesLowerLimit());
+				this.includesLowerLimit() == false);
 	}
 	
 	/**

@@ -39,7 +39,7 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test01_OnStartOfDay() throws Exception {
-		CalendarMinute feb17AtStartOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 0, 0);
+		CalendarMinute feb17AtStartOfDay = CalendarMinute.from(2006, 2, 17, 0, 0);
 		assertThat(midnight.on(feb17), is(feb17AtStartOfDay));
 	}
 	
@@ -50,7 +50,7 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test02_OnMiddleOfDay() throws Exception {
-		CalendarMinute feb17AtMiddleOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 12, 0);
+		CalendarMinute feb17AtMiddleOfDay = CalendarMinute.from(2006, 2, 17, 12, 0);
 		assertThat(noon.on(feb17), is(feb17AtMiddleOfDay));
 	}
 	
@@ -61,7 +61,7 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test03_OnEndOfDay() throws Exception {
-		CalendarMinute feb17AtEndOfDay = CalendarMinute.dateHourAndMinute(2006, 2, 17, 23, 58);
+		CalendarMinute feb17AtEndOfDay = CalendarMinute.from(2006, 2, 17, 23, 58);
 		assertThat(twoMinutesBeforeMidnight.on(feb17), is(feb17AtEndOfDay));
 	}
 	

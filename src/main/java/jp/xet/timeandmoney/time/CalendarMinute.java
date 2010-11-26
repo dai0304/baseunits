@@ -20,6 +20,8 @@
 package jp.xet.timeandmoney.time;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.Validate;
@@ -62,8 +64,23 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
 	 */
-	public static CalendarMinute dateHourAndMinute(int year, int month, int day, int hour, int minute) {
+	public static CalendarMinute from(int year, int month, int day, int hour, int minute) {
 		return new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.hourAndMinute(hour, minute));
+	}
+	
+	/**
+	 * 指定した年月日時分を表す、{@link CalendarDate}のインスタンスを生成する。
+	 * 
+	 * @param dateTimeString 年月日時分を表す文字列 
+	 * @param pattern 解析パターン文字列
+	 * @return {@link CalendarMinute}
+	 * @throws ParseException 文字列の解析に失敗した場合 
+	 */
+	public static CalendarMinute from(String dateTimeString, String pattern) throws ParseException {
+		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
+		//Any timezone works, as long as the same one is used throughout.
+		TimePoint point = TimePoint.parseFrom(dateTimeString, pattern, arbitraryZone);
+		return CalendarMinute.dateAndTimeOfDay(point.calendarDate(arbitraryZone), point.asTimeOfDay(arbitraryZone));
 	}
 	
 
@@ -74,7 +91,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	final TimeOfDay time;
 	
 
-	private CalendarMinute(CalendarDate date, TimeOfDay time) {
+	CalendarMinute(CalendarDate date, TimeOfDay time) {
 		Validate.notNull(date);
 		Validate.notNull(time);
 		this.date = date;
@@ -116,9 +133,12 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	}
 	
 	@Override
-	public int compareTo(CalendarMinute arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(CalendarMinute other) {
+		int dateComparance = date.compareTo(other.date);
+		if (dateComparance != 0) {
+			return dateComparance;
+		}
+		return time.compareTo(other.time);
 	}
 	
 	@Override
@@ -155,8 +175,54 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 		return result;
 	}
 	
+	/**
+	 * 指定した年月日時分 {@code other} が、このオブジェクトが表現する年月日時分よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 対象年月日時分
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public boolean isAfter(CalendarMinute other) {
+		Validate.notNull(other);
+		return isBefore(other) == false && equals(other) == false;
+	}
+	
+	/**
+	 * 指定した年月日時分 {@code other} が、このオブジェクトが表現する年月日時分よりも未来であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 対象年月日時分
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public boolean isBefore(CalendarMinute other) {
+		Validate.notNull(other);
+		if (date.isBefore(other.date)) {
+			return true;
+		}
+		if (date.isAfter(other.date)) {
+			return false;
+		}
+		return time.isBefore(other.time);
+	}
+	
 	@Override
 	public String toString() {
 		return date.toString() + " at " + time.toString();
+	}
+	
+	/**
+	 * この年月日時分を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
+	 * @param pattern {@link SimpleDateFormat}に基づくパターン
+	 * @param zone タイムゾーン
+	 * @return 整形済み時間文字列
+	 */
+	public String toString(String pattern, TimeZone zone) {
+		TimePoint point = asTimePoint(zone);
+		return point.toString(pattern, zone);
 	}
 }

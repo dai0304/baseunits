@@ -19,6 +19,7 @@
  */
 package jp.xet.timeandmoney.time;
 
+import java.io.Serializable;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.Validate;
@@ -28,7 +29,8 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。</p>
  */
-public class TimeOfDay {
+@SuppressWarnings("serial")
+public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	
 	/**
 	 * 指定した時分を表す、{@link TimeOfDay}のインスタンスを生成する。
@@ -99,6 +101,15 @@ public class TimeOfDay {
 	 */
 	public MinuteOfHour breachEncapsulationOfMinute() {
 		return minute;
+	}
+	
+	@Override
+	public int compareTo(TimeOfDay other) {
+		int hourComparance = hour.compareTo(other.hour);
+		if (hourComparance != 0) {
+			return hourComparance;
+		}
+		return minute.compareTo(other.minute);
 	}
 	
 	@Override

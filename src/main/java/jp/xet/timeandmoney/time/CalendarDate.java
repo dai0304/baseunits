@@ -288,11 +288,11 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
 	 * 
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isAfter(CalendarDate other) {
 		if (other == null) {
@@ -304,20 +304,20 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
 	 * 
 	 * @param other 対象日時
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isBefore(CalendarDate other) {
 		if (other == null) {
 			return false;
 		}
-		if (yearMonth.isBefore(other.getCalendarMonth())) {
+		if (yearMonth.isBefore(other.yearMonth)) {
 			return true;
 		}
-		if (yearMonth.isAfter(other.getCalendarMonth())) {
+		if (yearMonth.isAfter(other.yearMonth)) {
 			return false;
 		}
 		return day.isBefore(other.day);
@@ -433,8 +433,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * この日付を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
-	 * @param pattern パターン
-	 * @return 文字列表現
+	 * @param pattern {@link SimpleDateFormat}に基づくパターン
+	 * @return 整形済み時間文字列
 	 */
 	public String toString(String pattern) {
 		// Any timezone works, as long as the same one is used throughout.

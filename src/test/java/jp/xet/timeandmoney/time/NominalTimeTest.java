@@ -29,7 +29,7 @@ public class NominalTimeTest {
 	public void test01_CombineNominalTimes() throws Exception {
 		TimeOfDay fiveFifteenPM = TimeOfDay.hourAndMinute(17, 15);
 		CalendarDate april19_2006 = CalendarDate.from(2006, 4, 19);
-		CalendarMinute expectedCombination = CalendarMinute.dateHourAndMinute(2006, 4, 19, 17, 15);
+		CalendarMinute expectedCombination = CalendarMinute.from(2006, 4, 19, 17, 15);
 		assertThat(fiveFifteenPM.on(april19_2006), is(expectedCombination));
 		assertThat(april19_2006.at(fiveFifteenPM), is(expectedCombination));
 	}
@@ -41,7 +41,7 @@ public class NominalTimeTest {
 	 */
 	@Test
 	public void test02_ConvertNominalTimeToTimePoint() throws Exception {
-		CalendarMinute calendarMinute = CalendarMinute.dateHourAndMinute(2006, 4, 19, 17, 15);
+		CalendarMinute calendarMinute = CalendarMinute.from(2006, 4, 19, 17, 15);
 		TimePoint expectedTimePoint = TimePoint.at(2006, 4, 19, 17, 15, 0, 0, HONOLULU_TIME);
 		assertThat(calendarMinute.asTimePoint(HONOLULU_TIME), is(expectedTimePoint));
 	}

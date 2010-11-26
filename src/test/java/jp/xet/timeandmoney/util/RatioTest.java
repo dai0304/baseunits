@@ -86,15 +86,39 @@ public class RatioTest {
 	}
 	
 	/**
+	 * {@link Ratio#of(BigDecimal)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_FractionalRatio() throws Exception {
+		Ratio ratio = Ratio.of(new BigDecimal("3.14159"));
+		assertThat(ratio.breachEncapsulationOfDenominator(), is(BigDecimal.ONE));
+		assertThat(ratio.breachEncapsulationOfNumerator(), is(new BigDecimal("3.14159")));
+		assertThat(ratio.decimalValue(5, Rounding.UNNECESSARY), is(new BigDecimal("3.14159")));
+	}
+	
+	/**
 	 * {@link Ratio#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test03_Equals() throws Exception {
+	public void test04_Equals() throws Exception {
+		Ratio r = Ratio.of(100, 200);
+		assertThat(r.equals(r), is(true));
+		
 		assertThat(Ratio.of(100, 200).equals(Ratio.of(100, 200)), is(true));
 		assertThat(Ratio.of(100, 200), is(Ratio.of(100, 200)));
 		assertThat(Ratio.of(new BigDecimal("100"), new BigDecimal("200")), is(Ratio.of(100, 200)));
+		assertThat(Ratio.of(new BigDecimal("100"), new BigDecimal("200")).equals(Ratio.of(100, 200)), is(true));
+		assertThat(Ratio.of(new BigDecimal("100"), new BigDecimal("200")).equals(Ratio.of(101, 200)), is(false));
+		assertThat(Ratio.of(new BigDecimal("100"), new BigDecimal("200")).equals(Ratio.of(100, 201)), is(false));
+		
+		assertThat(Ratio.of(100, 200).equals(null), is(false));
+		assertThat(new Ratio(new BigDecimal("100"), new BigDecimal("200")), is(r));
+		assertThat(new Ratio(new BigDecimal("100"), new BigDecimal("200")) {
+		}, is(not(r)));
 		
 		// THINK 等価なんだけどな。
 		assertThat(Ratio.of(100, 200), is(not(Ratio.of(10, 20))));
@@ -106,7 +130,7 @@ public class RatioTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test04_MultiplyNumerator() throws Exception {
+	public void test05_MultiplyNumerator() throws Exception {
 		Ratio rManyDigits = Ratio.of(9001, 3000);
 		Ratio product = rManyDigits.times(new BigDecimal("1.1"));
 		assertThat(product, is(Ratio.of(new BigDecimal("9901.1"), new BigDecimal(3000))));
@@ -118,10 +142,21 @@ public class RatioTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test05_MultiplyByRatio() throws Exception {
+	public void test06_MultiplyByRatio() throws Exception {
 		Ratio r1 = Ratio.of(9001, 3000);
 		Ratio r2 = Ratio.of(3, 2);
 		Ratio expectedProduct = Ratio.of(27003, 6000);
 		assertThat(r1.times(r2), is(expectedProduct));
+	}
+	
+	/**
+	 * {@link Ratio#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_toString() throws Exception {
+		assertThat(Ratio.of(100, 200).toString(), is("100/200"));
+		assertThat(Ratio.of(10, 20).toString(), is("10/20"));
 	}
 }

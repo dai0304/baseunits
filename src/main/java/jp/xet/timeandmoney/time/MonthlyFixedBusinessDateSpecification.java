@@ -54,7 +54,8 @@ public class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecificat
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
 		if (cal.isBusinessDay(date)) {
-			return day.equals(date.breachEncapsulationOfDay());
+			CalendarDate thisMonth = ofYearMonth(date.breachEncapsulationOfYearMonth());
+			return thisMonth.equals(date);
 		}
 		return false;
 	}

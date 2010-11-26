@@ -38,6 +38,8 @@ public class MoneyTest {
 	
 	private Money y50;
 	
+	private Money y100;
+	
 	private Money e2_51;
 	
 	private Money d100;
@@ -58,6 +60,7 @@ public class MoneyTest {
 		d2_51 = Money.valueOf(new BigDecimal("2.51"), USD);
 		e2_51 = Money.valueOf(new BigDecimal("2.51"), EUR);
 		y50 = Money.valueOf(new BigDecimal("50"), JPY);
+		y100 = Money.valueOf(new BigDecimal("100"), JPY);
 		d100 = Money.valueOf(new BigDecimal("100.0"), USD);
 		d0 = Money.valueOf(BigDecimal.ZERO, USD);
 		y0 = Money.valueOf(BigDecimal.ZERO, JPY);
@@ -83,7 +86,7 @@ public class MoneyTest {
 		assertThat(Money.valueOf(15.0, USD), is(d15));
 		assertThat(Money.valueOf(2.51, USD), is(d2_51));
 		assertThat(Money.valueOf(50.1, JPY), is(y50));
-		assertThat(Money.valueOf(100, USD), is(d100));
+		assertThat(Money.valueOf(100, JPY), is(y100));
 	}
 	
 	/**
@@ -126,6 +129,8 @@ public class MoneyTest {
 	public void test05_Divide() throws Exception {
 		assertThat(d100.dividedBy(3), is(Money.dollars(33.33)));
 		assertThat(d100.dividedBy(6), is(Money.dollars(16.67)));
+		assertThat(y100.dividedBy(6), is(Money.yens(new BigDecimal(17))));
+		assertThat(y50.dividedBy(5), is(Money.yens(10)));
 	}
 	
 	/**
@@ -137,7 +142,7 @@ public class MoneyTest {
 	public void test06_Multiply() throws Exception {
 		assertThat(d15.times(10), is(Money.dollars(150)));
 		assertThat(d15.times(0.1), is(Money.dollars(1.5)));
-		assertThat(d100.times(0.7), is(Money.dollars(70)));
+		assertThat(d100.times(0.7), is(Money.dollars(new BigDecimal("70"))));
 	}
 	
 	/**

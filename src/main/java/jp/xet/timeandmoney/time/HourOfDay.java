@@ -19,6 +19,8 @@
  */
 package jp.xet.timeandmoney.time;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -26,7 +28,8 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link java.util.Date}と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
  */
-public class HourOfDay {
+@SuppressWarnings("serial")
+public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	
 	private static final int MIN = 0;
 	
@@ -101,6 +104,11 @@ public class HourOfDay {
 	 */
 	public int breachEncapsulationOfValue() {
 		return value;
+	}
+	
+	@Override
+	public int compareTo(HourOfDay other) {
+		return value - other.value;
 	}
 	
 	@Override

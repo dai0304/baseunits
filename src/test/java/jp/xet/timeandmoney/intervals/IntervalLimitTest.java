@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +23,7 @@ public class IntervalLimitTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
+	@SuppressWarnings("serial")
 	public void test01_Equals() throws Exception {
 		assertThat(IntervalLimit.lower(false, 10).equals(IntervalLimit.lower(false, 10)), is(true));
 		assertThat(IntervalLimit.lower(true, 10).equals(IntervalLimit.lower(false, 10)), is(false));
@@ -42,6 +44,13 @@ public class IntervalLimitTest {
 		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(false, 10)), is(false));
 		assertThat(IntervalLimit.upper(false, 10).equals(IntervalLimit.lower(true, 10)), is(false));
 		assertThat(IntervalLimit.upper(true, 10).equals(IntervalLimit.lower(true, 10)), is(false));
+		
+		IntervalLimit<Integer> lowerOpen10 = IntervalLimit.lower(false, 10);
+		assertThat(lowerOpen10.equals(lowerOpen10), is(true));
+		assertThat(lowerOpen10.equals(null), is(false));
+		assertThat(new IntervalLimit<Integer>(false, true, 10).equals(lowerOpen10), is(true));
+		assertThat(new IntervalLimit<Integer>(false, true, 10) {
+		}.equals(lowerOpen10), is(false));
 	}
 	
 	/**
@@ -50,7 +59,7 @@ public class IntervalLimitTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test02_compare() throws Exception {
+	public void test02_compareTo() throws Exception {
 		IntervalLimit<Integer> lowerInf = IntervalLimit.<Integer> lower(false, null);
 		IntervalLimit<Integer> upperInf = IntervalLimit.<Integer> upper(false, null);
 		IntervalLimit<Integer> lowerOpen2 = IntervalLimit.lower(false, 2);
@@ -158,6 +167,13 @@ public class IntervalLimitTest {
 		assertThat(upperOpen6.compareTo(upperOpen5), is(greaterThan(0)));
 		assertThat(upperOpen6.compareTo(upperClose6), is(lessThan(0)));
 		assertThat(upperOpen6.compareTo(upperOpen6), is(0));
+		
+		try {
+			lowerInf.compareTo(null);
+			fail();
+		} catch (NullPointerException e) {
+			// success
+		}
 	}
 	
 	/**

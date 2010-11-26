@@ -206,7 +206,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	private MoneyFan<T> withoutZeros() {
 		Set<Allotment<T>> nonZeroAllotments = new HashSet<Allotment<T>>();
 		for (Allotment<T> allotment : allotments) {
-			if (!allotment.amount.isZero()) {
+			if (allotment.breachEncapsulationOfAmount().isZero() == false) {
 				nonZeroAllotments.add(allotment);
 			}
 		}

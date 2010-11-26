@@ -29,6 +29,8 @@ public class TimeRateTest {
 	public void test01_SimpleRate() throws Exception {
 		TimeRate rate = new TimeRate(100.00, Duration.minutes(1));
 		assertThat(rate.over(Duration.hours(1)), is(new BigDecimal(6000.00)));
+		
+		assertThat(rate.toString(), is("100 per 1 minute"));
 	}
 	
 	/**
@@ -78,5 +80,24 @@ public class TimeRateTest {
 	public void test05_Equals() throws Exception {
 		TimeRate rate = new TimeRate(11, Duration.days(2));
 		assertThat(rate, is(new TimeRate(11.00, Duration.days(2))));
+		assertThat(rate.equals(rate), is(true));
+		assertThat(rate.equals(new TimeRate(11.00, Duration.days(2))), is(true));
+		assertThat(rate.equals(new TimeRate(11.00, Duration.days(2)) {
+		}), is(false));
+		assertThat(rate.equals(null), is(false));
+		assertThat(rate.equals(new TimeRate(11.00, Duration.days(1))), is(false));
+		assertThat(rate.equals(new TimeRate(11.00, Duration.months(2))), is(false));
+		assertThat(rate.equals(new TimeRate(11.01, Duration.days(2))), is(false));
+	}
+	
+	/**
+	 * {@link TimeRate#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_toString() throws Exception {
+		TimeRate rate = new TimeRate(100.00, Duration.minutes(1));
+		assertThat(rate.toString(), is("100 per 1 minute"));
 	}
 }

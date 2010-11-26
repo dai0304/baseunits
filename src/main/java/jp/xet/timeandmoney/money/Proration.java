@@ -135,9 +135,9 @@ public final class Proration {
 	}
 	
 	static Money[] distributeRemainderOver(Money[] amounts, Money remainder) {
-		int increments =
-				remainder.dividedBy(remainder.minimumIncrement()).decimalValue(0, Rounding.UNNECESSARY).intValue();
-		assertAmountsLengthLessThanOrEqualTo(amounts, increments);
+		int increments = remainder.dividedBy(remainder.minimumIncrement())
+				.decimalValue(0, Rounding.UNNECESSARY).intValue();
+		assert increments <= amounts.length;
 		
 		Money[] results = new Money[amounts.length];
 		for (int i = 0; i < increments; i++) {
@@ -198,12 +198,6 @@ public final class Proration {
 			sum = sum.plus(element);
 		}
 		return sum;
-	}
-	
-	private static void assertAmountsLengthLessThanOrEqualTo(Money[] amounts, int increments) {
-		if (increments > amounts.length) {
-			throw new IllegalArgumentException();
-		}
 	}
 	
 	private static int defaultScaleForIntermediateCalculations(Money total) {

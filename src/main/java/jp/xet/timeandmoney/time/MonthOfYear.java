@@ -68,7 +68,7 @@ public enum MonthOfYear {
 	DEC(12, DayOfMonth.valueOf(31), Calendar.DECEMBER);
 	
 	/**
-	 * {@link Calendar}に定義されている定数値から、インスタンスを取得する。
+	 * {@link Calendar}に定義する月をあらわす定数値から、インスタンスを取得する。
 	 * 
 	 * @param value {@link Calendar}に定義されている定数値
 	 * @return {@link MonthOfYear}. 見つからなかった場合は {@code null}
@@ -83,7 +83,7 @@ public enum MonthOfYear {
 	}
 	
 	/**
-	 * {@link Calendar}に定義されている定数値から、インスタンスを取得する。
+	 * 月数から、インスタンスを取得する。
 	 * 
 	 * @param value 月数（1〜12）
 	 * @return {@link MonthOfYear}. 見つからなかった場合は {@code null}

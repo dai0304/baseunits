@@ -395,6 +395,17 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		return CalendarInterval.year(year);
 	}
 	
+	/**
+	 * このインスタンスが表現する年月を含む年の元旦からその大晦日までの、期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * 
+	 * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
+	 */
+	public CalendarInterval yearInterval() {
+		return CalendarInterval.year(year);
+	}
+	
 	Calendar asJavaCalendarUniversalZoneMidnight() {
 		TimeZone zone = TimeZone.getTimeZone("Universal");
 		Calendar calendar = Calendar.getInstance(zone);
