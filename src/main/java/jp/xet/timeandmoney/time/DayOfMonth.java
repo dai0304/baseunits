@@ -226,6 +226,11 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 		return CalendarDate.date(month, this);
 	}
 	
+	@Override
+	public String toString() {
+		return String.valueOf(value);
+	}
+	
 //	public DayOfYear on(MonthOfYear month) {
 //		// ...
 //	}

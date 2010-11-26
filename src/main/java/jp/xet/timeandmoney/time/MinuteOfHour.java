@@ -129,6 +129,9 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	
 	@Override
 	public String toString() {
+		if (value < 10) {
+			return "0" + String.valueOf(value);
+		}
 		return String.valueOf(value);
 	}
 }

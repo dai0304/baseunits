@@ -82,6 +82,11 @@ public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMa
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return keyValues.toString();
+	}
+	
 	private void directPut(List<Interval<K>> intervalSequence, V value) {
 		Validate.noNullElements(intervalSequence);
 		for (Interval<K> interval : intervalSequence) {

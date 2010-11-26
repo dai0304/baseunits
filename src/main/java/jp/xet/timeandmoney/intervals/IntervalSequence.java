@@ -179,6 +179,11 @@ public class IntervalSequence<T extends Comparable<T>> implements Iterable<Inter
 		return intervals.iterator();
 	}
 	
+	@Override
+	public String toString() {
+		return intervals.toString();
+	}
+	
 //	String toStringGraphically() {
 //		StringBuilder sb = new StringBuilder();
 //		for (Interval<T> interval : intervals) {

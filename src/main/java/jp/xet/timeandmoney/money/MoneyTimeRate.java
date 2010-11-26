@@ -154,6 +154,6 @@ public class MoneyTimeRate {
 	
 	@Override
 	public String toString() {
-		return rate.toString();
+		return currency.getSymbol() + " " + rate.toString();
 	}
 }

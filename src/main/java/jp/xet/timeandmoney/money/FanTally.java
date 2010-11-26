@@ -36,11 +36,11 @@ public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	
 
 	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param fans {@link MoneyFan}の集合
-	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
-	 */
+	* インスタンスを生成する。
+	* 
+	* @param fans {@link MoneyFan}の集合
+	* @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
+	*/
 	public FanTally(Collection<MoneyFan<T>> fans) {
 		Validate.noNullElements(fans);
 		this.fans = fans;
@@ -73,6 +73,11 @@ public class FanTally<T> implements Iterable<MoneyFan<T>> {
 			sum = sum.plus(fan);
 		}
 		return sum;
+	}
+	
+	@Override
+	public String toString() {
+		return fans.toString();
 	}
 	
 	/**

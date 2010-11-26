@@ -92,4 +92,9 @@ public class Tally implements Iterable<Money> {
 		return sum;
 	}
 	
+	@Override
+	public String toString() {
+		return monies.toString();
+	}
+	
 }

@@ -57,4 +57,8 @@ class AnnualFixedDateSpecification extends AnnualDateSpecification {
 		return CalendarDate.date(year, month, day);
 	}
 	
+	@Override
+	public String toString() {
+		return day.toString() + " " + month.toString();
+	}
 }

@@ -177,7 +177,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	
 	@Override
 	public String toString() {
-		return "" + allotments;
+		return allotments.toString();
 	}
 	
 	/**
