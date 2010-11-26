@@ -40,13 +40,14 @@ Alan Lovejoy helped clarify the TimePoint/Duration/Interval distinction.
     <ul>
       <li>Javadocの @throws は RuntimeException についても記述されていなければならない。 
       つまり、Javadocに記述のない例外（RuntimeExceptionを含む）が飛んだら、バグである。</li>
-      <li>このAPIは NullPointerException をスローしない。NullPointerExceptionが飛んだらバグである。 
-      throw new NullPointerException(...); は使用しない。代わりに IllegalArgumentException を使用する。
-      ただし、APIドキュメントに @throws NullPointerException が明記してある場合は例外とする。</li>
+      <li>このAPIは基本的に NullPointerException をスローしない。代わりに IllegalArgumentException を使用する。
+      APIをコールした結果、NullPointerExceptionが飛んだらバグである。ただし、APIドキュメントに
+      @throws NullPointerException が明記してある場合は例外とする。</li>
     </ul>
-  「仕様バグ」（Javadoc自体の記述漏れ・不整合など）と「実装バグ」（コードの不整合など）がありえる。
   </li>
 </ul>
+
+<p>「仕様バグ」（APIドキュメント自体の記述漏れ・不整合など）と「実装バグ」（コードの不整合など）がありえる。</p>
 
   </body>
 </html>
