@@ -32,8 +32,14 @@ public class ClockTest {
 	
 	TimeZone ct = TimeZone.getTimeZone("America/Chicago");
 	
-	/** 現在時間を問われた時、常に{@code dec1_5am_gmt}を返す {@link TimeSource} */
-	TimeSource dummySourceDec1_5h = dummyTimeSource(dec1_5am_gmt);
+	/** 現在時間を問われた時、常に{@link #dec1_5am_gmt}を返す {@link TimeSource} */
+	TimeSource dummySourceDec1_5h = new TimeSource() {
+		
+		@Override
+		public TimePoint now() {
+			return dec1_5am_gmt;
+		}
+	};
 	
 
 	/**
@@ -104,15 +110,5 @@ public class ClockTest {
 			// Correctly threw exception
 		}
 		
-	}
-	
-	private TimeSource dummyTimeSource(final TimePoint returnValueForNow) {
-		return new TimeSource() {
-			
-			@Override
-			public TimePoint now() {
-				return returnValueForNow;
-			}
-		};
 	}
 }

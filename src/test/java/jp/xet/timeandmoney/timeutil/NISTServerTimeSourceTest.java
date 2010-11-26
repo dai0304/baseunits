@@ -56,8 +56,8 @@ public class NISTServerTimeSourceTest {
 	 */
 	@Test
 	public void test01_NISTTimeSource() throws Exception {
-		//This would return a source that goes to the internet       
-		//TimeSource source = NISTClient.timeSource();
+		// This would return a source that goes to the internet       
+		// TimeSource source = NISTClient.timeSource();
 		TimeSource source = NISTClient.timeSource(standInNISTServer.getHostName(), standInNISTServer.getPort());
 		assertThat(source.now(), is(EXPECTED_TIME_POINT));
 	}
