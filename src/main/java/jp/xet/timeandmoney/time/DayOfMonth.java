@@ -125,8 +125,8 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	}
 	
 	@Override
-	public int compareTo(DayOfMonth o) {
-		return Integer.valueOf(value).compareTo(o.value);
+	public int compareTo(DayOfMonth other) {
+		return value - other.value;
 	}
 	
 	@Override

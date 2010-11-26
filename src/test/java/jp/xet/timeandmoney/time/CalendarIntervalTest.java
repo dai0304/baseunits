@@ -12,6 +12,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.TimeZone;
 
 import jp.xet.timeandmoney.intervals.Interval;
@@ -107,7 +108,19 @@ public class CalendarIntervalTest {
 		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(may3));
 		assertThat(iterator.hasNext(), is(false));
+		try {
+			iterator.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
 		
+		try {
+			CalendarInterval.everPreceding(may1).daysIterator();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
 	}
 	
 	/**
@@ -141,12 +154,25 @@ public class CalendarIntervalTest {
 		
 		iterator = may1_3.subintervalIterator(Duration.months(1));
 		assertThat(iterator.hasNext(), is(false));
+		try {
+			iterator.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
 		
 		CalendarInterval apr15_jun1 = CalendarInterval.inclusive(apr15, jun1);
 		iterator = apr15_jun1.subintervalIterator(Duration.months(1));
 		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(apr15.through(may14)));
 		assertThat(iterator.hasNext(), is(false));
+		
+		try {
+			CalendarInterval.everPreceding(may1).subintervalIterator(Duration.months(1));
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
 	}
 	
 	/**
@@ -191,7 +217,7 @@ public class CalendarIntervalTest {
 	public void test10_EverFromToString() throws Exception {
 		CalendarDate x = CalendarDate.from(2007, 6, 5);
 		CalendarInterval i = CalendarInterval.everFrom(x);
-		assertThat(i.toString(), is("[2007-06-05, Infinity]"));
+		assertThat(i.toString(), is("[2007-06-05, Infinity)"));
 	}
 	
 	/**

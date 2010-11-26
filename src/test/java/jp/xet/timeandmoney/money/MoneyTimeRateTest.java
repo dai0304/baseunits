@@ -6,6 +6,7 @@
 package jp.xet.timeandmoney.money;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -79,6 +80,30 @@ public class MoneyTimeRateTest {
 	public void test05_Equals() throws Exception {
 		Money amount = Money.euros(11.00);
 		MoneyTimeRate rate = amount.per(Duration.days(2));
-		assertThat(rate, is(new MoneyTimeRate(Money.euros(11.00), Duration.days(2))));
+		assertThat(rate.equals(rate), is(true));
+		assertThat(rate.equals(new MoneyTimeRate(Money.euros(11.00), Duration.days(2))), is(true));
+		assertThat(rate.equals(new MoneyTimeRate(Money.euros(11.01), Duration.days(2))), is(false));
+		assertThat(rate.equals(new MoneyTimeRate(Money.euros(11.00), Duration.days(1))), is(false));
+		assertThat(rate.equals(new MoneyTimeRate(Money.yens(11.00), Duration.days(2))), is(false));
+		assertThat(rate.equals(null), is(false));
+		assertThat(rate.equals(new MoneyTimeRate(Money.euros(11.00), Duration.days(2)) {
+		}), is(false));
+		
+		assertThat(rate.hashCode(), is(new MoneyTimeRate(Money.euros(11.00), Duration.days(2)).hashCode()));
+		assertThat(rate.hashCode(), is(not(new MoneyTimeRate(Money.euros(11.01), Duration.days(2)).hashCode())));
+		assertThat(rate.hashCode(), is(not(new MoneyTimeRate(Money.euros(11.00), Duration.days(1)).hashCode())));
+		assertThat(rate.hashCode(), is(not(new MoneyTimeRate(Money.yens(11.00), Duration.days(2)).hashCode())));
+	}
+	
+	/**
+	 * {@link MoneyTimeRate#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_toString() throws Exception {
+		Money amount = Money.euros(11.00);
+		MoneyTimeRate rate = amount.per(Duration.days(2));
+		assertThat(rate.toString(), is("EUR 11.00 per 2 days"));
 	}
 }

@@ -17,6 +17,8 @@
 package jp.xet.timeandmoney.time;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -136,5 +138,49 @@ public class DayOfMonthTest {
 		
 		assertThat(DayOfMonth.valueOf(12).isBefore(DayOfMonth.valueOf(11)), is(false));
 		assertThat(DayOfMonth.valueOf(12).isBefore(DayOfMonth.valueOf(12)), is(false));
+	}
+	
+	/**
+	 * {@link DayOfMonth#equals(Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	@SuppressWarnings("serial")
+	public void test04_equals() throws Exception {
+		DayOfMonth dom1 = DayOfMonth.valueOf(1);
+		assertThat(dom1.equals(DayOfMonth.valueOf(1)), is(true));
+		assertThat(dom1.equals(dom1), is(true));
+		assertThat(dom1.equals(DayOfMonth.valueOf(2)), is(false));
+		assertThat(dom1.equals(null), is(false));
+		assertThat(dom1.equals(new DayOfMonth(1) {
+		}), is(false));
+	}
+	
+	/**
+	 * {@link DayOfMonth#compareTo(DayOfMonth)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_compareTo() throws Exception {
+		assertThat(DayOfMonth.valueOf(10).compareTo(DayOfMonth.valueOf(10)), is(0));
+		assertThat(DayOfMonth.valueOf(10).compareTo(DayOfMonth.valueOf(11)), is(lessThan(0)));
+		assertThat(DayOfMonth.valueOf(10).compareTo(DayOfMonth.valueOf(31)), is(lessThan(0)));
+		assertThat(DayOfMonth.valueOf(10).compareTo(DayOfMonth.valueOf(1)), is(greaterThan(0)));
+		assertThat(DayOfMonth.valueOf(10).compareTo(DayOfMonth.valueOf(2)), is(greaterThan(0)));
+		assertThat(DayOfMonth.valueOf(10).compareTo(DayOfMonth.valueOf(5)), is(greaterThan(0)));
+	}
+	
+	/**
+	 * {@link DayOfMonth#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_toString() throws Exception {
+		assertThat(DayOfMonth.valueOf(1).toString(), is("1"));
+		assertThat(DayOfMonth.valueOf(10).toString(), is("10"));
+		assertThat(DayOfMonth.valueOf(31).toString(), is("31"));
 	}
 }

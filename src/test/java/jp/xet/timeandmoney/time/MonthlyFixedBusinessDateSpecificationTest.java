@@ -43,7 +43,7 @@ public class MonthlyFixedBusinessDateSpecificationTest {
 		MonthlyFixedBusinessDateSpecification spec = new MonthlyFixedBusinessDateSpecification(
 				DayOfMonth.valueOf(11), Shifter.NEXT, cal);
 		
-		CalendarInterval yearInterval = CalendarMonth.from(2010, 1).yearInterval();
+		CalendarInterval yearInterval = CalendarMonth.from(2010, 1).asYearInterval();
 		
 		Iterator<CalendarDate> itr = spec.iterateOver(yearInterval);
 		assertThat(itr.hasNext(), is(true));
@@ -86,7 +86,7 @@ public class MonthlyFixedBusinessDateSpecificationTest {
 		MonthlyFixedBusinessDateSpecification spec = new MonthlyFixedBusinessDateSpecification(
 				DayOfMonth.valueOf(11), Shifter.PREV, cal);
 		
-		CalendarInterval yearInterval = CalendarMonth.from(2010, 1).yearInterval();
+		CalendarInterval yearInterval = CalendarMonth.from(2010, 1).asYearInterval();
 		
 		Iterator<CalendarDate> itr = spec.iterateOver(yearInterval);
 		assertThat(itr.hasNext(), is(true));

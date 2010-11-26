@@ -91,18 +91,6 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		return CalendarMonth.from(calendar);
 	}
 	
-	/**
-	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
-	 * 
-	 * @param year 西暦年をあらわす数
-	 * @param month 月をあらわす正数（1〜12）
-	 * @return {@link CalendarMonth}
-	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
-	 */
-	public static CalendarMonth yearMonth(int year, int month) {
-		return from(year, month);
-	}
-	
 	static CalendarMonth from(Calendar calendar) { // CHECKSTYLE IGNORE THIS LINE
 		// Use timezone already set in calendar.
 		int year = calendar.get(Calendar.YEAR);
@@ -143,6 +131,17 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
 		return TimePoint.at(year, month, DayOfMonth.valueOf(1), 0, 0, 0, 0, timeZone);
+	}
+	
+	/**
+	 * このインスタンスが表現する年月を含む年の元旦からその大晦日までの、期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * 
+	 * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
+	 */
+	public CalendarInterval asYearInterval() {
+		return CalendarInterval.year(year);
 	}
 	
 	/**
@@ -254,11 +253,11 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
 	 * 
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isAfter(CalendarMonth other) {
 		if (other == null) {
@@ -270,11 +269,11 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	/**
 	 * 指定した年月 {@code other} が、このオブジェクトが表現する年月よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
 	 * 
 	 * @param other 対象年月
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isBefore(CalendarMonth other) {
 		if (other == null) {
@@ -287,15 +286,6 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 			return false;
 		}
 		return month.isBefore(other.month);
-	}
-	
-	/**
-	 * このインスタンスが表現する日を含む年月を表す期間を取得する。
-	 * 
-	 * @return このインスタンスが表現する日を含む年月を表す期間
-	 */
-	public CalendarInterval month() {
-		return CalendarInterval.month(year, month);
 	}
 	
 	/**
@@ -384,26 +374,6 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		TimePoint point = asTimePoint(arbitraryZone);
 		return point.toString(pattern, arbitraryZone);
-	}
-	
-	/**
-	 * このインスタンスが表現する日を含む年を表す期間を取得する。
-	 * 
-	 * @return このインスタンスが表現する日を含む年を表す期間
-	 */
-	public CalendarInterval year() {
-		return CalendarInterval.year(year);
-	}
-	
-	/**
-	 * このインスタンスが表現する年月を含む年の元旦からその大晦日までの、期間を生成する。
-	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
-	 * 
-	 * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
-	 */
-	public CalendarInterval yearInterval() {
-		return CalendarInterval.year(year);
 	}
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {

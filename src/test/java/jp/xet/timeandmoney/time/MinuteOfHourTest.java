@@ -128,4 +128,22 @@ public class MinuteOfHourTest {
 		MinuteOfHour anotherMinute = MinuteOfHour.of(15);
 		assertThat(anMinute.isBefore(anotherMinute), is(false));
 	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	@SuppressWarnings("serial")
+	public void test10_equals() throws Exception {
+		MinuteOfHour m14 = MinuteOfHour.of(14);
+		assertThat(m14.equals(m14), is(true));
+		assertThat(m14.equals(MinuteOfHour.of(14)), is(true));
+		assertThat(m14.equals(MinuteOfHour.of(15)), is(false));
+		assertThat(m14.equals(null), is(false));
+		assertThat(m14.equals(new MinuteOfHour(14)), is(true));
+		assertThat(m14.equals(new MinuteOfHour(14) {
+		}), is(false));
+	}
 }

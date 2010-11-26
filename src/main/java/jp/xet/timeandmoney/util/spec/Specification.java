@@ -47,11 +47,9 @@ public interface Specification<T> {
 	/**
 	 * Create a new specification that is the NOT operation of {@code this} specification.
 	 * 
-	 * @param specification Specification to NOT.
 	 * @return A new specification.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	Specification<T> not(Specification<T> specification);
+	Specification<T> not();
 	
 	/**
 	 * Create a new specification that is the OR operation of {@code this} specification and another specification.

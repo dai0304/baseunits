@@ -311,69 +311,6 @@ public class CalendarInterval extends Interval<CalendarDate> {
 		return upperLimit();
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		// THINK オーバーライド要る？
-		if (this == obj) {
-			return true;
-		}
-		if (super.equals(obj) == false) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		CalendarInterval other = (CalendarInterval) obj;
-		if (upperLimit() == null) {
-			if (other.upperLimit() != null) {
-				return false;
-			}
-		} else if (upperLimit().equals(other.upperLimit()) == false) {
-			return false;
-		}
-		if (lowerLimit() == null) {
-			if (other.lowerLimit() != null) {
-				return false;
-			}
-		} else if (lowerLimit().equals(other.lowerLimit()) == false) {
-			return false;
-		}
-		return true;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (upperLimit() == null ? 0 : upperLimit().hashCode());
-		result = prime * result + (lowerLimit() == null ? 0 : lowerLimit().hashCode());
-		return result;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * <p>この実装では、常に {@code true} を返す。</p>
-	 * 
-	 * @see jp.xet.timeandmoney.intervals.Interval#includesLowerLimit()
-	 */
-	@Override
-	public boolean includesLowerLimit() {
-		return true;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * <p>この実装では、常に {@code true} を返す。</p>
-	 * 
-	 * @see jp.xet.timeandmoney.intervals.Interval#includesLowerLimit()
-	 */
-	@Override
-	public boolean includesUpperLimit() {
-		return true;
-	}
-	
 	/**
 	 * この期間の日数としての長さを取得する。
 	 * 

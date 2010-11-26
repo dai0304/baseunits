@@ -52,7 +52,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	final int value;
 	
 
-	private MinuteOfHour(int initial) {
+	MinuteOfHour(int initial) {
 		if (initial < MIN || initial > MAX) {
 			throw new IllegalArgumentException("Illegal value for minute: " + initial
 					+ ", please use a value between 0 and 59");

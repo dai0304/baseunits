@@ -120,6 +120,11 @@ public class RatioTest {
 		assertThat(new Ratio(new BigDecimal("100"), new BigDecimal("200")) {
 		}, is(not(r)));
 		
+		assertThat(Ratio.of(100, 200).hashCode(), is(Ratio.of(100, 200).hashCode()));
+		assertThat(Ratio.of(101, 200).hashCode(), is(not(Ratio.of(100, 200).hashCode())));
+		assertThat(Ratio.of(100, 201).hashCode(), is(not(Ratio.of(100, 200).hashCode())));
+		assertThat(Ratio.of(100, 200).hashCode(), is(not(Ratio.of(10, 20).hashCode())));
+		
 		// THINK 等価なんだけどな。
 		assertThat(Ratio.of(100, 200), is(not(Ratio.of(10, 20))));
 	}
