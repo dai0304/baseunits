@@ -157,6 +157,28 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
+	 * このオブジェクトの{@link #month}フィールド（月）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 月
+	 */
+	public MonthOfYear breachEncapsulationOfMonth() {
+		return month;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #year}フィールド（西暦年をあらわす数）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 西暦年をあらわす数
+	 */
+	public int breachEncapsulationOfYear() {
+		return year;
+	}
+	
+	/**
 	 * 年月日同士の比較を行う。
 	 * 
 	 * <p>相対的に過去である方を「小さい」と判断する。</p>
@@ -216,7 +238,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @return {@link DayOfMonth}
 	 */
 	public DayOfMonth getLastDayOfMonth() {
-		return month.breachEncapsulationOfLastDayOfThisMonth(year);
+		return month.getLastDayOfThisMonth(year);
 	}
 	
 	@Override
@@ -384,13 +406,5 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar;
-	}
-	
-	MonthOfYear breachEncapsulationOfMonth() {
-		return month;
-	}
-	
-	int breachEncapsulationOfYear() {
-		return year;
 	}
 }

@@ -180,11 +180,11 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test12_GetHour() throws Exception {
-		assertThat(midnight.breachEncapsulationOfHour(), is(0));
-		assertThat(morning.breachEncapsulationOfHour(), is(10));
-		assertThat(noon.breachEncapsulationOfHour(), is(12));
-		assertThat(afternoon.breachEncapsulationOfHour(), is(15));
-		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfHour(), is(23));
+		assertThat(midnight.breachEncapsulationOfHour(), is(HourOfDay.of(0)));
+		assertThat(morning.breachEncapsulationOfHour(), is(HourOfDay.of(10)));
+		assertThat(noon.breachEncapsulationOfHour(), is(HourOfDay.of(12)));
+		assertThat(afternoon.breachEncapsulationOfHour(), is(HourOfDay.of(15)));
+		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfHour(), is(HourOfDay.of(23)));
 	}
 	
 	/**
@@ -194,11 +194,11 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test13_GetMinute() throws Exception {
-		assertThat(midnight.breachEncapsulationOfMinute(), is(0));
-		assertThat(morning.breachEncapsulationOfMinute(), is(20));
-		assertThat(noon.breachEncapsulationOfMinute(), is(0));
-		assertThat(afternoon.breachEncapsulationOfMinute(), is(40));
-		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfMinute(), is(58));
+		assertThat(midnight.breachEncapsulationOfMinute(), is(MinuteOfHour.of(0)));
+		assertThat(morning.breachEncapsulationOfMinute(), is(MinuteOfHour.of(20)));
+		assertThat(noon.breachEncapsulationOfMinute(), is(MinuteOfHour.of(0)));
+		assertThat(afternoon.breachEncapsulationOfMinute(), is(MinuteOfHour.of(40)));
+		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfMinute(), is(MinuteOfHour.of(58)));
 	}
 	
 	/**

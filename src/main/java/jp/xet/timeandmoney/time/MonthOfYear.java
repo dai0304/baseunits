@@ -31,7 +31,7 @@ public enum MonthOfYear {
 	FEB(2, null, Calendar.FEBRUARY) {
 		
 		@Override
-		DayOfMonth breachEncapsulationOfLastDayOfThisMonth(int year) {
+		DayOfMonth getLastDayOfThisMonth(int year) {
 			GregorianCalendar calendar = new GregorianCalendar(year, 2, 1);
 			return calendar.isLeapYear(year) ? DayOfMonth.valueOf(29) : DayOfMonth.valueOf(28); // CHECKSTYLE IGNORE THIS LINE
 		}
@@ -104,7 +104,7 @@ public enum MonthOfYear {
 	/** その月の最終日 */
 	final DayOfMonth lastDayOfThisMonth;
 	
-	/** {@link Calendar#JANUARY}, {@link Calendar#FEBRUARY}, ... */
+	/** {@link Calendar}に定義する月をあらわす定数値 */
 	final int calendarValue;
 	
 
@@ -112,6 +112,28 @@ public enum MonthOfYear {
 		value = month;
 		this.lastDayOfThisMonth = lastDayOfThisMonth;
 		this.calendarValue = calendarValue;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #calendarValue}フィールド（{@link Calendar}に定義する月をあらわす定数値）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return {@link Calendar}に定義する月をあらわす定数値（{@link Calendar#JANUARY}〜{@link Calendar#DECEMBER}）
+	 */
+	public int breachEncapsulationOfCalendarValue() {
+		return calendarValue;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #value}フィールド（月をあらわす数 1〜12）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 月をあらわす数（1〜12）
+	 */
+	public int breachEncapsulationOfValue() {
+		return value;
 	}
 	
 	/**
@@ -146,6 +168,10 @@ public enum MonthOfYear {
 		return value < other.value;
 	}
 	
+//	public DayOfYear at(DayOfMonth month) {
+//		// ...
+//	}
+	
 	/**
 	 * 指定した年の、この月を表す年月を返す。
 	 * 
@@ -156,25 +182,13 @@ public enum MonthOfYear {
 		return CalendarMonth.from(year, this);
 	}
 	
-	int breachEncapsulationOfCalendarValue() {
-		return calendarValue;
-	}
-	
-//	public DayOfYear at(DayOfMonth month) {
-//		// ...
-//	}
-	
 	/**
 	 * その月の最終日を取得する。
 	 * 
 	 * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
 	 * @return 最終日
 	 */
-	DayOfMonth breachEncapsulationOfLastDayOfThisMonth(int year) {
+	DayOfMonth getLastDayOfThisMonth(int year) {
 		return lastDayOfThisMonth;
-	}
-	
-	int breachEncapsulationOfValue() {
-		return value;
 	}
 }

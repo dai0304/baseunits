@@ -77,6 +77,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	}
 	
 
+	/** 日をあらわす正数 */
 	final int value;
 	
 
@@ -110,6 +111,17 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 		}
 		value = day;
 		Validate.isTrue(isApplyable(month), String.format("%s-%02d is invalid.", month.toString(), day));
+	}
+	
+	/**
+	 * このオブジェクトの{@link #value}フィールド（日をあらわす正数）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 日をあらわす正数（1〜31）
+	 */
+	public int breachEncapsulationOfValue() {
+		return value;
 	}
 	
 	@Override
@@ -183,7 +195,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public boolean isApplyable(int year, MonthOfYear month) {
-		return month.breachEncapsulationOfLastDayOfThisMonth(year).isBefore(this) == false;
+		return month.getLastDayOfThisMonth(year).isBefore(this) == false;
 	}
 	
 	/**
@@ -212,10 +224,6 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 */
 	public CalendarDate on(CalendarMonth month) {
 		return CalendarDate.date(month, this);
-	}
-	
-	int breachEncapsulationOfValue() {
-		return value;
 	}
 	
 //	public DayOfYear on(MonthOfYear month) {

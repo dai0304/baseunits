@@ -48,6 +48,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	}
 	
 
+	/** 分をあらわす正数 */
 	final int value;
 	
 
@@ -57,6 +58,17 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 					+ ", please use a value between 0 and 59");
 		}
 		value = initial;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #value}フィールド（分をあらわす正数）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 分をあらわす正数（0〜59）
+	 */
+	public int breachEncapsulationOfValue() {
+		return value;
 	}
 	
 	@Override
@@ -118,14 +130,5 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	@Override
 	public String toString() {
 		return String.valueOf(value);
-	}
-	
-	/**
-	 * 分をあらわす正数を取得する。
-	 * 
-	 * @return 分をあらわす正数
-	 */
-	int breachEncapsulationOfValue() {
-		return value;
 	}
 }

@@ -44,8 +44,10 @@ public class TimeOfDay {
 	}
 	
 
+	/** 時 */
 	final HourOfDay hour;
 	
+	/** 分 */
 	final MinuteOfHour minute;
 	
 
@@ -75,6 +77,28 @@ public class TimeOfDay {
 		Validate.notNull(timeZone);
 		CalendarMinute timeOfDayOnDate = on(date);
 		return timeOfDayOnDate.asTimePoint(timeZone);
+	}
+	
+	/**
+	 * このオブジェクトの{@link #hour}フィールド（時）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 時
+	 */
+	public HourOfDay breachEncapsulationOfHour() {
+		return hour;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #minute}フィールド（分）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 分
+	 */
+	public MinuteOfHour breachEncapsulationOfMinute() {
+		return minute;
 	}
 	
 	@Override
@@ -152,21 +176,5 @@ public class TimeOfDay {
 	@Override
 	public String toString() {
 		return hour.toString() + ":" + minute.toString();
-	}
-	
-	int breachEncapsulationOfHour() {
-		return hour.breachEncapsulationOfValue();
-	}
-	
-	int breachEncapsulationOfMinute() {
-		return minute.breachEncapsulationOfValue();
-	}
-	
-	HourOfDay hour() {
-		return hour;
-	}
-	
-	MinuteOfHour minute() {
-		return minute;
 	}
 }

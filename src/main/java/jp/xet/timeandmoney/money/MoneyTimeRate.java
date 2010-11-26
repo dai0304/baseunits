@@ -34,8 +34,10 @@ import org.apache.commons.lang.Validate;
  */
 public class MoneyTimeRate {
 	
+	/** 単位時間あたりの数量 */
 	private final TimeRate rate;
 	
+	/** 通貨単位 */
 	private final Currency currency;
 	
 
@@ -51,6 +53,28 @@ public class MoneyTimeRate {
 		Validate.notNull(duration);
 		rate = new TimeRate(money.breachEncapsulationOfAmount(), duration);
 		currency = money.breachEncapsulationOfCurrency();
+	}
+	
+	/**
+	 * このオブジェクトの{@link #currency}フィールド（通貨単位）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 通貨単位
+	 */
+	public Currency breachEncapsulationOfCurrency() {
+		return currency;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #rate}フィールド（単位時間当たりの数量）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 単位時間あたりの数量
+	 */
+	public TimeRate breachEncapsulationOfRate() {
+		return rate;
 	}
 	
 	@Override
@@ -131,13 +155,5 @@ public class MoneyTimeRate {
 	@Override
 	public String toString() {
 		return rate.toString();
-	}
-	
-	Currency breachEncapsulationOfCurrency() {
-		return currency;
-	}
-	
-	TimeRate breachEncapsulationOfRate() {
-		return rate;
 	}
 }

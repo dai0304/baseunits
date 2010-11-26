@@ -32,8 +32,10 @@ import org.apache.commons.lang.Validate;
  */
 public class TimeRate {
 	
+	/** 単位時間あたりの量 */
 	final BigDecimal quantity;
 	
+	/** 単位時間 */
 	final Duration unit;
 	
 
@@ -74,6 +76,28 @@ public class TimeRate {
 	 */
 	public TimeRate(String quantity, Duration unit) {
 		this(new BigDecimal(quantity), unit);
+	}
+	
+	/**
+	 * このオブジェクトの{@link #quantity}フィールド（単位時間あたりの量）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 単位時間あたりの量
+	 */
+	public BigDecimal breachEncapsulationOfQuantity() {
+		return quantity;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #unit}フィールド（単位時間）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 単位時間
+	 */
+	public Duration breachEncapsulationOfUnit() {
+		return unit;
 	}
 	
 	@Override
@@ -177,13 +201,5 @@ public class TimeRate {
 		buffer.append(" per ");
 		buffer.append(unit);
 		return buffer.toString();
-	}
-	
-	BigDecimal breachEncapsulationOfQuantity() {
-		return quantity;
-	}
-	
-	Duration breachEncapsulationOfUnit() {
-		return unit;
 	}
 }

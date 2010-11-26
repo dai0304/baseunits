@@ -244,6 +244,28 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
+	 * このオブジェクトの{@link #quantity}フィールド（量）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 量
+	 */
+	public long breachEncapsulationOfQuantity() {
+		return quantity;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #unit}フィールド（単位）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 単位
+	 */
+	public TimeUnit breachEncapsulationOfUnit() {
+		return unit;
+	}
+	
+	/**
 	 * 時間量同士の比較を行う。
 	 * 
 	 * <p>基本単位(baseUnit)換算で比較し、時間量の少ない方を「小さい」と判断する。
@@ -475,14 +497,6 @@ public class Duration implements Comparable<Duration>, Serializable {
 			addAmountToCalendar(amount, calendar);
 			return TimePoint.from(calendar);
 		}
-	}
-	
-	long breachEncapsulationOfQuantity() {
-		return quantity;
-	}
-	
-	TimeUnit breachEncapsulationOfUnit() {
-		return unit;
 	}
 	
 	long inBaseUnits() {

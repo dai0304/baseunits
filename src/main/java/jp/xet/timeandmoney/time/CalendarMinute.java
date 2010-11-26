@@ -67,8 +67,10 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	}
 	
 
+	/** 年月日 */
 	final CalendarDate date;
 	
+	/** 時分 */
 	final TimeOfDay time;
 	
 
@@ -89,6 +91,28 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
 		return TimePoint.from(date, time, timeZone);
+	}
+	
+	/**
+	 * このオブジェクトの{@link #date}フィールド（年月日）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 年月日
+	 */
+	public CalendarDate breachEncapsulationOfDate() {
+		return date;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #time}フィールド（時分）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 時分
+	 */
+	public TimeOfDay breachEncapsulationOfTime() {
+		return time;
 	}
 	
 	@Override
@@ -134,13 +158,5 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	@Override
 	public String toString() {
 		return date.toString() + " at " + time.toString();
-	}
-	
-	CalendarDate breachEncapsulationOfDate() {
-		return date;
-	}
-	
-	TimeOfDay breachEncapsulationOfTime() {
-		return time;
 	}
 }

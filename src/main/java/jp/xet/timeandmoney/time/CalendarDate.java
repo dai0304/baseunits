@@ -188,6 +188,28 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
+	 * このオブジェクトの{@link #day}フィールド（日）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 日
+	 */
+	public DayOfMonth breachEncapsulationOfDay() {
+		return day;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #yearMonth}フィールド（年月）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 年月
+	 */
+	public CalendarMonth breachEncapsulationOfYearMonth() {
+		return yearMonth;
+	}
+	
+	/**
 	 * 年月日同士の比較を行う。
 	 * 
 	 * <p>相対的に過去である方を「小さい」と判断する。</p>
@@ -441,13 +463,5 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar;
-	}
-	
-	DayOfMonth breachEncapsulationOfDay() {
-		return day;
-	}
-	
-	CalendarMonth breachEncapsulationOfYearMonth() {
-		return yearMonth;
 	}
 }

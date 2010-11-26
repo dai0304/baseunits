@@ -28,8 +28,10 @@ import org.apache.commons.lang.Validate;
  */
 public class Allotment<T> {
 	
+	/** 割り当て対象 */
 	final T entity;
 	
+	/** 金額 */
 	final Money amount;
 	
 
@@ -45,6 +47,28 @@ public class Allotment<T> {
 		Validate.notNull(amount);
 		this.entity = entity;
 		this.amount = amount;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #amount}フィールド（金額）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 金額
+	 */
+	public Money breachEncapsulationOfAmount() {
+		return amount;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #entity}フィールド（割り当て対象）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 割り当て対象
+	 */
+	public T breachEncapsulationOfEntity() {
+		return entity;
 	}
 	
 	@Override
@@ -93,13 +117,5 @@ public class Allotment<T> {
 	@Override
 	public String toString() {
 		return "" + entity + " --> " + amount;
-	}
-	
-	Money breachEncapsulationOfAmount() {
-		return amount;
-	}
-	
-	T breachEncapsulationOfEntity() {
-		return entity;
 	}
 }

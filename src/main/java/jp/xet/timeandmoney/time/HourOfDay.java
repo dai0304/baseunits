@@ -80,6 +80,7 @@ public class HourOfDay {
 	}
 	
 
+	/** 時をあらわす正数 */
 	final int value;
 	
 
@@ -89,6 +90,17 @@ public class HourOfDay {
 					+ ", please use a value between 0 and 23");
 		}
 		value = initial;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #value}フィールド（時をあらわす正数）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 時をあらわす正数（0〜23）
+	 */
+	public int breachEncapsulationOfValue() {
+		return value;
 	}
 	
 	@Override
@@ -141,14 +153,5 @@ public class HourOfDay {
 	@Override
 	public String toString() {
 		return String.valueOf(value);
-	}
-	
-	/**
-	 * 時をあらわす正数を取得する。
-	 * 
-	 * @return 時をあらわす正数
-	 */
-	int breachEncapsulationOfValue() {
-		return value;
 	}
 }

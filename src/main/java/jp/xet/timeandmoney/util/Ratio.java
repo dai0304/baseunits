@@ -77,10 +77,10 @@ public class Ratio {
 	}
 	
 
-	/** 分子 */
+	/** 分子をあらわず数 */
 	private final BigDecimal numerator;
 	
-	/** 分母 */
+	/** 分母をあらわず数 */
 	private final BigDecimal denominator;
 	
 
@@ -100,6 +100,28 @@ public class Ratio {
 		}
 		this.numerator = numerator;
 		this.denominator = denominator;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #denominator}フィールド（分母をあらわす数）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 分母をあらわず数
+	 */
+	public BigDecimal breachEncapsulationOfDenominator() {
+		return denominator;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #numerator}フィールド（分子をあらわす数）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 分子をあらわす数
+	 */
+	public BigDecimal breachEncapsulationOfNumerator() {
+		return numerator;
 	}
 	
 	/**
@@ -200,14 +222,6 @@ public class Ratio {
 	@Override
 	public String toString() {
 		return numerator.toString() + "/" + denominator;
-	}
-	
-	BigDecimal breachEncapsulationOfDenominator() {
-		return denominator;
-	}
-	
-	BigDecimal breachEncapsulationOfNumerator() {
-		return numerator;
 	}
 	
 }

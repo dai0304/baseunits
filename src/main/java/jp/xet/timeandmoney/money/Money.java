@@ -225,8 +225,10 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 
+	/** 量 */
 	final BigDecimal amount;
 	
+	/** 通貨単位 */
 	final Currency currency;
 	
 
@@ -287,6 +289,35 @@ public class Money implements Comparable<Money>, Serializable {
 		Validate.notNull(ratio);
 		Validate.notNull(roundingRule);
 		return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
+	}
+	
+	/**
+	 * このオブジェクトの{@link #amount}フィールド（量）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * <p>How best to handle access to the internals? It is needed for
+	 * database mapping, UI presentation, and perhaps a few other
+	 * uses. Yet giving public access invites people to do the
+	 * real work of the Money object elsewhere.
+	 * Here is an experimental approach, giving access with a 
+	 * warning label of sorts. Let us know how you like it.</p>
+	 * 
+	 * @return 量
+	 */
+	public BigDecimal breachEncapsulationOfAmount() {
+		return amount;
+	}
+	
+	/**
+	 * このオブジェクトの{@link #currency}フィールド（通貨単位）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return 通貨単位
+	 */
+	public Currency breachEncapsulationOfCurrency() {
+		return currency;
 	}
 	
 	/**
@@ -600,24 +631,6 @@ public class Money implements Comparable<Money>, Serializable {
 		}
 		Validate.notNull(locale);
 		return currency.getSymbol(locale) + " " + amount;
-	}
-	
-	/**
-	 * How best to handle access to the internals? It is needed for
-	 * database mapping, UI presentation, and perhaps a few other
-	 * uses. Yet giving public access invites people to do the
-	 * real work of the Money object elsewhere.
-	 * Here is an experimental approach, giving access with a 
-	 * warning label of sorts. Let us know how you like it.
-	 * 
-	 * @return amount
-	 */
-	BigDecimal breachEncapsulationOfAmount() {
-		return amount;
-	}
-	
-	Currency breachEncapsulationOfCurrency() {
-		return currency;
 	}
 	
 //	BigDecimal getAmount() {

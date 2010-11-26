@@ -303,7 +303,8 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Validate.notNull(time);
 		Validate.notNull(zone);
 		return at(date.getCalendarMonth(), date.breachEncapsulationOfDay(),
-				time.breachEncapsulationOfHour(), time.breachEncapsulationOfMinute(), 0, 0, zone);
+				time.breachEncapsulationOfHour().value, time.breachEncapsulationOfMinute().value,
+				0, 0, zone);
 	}
 	
 	/**
@@ -417,6 +418,17 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public TimePoint backToMidnight(TimeZone zone) {
 		Validate.notNull(zone);
 		return calendarDate(zone).asTimeInterval(zone).start();
+	}
+	
+	/**
+	 * このオブジェクトの{@link #millisecondsFromEpoc}フィールド（エポックからの経過ミリ秒）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return エポックからの経過ミリ秒
+	 */
+	public long breachEncapsulationOfMillisecondsFromEpoc() {
+		return millisecondsFromEpoc;
 	}
 	
 	/**
@@ -619,10 +631,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public TimeInterval until(TimePoint end) {
 		return TimeInterval.over(this, end);
-	}
-	
-	long breachEncapsulationOfMillisecondsFromEpoc() {
-		return millisecondsFromEpoc;
 	}
 	
 }

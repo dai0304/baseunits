@@ -65,7 +65,7 @@ public enum DayOfWeek {
 	}
 	
 
-	/** {@link Calendar}に定義されている定数値 */
+	/** {@link Calendar}に定義する曜日をあらわす定数値 */
 	final int value;
 	
 
@@ -73,7 +73,14 @@ public enum DayOfWeek {
 		this.value = value;
 	}
 	
-	int breachEncapsulationOfValue() {
+	/**
+	 * このオブジェクトの{@link #value}フィールド（{@link Calendar}に定義する曜日をあらわす定数値）を返す。
+	 * 
+	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
+	 * 
+	 * @return {@link Calendar}に定義する曜日をあらわす定数値（{@link Calendar#SUNDAY}〜{@link Calendar#SATURDAY}）
+	 */
+	public int breachEncapsulationOfValue() {
 		return value;
 	}
 	
