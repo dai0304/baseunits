@@ -177,7 +177,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 */
 	public Duration(long quantity, TimeUnit unit) {
 		Validate.notNull(unit);
-		Validate.isTrue(quantity > 0, "Quantity: " + quantity + " must be zero or positive");
+		Validate.isTrue(quantity >= 0, "Quantity: " + quantity + " must be zero or positive");
 		this.quantity = quantity;
 		this.unit = unit;
 	}
