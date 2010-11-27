@@ -336,8 +336,8 @@ public class Duration implements Comparable<Duration>, Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (inBaseUnits() ^ (inBaseUnits() >>> 32));
-		result = prime * result + ((unit.baseType == null) ? 0 : unit.baseType.hashCode());
+		result = prime * result + (int) (inBaseUnits() ^ (inBaseUnits() >>> 32)); // CHECKSTYLE IGNORE THIS LINE
+		result = prime * result + unit.baseType.hashCode();
 		return result;
 	}
 	
