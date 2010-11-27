@@ -1,12 +1,14 @@
-Time and Money 
-Copyright 2010 TRICREO, Inc. (http://tricreo.jp/) (http://tricreo.jp/).
+Basic Units Library
+Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
+This product is licensed under the Apache License v2.0 (see LICENSE.txt)
+
 
 This product includes following softwares.
 
-Apache Commons Library http://commons.apache.org/
+Apache Commons Library  http://commons.apache.org/
   developed by The Apache Software Foundation (http://www.apache.org/).
-  licensed as Apache License v2.0 (see license.commons.txt)
+  licensed under the Apache License v2.0 (see license.commons.txt)
 
-Time & Money Library http://sourceforge.net/projects/timeandmoney/
+Time & Money Library  http://sourceforge.net/projects/timeandmoney/
   developed by Domain Language, Inc. (http://www.domainlanguage.com/)
-  licensed as MIT License (see license.timeandmoney.txt)
+  licensed under the MIT License (see license.timeandmoney.txt)
