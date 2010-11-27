@@ -27,9 +27,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:git@github.com:dai0304/timeandmoney-remodelled.git</connection>
-    <url>scm:git:git@github.com:dai0304/timeandmoney-remodelled.git</url>
-    <developerConnection>scm:git:git@github.com:dai0304/timeandmoney-remodelled.git</developerConnection>
+    <url>scm:git:git@github.com:dai0304/basicunits.git</url>
+    <connection>scm:git:git@github.com:dai0304/basicunits.git</connection>
+    <developerConnection>scm:git:git@github.com:dai0304/basicunits.git</developerConnection>
   </scm>
   <build>
     <plugins>
@@ -50,12 +50,10 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <forkMode>pertest</forkMode>
           <includes>
             <include>**/*Test.java</include>
           </includes>
           <argLine>-enableassertions -Xms512M -Xmx512M</argLine>
-          <testFailureIgnore>true</testFailureIgnore>
         </configuration>
       </plugin>
       <plugin>
