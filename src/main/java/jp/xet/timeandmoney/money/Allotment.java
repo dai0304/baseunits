@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Daisuke Miyamoto.
+ * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  * ----
  * Copyright (c) 200X Domain Language, Inc. (http://domainlanguage.com) This
- * free software is distributed under the "MIT" licence. See file licence.txt.
+ * free software is distributed under the "MIT" licence.
  * For more information, see http://timeandmoney.sourceforge.net.
  */
 package jp.xet.timeandmoney.money;

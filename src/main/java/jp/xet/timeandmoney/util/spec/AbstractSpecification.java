@@ -18,7 +18,7 @@ package jp.xet.timeandmoney.util.spec;
 /**
  * {@link Specification}の抽象実装クラス。
  * 
- * <p>{@link #and(Specification)}, {@link #or(Specification)}, {@link #not(Specification)}を
+ * <p>{@link #and(Specification)}, {@link #or(Specification)}, {@link #not()}を
  * 実装済みである。</p>
  * 
  * @param <T> {@link AbstractSpecification}の型

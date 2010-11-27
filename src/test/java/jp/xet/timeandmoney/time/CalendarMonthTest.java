@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Daisuke Miyamoto.
+ * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2010/11/27
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,7 +48,7 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMonth#from}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -59,7 +59,7 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMonth#asCalendarInterval()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -71,7 +71,7 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMonth#at(DayOfMonth)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -88,7 +88,8 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMonth#getLastDay()}
+	 * {@link CalendarMonth#getLastDayOfMonth()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -104,7 +105,7 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMonth#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

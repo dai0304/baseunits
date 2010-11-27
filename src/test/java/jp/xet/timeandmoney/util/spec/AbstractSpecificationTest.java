@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Daisuke Miyamoto.
+ * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2010/11/27
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,21 +23,19 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 /**
- * TODO for daisuke
- * 
- * @since TODO for daisuke
- * @version $Id$
- * @author daisuke
+ * {@link AbstractSpecification}のテストクラス。
  */
 public class AbstractSpecificationTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link AbstractSpecification#and(Specification)}
+	 * {@link AbstractSpecification#or(Specification)}
+	 * {@link AbstractSpecification#not()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void testname() throws Exception {
+	public void test01_and_or_not() throws Exception {
 		AbstractSpecification<Void> spec = new AbstractSpecification<Void>() {
 			
 			@Override

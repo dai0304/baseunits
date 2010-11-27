@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Daisuke Miyamoto.
+ * Copyright 2009 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2009/12/08
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
