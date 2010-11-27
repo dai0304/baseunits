@@ -8,15 +8,15 @@
     <artifactId>generic-master</artifactId>
     <version>0.1.0</version>
   </parent>
-  <groupId>jp.xet.timeandmoney</groupId>
+  <groupId>jp.tricreo</groupId>
   <artifactId>timeandmoney-remodelled</artifactId>
   <name>Time and Money Remodelled Library</name>
   <version>1.0-SNAPSHOT</version>
   <description>The models of Time and Money domains.</description>
   <url>http://maven.xet.jp/site/timeandmoney-remodelled/${project.version}/</url>
   <organization>
-    <name>Daisuke and the others.</name>
-    <url>http://d.hatena.ne.jp/daisuke-m/</url>
+    <name>TRICREO, Inc.</name>
+    <url>http://tricreo.jp/</url>
   </organization>
   <inceptionYear>2010</inceptionYear>
   <licenses>

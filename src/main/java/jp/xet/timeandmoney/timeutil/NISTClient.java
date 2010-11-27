@@ -48,20 +48,58 @@ public class NISTClient {
 	/** socket通信バッファサイズ */
 	private static final int BUFFER_SIZE = 256;
 	
+	private final String serverName;
+	
+	private final int port;
+	
 
 	/**
-	 * ネットワーク時間に基づき現在の時刻を返す {@link TimeSource} を返す。
+	 * インスタンスを生成する。
 	 * 
-	 * <p>時間の問い合わせ先は、 {@code time.nist.gov:13} を使用する。</p>
-	 * 
-	 * @return ネットワーク時間に基づき現在の時刻を返す {@link TimeSource}
+	 * <p>時間の問い合わせ先は、{@code time.nist.gov:13}を使用する。</p>
 	 */
-	public static TimeSource timeSource() {
-		return timeSource(DEFAULT_SERVER, DEFAULT_PORT);
+	public NISTClient() {
+		this(DEFAULT_SERVER, DEFAULT_PORT);
 	}
 	
 	/**
-	 * {@code time.nist.gov}が返す時間文字列を {@link TimePoint}型に変換する。
+	 * インスタンスを生成する。
+	 * 
+	 * <p>通常は使用しない。</p>
+	 * 
+	 * @param serverName サーバ名
+	 * @param port ポート番号
+	 */
+	public NISTClient(String serverName, int port) {
+		Validate.notNull(serverName);
+		this.serverName = serverName;
+		this.port = port;
+	}
+	
+	/**
+	 * ネットワーク時間に基づき現在の時刻を返す {@link TimeSource} を返す。
+	 * 
+	 * @return ネットワーク時間に基づき現在の時刻を返す {@link TimeSource}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public TimeSource timeSource() {
+		return new TimeSource() {
+			
+			@Override
+			public TimePoint now() {
+				try {
+					return NISTClient.this.now(serverName, port);
+				} catch (IOException e) {
+					throw new TimeSourceException("Problem obtaining network time: " + e.getMessage(), e);
+				} catch (ParseException e) {
+					throw new TimeSourceException("Problem obtaining network time: " + e.getMessage(), e);
+				}
+			}
+		};
+	}
+	
+	/**
+	 * {@code time.nist.gov}が返す時間文字列を{@link TimePoint}型に変換する。
 	 * 
 	 * <p>例えば、{@code "55173 09-12-08 08:15:57 00 0 0 148.8 UTC(NIST) *"}等の文字列を
 	 * 入力すると、{@code "Tue Dec 08 17:15:57 JST 2009"}を表す {@link TimePoint} を返す。
@@ -72,49 +110,21 @@ public class NISTClient {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ParseException 引数nistRawFormattedStringの解析に失敗した場合
 	 */
-	protected static TimePoint asTimePoint(String nistRawFormattedString) throws ParseException {
+	protected TimePoint asTimePoint(String nistRawFormattedString) throws ParseException {
 		Validate.notNull(nistRawFormattedString);
 		String nistGist = nistRawFormattedString.substring(7, 24); // CHECKSTYLE IGNORE THIS LINE
 		return TimePoint.parseGMTFrom(nistGist, PATTERN);
 	}
 	
-	/**
-	 * ネットワーク時間に基づき現在の時刻を返す {@link TimeSource} を返す。
-	 * 
-	 * @param serverName サーバ名
-	 * @param port ポート番号
-	 * @return ネットワーク時間に基づき現在の時刻を返す {@link TimeSource}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	protected static TimeSource timeSource(final String serverName, final int port) {
-		Validate.notNull(serverName);
-		return new TimeSource() {
-			
-			@Override
-			public TimePoint now() {
-				try {
-					return NISTClient.now(serverName, port);
-				} catch (IOException e) {
-					throw new TimeSourceException("Problem obtaining network time: " + e.getMessage(), e);
-				}
-			}
-		};
-	}
-	
-	static TimePoint now(String serverName, int port) throws IOException {
+	TimePoint now(String serverName, int port) throws IOException, ParseException {
 		byte[] buffer = new byte[BUFFER_SIZE];
 		Socket socket = new Socket(serverName, port);
 		try {
 			int length = socket.getInputStream().read(buffer);
 			String nistTime = new String(buffer, 0, length);
 			return asTimePoint(nistTime);
-		} catch (ParseException e) {
-			throw new Error(e);
 		} finally {
 			socket.close();
 		}
-	}
-	
-	private NISTClient() {
 	}
 }

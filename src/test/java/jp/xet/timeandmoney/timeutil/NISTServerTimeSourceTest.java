@@ -8,9 +8,18 @@ package jp.xet.timeandmoney.timeutil;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
+
+import java.io.IOException;
+
 import jp.xet.timeandmoney.tests.CannedResponseServer;
 import jp.xet.timeandmoney.time.TimePoint;
 import jp.xet.timeandmoney.time.TimeSource;
+import jp.xet.timeandmoney.time.TimeSourceException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -50,7 +59,7 @@ public class NISTServerTimeSourceTest {
 	}
 	
 	/**
-	 * {@link NISTClient#timeSource(String, int)}のテスト。
+	 * {@link NISTClient#timeSource()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -58,7 +67,8 @@ public class NISTServerTimeSourceTest {
 	public void test01_NISTTimeSource() throws Exception {
 		// This would return a source that goes to the internet       
 		// TimeSource source = NISTClient.timeSource();
-		TimeSource source = NISTClient.timeSource(standInNISTServer.getHostName(), standInNISTServer.getPort());
+		NISTClient client = new NISTClient(standInNISTServer.getHostName(), standInNISTServer.getPort());
+		TimeSource source = client.timeSource();
 		assertThat(source.now(), is(EXPECTED_TIME_POINT));
 	}
 	
@@ -69,7 +79,26 @@ public class NISTServerTimeSourceTest {
 	 */
 	@Test
 	public void test02_AsTimePoint() throws Exception {
-		assertThat(NISTClient.asTimePoint(CANNED_RESPONSE), is(EXPECTED_TIME_POINT));
+		NISTClient client = new NISTClient();
+		assertThat(client.asTimePoint(CANNED_RESPONSE), is(EXPECTED_TIME_POINT));
 	}
 	
+	/**
+	 * エラー発生時のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_error() throws Exception {
+		NISTClient client = spy(new NISTClient());
+		doThrow(new IOException()).when(client).now(anyString(), anyInt());
+		
+		TimeSource source = client.timeSource();
+		try {
+			source.now();
+			fail();
+		} catch (TimeSourceException e) {
+			// success
+		}
+	}
 }

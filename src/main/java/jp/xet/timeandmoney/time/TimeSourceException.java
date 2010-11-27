@@ -16,7 +16,6 @@
  */
 package jp.xet.timeandmoney.time;
 
-import java.io.IOException;
 
 /**
  * 現在時刻の取得に失敗したことをあらわす例外。
@@ -30,7 +29,7 @@ public class TimeSourceException extends RuntimeException {
 	 * @param message 例外メッセージ
 	 * @param e 起因例外
 	 */
-	public TimeSourceException(String message, IOException e) {
+	public TimeSourceException(String message, Exception e) {
 		super(message, e);
 	}
 }
