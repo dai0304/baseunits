@@ -35,15 +35,13 @@ public class MonthOfYearTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test01_basic() throws Exception {
-		assertThat(MonthOfYear.JAN.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(31)));
-		
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(28)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2000), is(DayOfMonth.valueOf(29)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2004), is(DayOfMonth.valueOf(29)));
-		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(1900), is(DayOfMonth.valueOf(28)));
-		
-		assertThat(MonthOfYear.NOV.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(30)));
+	public void test01_basics() throws Exception {
+		assertThat(MonthOfYear.JAN.breachEncapsulationOfValue(), is(1));
+		assertThat(MonthOfYear.FEB.breachEncapsulationOfValue(), is(2));
+		assertThat(MonthOfYear.DEC.breachEncapsulationOfValue(), is(12));
+		assertThat(MonthOfYear.JAN.breachEncapsulationOfCalendarValue(), is(Calendar.JANUARY));
+		assertThat(MonthOfYear.FEB.breachEncapsulationOfCalendarValue(), is(Calendar.FEBRUARY));
+		assertThat(MonthOfYear.DEC.breachEncapsulationOfCalendarValue(), is(Calendar.DECEMBER));
 	}
 	
 	/**
@@ -96,5 +94,22 @@ public class MonthOfYearTest {
 	@Test
 	public void test05_on() throws Exception {
 		assertThat(MonthOfYear.MAR.on(1978), is(CalendarMonth.from(1978, 3)));
+	}
+	
+	/**
+	 * {@link MonthOfYear#getLastDayOfThisMonth(int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_getLastDayOfThisMonth() throws Exception {
+		assertThat(MonthOfYear.JAN.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(31)));
+		
+		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(28)));
+		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2000), is(DayOfMonth.valueOf(29)));
+		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(2004), is(DayOfMonth.valueOf(29)));
+		assertThat(MonthOfYear.FEB.getLastDayOfThisMonth(1900), is(DayOfMonth.valueOf(28)));
+		
+		assertThat(MonthOfYear.NOV.getLastDayOfThisMonth(2010), is(DayOfMonth.valueOf(30)));
 	}
 }

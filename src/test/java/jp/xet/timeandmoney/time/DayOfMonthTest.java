@@ -37,7 +37,8 @@ public class DayOfMonthTest {
 	@Test
 	public void test01_create() throws Exception {
 		for (int i = 1; i <= 31; i++) {
-			DayOfMonth.valueOf(i);
+			DayOfMonth m = DayOfMonth.valueOf(i);
+			assertThat(m.breachEncapsulationOfValue(), is(i));
 		}
 		
 		try {
@@ -116,6 +117,8 @@ public class DayOfMonthTest {
 		
 		assertThat(DayOfMonth.valueOf(12).isAfter(DayOfMonth.valueOf(11)), is(true));
 		assertThat(DayOfMonth.valueOf(12).isAfter(DayOfMonth.valueOf(12)), is(false));
+		
+		assertThat(DayOfMonth.valueOf(12).isAfter(null), is(false));
 	}
 	
 	/**
@@ -138,6 +141,8 @@ public class DayOfMonthTest {
 		
 		assertThat(DayOfMonth.valueOf(12).isBefore(DayOfMonth.valueOf(11)), is(false));
 		assertThat(DayOfMonth.valueOf(12).isBefore(DayOfMonth.valueOf(12)), is(false));
+		
+		assertThat(DayOfMonth.valueOf(12).isBefore(null), is(false));
 	}
 	
 	/**

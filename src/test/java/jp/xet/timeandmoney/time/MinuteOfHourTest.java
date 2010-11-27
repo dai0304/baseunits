@@ -146,4 +146,21 @@ public class MinuteOfHourTest {
 		assertThat(m14.equals(new MinuteOfHour(14) {
 		}), is(false));
 	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test11_toString() throws Exception {
+		for (int i = 1; i < 10; i++) {
+			MinuteOfHour m = MinuteOfHour.of(i);
+			assertThat(m.toString(), is(String.format("%02d", i)));
+		}
+		for (int i = 10; i < 60; i++) {
+			MinuteOfHour m = MinuteOfHour.of(i);
+			assertThat(m.toString(), is(String.valueOf(i)));
+		}
+	}
 }

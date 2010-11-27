@@ -61,7 +61,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜23の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code minute}の値が0〜59の範囲ではない場合
 	 */
-	private TimeOfDay(int hour, int minute) {
+	TimeOfDay(int hour, int minute) {
 		this.hour = HourOfDay.of(hour);
 		this.minute = MinuteOfHour.of(minute);
 	}

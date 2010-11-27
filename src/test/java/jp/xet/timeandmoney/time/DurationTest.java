@@ -137,6 +137,10 @@ public class DurationTest {
 		CalendarDate dec20_2001 = CalendarDate.from(2001, 12, 20);
 		Duration twoYears = Duration.years(2);
 		assertThat(twoYears.addedTo(dec20_2001), is(dec20_2003));
+		
+		// 単位が日未満の時は日付を変えない。
+		Duration threeHours = Duration.milliseconds(30);
+		assertThat(threeHours.addedTo(CalendarDate.date(2010, 11, 27)), is(CalendarDate.date(2010, 11, 27)));
 	}
 	
 	/**
@@ -305,6 +309,12 @@ public class DurationTest {
 		Duration zeroMillisecs = Duration.milliseconds(0);
 		assertThat(twoHours.compareTo(zeroMonths), is(greaterThan(0)));
 		assertThat(zeroMonths.compareTo(zeroMillisecs), is(0));
+		
+		try {
+			twoHours.compareTo(null);
+			fail();
+		} catch (NullPointerException e) {
+		}
 	}
 	
 	/**
@@ -346,4 +356,28 @@ public class DurationTest {
 		assertThat(Duration.hours(25).normalizedUnit(), is(TimeUnit.hour));
 	}
 	
+	/**
+	 * {@link Duration#addedTo(CalendarMonth)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test2o_AddToCalendarMonth() throws Exception {
+		CalendarMonth oct2003 = CalendarMonth.from(2003, 10);
+		CalendarMonth dec2003 = CalendarMonth.from(2003, 12);
+		
+		Duration twoMonths = Duration.months(2);
+		assertThat(twoMonths.addedTo(oct2003), is(dec2003));
+		
+		Duration sixtyoneDays = Duration.days(61);
+		assertThat(sixtyoneDays.addedTo(oct2003), is(oct2003));
+		
+		CalendarMonth dec2001 = CalendarMonth.from(2001, 12);
+		Duration twoYears = Duration.years(2);
+		assertThat(twoYears.addedTo(dec2001), is(dec2003));
+		
+		// 単位が日未満の時は日付を変えない。
+		Duration threeHours = Duration.days(30);
+		assertThat(threeHours.addedTo(CalendarMonth.from(2010, 11)), is(CalendarMonth.from(2010, 11)));
+	}
 }

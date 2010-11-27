@@ -8,12 +8,12 @@ package jp.xet.timeandmoney.time;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 
 import org.junit.Test;
 
@@ -120,12 +120,31 @@ public class DateSpecificationTest {
 	}
 	
 	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_never() throws Exception {
+		DateSpecification never = DateSpecification.never();
+		assertThat(never, is(notNullValue()));
+		
+		assertThat(never.firstOccurrenceIn(CalendarInterval.year(2010)), is(nullValue()));
+		Iterator<CalendarDate> it = CalendarInterval.year(2009).daysIterator();
+		while (it.hasNext()) {
+			assertThat(never.isSatisfiedBy(it.next()), is(false));
+		}
+		
+		assertThat(never.iterateOver(CalendarInterval.year(2008)).hasNext(), is(false));
+	}
+	
+	/**
 	 * {@link DateSpecification#firstOccurrenceIn(CalendarInterval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test05_SelectFirstFromInterval() throws Exception {
+	public void test06_SelectFirstFromInterval() throws Exception {
 		CalendarInterval y2002_2004 = CalendarInterval.inclusive(2002, 1, 1, 2004, 12, 31);
 		CalendarInterval ylate2002_2004 = CalendarInterval.inclusive(2002, 8, 1, 2004, 12, 31);
 		CalendarInterval ylate2002 = CalendarInterval.inclusive(2002, 8, 1, 2002, 12, 31);
@@ -143,7 +162,7 @@ public class DateSpecificationTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test06_IterateThroughInterval() throws Exception {
+	public void test07_IterateThroughInterval() throws Exception {
 		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
 		CalendarInterval ylate2002_early2005 = CalendarInterval.inclusive(2002, 8, 1, 2005, 6, 30);
 		Iterator<CalendarDate> it = independenceDay.iterateOver(ylate2002_early2005);

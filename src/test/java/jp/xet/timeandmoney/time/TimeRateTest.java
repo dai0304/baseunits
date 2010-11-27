@@ -31,6 +31,8 @@ public class TimeRateTest {
 		assertThat(rate.over(Duration.hours(1)), is(new BigDecimal(6000.00)));
 		
 		assertThat(rate.toString(), is("100 per 1 minute"));
+		assertThat(rate.breachEncapsulationOfQuantity(), is(BigDecimal.valueOf(100)));
+		assertThat(rate.breachEncapsulationOfUnit(), is(Duration.minutes(1)));
 	}
 	
 	/**

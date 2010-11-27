@@ -274,6 +274,26 @@ public class TimeIntervalTest {
 		assertThat(it.hasNext(), is(true));
 		assertThat(it.next(), is(TimePoint.atGMT(2004, 2, 7, 10, 0)));
 		assertThat(it.hasNext(), is(false));
+		try {
+			it.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
+		
+		TimeInterval interval2 = TimeInterval.everPreceding(end);
+		try {
+			interval2.daysIterator();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+		
+		TimeInterval interval3 = TimeInterval.everFrom(start);
+		Iterator<TimePoint> it3 = interval3.daysIterator();
+		for (int i = 0; i < 100; i++) {
+			assertThat(it3.hasNext(), is(true));
+		}
 	}
 	
 	/**

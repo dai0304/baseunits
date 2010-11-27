@@ -19,6 +19,7 @@ package jp.xet.timeandmoney.time;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.util.TimeZone;
@@ -141,6 +142,23 @@ public class CalendarMinuteTest {
 			
 			private static final long serialVersionUID = 8307944665463538049L;
 		}.equals(feb17_1_23), is(false));
+		
+		assertThat(feb17_1_23.hashCode(), is(feb17_1_23.hashCode()));
+		assertThat(feb17_1_23.hashCode(), is(not(feb17_3_45.hashCode())));
+		assertThat(feb17_1_23.hashCode(), is(not(mar13_3_45.hashCode())));
+		
+	}
+	
+	/**
+	 * {@link CalendarMinute#breachEncapsulationOfDate()}
+	 * {@link CalendarMinute#breachEncapsulationOfTime()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_breachEncapsulationOf() throws Exception {
+		assertThat(feb17_1_23.breachEncapsulationOfDate(), is(CalendarDate.from(2003, 2, 17)));
+		assertThat(feb17_1_23.breachEncapsulationOfTime(), is(TimeOfDay.hourAndMinute(1, 23)));
 	}
 	
 	/**

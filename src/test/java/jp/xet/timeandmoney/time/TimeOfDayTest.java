@@ -31,6 +31,8 @@ public class TimeOfDayTest {
 	
 	private TimeOfDay twoMinutesBeforeMidnight = TimeOfDay.hourAndMinute(23, 58);
 	
+	private TimeOfDay tenMinutesBeforeMidnight = TimeOfDay.hourAndMinute(23, 50);
+	
 
 	/**
 	 * {@link TimeOfDay#on(CalendarDate)}のテスト。
@@ -71,12 +73,20 @@ public class TimeOfDayTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
+	@SuppressWarnings("serial")
 	public void test04_Equals() throws Exception {
-		assertThat(midnight, is(TimeOfDay.hourAndMinute(0, 0)));
-		assertThat(morning, is(TimeOfDay.hourAndMinute(10, 20)));
-		assertThat(noon, is(TimeOfDay.hourAndMinute(12, 0)));
-		assertThat(afternoon, is(TimeOfDay.hourAndMinute(15, 40)));
-		assertThat(twoMinutesBeforeMidnight, is(TimeOfDay.hourAndMinute(23, 58)));
+		assertThat(midnight.equals(TimeOfDay.hourAndMinute(0, 0)), is(true));
+		assertThat(morning.equals(TimeOfDay.hourAndMinute(10, 20)), is(true));
+		assertThat(noon.equals(TimeOfDay.hourAndMinute(12, 0)), is(true));
+		assertThat(afternoon.equals(TimeOfDay.hourAndMinute(15, 40)), is(true));
+		assertThat(twoMinutesBeforeMidnight.equals(TimeOfDay.hourAndMinute(23, 58)), is(true));
+		
+		assertThat(midnight.equals(morning), is(false));
+		assertThat(morning.equals(null), is(false));
+		assertThat(tenMinutesBeforeMidnight.equals(twoMinutesBeforeMidnight), is(false));
+		assertThat(noon.equals(new TimeOfDay(12, 0)), is(true));
+		assertThat(noon.equals(new TimeOfDay(12, 0) {
+		}), is(false));
 	}
 	
 	/**

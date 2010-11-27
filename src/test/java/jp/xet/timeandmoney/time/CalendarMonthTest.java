@@ -17,6 +17,8 @@
 package jp.xet.timeandmoney.time;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import jp.xet.timeandmoney.tests.SerializationTester;
@@ -118,5 +120,49 @@ public class CalendarMonthTest {
 		assertThat(feb2009.equals(new CalendarMonth(2009, MonthOfYear.FEB)), is(true));
 		assertThat(feb2009.equals(new CalendarMonth(2009, MonthOfYear.FEB) {
 		}), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_compareTo() throws Exception {
+		assertThat(feb2009.compareTo(feb2009), is(0));
+		assertThat(feb2009.compareTo(dec2010), is(lessThan(0)));
+		assertThat(dec2010.compareTo(feb2009), is(greaterThan(0)));
+		try {
+			feb2009.compareTo(null);
+			fail();
+		} catch (NullPointerException e) {
+			// success
+		}
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_isBefore() throws Exception {
+		assertThat(feb2009.isBefore(feb2009), is(false));
+		assertThat(feb2009.isBefore(null), is(false));
+		assertThat(feb2009.isBefore(dec2010), is(true));
+		assertThat(dec2010.isBefore(feb2009), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_isAfter() throws Exception {
+		assertThat(feb2009.isAfter(feb2009), is(false));
+		assertThat(feb2009.isAfter(null), is(false));
+		assertThat(feb2009.isAfter(dec2010), is(false));
+		assertThat(dec2010.isAfter(feb2009), is(true));
 	}
 }

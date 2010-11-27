@@ -310,24 +310,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する日の {@code increment} 日後を返す。
-	 * 
-	 * <p> {@code increment}に負数を与えてもよい。</p>
-	 * 
-	 * @param increment 加える日数
-	 * @return 計算結果
-	 */
-	public CalendarDate plusDays(int increment) {
-		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
-		calendar.add(Calendar.DATE, increment);
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH) + 1;
-		int day = calendar.get(Calendar.DATE);
-		return CalendarDate.from(year, month, day);
-	}
-	
-	/**
-	 * このインスタンスが表現する日の {@code increment} ヶ月後を返す。
+	 * このインスタンスが表現する年月の {@code increment} ヶ月後を返す。
 	 * 
 	 * <p> {@code increment}に負数を与えてもよい。</p>
 	 * 
@@ -343,12 +326,12 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する日の前日を返す。
+	 * このインスタンスが表現する年月の前月を返す。
 	 * 
-	 * @return 前日
+	 * @return 前月
 	 */
-	public CalendarDate previousDay() {
-		return plusDays(-1);
+	public CalendarMonth previousDay() {
+		return plusMonths(-1);
 	}
 	
 	/**

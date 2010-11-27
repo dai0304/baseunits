@@ -48,6 +48,8 @@ public class MoneyTest {
 	
 	private Money y0;
 	
+	private Money y100minus;
+	
 
 	/**
 	 * テストを初期化する。
@@ -64,6 +66,7 @@ public class MoneyTest {
 		d100 = Money.valueOf(new BigDecimal("100.0"), USD);
 		d0 = Money.valueOf(BigDecimal.ZERO, USD);
 		y0 = Money.valueOf(BigDecimal.ZERO, JPY);
+		y100minus = Money.valueOf(new BigDecimal("-100"), JPY);
 	}
 	
 	/**
@@ -432,6 +435,16 @@ public class MoneyTest {
 //        assertThat(wholeMoney, is(Money.dollars(0.01)));
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test27_abs() throws Exception {
+		assertThat(y100minus.abs(), is(y100));
+		assertThat(y100.abs(), is(y100));
+	}
 //	/**
 //	 * TODO: Formatted printing of Money
 //	 * 

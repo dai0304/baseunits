@@ -11,8 +11,10 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 
 import jp.xet.timeandmoney.time.Duration;
+import jp.xet.timeandmoney.time.TimeRate;
 import jp.xet.timeandmoney.util.Rounding;
 
 import org.junit.Test;
@@ -31,6 +33,9 @@ public class MoneyTimeRateTest {
 	public void test01_SimpleRate() throws Exception {
 		MoneyTimeRate rate = new MoneyTimeRate(Money.dollars(20.00), Duration.hours(1));
 		assertThat(rate.over(Duration.hours(2)), is(Money.dollars(40.00)));
+		
+		assertThat(rate.breachEncapsulationOfRate(), is(new TimeRate(new BigDecimal("20.00"), Duration.hours(1))));
+		assertThat(rate.breachEncapsulationOfCurrency(), is(Currency.getInstance("USD")));
 	}
 	
 	/**
