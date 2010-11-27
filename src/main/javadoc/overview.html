@@ -10,21 +10,21 @@ Eric Evansらによるオープンソースプロダクト（MIT License）で�
 しかし残念なことに、<a href="http://domainlanguage.com/ddd/">Domain Language, Inc.</a>のページを見るところによると
 「このプロジェクトはもはやアクティブではない(Although this project is no longer active)」と明記している。</p>
 
-<p>従って、本プロジェクト（Time & Money Remodelled Library）は、Time & Money Libraryにおける
+<p>従って、本プロジェクト（Basic Units Library）は、Time & Money Libraryにおける
 不完全（主に仕様ドキュメンテーション）な部分を補い、機能を拡張し、個人的な設計ポリシー（例外の扱い方など）を適用し、
 いくつかの僅かなバグを修正したものを、派生プロダクト（Apache License v2.0）としてリリースするものである。</p>
 
 <blockquote>
-Eric Evans has been the primary developer and designer of TimeLanguage.
+Eric Evans has been the primary developer and designer of TimeLanguage.<br/>
 Martin Fowler contributed the initial version of Money, the class that 
-became CalendarDate and some nice unit tests for TimeInterval.
+became CalendarDate and some nice unit tests for TimeInterval.<br/>
 Benny Sadeh contributed the initial version of BusinessCalendar and TimeUnit, and
-did some refactoring on the code base.
-Vlad Gitlevich contributed the SerializationTest.
-Vlad Gitlevich and John Corbett each acted as programming pairs.
-Kai Yu identified and fixed key bugs.
-Michael Two provided valuable debugging assistance.
-Alan Lovejoy helped clarify the TimePoint/Duration/Interval distinction.
+did some refactoring on the code base.<br/>
+Vlad Gitlevich contributed the SerializationTest.<br/>
+Vlad Gitlevich and John Corbett each acted as programming pairs.<br/>
+Kai Yu identified and fixed key bugs.<br/>
+Michael Two provided valuable debugging assistance.<br/>
+Alan Lovejoy helped clarify the TimePoint/Duration/Interval distinction.<br/>
 </blockquote>
 
 <h2>一般仕様</h2>
@@ -38,11 +38,11 @@ Alan Lovejoy helped clarify the TimePoint/Duration/Interval distinction.
   <li>このAPIは、APIドキュメントに漏れなく仕様を定義することを理想としている。
   もしAPIを呼び出した結果、APIドキュメントに記述のない挙動をした場合、それはこのAPIのバグである。
     <ul>
-      <li>Javadocの @throws は RuntimeException についても記述されていなければならない。 
+      <li>Javadocのthrows部はRuntimeExceptionの派生クラスについても記述されていなければならない。 
       つまり、Javadocに記述のない例外（RuntimeExceptionを含む）が飛んだら、バグである。</li>
-      <li>このAPIは基本的に NullPointerException をスローしない。代わりに IllegalArgumentException を使用する。
-      APIをコールした結果、NullPointerExceptionが飛んだらバグである。ただし、APIドキュメントに
-      @throws NullPointerException が明記してある場合は例外とする。</li>
+      <li>このAPIは基本的にNullPointerExceptionをスローしない。代わりにIllegalArgumentExceptionを使用する。
+      APIをコールした結果、NullPointerExceptionが飛んだらバグである。
+      ただし、APIドキュメントのthrows部にullPointerExceptionが明記してある場合は例外とする。</li>
     </ul>
   </li>
 </ul>
