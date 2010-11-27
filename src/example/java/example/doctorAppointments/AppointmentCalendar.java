@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 
-import jp.xet.timeandmoney.time.CalendarDate;
-import jp.xet.timeandmoney.time.TimeInterval;
+import jp.tricreo.basicunits.time.CalendarDate;
+import jp.tricreo.basicunits.time.TimeInterval;
 
 
 class AppointmentCalendar {

@@ -6,11 +6,11 @@
 
 package example.socialSecurityBenefits;
 
-import jp.xet.timeandmoney.money.Money;
-import jp.xet.timeandmoney.time.CalendarDate;
-import jp.xet.timeandmoney.time.CalendarInterval;
-import jp.xet.timeandmoney.util.Ratio;
-import jp.xet.timeandmoney.util.Rounding;
+import jp.tricreo.basicunits.money.Money;
+import jp.tricreo.basicunits.time.CalendarDate;
+import jp.tricreo.basicunits.time.CalendarInterval;
+import jp.tricreo.basicunits.util.Ratio;
+import jp.tricreo.basicunits.util.Rounding;
 import junit.framework.TestCase;
 
 import org.junit.Ignore;

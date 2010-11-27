@@ -11,11 +11,11 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
 
-import jp.xet.timeandmoney.time.CalendarDate;
-import jp.xet.timeandmoney.time.CalendarInterval;
-import jp.xet.timeandmoney.time.DateSpecification;
-import jp.xet.timeandmoney.time.DayOfWeek;
-import jp.xet.timeandmoney.time.Duration;
+import jp.tricreo.basicunits.time.CalendarDate;
+import jp.tricreo.basicunits.time.CalendarInterval;
+import jp.tricreo.basicunits.time.DateSpecification;
+import jp.tricreo.basicunits.time.DayOfWeek;
+import jp.tricreo.basicunits.time.Duration;
 
 import org.junit.Test;
 

@@ -9,11 +9,11 @@
     <version>0.1.0</version>
   </parent>
   <groupId>jp.tricreo</groupId>
-  <artifactId>timeandmoney-remodelled</artifactId>
-  <name>Time and Money Remodelled Library</name>
+  <artifactId>basicunits</artifactId>
+  <name>Basic Unit Model Library</name>
   <version>1.0-SNAPSHOT</version>
-  <description>The models of Time and Money domains.</description>
-  <url>http://maven.xet.jp/site/timeandmoney-remodelled/${project.version}/</url>
+  <description>The models of basic unit (ex. Time, Money, etc.)</description>
+  <url>http://earth.tricreo.jp/maven2-site/${project.artifactId}/${project.version}/</url>
   <organization>
     <name>TRICREO, Inc.</name>
     <url>http://tricreo.jp/</url>
@@ -123,16 +123,16 @@
   </dependencies>
   <distributionManagement>
     <repository>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/virtual/daisuke/public_html/release</url>
+      <id>earth.tricreo.jp</id>
+      <url>scp://earth.tricreo.jp/var/www/earth.tricreo.jp/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/virtual/daisuke/public_html/snapshot</url>
+      <id>earth.tricreo.jp</id>
+      <url>scp://earth.tricreo.jp/var/www/earth.tricreo.jp/maven2-snapshot</url>
     </snapshotRepository>
     <site>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/virtual/daisuke/public_html/site/timeandmoney-remodelled/${project.version}</url>
+      <id>earth.tricreo.jp</id>
+      <url>scp://earth.tricreo.jp/var/www/earth.tricreo.jp/maven2-site/${project.artifactId}/${project.version}</url>
     </site>
   </distributionManagement>
 </project>
