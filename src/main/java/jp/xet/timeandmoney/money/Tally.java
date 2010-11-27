@@ -85,11 +85,7 @@ public class Tally implements Iterable<Money> {
 	 * @return 合計
 	 */
 	public Money net() {
-		Money sum = Money.zero(currency());
-		for (Money money : monies) {
-			sum = sum.plus(money);
-		}
-		return sum;
+		return Money.sum(monies);
 	}
 	
 	@Override
