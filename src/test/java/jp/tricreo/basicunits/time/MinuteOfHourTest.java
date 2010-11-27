@@ -22,7 +22,6 @@ package jp.tricreo.basicunits.time;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import jp.tricreo.basicunits.time.MinuteOfHour;
 
 import org.junit.Test;
 
@@ -163,7 +162,7 @@ public class MinuteOfHourTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MinuteOfHour#toString()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

@@ -83,11 +83,11 @@ public enum TimeUnit {
 		month
 	};
 	
-	private final Type type;
+	final Type type;
 	
-	private final Type baseType;
+	final Type baseType;
 	
-	private final TimeUnitConversionFactor factor;
+	final TimeUnitConversionFactor factor;
 	
 
 	TimeUnit(Type type, Type baseType, TimeUnitConversionFactor factor) {

@@ -107,7 +107,7 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMonth#compareTo(CalendarMonth)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -125,7 +125,7 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMonth#isBefore(CalendarMonth)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -138,7 +138,7 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CalendarMonth#isAfter(CalendarMonth)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

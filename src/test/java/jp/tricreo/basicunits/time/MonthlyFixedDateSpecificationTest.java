@@ -24,16 +24,10 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import jp.tricreo.basicunits.time.CalendarDate;
-import jp.tricreo.basicunits.time.CalendarInterval;
-import jp.tricreo.basicunits.time.CalendarMonth;
-import jp.tricreo.basicunits.time.DateSpecification;
-import jp.tricreo.basicunits.time.MonthlyFixedBusinessDateSpecification;
-
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link MonthlyFixedDateSpecification}のテストクラス。
  */
 public class MonthlyFixedDateSpecificationTest {
 	
@@ -59,7 +53,7 @@ public class MonthlyFixedDateSpecificationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link MonthlyFixedDateSpecification#iterateOver(CalendarInterval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

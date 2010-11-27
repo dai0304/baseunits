@@ -312,21 +312,33 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	@Override
-	public boolean equals(Object object) {
-		if (object instanceof Duration == false) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
 			return false;
 		}
-		Duration other = (Duration) object;
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Duration other = (Duration) obj;
 		if (isConvertibleTo(other) == false) {
 			return false;
 		}
-		return inBaseUnits() == other.inBaseUnits();
+		if (inBaseUnits() != other.inBaseUnits()) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		// TODO equalsとの整合性おかしくない？
-		return (int) (quantity ^ (quantity >>> 32)); // CHECKSTYLE IGNORE THIS LINE;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (inBaseUnits() ^ (inBaseUnits() >>> 32));
+		result = prime * result + ((unit.baseType == null) ? 0 : unit.baseType.hashCode());
+		return result;
 	}
 	
 	/**

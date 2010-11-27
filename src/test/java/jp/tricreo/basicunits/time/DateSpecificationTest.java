@@ -28,20 +28,6 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import jp.tricreo.basicunits.time.AnnualDateSpecification;
-import jp.tricreo.basicunits.time.AnnualFixedDateSpecification;
-import jp.tricreo.basicunits.time.AnnualFloatingDateSpecification;
-import jp.tricreo.basicunits.time.CalendarDate;
-import jp.tricreo.basicunits.time.CalendarInterval;
-import jp.tricreo.basicunits.time.CalendarMonth;
-import jp.tricreo.basicunits.time.DateSpecification;
-import jp.tricreo.basicunits.time.DayOfMonth;
-import jp.tricreo.basicunits.time.DayOfWeek;
-import jp.tricreo.basicunits.time.MonthOfYear;
-import jp.tricreo.basicunits.time.MonthlyDateSpecification;
-import jp.tricreo.basicunits.time.MonthlyFixedDateSpecification;
-import jp.tricreo.basicunits.time.MonthlyFloatingDateSpecification;
-
 import org.junit.Test;
 
 /**
@@ -147,7 +133,7 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link DateSpecification#never()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
