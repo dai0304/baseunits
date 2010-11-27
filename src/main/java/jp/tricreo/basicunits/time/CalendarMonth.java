@@ -68,10 +68,10 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @return {@link CalendarMonth}
 	 * @throws ParseException 文字列の解析に失敗した場合 
 	 */
-	public static CalendarMonth from(String dateString, String pattern) throws ParseException {
+	public static CalendarMonth parse(String dateString, String pattern) throws ParseException {
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		//Any timezone works, as long as the same one is used throughout.
-		TimePoint point = TimePoint.parseFrom(dateString, pattern, arbitraryZone);
+		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
 		return CalendarMonth.from(point, arbitraryZone);
 	}
 	
@@ -152,7 +152,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code day}がこの月に存在しない場合
 	 */
 	public CalendarDate at(DayOfMonth day) {
-		return CalendarDate.date(year, month, day);
+		return CalendarDate.from(year, month, day);
 	}
 	
 	/**
@@ -228,7 +228,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @return {@link DayOfMonth}
 	 */
 	public CalendarDate getLastDay() {
-		return CalendarDate.date(year, month, getLastDayOfMonth());
+		return CalendarDate.from(year, month, getLastDayOfMonth());
 	}
 	
 	/**

@@ -46,36 +46,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
 	 */
-	public static CalendarDate date(CalendarMonth yearMonth, DayOfMonth day) {
+	public static CalendarDate from(CalendarMonth yearMonth, DayOfMonth day) {
 		return new CalendarDate(yearMonth, day);
-	}
-	
-	/**
-	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
-	 * 
-	 * @param year 西暦年をあらわす数
-	 * @param month 月をあらわす正数（1〜12）
-	 * @param day 日をあらわす正数（1〜31）
-	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
-	 */
-	public static CalendarDate date(int year, int month, int day) {
-		return from(year, month, day);
-	}
-	
-	/**
-	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
-	 * 
-	 * @param year 年
-	 * @param month 月
-	 * @param day 日
-	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数{@code day}が{@code year}年の{@code month}の月に存在しない場合
-	 */
-	public static CalendarDate date(int year, MonthOfYear month, DayOfMonth day) {
-		return date(CalendarMonth.from(year, month), day);
 	}
 	
 	/**
@@ -96,16 +68,14 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
-	 * @param dateString 年月日を表す文字列 
-	 * @param pattern 解析パターン文字列
+	 * @param year 年
+	 * @param month 月
+	 * @param day 日
 	 * @return {@link CalendarDate}
-	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @throws IllegalArgumentException 引数{@code day}が{@code year}年の{@code month}の月に存在しない場合
 	 */
-	public static CalendarDate from(String dateString, String pattern) throws ParseException {
-		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
-		//Any timezone works, as long as the same one is used throughout.
-		TimePoint point = TimePoint.parseFrom(dateString, pattern, arbitraryZone);
-		return CalendarDate.from(point, arbitraryZone);
+	public static CalendarDate from(int year, MonthOfYear month, DayOfMonth day) {
+		return from(CalendarMonth.from(year, month), day);
 	}
 	
 	/**
@@ -121,15 +91,30 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		Validate.notNull(zone);
 		Calendar calendar = timePoint.asJavaCalendar();
 		calendar.setTimeZone(zone);
-		return CalendarDate.from(calendar);
+		return from(calendar);
 	}
 	
-	static CalendarDate from(Calendar calendar) { // CHECKSTYLE IGNORE THIS LINE
+	/**
+	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
+	 * 
+	 * @param dateString 年月日を表す文字列 
+	 * @param pattern 解析パターン文字列
+	 * @return {@link CalendarDate}
+	 * @throws ParseException 文字列の解析に失敗した場合 
+	 */
+	public static CalendarDate parse(String dateString, String pattern) throws ParseException {
+		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
+		// Any timezone works, as long as the same one is used throughout.
+		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
+		return CalendarDate.from(point, arbitraryZone);
+	}
+	
+	static CalendarDate from(Calendar calendar) {
 		// Use timezone already set in calendar.
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH) + 1; // T&M Lib counts January as 1
 		int date = calendar.get(Calendar.DATE);
-		return CalendarDate.from(year, month, date);
+		return from(year, month, date);
 	}
 	
 
@@ -155,6 +140,33 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
+	 * このインスタンスが表現する日を含む年月を表す{@link CalendarMonth}を取得する。
+	 * 
+	 * @return このインスタンスが表現する日を含む年月を表す期間
+	 */
+	public CalendarMonth asCalendarMonth() {
+		return yearMonth;
+	}
+	
+	// comment-out by daisuke
+//	public CalendarDate start() {
+//		return this;
+//	}
+//
+//	public CalendarDate end() {
+//		return this;
+//	}
+	
+	/**
+	 * このインスタンスが表現する日を含む年月を表す期間を取得する。
+	 * 
+	 * @return このインスタンスが表現する日を含む年月を表す期間
+	 */
+	public CalendarInterval asMonthInterval() {
+		return CalendarInterval.month(yearMonth);
+	}
+	
+	/**
 	 * このインスタンスが表現する日の午前0時から丸一日を期間として取得する。
 	 * 
 	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開区間を生成する。</p>
@@ -168,14 +180,14 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return TimeInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
 	}
 	
-	// comment-out by daisuke
-//	public CalendarDate start() {
-//		return this;
-//	}
-//
-//	public CalendarDate end() {
-//		return this;
-//	}
+	/**
+	 * このインスタンスが表現する日を含む年を表す期間を取得する。
+	 * 
+	 * @return このインスタンスが表現する日を含む年を表す期間
+	 */
+	public CalendarInterval asYearInterval() {
+		return CalendarInterval.year(yearMonth.breachEncapsulationOfYear());
+	}
 	
 	/**
 	 * このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
@@ -184,7 +196,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @return 日時
 	 */
 	public CalendarMinute at(TimeOfDay timeOfDay) {
-		return CalendarMinute.dateAndTimeOfDay(this, timeOfDay);
+		return CalendarMinute.from(this, timeOfDay);
 	}
 	
 	/**
@@ -265,15 +277,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return true;
 	}
 	
-	/**
-	 * このインスタンスが表現する日を含む年月を表す{@link CalendarMonth}を取得する。
-	 * 
-	 * @return このインスタンスが表現する日を含む年月を表す期間
-	 */
-	public CalendarMonth getCalendarMonth() {
-		return yearMonth;
-	}
-	
 	@Override
 	public int hashCode() {
 		assert day != null;
@@ -321,15 +324,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 			return false;
 		}
 		return day.isBefore(other.day);
-	}
-	
-	/**
-	 * このインスタンスが表現する日を含む年月を表す期間を取得する。
-	 * 
-	 * @return このインスタンスが表現する日を含む年月を表す期間
-	 */
-	public CalendarInterval monthCalendarInterval() {
-		return CalendarInterval.month(yearMonth);
 	}
 	
 	/**
@@ -441,15 +435,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		TimePoint point = startAsTimePoint(arbitraryZone);
 		return point.toString(pattern, arbitraryZone);
-	}
-	
-	/**
-	 * このインスタンスが表現する日を含む年を表す期間を取得する。
-	 * 
-	 * @return このインスタンスが表現する日を含む年を表す期間
-	 */
-	public CalendarInterval yearInterval() {
-		return CalendarInterval.year(yearMonth.breachEncapsulationOfYear());
 	}
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {

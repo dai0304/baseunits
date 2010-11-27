@@ -100,11 +100,11 @@ public class ClockTest {
 		Clock.setTimeSource(dummySourceDec1_5h);
 		
 		Clock.setDefaultTimeZone(gmt);
-		assertThat(Clock.today(), is(CalendarDate.date(2004, 12, 1)));
+		assertThat(Clock.today(), is(CalendarDate.from(2004, 12, 1)));
 		assertThat(Clock.now(), is(dec1_5am_gmt));
 		
 		Clock.setDefaultTimeZone(pt);
-		assertThat(Clock.today(), is(CalendarDate.date(2004, 11, 30)));
+		assertThat(Clock.today(), is(CalendarDate.from(2004, 11, 30)));
 		assertThat(Clock.now(), is(dec1_5am_gmt));
 	}
 	

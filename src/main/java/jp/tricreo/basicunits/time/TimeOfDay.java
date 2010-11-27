@@ -35,14 +35,26 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	/**
 	 * 指定した時分を表す、{@link TimeOfDay}のインスタンスを生成する。
 	 * 
+	 * @param hour 時
+	 * @param minute 分
+	 * @return {@link TimeOfDay}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute) {
+		return new TimeOfDay(hour, minute);
+	}
+	
+	/**
+	 * 指定した時分を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 
 	 * @param hour 時をあらわす正数（0〜23）
 	 * @param minute 分をあらわす正数（0〜59）
 	 * @return {@link TimeOfDay}
 	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
 	 */
-	public static TimeOfDay hourAndMinute(int hour, int minute) {
-		return new TimeOfDay(hour, minute);
+	public static TimeOfDay from(int hour, int minute) {
+		return new TimeOfDay(HourOfDay.valueOf(hour), MinuteOfHour.valueOf(minute));
 	}
 	
 
@@ -56,14 +68,15 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param hour 時をあらわす正数（0〜23）
-	 * @param minute 分をあらわす正数（0〜59）
-	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜23の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code minute}の値が0〜59の範囲ではない場合
+	 * @param hour 時
+	 * @param minute 分
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	TimeOfDay(int hour, int minute) {
-		this.hour = HourOfDay.of(hour);
-		this.minute = MinuteOfHour.of(minute);
+	TimeOfDay(HourOfDay hour, MinuteOfHour minute) {
+		Validate.notNull(hour);
+		Validate.notNull(minute);
+		this.hour = hour;
+		this.minute = minute;
 	}
 	
 	/**
@@ -181,7 +194,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 */
 	public CalendarMinute on(CalendarDate date) {
 		Validate.notNull(date);
-		return CalendarMinute.dateAndTimeOfDay(date, this);
+		return CalendarMinute.from(date, this);
 	}
 	
 	@Override

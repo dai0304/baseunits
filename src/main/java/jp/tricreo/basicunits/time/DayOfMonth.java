@@ -36,38 +36,6 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * <p>年月を利用して、範囲チェックを行う。</p>
-	 * 
-	 * @param day 日をあらわす正数
-	 * @param month 年月（チェック用）
-	 * @return {@link DayOfMonth}
-	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code day}の日が与えた年月に存在しない場合
-	 */
-	public static DayOfMonth of(int day, CalendarMonth month) {
-		return new DayOfMonth(day, month);
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * <p>年と月を利用して、範囲チェックを行う。</p>
-	 * 
-	 * @param year 年
-	 * @param month 月
-	 * @param day 日をあらわす正数
-	 * @return {@link DayOfMonth}
-	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code day}の値が与えた年月に適合しない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static DayOfMonth of(int year, MonthOfYear month, int day) {
-		return new DayOfMonth(day, month.on(year));
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
 	 * @param day 日をあらわす正数（1〜31）
 	 * @return {@link DayOfMonth}
 	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
@@ -92,25 +60,6 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 					+ ", please use a value between 1 and 31");
 		}
 		value = initial;
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * <p>年月を利用して、範囲チェックを行う。</p>
-	 * 
-	 * @param day 日をあらわす正数
-	 * @param month 年月
-	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code day}の日が与えた年月に存在しない場合
-	 */
-	public DayOfMonth(int day, CalendarMonth month) {
-		if (day < MIN || day > MAX) {
-			throw new IllegalArgumentException("Illegal value for day of month: " + day
-					+ ", please use a value between 1 and 31");
-		}
-		value = day;
-		Validate.isTrue(isApplyable(month), String.format("%s-%02d is invalid.", month.toString(), day));
 	}
 	
 	/**
@@ -223,7 +172,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code month}の月にこの日が存在しない場合
 	 */
 	public CalendarDate on(CalendarMonth month) {
-		return CalendarDate.date(month, this);
+		return CalendarDate.from(month, this);
 	}
 	
 	@Override

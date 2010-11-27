@@ -32,25 +32,25 @@ import org.junit.Test;
 public class MinuteOfHourTest {
 	
 	/**
-	 * {@link MinuteOfHour#of(int)}のテスト。
+	 * {@link MinuteOfHour#valueOf(int)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test01_Simple() throws Exception {
-		assertThat(MinuteOfHour.of(11).breachEncapsulationOfValue(), is(11));
-		assertThat(MinuteOfHour.of(23), is(MinuteOfHour.of(23)));
+		assertThat(MinuteOfHour.valueOf(11).breachEncapsulationOfValue(), is(11));
+		assertThat(MinuteOfHour.valueOf(23), is(MinuteOfHour.valueOf(23)));
 	}
 	
 	/**
-	 * {@link MinuteOfHour#of(int)}の不正引数テスト。
+	 * {@link MinuteOfHour#valueOf(int)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test02_IllegalLessThanZero() throws Exception {
 		try {
-			MinuteOfHour.of(-1);
+			MinuteOfHour.valueOf(-1);
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success
@@ -58,14 +58,14 @@ public class MinuteOfHourTest {
 	}
 	
 	/**
-	 * {@link MinuteOfHour#of(int)}の不正引数テスト。
+	 * {@link MinuteOfHour#valueOf(int)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test03_GreaterThan() throws Exception {
 		try {
-			MinuteOfHour.of(60);
+			MinuteOfHour.valueOf(60);
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success
@@ -79,8 +79,8 @@ public class MinuteOfHourTest {
 	 */
 	@Test
 	public void test04_LaterAfterEarlier() throws Exception {
-		MinuteOfHour later = MinuteOfHour.of(45);
-		MinuteOfHour earlier = MinuteOfHour.of(15);
+		MinuteOfHour later = MinuteOfHour.valueOf(45);
+		MinuteOfHour earlier = MinuteOfHour.valueOf(15);
 		assertThat(later.isAfter(earlier), is(true));
 	}
 	
@@ -91,8 +91,8 @@ public class MinuteOfHourTest {
 	 */
 	@Test
 	public void test05_EarlierAfterLater() throws Exception {
-		MinuteOfHour earlier = MinuteOfHour.of(15);
-		MinuteOfHour later = MinuteOfHour.of(45);
+		MinuteOfHour earlier = MinuteOfHour.valueOf(15);
+		MinuteOfHour later = MinuteOfHour.valueOf(45);
 		assertThat(earlier.isAfter(later), is(false));
 	}
 	
@@ -103,8 +103,8 @@ public class MinuteOfHourTest {
 	 */
 	@Test
 	public void test06_EqualAfterEqual() throws Exception {
-		MinuteOfHour anMinute = MinuteOfHour.of(45);
-		MinuteOfHour anotherMinute = MinuteOfHour.of(45);
+		MinuteOfHour anMinute = MinuteOfHour.valueOf(45);
+		MinuteOfHour anotherMinute = MinuteOfHour.valueOf(45);
 		assertThat(anMinute.isAfter(anotherMinute), is(false));
 	}
 	
@@ -115,8 +115,8 @@ public class MinuteOfHourTest {
 	 */
 	@Test
 	public void test07_LaterBeforeEarlier() throws Exception {
-		MinuteOfHour later = MinuteOfHour.of(45);
-		MinuteOfHour earlier = MinuteOfHour.of(15);
+		MinuteOfHour later = MinuteOfHour.valueOf(45);
+		MinuteOfHour earlier = MinuteOfHour.valueOf(15);
 		assertThat(later.isBefore(earlier), is(false));
 	}
 	
@@ -127,8 +127,8 @@ public class MinuteOfHourTest {
 	 */
 	@Test
 	public void test08_EarlierBeforeLater() throws Exception {
-		MinuteOfHour earlier = MinuteOfHour.of(15);
-		MinuteOfHour later = MinuteOfHour.of(45);
+		MinuteOfHour earlier = MinuteOfHour.valueOf(15);
+		MinuteOfHour later = MinuteOfHour.valueOf(45);
 		assertThat(earlier.isBefore(later), is(true));
 	}
 	
@@ -139,8 +139,8 @@ public class MinuteOfHourTest {
 	 */
 	@Test
 	public void test09_EqualBeforeEqual() throws Exception {
-		MinuteOfHour anMinute = MinuteOfHour.of(15);
-		MinuteOfHour anotherMinute = MinuteOfHour.of(15);
+		MinuteOfHour anMinute = MinuteOfHour.valueOf(15);
+		MinuteOfHour anotherMinute = MinuteOfHour.valueOf(15);
 		assertThat(anMinute.isBefore(anotherMinute), is(false));
 	}
 	
@@ -152,10 +152,10 @@ public class MinuteOfHourTest {
 	@Test
 	@SuppressWarnings("serial")
 	public void test10_equals() throws Exception {
-		MinuteOfHour m14 = MinuteOfHour.of(14);
+		MinuteOfHour m14 = MinuteOfHour.valueOf(14);
 		assertThat(m14.equals(m14), is(true));
-		assertThat(m14.equals(MinuteOfHour.of(14)), is(true));
-		assertThat(m14.equals(MinuteOfHour.of(15)), is(false));
+		assertThat(m14.equals(MinuteOfHour.valueOf(14)), is(true));
+		assertThat(m14.equals(MinuteOfHour.valueOf(15)), is(false));
 		assertThat(m14.equals(null), is(false));
 		assertThat(m14.equals(new MinuteOfHour(14)), is(true));
 		assertThat(m14.equals(new MinuteOfHour(14) {
@@ -170,11 +170,11 @@ public class MinuteOfHourTest {
 	@Test
 	public void test11_toString() throws Exception {
 		for (int i = 1; i < 10; i++) {
-			MinuteOfHour m = MinuteOfHour.of(i);
+			MinuteOfHour m = MinuteOfHour.valueOf(i);
 			assertThat(m.toString(), is(String.format("%02d", i)));
 		}
 		for (int i = 10; i < 60; i++) {
-			MinuteOfHour m = MinuteOfHour.of(i);
+			MinuteOfHour m = MinuteOfHour.valueOf(i);
 			assertThat(m.toString(), is(String.valueOf(i)));
 		}
 	}

@@ -19,7 +19,6 @@
  */
 package jp.tricreo.basicunits.time;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -37,8 +36,6 @@ import org.apache.commons.lang.Validate;
  */
 public class BusinessCalendar {
 	
-	final Set<CalendarDate> holidays;
-	
 	Specification<CalendarDate> holidaySpecs;
 	
 
@@ -46,7 +43,6 @@ public class BusinessCalendar {
 	 * インスタンスを生成する。
 	 */
 	public BusinessCalendar() {
-		holidays = defaultHolidays();
 		holidaySpecs = defaultHolidaySpecs();
 	}
 	
@@ -56,7 +52,7 @@ public class BusinessCalendar {
 	 * @param date 休日として取り扱う「日」 
 	 */
 	public void addHoliday(CalendarDate date) {
-		holidays.add(date);
+		addHolidaySpec(DateSpecification.fixed(date));
 	}
 	
 	/**
@@ -65,7 +61,9 @@ public class BusinessCalendar {
 	 * @param days 休日として取り扱う「日」 
 	 */
 	public void addHolidays(Set<CalendarDate> days) {
-		holidays.addAll(days);
+		for (CalendarDate date : days) {
+			addHolidaySpec(DateSpecification.fixed(date));
+		}
 	}
 	
 	/**
@@ -163,7 +161,7 @@ public class BusinessCalendar {
 	 * @return 休日に当たる場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public boolean isHoliday(CalendarDate day) {
-		return holidays.contains(day) || holidaySpecs.isSatisfiedBy(day);
+		return holidaySpecs.isSatisfiedBy(day);
 	}
 	
 	/**
@@ -279,15 +277,6 @@ public class BusinessCalendar {
 		} else {
 			return minusBusinessDays(startDate, 0);
 		}
-	}
-	
-	/**
-	 * Should be overriden for each particular organization.
-	 *  
-	 * @return 営業日の{@link Set} 
-	 */
-	protected Set<CalendarDate> defaultHolidays() {
-		return new HashSet<CalendarDate>();
 	}
 	
 	/**

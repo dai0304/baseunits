@@ -64,7 +64,7 @@ public class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecificat
 	public CalendarDate ofYearMonth(CalendarMonth month) {
 		Validate.notNull(month);
 		return shifter.shift(
-				CalendarDate.date(month.breachEncapsulationOfYear(), month.breachEncapsulationOfMonth(), day), cal);
+				CalendarDate.from(month.breachEncapsulationOfYear(), month.breachEncapsulationOfMonth(), day), cal);
 	}
 	
 

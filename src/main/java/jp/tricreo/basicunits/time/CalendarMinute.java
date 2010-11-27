@@ -43,7 +43,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @return {@link CalendarMinute}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static CalendarMinute dateAndTimeOfDay(CalendarDate aDate, TimeOfDay aTime) {
+	public static CalendarMinute from(CalendarDate aDate, TimeOfDay aTime) {
 		Validate.notNull(aDate);
 		Validate.notNull(aTime);
 		return new CalendarMinute(aDate, aTime);
@@ -65,7 +65,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
 	 */
 	public static CalendarMinute from(int year, int month, int day, int hour, int minute) {
-		return new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.hourAndMinute(hour, minute));
+		return new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute));
 	}
 	
 	/**
@@ -76,11 +76,11 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @return {@link CalendarMinute}
 	 * @throws ParseException 文字列の解析に失敗した場合 
 	 */
-	public static CalendarMinute from(String dateTimeString, String pattern) throws ParseException {
+	public static CalendarMinute parse(String dateTimeString, String pattern) throws ParseException {
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		//Any timezone works, as long as the same one is used throughout.
-		TimePoint point = TimePoint.parseFrom(dateTimeString, pattern, arbitraryZone);
-		return CalendarMinute.dateAndTimeOfDay(point.calendarDate(arbitraryZone), point.asTimeOfDay(arbitraryZone));
+		TimePoint point = TimePoint.parse(dateTimeString, pattern, arbitraryZone);
+		return CalendarMinute.from(point.calendarDate(arbitraryZone), point.asTimeOfDay(arbitraryZone));
 	}
 	
 

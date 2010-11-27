@@ -32,35 +32,35 @@ import org.junit.Test;
 public class HourOfDayTest {
 	
 	/**
-	 * {@link HourOfDay#of(int)}のテスト。
+	 * {@link HourOfDay#valueOf(int)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test01_24Simple() throws Exception {
-		assertThat(HourOfDay.of(22).breachEncapsulationOfValue(), is(22));
+		assertThat(HourOfDay.valueOf(22).breachEncapsulationOfValue(), is(22));
 	}
 	
 	/**
-	 * {@link HourOfDay#value(int, String)}のテスト。
+	 * {@link HourOfDay#valueOf(int, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test02_12Simple() throws Exception {
-		assertThat(HourOfDay.value(10, "PM"), is(HourOfDay.of(22)));
-		assertThat(HourOfDay.value(3, "am"), is(HourOfDay.of(3)));
+		assertThat(HourOfDay.valueOf(10, "PM"), is(HourOfDay.valueOf(22)));
+		assertThat(HourOfDay.valueOf(3, "am"), is(HourOfDay.valueOf(3)));
 	}
 	
 	/**
-	 * {@link HourOfDay#of(int)}の不正引数テスト。
+	 * {@link HourOfDay#valueOf(int)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test03_24IllegalLessThanZero() throws Exception {
 		try {
-			HourOfDay.of(-1);
+			HourOfDay.valueOf(-1);
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success
@@ -68,14 +68,14 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * {@link HourOfDay#of(int)}の不正引数テスト。
+	 * {@link HourOfDay#valueOf(int)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test04_24GreaterThan() throws Exception {
 		try {
-			HourOfDay.of(24);
+			HourOfDay.valueOf(24);
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success
@@ -83,14 +83,14 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * {@link HourOfDay#value(int, String)}の不正引数テスト。
+	 * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test05_12IllegalLessThanZero() throws Exception {
 		try {
-			HourOfDay.value(-1, "PM");
+			HourOfDay.valueOf(-1, "PM");
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success
@@ -98,14 +98,14 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * {@link HourOfDay#value(int, String)}の不正引数テスト。
+	 * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test06_12GreaterThan() throws Exception {
 		try {
-			HourOfDay.value(13, "AM");
+			HourOfDay.valueOf(13, "AM");
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success
@@ -113,14 +113,14 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * {@link HourOfDay#value(int, String)}の不正引数テスト。
+	 * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test07_12BadAmPm() throws Exception {
 		try {
-			HourOfDay.value(5, "FD");
+			HourOfDay.valueOf(5, "FD");
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success
@@ -134,8 +134,8 @@ public class HourOfDayTest {
 	 */
 	@Test
 	public void test08_LaterAfterEarlier() throws Exception {
-		HourOfDay later = HourOfDay.of(8);
-		HourOfDay earlier = HourOfDay.of(6);
+		HourOfDay later = HourOfDay.valueOf(8);
+		HourOfDay earlier = HourOfDay.valueOf(6);
 		assertThat(later.isAfter(earlier), is(true));
 	}
 	
@@ -146,8 +146,8 @@ public class HourOfDayTest {
 	 */
 	@Test
 	public void test09_EarlierAfterLater() throws Exception {
-		HourOfDay earlier = HourOfDay.of(8);
-		HourOfDay later = HourOfDay.of(20);
+		HourOfDay earlier = HourOfDay.valueOf(8);
+		HourOfDay later = HourOfDay.valueOf(20);
 		assertThat(earlier.isAfter(later), is(false));
 	}
 	
@@ -158,8 +158,8 @@ public class HourOfDayTest {
 	 */
 	@Test
 	public void test10_EqualAfterEqual() throws Exception {
-		HourOfDay anHour = HourOfDay.of(8);
-		HourOfDay anotherHour = HourOfDay.of(8);
+		HourOfDay anHour = HourOfDay.valueOf(8);
+		HourOfDay anotherHour = HourOfDay.valueOf(8);
 		assertThat(anHour.isAfter(anotherHour), is(false));
 	}
 	
@@ -170,8 +170,8 @@ public class HourOfDayTest {
 	 */
 	@Test
 	public void test11_LaterBeforeEarlier() throws Exception {
-		HourOfDay later = HourOfDay.of(8);
-		HourOfDay earlier = HourOfDay.of(6);
+		HourOfDay later = HourOfDay.valueOf(8);
+		HourOfDay earlier = HourOfDay.valueOf(6);
 		assertThat(later.isBefore(earlier), is(false));
 	}
 	
@@ -182,8 +182,8 @@ public class HourOfDayTest {
 	 */
 	@Test
 	public void test12_EarlierBeforeLater() throws Exception {
-		HourOfDay earlier = HourOfDay.of(8);
-		HourOfDay later = HourOfDay.of(20);
+		HourOfDay earlier = HourOfDay.valueOf(8);
+		HourOfDay later = HourOfDay.valueOf(20);
 		assertThat(earlier.isBefore(later), is(true));
 	}
 	
@@ -194,8 +194,8 @@ public class HourOfDayTest {
 	 */
 	@Test
 	public void test13_EqualBeforeEqual() throws Exception {
-		HourOfDay anHour = HourOfDay.of(8);
-		HourOfDay anotherHour = HourOfDay.of(8);
+		HourOfDay anHour = HourOfDay.valueOf(8);
+		HourOfDay anotherHour = HourOfDay.valueOf(8);
 		assertThat(anHour.isBefore(anotherHour), is(false));
 	}
 }

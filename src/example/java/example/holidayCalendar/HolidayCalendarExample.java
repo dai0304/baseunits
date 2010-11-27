@@ -55,18 +55,18 @@ public class HolidayCalendarExample {
 		// Calculate Thanksgiving, the 4th Thursday in November, for the year 2005
 		DateSpecification thanksgiving = DateSpecification.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
 		// With the specification, you can do checks like
-		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.date(2005, 11, 24)), is(true));
-		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.date(2005, 11, 25)), is(false));
+		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.from(2005, 11, 24)), is(true));
+		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.from(2005, 11, 25)), is(false));
 		// Derive the date(s) for an interval
-		assertThat(thanksgiving.firstOccurrenceIn(CalendarInterval.year(2005)), is(CalendarDate.date(2005, 11, 24)));
+		assertThat(thanksgiving.firstOccurrenceIn(CalendarInterval.year(2005)), is(CalendarDate.from(2005, 11, 24)));
 		
 		// Calculate all the Thanksgivings over a three year interval.
 		CalendarInterval y2002_2004 = CalendarInterval.inclusive(2002, 1, 1, 2004, 12, 31);
-		assertThat(thanksgiving.firstOccurrenceIn(y2002_2004), is(CalendarDate.date(2002, 11, 28)));
+		assertThat(thanksgiving.firstOccurrenceIn(y2002_2004), is(CalendarDate.from(2002, 11, 28)));
 		Iterator<CalendarDate> iterator = thanksgiving.iterateOver(y2002_2004);
-		assertThat(iterator.next(), is(CalendarDate.date(2002, 11, 28)));
-		assertThat(iterator.next(), is(CalendarDate.date(2003, 11, 27)));
-		assertThat(iterator.next(), is(CalendarDate.date(2004, 11, 25)));
+		assertThat(iterator.next(), is(CalendarDate.from(2002, 11, 28)));
+		assertThat(iterator.next(), is(CalendarDate.from(2003, 11, 27)));
+		assertThat(iterator.next(), is(CalendarDate.from(2004, 11, 25)));
 		assertThat(iterator.hasNext(), is(false));
 	}
 	

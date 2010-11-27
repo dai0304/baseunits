@@ -160,7 +160,7 @@ public class DurationTest {
 		
 		// 単位が日未満の時は日付を変えない。
 		Duration threeHours = Duration.milliseconds(30);
-		assertThat(threeHours.addedTo(CalendarDate.date(2010, 11, 27)), is(CalendarDate.date(2010, 11, 27)));
+		assertThat(threeHours.addedTo(CalendarDate.from(2010, 11, 27)), is(CalendarDate.from(2010, 11, 27)));
 	}
 	
 	/**
@@ -357,8 +357,8 @@ public class DurationTest {
 	 */
 	@Test
 	public void test18_StartingFromCalendarDate() throws Exception {
-		CalendarDate dec20 = CalendarDate.date(2004, 12, 20);
-		CalendarDate dec26 = CalendarDate.date(2004, 12, 26);
+		CalendarDate dec20 = CalendarDate.from(2004, 12, 20);
+		CalendarDate dec26 = CalendarDate.from(2004, 12, 26);
 		CalendarInterval dec20_26 = dec20.through(dec26);
 		assertThat(Duration.days(7).startingFrom(dec20), is(dec20_26));
 	}

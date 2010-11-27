@@ -43,9 +43,9 @@ public class CalendarDateTest {
 	
 	private CalendarDate mar13 = CalendarDate.from(2003, 3, 13);
 	
-	private CalendarDate may1 = CalendarDate.date(2004, 5, 1);
+	private CalendarDate may1 = CalendarDate.from(2004, 5, 1);
 	
-	private CalendarDate may20 = CalendarDate.date(2004, 5, 20);
+	private CalendarDate may20 = CalendarDate.from(2004, 5, 20);
 	
 	private TimeZone gmt = TimeZone.getTimeZone("Universal");
 	
@@ -116,15 +116,15 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * {@link CalendarDate#from(String, String)}のテスト。
+	 * {@link CalendarDate#parse(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test06_FromFormattedString() throws Exception {
-		assertThat(CalendarDate.from("2/17/2003", "M/d/yyyy"), is(feb17));
+		assertThat(CalendarDate.parse("2/17/2003", "M/d/yyyy"), is(feb17));
 		//Now a nonsense pattern, to make sure it isn't succeeding by accident.
-		assertThat(CalendarDate.from("#17-03/02 2003", "#d-yy/MM yyyy"), is(feb17));
+		assertThat(CalendarDate.parse("#17-03/02 2003", "#d-yy/MM yyyy"), is(feb17));
 	}
 	
 	/**
@@ -157,9 +157,9 @@ public class CalendarDateTest {
 	 */
 	@Test
 	public void test09_DayOfWeek() throws Exception {
-		CalendarDate date = CalendarDate.date(2004, 11, 6);
+		CalendarDate date = CalendarDate.from(2004, 11, 6);
 		assertThat(date.dayOfWeek(), is(DayOfWeek.SATURDAY));
-		date = CalendarDate.date(2007, 1, 1);
+		date = CalendarDate.from(2007, 1, 1);
 		assertThat(date.dayOfWeek(), is(DayOfWeek.MONDAY));
 	}
 	
@@ -170,9 +170,9 @@ public class CalendarDateTest {
 	 */
 	@Test
 	public void test10_NextDay() throws Exception {
-		CalendarDate feb28_2004 = CalendarDate.date(2004, 2, 28);
-		assertThat(feb28_2004.nextDay(), is(CalendarDate.date(2004, 2, 29)));
-		assertThat(feb28_2004.nextDay().nextDay(), is(CalendarDate.date(2004, 3, 1)));
+		CalendarDate feb28_2004 = CalendarDate.from(2004, 2, 28);
+		assertThat(feb28_2004.nextDay(), is(CalendarDate.from(2004, 2, 29)));
+		assertThat(feb28_2004.nextDay().nextDay(), is(CalendarDate.from(2004, 3, 1)));
 	}
 	
 	/**
@@ -182,33 +182,33 @@ public class CalendarDateTest {
 	 */
 	@Test
 	public void test11_PreviousDay() throws Exception {
-		CalendarDate mar1_2004 = CalendarDate.date(2004, 3, 1);
-		assertThat(mar1_2004.previousDay(), is(CalendarDate.date(2004, 2, 29)));
-		assertThat(mar1_2004.previousDay().previousDay(), is(CalendarDate.date(2004, 2, 28)));
+		CalendarDate mar1_2004 = CalendarDate.from(2004, 3, 1);
+		assertThat(mar1_2004.previousDay(), is(CalendarDate.from(2004, 2, 29)));
+		assertThat(mar1_2004.previousDay().previousDay(), is(CalendarDate.from(2004, 2, 28)));
 	}
 	
 	/**
-	 * {@link CalendarDate#monthCalendarInterval()}のテスト。
+	 * {@link CalendarDate#asMonthInterval()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test12_Month() throws Exception {
-		CalendarDate nov6_2004 = CalendarDate.date(2004, 11, 6);
+		CalendarDate nov6_2004 = CalendarDate.from(2004, 11, 6);
 		CalendarInterval nov2004 = CalendarInterval.inclusive(2004, 11, 1, 2004, 11, 30);
-		assertThat(nov6_2004.monthCalendarInterval(), is(nov2004));
+		assertThat(nov6_2004.asMonthInterval(), is(nov2004));
 		
-		CalendarDate dec6_2004 = CalendarDate.date(2004, 12, 6);
+		CalendarDate dec6_2004 = CalendarDate.from(2004, 12, 6);
 		CalendarInterval dec2004 = CalendarInterval.inclusive(2004, 12, 1, 2004, 12, 31);
-		assertThat(dec6_2004.monthCalendarInterval(), is(dec2004));
+		assertThat(dec6_2004.asMonthInterval(), is(dec2004));
 		
-		CalendarDate feb9_2004 = CalendarDate.date(2004, 2, 9);
+		CalendarDate feb9_2004 = CalendarDate.from(2004, 2, 9);
 		CalendarInterval feb2004 = CalendarInterval.inclusive(2004, 2, 1, 2004, 2, 29);
-		assertThat(feb9_2004.monthCalendarInterval(), is(feb2004));
+		assertThat(feb9_2004.asMonthInterval(), is(feb2004));
 		
-		CalendarDate feb9_2003 = CalendarDate.date(2003, 2, 9);
+		CalendarDate feb9_2003 = CalendarDate.from(2003, 2, 9);
 		CalendarInterval feb2003 = CalendarInterval.inclusive(2003, 2, 1, 2003, 2, 28);
-		assertThat(feb9_2003.monthCalendarInterval(), is(feb2003));
+		assertThat(feb9_2003.asMonthInterval(), is(feb2003));
 		
 	}
 	
@@ -219,7 +219,7 @@ public class CalendarDateTest {
 	 */
 	@Test
 	public void test13_ToString() throws Exception {
-		CalendarDate date = CalendarDate.date(2004, 5, 28);
+		CalendarDate date = CalendarDate.from(2004, 5, 28);
 		assertThat(date.toString(), is("2004-05-28"));
 	}
 	

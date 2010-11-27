@@ -43,7 +43,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	 * @return 分（0〜59）
 	 * @throws IllegalArgumentException 引数の値が0〜59の範囲ではない場合
 	 */
-	public static MinuteOfHour of(int initial) {
+	public static MinuteOfHour valueOf(int initial) {
 		return new MinuteOfHour(initial);
 	}
 	

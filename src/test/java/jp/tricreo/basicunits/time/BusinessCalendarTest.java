@@ -50,29 +50,29 @@ public class BusinessCalendarTest {
 		calendar.addHolidaySpec(DateSpecification.fixed(1, 1)); // 元旦
 		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(1, DayOfWeek.MONDAY, 2)); // 成人の日
 		calendar.addHolidaySpec(DateSpecification.fixed(2, 11)); // 建国記念日
-		calendar.addHoliday(CalendarDate.date(2010, 3, 21)); // 春分の日
+		calendar.addHoliday(CalendarDate.from(2010, 3, 21)); // 春分の日
 		calendar.addHolidaySpec(DateSpecification.fixed(4, 29)); // 昭和の日
 		calendar.addHolidaySpec(DateSpecification.fixed(5, 3)); // 憲法記念日
 		calendar.addHolidaySpec(DateSpecification.fixed(5, 4)); // みどりの日
 		calendar.addHolidaySpec(DateSpecification.fixed(5, 5)); // こどもの日
 		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(7, DayOfWeek.MONDAY, 3)); // 海の日
 		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(9, DayOfWeek.MONDAY, 3)); // 敬老の日
-		calendar.addHoliday(CalendarDate.date(2010, 9, 23)); // 秋分の日
+		calendar.addHoliday(CalendarDate.from(2010, 9, 23)); // 秋分の日
 		calendar.addHolidaySpec(DateSpecification.nthOccuranceOfWeekdayInMonth(10, DayOfWeek.MONDAY, 2)); // 体育の日
 		calendar.addHolidaySpec(DateSpecification.fixed(11, 3)); // 文化の日
 		calendar.addHolidaySpec(DateSpecification.fixed(11, 23)); // 勤労感謝の日
 		calendar.addHolidaySpec(DateSpecification.fixed(12, 23)); // 天皇誕生日
 		
 		// それぞれの日が「営業日」にあたるかどうかチェック。
-		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 8)), is(true)); // 金曜日
-		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 9)), is(false)); // 土曜日
-		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 10)), is(false)); // 日曜日
-		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 11)), is(false)); // 月曜日体育の日
-		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 10, 12)), is(true)); // 火曜日平日
+		assertThat(calendar.isBusinessDay(CalendarDate.from(2010, 10, 8)), is(true)); // 金曜日
+		assertThat(calendar.isBusinessDay(CalendarDate.from(2010, 10, 9)), is(false)); // 土曜日
+		assertThat(calendar.isBusinessDay(CalendarDate.from(2010, 10, 10)), is(false)); // 日曜日
+		assertThat(calendar.isBusinessDay(CalendarDate.from(2010, 10, 11)), is(false)); // 月曜日体育の日
+		assertThat(calendar.isBusinessDay(CalendarDate.from(2010, 10, 12)), is(true)); // 火曜日平日
 		
-		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 11, 22)), is(true)); // 月曜日平日
-		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 11, 23)), is(false)); // 火曜日祝日
-		assertThat(calendar.isBusinessDay(CalendarDate.date(2010, 11, 24)), is(true)); // 水曜日平日
+		assertThat(calendar.isBusinessDay(CalendarDate.from(2010, 11, 22)), is(true)); // 月曜日平日
+		assertThat(calendar.isBusinessDay(CalendarDate.from(2010, 11, 23)), is(false)); // 火曜日祝日
+		assertThat(calendar.isBusinessDay(CalendarDate.from(2010, 11, 24)), is(true)); // 水曜日平日
 		
 		// 振替休日（「国民の祝日」が日曜日にあたる場合、その直後の「国民の祝日」でない日を休日とする）とか、
 		// 国民の休日（「国民の祝日」と次の「国民の祝日」の間隔が中1日しかなくその中日（なかび）が「国民の祝日」でない場合、その日を休日とする）
@@ -422,7 +422,7 @@ public class BusinessCalendarTest {
 			String[] strings = COMMON_US_HOLIDAYS;
 			for (String string : strings) {
 				try {
-					dates.add(CalendarDate.from(string, "yyyy/MM/dd"));
+					dates.add(CalendarDate.parse(string, "yyyy/MM/dd"));
 				} catch (ParseException e) {
 					throw new Error(e);
 				}

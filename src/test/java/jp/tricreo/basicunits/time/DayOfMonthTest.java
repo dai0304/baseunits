@@ -21,8 +21,6 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import jp.tricreo.basicunits.time.DayOfMonth;
-import jp.tricreo.basicunits.time.MonthOfYear;
 
 import org.junit.Test;
 
@@ -70,29 +68,23 @@ public class DayOfMonthTest {
 	 */
 	@Test
 	public void test02_create2() throws Exception {
-		for (int i = 1; i <= 30; i++) {
-			DayOfMonth.of(2010, MonthOfYear.APR, i);
+		for (int i = 1; i <= 31; i++) {
+			DayOfMonth.valueOf(i);
 		}
 		try {
-			DayOfMonth.of(2010, MonthOfYear.APR, 0);
+			DayOfMonth.valueOf(0);
 			fail();
 		} catch (IllegalArgumentException e) {
 			// success
 		}
 		try {
-			DayOfMonth.of(2010, MonthOfYear.APR, -1);
+			DayOfMonth.valueOf(-1);
 			fail();
 		} catch (IllegalArgumentException e) {
 			// success
 		}
 		try {
-			DayOfMonth.of(2010, MonthOfYear.APR, 31);
-			fail();
-		} catch (IllegalArgumentException e) {
-			// success
-		}
-		try {
-			DayOfMonth.of(2010, MonthOfYear.APR, 32);
+			DayOfMonth.valueOf(32);
 			fail();
 		} catch (IllegalArgumentException e) {
 			// success

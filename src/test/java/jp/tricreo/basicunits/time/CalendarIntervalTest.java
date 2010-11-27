@@ -38,21 +38,21 @@ import org.junit.Test;
  */
 public class CalendarIntervalTest {
 	
-	private CalendarDate may1 = CalendarDate.date(2004, 5, 1);
+	private CalendarDate may1 = CalendarDate.from(2004, 5, 1);
 	
-	private CalendarDate may2 = CalendarDate.date(2004, 5, 2);
+	private CalendarDate may2 = CalendarDate.from(2004, 5, 2);
 	
-	private CalendarDate may3 = CalendarDate.date(2004, 5, 3);
+	private CalendarDate may3 = CalendarDate.from(2004, 5, 3);
 	
-	private CalendarDate may14 = CalendarDate.date(2004, 5, 14);
+	private CalendarDate may14 = CalendarDate.from(2004, 5, 14);
 	
-	private CalendarDate may20 = CalendarDate.date(2004, 5, 20);
+	private CalendarDate may20 = CalendarDate.from(2004, 5, 20);
 	
-	private CalendarDate may31 = CalendarDate.date(2004, 5, 31);
+	private CalendarDate may31 = CalendarDate.from(2004, 5, 31);
 	
-	private CalendarDate apr15 = CalendarDate.date(2004, 4, 15);
+	private CalendarDate apr15 = CalendarDate.from(2004, 4, 15);
 	
-	private CalendarDate jun1 = CalendarDate.date(2004, 6, 1);
+	private CalendarDate jun1 = CalendarDate.from(2004, 6, 1);
 	
 	private CalendarInterval may = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 31);
 	

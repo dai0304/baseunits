@@ -46,7 +46,7 @@ public class NominalTimeTest {
 	 */
 	@Test
 	public void test01_CombineNominalTimes() throws Exception {
-		TimeOfDay fiveFifteenPM = TimeOfDay.hourAndMinute(17, 15);
+		TimeOfDay fiveFifteenPM = TimeOfDay.from(17, 15);
 		CalendarDate april19_2006 = CalendarDate.from(2006, 4, 19);
 		CalendarMinute expectedCombination = CalendarMinute.from(2006, 4, 19, 17, 15);
 		assertThat(fiveFifteenPM.on(april19_2006), is(expectedCombination));

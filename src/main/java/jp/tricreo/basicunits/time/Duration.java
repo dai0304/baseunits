@@ -495,7 +495,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 		} else {
 			Calendar calendar = point.asJavaCalendar();
 			addAmountToCalendar(amount, calendar);
-			return TimePoint.from(calendar);
+			return TimePoint.valueOf(calendar);
 		}
 	}
 	

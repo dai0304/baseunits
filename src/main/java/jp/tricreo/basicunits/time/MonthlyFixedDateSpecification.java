@@ -49,7 +49,7 @@ class MonthlyFixedDateSpecification extends MonthlyDateSpecification {
 	@Override
 	public CalendarDate ofYearMonth(CalendarMonth month) {
 		Validate.notNull(month);
-		return CalendarDate.date(month.breachEncapsulationOfYear(), month.breachEncapsulationOfMonth(), day);
+		return CalendarDate.from(month.breachEncapsulationOfYear(), month.breachEncapsulationOfMonth(), day);
 	}
 	
 }

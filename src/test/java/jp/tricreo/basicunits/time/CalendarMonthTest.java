@@ -22,11 +22,6 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import jp.tricreo.basicunits.tests.SerializationTester;
-import jp.tricreo.basicunits.time.CalendarDate;
-import jp.tricreo.basicunits.time.CalendarInterval;
-import jp.tricreo.basicunits.time.CalendarMonth;
-import jp.tricreo.basicunits.time.DayOfMonth;
-import jp.tricreo.basicunits.time.MonthOfYear;
 
 import org.junit.Test;
 
@@ -61,7 +56,7 @@ public class CalendarMonthTest {
 	 */
 	@Test
 	public void test02_from() throws Exception {
-		assertThat(CalendarMonth.from("2010-11", "yyyy-MM"), is(nov2010));
+		assertThat(CalendarMonth.parse("2010-11", "yyyy-MM"), is(nov2010));
 		assertThat(CalendarMonth.from(1978, MonthOfYear.MAR), is(mar1978));
 	}
 	
@@ -112,22 +107,6 @@ public class CalendarMonthTest {
 	}
 	
 	/**
-	 * {@link CalendarMonth#equals(Object)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	@SuppressWarnings("serial")
-	public void test05_equals() throws Exception {
-		assertThat(feb2009.equals(feb2009), is(true));
-		assertThat(feb2009.equals(dec2010), is(false));
-		assertThat(feb2009.equals(null), is(false));
-		assertThat(feb2009.equals(new CalendarMonth(2009, MonthOfYear.FEB)), is(true));
-		assertThat(feb2009.equals(new CalendarMonth(2009, MonthOfYear.FEB) {
-		}), is(false));
-	}
-	
-	/**
 	 * TODO for daisuke
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -169,5 +148,21 @@ public class CalendarMonthTest {
 		assertThat(feb2009.isAfter(null), is(false));
 		assertThat(feb2009.isAfter(dec2010), is(false));
 		assertThat(dec2010.isAfter(feb2009), is(true));
+	}
+	
+	/**
+	 * {@link CalendarMonth#equals(Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	@SuppressWarnings("serial")
+	public void test09_equals() throws Exception {
+		assertThat(feb2009.equals(feb2009), is(true));
+		assertThat(feb2009.equals(dec2010), is(false));
+		assertThat(feb2009.equals(null), is(false));
+		assertThat(feb2009.equals(new CalendarMonth(2009, MonthOfYear.FEB)), is(true));
+		assertThat(feb2009.equals(new CalendarMonth(2009, MonthOfYear.FEB) {
+		}), is(false));
 	}
 }

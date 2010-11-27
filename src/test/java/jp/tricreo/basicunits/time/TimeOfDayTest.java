@@ -24,13 +24,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.TimeZone;
 
-import jp.tricreo.basicunits.time.CalendarDate;
-import jp.tricreo.basicunits.time.CalendarMinute;
-import jp.tricreo.basicunits.time.HourOfDay;
-import jp.tricreo.basicunits.time.MinuteOfHour;
-import jp.tricreo.basicunits.time.TimeOfDay;
-import jp.tricreo.basicunits.time.TimePoint;
-
 import org.junit.Test;
 
 /**
@@ -42,17 +35,17 @@ public class TimeOfDayTest {
 	
 	private CalendarDate feb17 = CalendarDate.from(2006, 2, 17);
 	
-	private TimeOfDay midnight = TimeOfDay.hourAndMinute(0, 0);
+	private TimeOfDay midnight = TimeOfDay.from(0, 0);
 	
-	private TimeOfDay morning = TimeOfDay.hourAndMinute(10, 20);
+	private TimeOfDay morning = TimeOfDay.from(10, 20);
 	
-	private TimeOfDay noon = TimeOfDay.hourAndMinute(12, 0);
+	private TimeOfDay noon = TimeOfDay.from(12, 0);
 	
-	private TimeOfDay afternoon = TimeOfDay.hourAndMinute(15, 40);
+	private TimeOfDay afternoon = TimeOfDay.from(15, 40);
 	
-	private TimeOfDay twoMinutesBeforeMidnight = TimeOfDay.hourAndMinute(23, 58);
+	private TimeOfDay twoMinutesBeforeMidnight = TimeOfDay.from(23, 58);
 	
-	private TimeOfDay tenMinutesBeforeMidnight = TimeOfDay.hourAndMinute(23, 50);
+	private TimeOfDay tenMinutesBeforeMidnight = TimeOfDay.from(23, 50);
 	
 
 	/**
@@ -96,17 +89,17 @@ public class TimeOfDayTest {
 	@Test
 	@SuppressWarnings("serial")
 	public void test04_Equals() throws Exception {
-		assertThat(midnight.equals(TimeOfDay.hourAndMinute(0, 0)), is(true));
-		assertThat(morning.equals(TimeOfDay.hourAndMinute(10, 20)), is(true));
-		assertThat(noon.equals(TimeOfDay.hourAndMinute(12, 0)), is(true));
-		assertThat(afternoon.equals(TimeOfDay.hourAndMinute(15, 40)), is(true));
-		assertThat(twoMinutesBeforeMidnight.equals(TimeOfDay.hourAndMinute(23, 58)), is(true));
+		assertThat(midnight.equals(TimeOfDay.from(0, 0)), is(true));
+		assertThat(morning.equals(TimeOfDay.from(10, 20)), is(true));
+		assertThat(noon.equals(TimeOfDay.from(12, 0)), is(true));
+		assertThat(afternoon.equals(TimeOfDay.from(15, 40)), is(true));
+		assertThat(twoMinutesBeforeMidnight.equals(TimeOfDay.from(23, 58)), is(true));
 		
 		assertThat(midnight.equals(morning), is(false));
 		assertThat(morning.equals(null), is(false));
 		assertThat(tenMinutesBeforeMidnight.equals(twoMinutesBeforeMidnight), is(false));
-		assertThat(noon.equals(new TimeOfDay(12, 0)), is(true));
-		assertThat(noon.equals(new TimeOfDay(12, 0) {
+		assertThat(noon.equals(new TimeOfDay(HourOfDay.valueOf(12), MinuteOfHour.valueOf(0))), is(true));
+		assertThat(noon.equals(new TimeOfDay(HourOfDay.valueOf(12), MinuteOfHour.valueOf(0)) {
 		}), is(false));
 	}
 	
@@ -117,11 +110,11 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test05_HashCode() throws Exception {
-		assertThat(midnight.hashCode(), is(TimeOfDay.hourAndMinute(0, 0).hashCode()));
-		assertThat(morning.hashCode(), is(TimeOfDay.hourAndMinute(10, 20).hashCode()));
-		assertThat(noon.hashCode(), is(TimeOfDay.hourAndMinute(12, 0).hashCode()));
-		assertThat(afternoon.hashCode(), is(TimeOfDay.hourAndMinute(15, 40).hashCode()));
-		assertThat(twoMinutesBeforeMidnight.hashCode(), is(TimeOfDay.hourAndMinute(23, 58).hashCode()));
+		assertThat(midnight.hashCode(), is(TimeOfDay.from(0, 0).hashCode()));
+		assertThat(morning.hashCode(), is(TimeOfDay.from(10, 20).hashCode()));
+		assertThat(noon.hashCode(), is(TimeOfDay.from(12, 0).hashCode()));
+		assertThat(afternoon.hashCode(), is(TimeOfDay.from(15, 40).hashCode()));
+		assertThat(twoMinutesBeforeMidnight.hashCode(), is(TimeOfDay.from(23, 58).hashCode()));
 	}
 	
 	/**
@@ -211,11 +204,11 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test12_GetHour() throws Exception {
-		assertThat(midnight.breachEncapsulationOfHour(), is(HourOfDay.of(0)));
-		assertThat(morning.breachEncapsulationOfHour(), is(HourOfDay.of(10)));
-		assertThat(noon.breachEncapsulationOfHour(), is(HourOfDay.of(12)));
-		assertThat(afternoon.breachEncapsulationOfHour(), is(HourOfDay.of(15)));
-		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfHour(), is(HourOfDay.of(23)));
+		assertThat(midnight.breachEncapsulationOfHour(), is(HourOfDay.valueOf(0)));
+		assertThat(morning.breachEncapsulationOfHour(), is(HourOfDay.valueOf(10)));
+		assertThat(noon.breachEncapsulationOfHour(), is(HourOfDay.valueOf(12)));
+		assertThat(afternoon.breachEncapsulationOfHour(), is(HourOfDay.valueOf(15)));
+		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfHour(), is(HourOfDay.valueOf(23)));
 	}
 	
 	/**
@@ -225,11 +218,11 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test13_GetMinute() throws Exception {
-		assertThat(midnight.breachEncapsulationOfMinute(), is(MinuteOfHour.of(0)));
-		assertThat(morning.breachEncapsulationOfMinute(), is(MinuteOfHour.of(20)));
-		assertThat(noon.breachEncapsulationOfMinute(), is(MinuteOfHour.of(0)));
-		assertThat(afternoon.breachEncapsulationOfMinute(), is(MinuteOfHour.of(40)));
-		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfMinute(), is(MinuteOfHour.of(58)));
+		assertThat(midnight.breachEncapsulationOfMinute(), is(MinuteOfHour.valueOf(0)));
+		assertThat(morning.breachEncapsulationOfMinute(), is(MinuteOfHour.valueOf(20)));
+		assertThat(noon.breachEncapsulationOfMinute(), is(MinuteOfHour.valueOf(0)));
+		assertThat(afternoon.breachEncapsulationOfMinute(), is(MinuteOfHour.valueOf(40)));
+		assertThat(twoMinutesBeforeMidnight.breachEncapsulationOfMinute(), is(MinuteOfHour.valueOf(58)));
 	}
 	
 	/**
@@ -239,8 +232,8 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test14_AsTimePoint() throws Exception {
-		TimeOfDay fiveFifteen = TimeOfDay.hourAndMinute(17, 15);
-		CalendarDate mayEleventh = CalendarDate.date(2006, 5, 11);
+		TimeOfDay fiveFifteen = TimeOfDay.from(17, 15);
+		CalendarDate mayEleventh = CalendarDate.from(2006, 5, 11);
 		TimePoint mayEleventhAtFiveFifteen = fiveFifteen.asTimePointGiven(mayEleventh, CST);
 		assertThat(mayEleventhAtFiveFifteen, is(TimePoint.at(2006, 5, 11, 17, 15, 0, 0, CST)));
 	}

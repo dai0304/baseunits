@@ -43,7 +43,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * @return 時（0〜23）
 	 * @throws IllegalArgumentException 引数の値が0〜23の範囲ではない場合
 	 */
-	public static HourOfDay of(int initial) {
+	public static HourOfDay valueOf(int initial) {
 		return new HourOfDay(initial);
 	}
 	
@@ -56,8 +56,8 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
 	 */
-	public static HourOfDay value(int initial, String amPm) {
-		return HourOfDay.of(convertTo24hour(initial, amPm));
+	public static HourOfDay valueOf(int initial, String amPm) {
+		return new HourOfDay(convertTo24hour(initial, amPm));
 	}
 	
 	/**

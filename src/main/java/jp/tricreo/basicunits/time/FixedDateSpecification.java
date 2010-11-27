@@ -19,46 +19,76 @@
  */
 package jp.tricreo.basicunits.time;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import jp.tricreo.basicunits.util.ImmutableIterator;
+
 import org.apache.commons.lang.Validate;
 
 /**
- * 毎年X月Y日、を表す日付仕様。
+ * ある特定の年月日を表す日付仕様。
  */
-class AnnualFixedDateSpecification extends AnnualDateSpecification {
+class FixedDateSpecification extends DateSpecification {
 	
-	final MonthOfYear month;
-	
-	final DayOfMonth day;
+	final CalendarDate date;
 	
 
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param month 月
-	 * @param day 日
+	 * @param date 日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	AnnualFixedDateSpecification(MonthOfYear month, DayOfMonth day) {
-		Validate.notNull(month);
-		Validate.notNull(day);
-		this.month = month;
-		this.day = day;
+	FixedDateSpecification(CalendarDate date) {
+		Validate.notNull(date);
+		this.date = date;
+	}
+	
+	@Override
+	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
+		if (interval.includes(date)) {
+			return date;
+		}
+		return null;
 	}
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return day.equals(date.breachEncapsulationOfDay())
-				&& month == date.asCalendarMonth().breachEncapsulationOfMonth();
+		return date.equals(this.date);
 	}
 	
 	@Override
-	public CalendarDate ofYear(int year) {
-		return CalendarDate.from(year, month, day);
+	@SuppressWarnings("unchecked")
+	public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
+		if (firstOccurrenceIn(interval) == null) {
+			return Collections.EMPTY_LIST.iterator();
+		}
+		return new ImmutableIterator<CalendarDate>() {
+			
+			boolean end;
+			
+
+			@Override
+			public boolean hasNext() {
+				return end;
+			}
+			
+			@Override
+			public CalendarDate next() {
+				if (hasNext() == false) {
+					throw new NoSuchElementException();
+				}
+				end = true;
+				return date;
+			}
+		};
 	}
 	
 	@Override
 	public String toString() {
-		return day.toString() + " " + month.toString();
+		return date.toString();
 	}
 }

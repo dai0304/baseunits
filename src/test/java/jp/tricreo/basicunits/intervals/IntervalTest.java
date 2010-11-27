@@ -288,19 +288,6 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * {@link Interval#toString()}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test02_ToString() throws Exception {
-		assertThat(c1_10c.toString(), is("[1, 10]"));
-		assertThat(o10_12c.toString(), is("(10, 12]"));
-		assertThat(empty.toString(), is("{}"));
-		assertThat(Interval.closed(10, 10).toString(), is("{10}"));
-	}
-	
-	/**
 	 * {@link Interval}のインスタンス生成テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -785,5 +772,18 @@ public class IntervalTest {
 		assertThat(complement.size(), is(2));
 		assertThat(complement.get(0), is(c1_3c));
 		assertThat(complement.get(1), is(c5_7c));
+	}
+	
+	/**
+	 * {@link Interval#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test30_ToString() throws Exception {
+		assertThat(c1_10c.toString(), is("[1, 10]"));
+		assertThat(o10_12c.toString(), is("(10, 12]"));
+		assertThat(empty.toString(), is("{}"));
+		assertThat(Interval.closed(10, 10).toString(), is("{10}"));
 	}
 }

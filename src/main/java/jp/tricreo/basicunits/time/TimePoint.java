@@ -87,7 +87,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		calendar.set(Calendar.MINUTE, minute);
 		calendar.set(Calendar.SECOND, second);
 		calendar.set(Calendar.MILLISECOND, millisecond);
-		return from(calendar);
+		return valueOf(calendar);
 	}
 	
 	/**
@@ -246,7 +246,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint atMidnight(CalendarDate calendarDate, TimeZone zone) {
 		Validate.notNull(calendarDate);
 		Validate.notNull(zone);
-		return at(calendarDate.getCalendarMonth(),
+		return at(calendarDate.asCalendarMonth(),
 				calendarDate.breachEncapsulationOfDay(), 0, 0, 0, 0, zone);
 	}
 	
@@ -284,7 +284,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static TimePoint from(Calendar calendar) {
+	public static TimePoint valueOf(Calendar calendar) {
 		Validate.notNull(calendar);
 		return from(calendar.getTime());
 	}
@@ -302,7 +302,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Validate.notNull(date);
 		Validate.notNull(time);
 		Validate.notNull(zone);
-		return at(date.getCalendarMonth(), date.breachEncapsulationOfDay(),
+		return at(date.asCalendarMonth(), date.breachEncapsulationOfDay(),
 				time.breachEncapsulationOfHour().value, time.breachEncapsulationOfMinute().value,
 				0, 0, zone);
 	}
@@ -335,20 +335,20 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/**
 	 * 日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す {@link TimePoint}を返す。
 	 * 
-	 * @param dateString 日時を表す文字列
+	 * @param dateTimeString 日時を表す文字列
 	 * @param pattern 解析パターン
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static TimePoint parseFrom(String dateString, String pattern, TimeZone zone) throws ParseException {
-		Validate.notNull(dateString);
+	public static TimePoint parse(String dateTimeString, String pattern, TimeZone zone) throws ParseException {
+		Validate.notNull(dateTimeString);
 		Validate.notNull(pattern);
 		Validate.notNull(zone);
 		DateFormat format = new SimpleDateFormat(pattern);
 		format.setTimeZone(zone);
-		Date date = format.parse(dateString);
+		Date date = format.parse(dateTimeString);
 		return from(date);
 	}
 	
@@ -364,7 +364,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint parseGMTFrom(String dateString, String pattern) throws ParseException {
 		Validate.notNull(dateString);
 		Validate.notNull(pattern);
-		return parseFrom(dateString, pattern, GMT);
+		return parse(dateString, pattern, GMT);
 	}
 	
 
@@ -418,7 +418,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public TimeOfDay asTimeOfDay(TimeZone zone) {
 		Validate.notNull(zone);
 		Calendar calendar = asJavaCalendar(zone);
-		return TimeOfDay.hourAndMinute(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
+		return TimeOfDay.from(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
 	}
 	
 	/**

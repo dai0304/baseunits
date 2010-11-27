@@ -70,7 +70,7 @@ public class SocialSecurityBenefitExample extends TestCase {
 
 		// Does beneficiary attain age 72 during the benefit year 1972?
 		CalendarInterval y1979 = CalendarInterval.year(1979);
-		CalendarDate birthday72 = CalendarDate.date(1979, 7, 15);
+		CalendarDate birthday72 = CalendarDate.from(1979, 7, 15);
 		assertTrue(y1979.includes(birthday72));
 		
 		// Note that all calculations are based on entire months.

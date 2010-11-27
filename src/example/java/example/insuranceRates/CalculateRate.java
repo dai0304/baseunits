@@ -29,7 +29,7 @@ import org.junit.Test;
 public class CalculateRate {
 	
 	/** 契約日 */
-	private static final CalendarDate policyEffectiveDate = CalendarDate.date(2004, 11, 7);
+	private static final CalendarDate policyEffectiveDate = CalendarDate.from(2004, 11, 7);
 	
 
 	/**
@@ -57,7 +57,7 @@ public class CalculateRate {
 	
 	@Test
 	public void testLookUpRate() {
-		CalendarDate birthdate = CalendarDate.date(1963, 4, 6);
+		CalendarDate birthdate = CalendarDate.from(1963, 4, 6);
 		Duration ageOnEffectiveDate = birthdate.through(policyEffectiveDate).lengthInMonths();
 		Money monthlyPremium = insuranceSchedule().get(ageOnEffectiveDate);
 		assertThat(monthlyPremium, is(Money.dollars(150.00)));
@@ -72,7 +72,7 @@ public class CalculateRate {
 		Money monthlyPremium = Money.dollars(150.00);
 		
 		// 契約月の残り期間
-		CalendarInterval entireMonth = policyEffectiveDate.monthCalendarInterval();
+		CalendarInterval entireMonth = policyEffectiveDate.asMonthInterval();
 		CalendarInterval remainderOfMonth = policyEffectiveDate.through(entireMonth.end());
 		
 		// 契約月の残り日数 ÷ 契約月の全日数

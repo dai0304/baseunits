@@ -117,15 +117,15 @@ public class CalendarMinuteTest {
 	}
 	
 	/**
-	 * {@link CalendarMinute#from(String, String)}のテスト。
+	 * {@link CalendarMinute#parse(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test06_FromFormattedString() throws Exception {
-		assertThat(CalendarMinute.from("2/17/2003 01:23", "M/d/yyyy HH:mm"), is(feb17_1_23));
+		assertThat(CalendarMinute.parse("2/17/2003 01:23", "M/d/yyyy HH:mm"), is(feb17_1_23));
 		//Now a nonsense pattern, to make sure it isn't succeeding by accident.
-		assertThat(CalendarMinute.from("#17-03/02 2003, 01:23", "#d-yy/MM yyyy, HH:mm"), is(feb17_1_23));
+		assertThat(CalendarMinute.parse("#17-03/02 2003, 01:23", "#d-yy/MM yyyy, HH:mm"), is(feb17_1_23));
 	}
 	
 	/**
@@ -140,9 +140,9 @@ public class CalendarMinuteTest {
 		assertThat(feb17_1_23.equals(mar13_3_45), is(false));
 		assertThat(feb17_1_23.equals(null), is(false));
 		assertThat(new CalendarMinute(CalendarDate.from(2003, 2, 17),
-				TimeOfDay.hourAndMinute(1, 23)).equals(feb17_1_23), is(true));
+				TimeOfDay.from(1, 23)).equals(feb17_1_23), is(true));
 		assertThat(new CalendarMinute(CalendarDate.from(2003, 2, 17),
-				TimeOfDay.hourAndMinute(1, 23)) {
+				TimeOfDay.from(1, 23)) {
 			
 			private static final long serialVersionUID = 8307944665463538049L;
 		}.equals(feb17_1_23), is(false));
@@ -162,7 +162,7 @@ public class CalendarMinuteTest {
 	@Test
 	public void test09_breachEncapsulationOf() throws Exception {
 		assertThat(feb17_1_23.breachEncapsulationOfDate(), is(CalendarDate.from(2003, 2, 17)));
-		assertThat(feb17_1_23.breachEncapsulationOfTime(), is(TimeOfDay.hourAndMinute(1, 23)));
+		assertThat(feb17_1_23.breachEncapsulationOfTime(), is(TimeOfDay.from(1, 23)));
 	}
 	
 	/**

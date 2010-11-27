@@ -34,7 +34,7 @@ public abstract class MonthlyDateSpecification extends DateSpecification {
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
 		Validate.notNull(interval);
-		CalendarMonth month = interval.start().getCalendarMonth();
+		CalendarMonth month = interval.start().asCalendarMonth();
 		
 		CalendarDate firstTry = ofYearMonth(month);
 		if (interval.includes(firstTry)) {
@@ -55,7 +55,7 @@ public abstract class MonthlyDateSpecification extends DateSpecification {
 			
 			CalendarDate next = firstOccurrenceIn(interval);
 			
-			CalendarMonth month = next.getCalendarMonth();
+			CalendarMonth month = next.asCalendarMonth();
 			
 
 			@Override

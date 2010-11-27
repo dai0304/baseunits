@@ -105,7 +105,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @return 期間
 	 */
 	public static CalendarInterval month(CalendarMonth month) {
-		CalendarDate startDate = CalendarDate.date(month, DayOfMonth.of(1, month));
+		CalendarDate startDate = CalendarDate.from(month, DayOfMonth.valueOf(1));
 		CalendarDate endDate = startDate.plusMonths(1).plusDays(-1);
 		return inclusive(startDate, endDate);
 	}
@@ -133,7 +133,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @return 期間
 	 */
 	public static CalendarInterval month(int year, MonthOfYear month) {
-		CalendarDate startDate = CalendarDate.date(year, month, DayOfMonth.valueOf(1));
+		CalendarDate startDate = CalendarDate.from(year, month, DayOfMonth.valueOf(1));
 		CalendarDate endDate = startDate.plusMonths(1).plusDays(-1);
 		return inclusive(startDate, endDate);
 	}
@@ -169,8 +169,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @return 期間
 	 */
 	public static CalendarInterval year(int year) {
-		CalendarDate startDate = CalendarDate.date(year, 1, 1);
-		CalendarDate endDate = CalendarDate.date(year + 1, 1, 1).plusDays(-1);
+		CalendarDate startDate = CalendarDate.from(year, 1, 1);
+		CalendarDate endDate = CalendarDate.from(year + 1, 1, 1).plusDays(-1);
 		return inclusive(startDate, endDate);
 	}
 	

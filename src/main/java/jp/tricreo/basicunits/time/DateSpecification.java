@@ -27,9 +27,22 @@ import jp.tricreo.basicunits.util.spec.AbstractSpecification;
 import org.apache.commons.lang.Validate;
 
 /**
- * 日付の仕様を表現するオブジェクト。DDDのSpecificationパターンオブジェクト。
+ * 日付の仕様を表現するオブジェクト。
  */
 public abstract class DateSpecification extends AbstractSpecification<CalendarDate> {
+	
+	/**
+	 * 特定のある1日だけにマッチする日付仕様のインスタンスを返す。
+	 * 
+	 * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
+	 * 
+	 * @param date マッチする日
+	 * @return 日付仕様
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static DateSpecification fixed(CalendarDate date) {
+		return new FixedDateSpecification(date);
+	}
 	
 	/**
 	 * 日付仕様「毎月{@code day}日」のインスタンスを生成する。

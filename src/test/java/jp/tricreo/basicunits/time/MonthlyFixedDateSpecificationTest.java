@@ -49,11 +49,11 @@ public class MonthlyFixedDateSpecificationTest {
 		assertThat(fixed.firstOccurrenceIn(nov2010), is(CalendarDate.from(2010, 11, 19)));
 		
 		CalendarInterval laterNovToDec2010 = CalendarInterval.inclusive(
-				CalendarDate.date(2010, 11, 25), CalendarDate.date(2010, 12, 31));
+				CalendarDate.from(2010, 11, 25), CalendarDate.from(2010, 12, 31));
 		assertThat(fixed.firstOccurrenceIn(laterNovToDec2010), is(CalendarDate.from(2010, 12, 19)));
 		
 		CalendarInterval noHit = CalendarInterval.inclusive(
-				CalendarDate.date(2010, 11, 25), CalendarDate.date(2010, 12, 10));
+				CalendarDate.from(2010, 11, 25), CalendarDate.from(2010, 12, 10));
 		assertThat(fixed.firstOccurrenceIn(noHit), is(nullValue()));
 		
 	}
@@ -70,29 +70,29 @@ public class MonthlyFixedDateSpecificationTest {
 		
 		Iterator<CalendarDate> itr = fixed.iterateOver(y2010);
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 1, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 1, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 2, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 2, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 3, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 3, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 4, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 4, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 5, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 5, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 6, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 6, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 7, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 7, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 8, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 8, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 9, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 9, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 10, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 10, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 11, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 11, 27)));
 		assertThat(itr.hasNext(), is(true));
-		assertThat(itr.next(), is(CalendarDate.date(2010, 12, 27)));
+		assertThat(itr.next(), is(CalendarDate.from(2010, 12, 27)));
 		assertThat(itr.hasNext(), is(false));
 		try {
 			itr.next();
