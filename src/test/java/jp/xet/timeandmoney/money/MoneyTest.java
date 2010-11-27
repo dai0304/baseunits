@@ -1,4 +1,18 @@
-/**
+/*
+ * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ * ----
  * Copyright (c) 2005 Domain Language, Inc. (http://domainlanguage.com) This
  * free software is distributed under the "MIT" licence.
  * For more information, see http://timeandmoney.sourceforge.net.
@@ -6,11 +20,14 @@
 package jp.xet.timeandmoney.money;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Currency;
 import java.util.Locale;
 
@@ -195,11 +212,6 @@ public class MoneyTest {
 		} catch (ClassCastException e) {
 			// success
 		}
-		
-		assertThat(d15.plus(d0), is(d15));
-		assertThat(d15.plus(y0), is(d15));
-		assertThat(d0.plus(y0), is(d0));
-		assertThat(y0.plus(d0), is(y0));
 	}
 	
 	/**
@@ -242,7 +254,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * {@link Money#isGreaterThan(Money)}, {@link Money#isLessThan(Money)}のテスト。
+	 * {@link Money#compareTo(Money)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -274,6 +286,13 @@ public class MoneyTest {
 			Arrays.sort(monies);
 			fail();
 		} catch (ClassCastException e) {
+			// success
+		}
+		
+		try {
+			y100.compareTo(null);
+			fail();
+		} catch (NullPointerException e) {
 			// success
 		}
 	}
@@ -315,7 +334,9 @@ public class MoneyTest {
 	@Test
 	public void test16_Equals() throws Exception {
 		Money d2_51a = Money.dollars(2.51);
-		assertThat(d2_51, is(d2_51a));
+		assertThat(d2_51.equals(d2_51a), is(true));
+		assertThat(d2_51.equals(d2_51), is(true));
+		assertThat(d2_51.equals(2.51), is(false));
 	}
 	
 	/**
@@ -325,8 +346,7 @@ public class MoneyTest {
 	 */
 	@Test
 	public void test17_EqualsNull() throws Exception {
-		Money d2_51a = Money.dollars(2.51);
-		assertThat(d2_51a.equals(null), is(false));
+		assertThat(d2_51.equals(null), is(false));
 	}
 	
 	/**
@@ -338,6 +358,7 @@ public class MoneyTest {
 	public void test18_Hash() throws Exception {
 		Money d2_51a = Money.dollars(2.51);
 		assertThat(d2_51.hashCode(), is(d2_51a.hashCode()));
+		assertThat(d2_51.hashCode(), is(not(d15.hashCode())));
 	}
 	
 	/**
@@ -360,9 +381,12 @@ public class MoneyTest {
 	public void test20_PositiveNegative() throws Exception {
 		assertThat(d15.isPositive(), is(true));
 		assertThat(Money.dollars(-10).isNegative(), is(true));
+		assertThat(d15.isNegative(), is(false));
+		assertThat(Money.dollars(-10).isPositive(), is(false));
 		assertThat(Money.dollars(0).isPositive(), is(false));
 		assertThat(Money.dollars(0).isNegative(), is(false));
 		assertThat(Money.dollars(0).isZero(), is(true));
+		assertThat(d15.isZero(), is(false));
 	}
 	
 	/**
@@ -374,6 +398,16 @@ public class MoneyTest {
 	public void test21_Print() throws Exception {
 		assertThat(d15.toString(Locale.US), is("$ 15.00"));
 		assertThat(d15.toString(Locale.UK), is("USD 15.00"));
+		assertThat(d15.toString(Locale.JAPAN), is("USD 15.00"));
+		assertThat(d15.toString(Locale.CANADA), is("US$ 15.00"));
+		
+		Locale backup = Locale.getDefault();
+		try {
+			Locale.setDefault(Locale.CANADA);
+			assertThat(d15.toString(null), is("US$ 15.00"));
+		} finally {
+			Locale.setDefault(backup);
+		}
 	}
 	
 	/**
@@ -395,6 +429,7 @@ public class MoneyTest {
 	@Test
 	public void test23_Subtraction() throws Exception {
 		assertThat(d15.minus(d2_51), is(Money.dollars(12.49)));
+		assertThat(y100.minus(y100minus), is(Money.yens(200)));
 	}
 	
 	/**
@@ -405,8 +440,7 @@ public class MoneyTest {
 	@Test
 	public void test24_ApplyRatio() throws Exception {
 		Ratio oneThird = Ratio.of(1, 3);
-		Money result = Money.dollars(100).applying(oneThird, 1, Rounding.UP);
-		assertThat(result, is(Money.dollars(33.40)));
+		assertThat(Money.dollars(100).applying(oneThird, 1, Rounding.UP), is(Money.dollars(33.40)));
 	}
 	
 	/**
@@ -436,7 +470,7 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link Money#abs()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -445,6 +479,7 @@ public class MoneyTest {
 		assertThat(y100minus.abs(), is(y100));
 		assertThat(y100.abs(), is(y100));
 	}
+	
 //	/**
 //	 * TODO: Formatted printing of Money
 //	 * 
@@ -455,5 +490,53 @@ public class MoneyTest {
 //		assertThat(d15.localString(), is("$15.00"));
 //		assertThat(m2_51.localString(), is("2,51 DM"));
 //	}
+	
+	/**
+	 * {@link Money#plus(Money)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test28_plus() throws Exception {
+		assertThat(d15.plus(d100), is(Money.dollars(115)));
+		assertThat(y100.plus(y100minus), is(Money.yens(0)));
+		assertThat(d15.plus(d0), is(d15));
+		assertThat(d15.plus(y0), is(d15));
+		assertThat(d0.plus(y0), is(d0));
+		assertThat(y0.plus(d0), is(y0));
+	}
+	
+	/**
+	 * {@link Money#sum(Collection)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test29_sum() throws Exception {
+		Locale backup = Locale.getDefault();
+		try {
+			Locale.setDefault(Locale.JAPAN);
+			
+			Collection<Money> monies = new ArrayList<Money>();
+			assertThat(Money.sum(monies), is(Money.yens(0)));
+			monies.add(Money.yens(1));
+			monies.add(Money.yens(2));
+			monies.add(Money.yens(4));
+			monies.add(Money.yens(8));
+			monies.add(Money.yens(16));
+			monies.add(Money.yens(32));
+			assertThat(Money.sum(monies), is(Money.yens(63)));
+			
+			monies.add(Money.dollars(64));
+			try {
+				Money.sum(monies);
+				fail();
+			} catch (ClassCastException e) {
+				// success
+			}
+		} finally {
+			Locale.setDefault(backup);
+		}
+	}
 	
 }
