@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import jp.tricreo.basicunits.intervals.Interval;
 import jp.tricreo.basicunits.tests.SerializationTester;
 
 import org.junit.Test;
@@ -279,12 +278,35 @@ public class IntervalTest {
 	
 
 	/**
+	 * {@link Interval}のインスタンスがシリアライズできるかどうか検証する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_Serialization() throws Exception {
+		SerializationTester.assertCanBeSerialized(c5_10c);
+	}
+	
+	/**
+	 * {@link Interval#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_ToString() throws Exception {
+		assertThat(c1_10c.toString(), is("[1, 10]"));
+		assertThat(o10_12c.toString(), is("(10, 12]"));
+		assertThat(empty.toString(), is("{}"));
+		assertThat(Interval.closed(10, 10).toString(), is("{10}"));
+	}
+	
+	/**
 	 * {@link Interval}のインスタンス生成テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test01_Assertions() throws Exception {
+	public void test03_Assertions() throws Exception {
 		// Redundant, maybe, but with all the compiler default
 		// confusion at the moment, I decided to throw this in.
 		try {
@@ -301,7 +323,7 @@ public class IntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test02_UpTo() throws Exception {
+	public void test04_UpTo() throws Exception {
 		Interval<Double> range = Interval.upTo(Double.valueOf(5.5));
 		assertThat(range.includes(Double.valueOf(5.5)), is(true));
 		assertThat(range.includes(Double.valueOf(-5.5)), is(true));
@@ -315,7 +337,7 @@ public class IntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test03_AndMore() throws Exception {
+	public void test05_AndMore() throws Exception {
 		Interval<Double> range = Interval.andMore(5.5);
 		assertThat(range.includes(5.5), is(true));
 		assertThat(range.includes(5.4999), is(false));
@@ -330,35 +352,12 @@ public class IntervalTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test04_AbstractCreation() throws Exception {
+	public void test06_AbstractCreation() throws Exception {
 		Interval<Integer> concrete = new Interval<Integer>(1, true, 3, true);
 		Interval<Integer> newInterval = concrete.newOfSameType(1, false, 4, false);
 		
 		Interval<Integer> expected = new Interval<Integer>(1, false, 4, false);
 		assertThat(newInterval, is(expected));
-	}
-	
-	/**
-	 * {@link Interval}のインスタンスがシリアライズできるかどうか検証する。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test05_Serialization() throws Exception {
-		SerializationTester.assertCanBeSerialized(c5_10c);
-	}
-	
-	/**
-	 * {@link Interval#toString()}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test06_ToString() throws Exception {
-		assertThat(c1_10c.toString(), is("[1, 10]"));
-		assertThat(o10_12c.toString(), is("(10, 12]"));
-		assertThat(empty.toString(), is("{}"));
-		assertThat(Interval.closed(10, 10).toString(), is("{10}"));
 	}
 	
 	/**

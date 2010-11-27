@@ -30,11 +30,6 @@ import java.util.TimeZone;
 
 import jp.tricreo.basicunits.intervals.Interval;
 import jp.tricreo.basicunits.tests.SerializationTester;
-import jp.tricreo.basicunits.time.CalendarDate;
-import jp.tricreo.basicunits.time.CalendarInterval;
-import jp.tricreo.basicunits.time.Duration;
-import jp.tricreo.basicunits.time.TimeInterval;
-import jp.tricreo.basicunits.time.TimePoint;
 
 import org.junit.Test;
 
@@ -86,29 +81,29 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * {@link CalendarInterval#includes(CalendarDate)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test03_Includes() throws Exception {
-		assertThat("apr15", may.includes(apr15), is(false));
-		assertThat("may1", may.includes(may1), is(true));
-		assertThat("may20", may.includes(may20), is(true));
-		assertThat("jun1", may.includes(jun1), is(false));
-		assertThat("may", may.covers(may), is(true));
-	}
-	
-	/**
 	 * {@link CalendarInterval#equals(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test04_Equals() throws Exception {
+	public void test03_Equals() throws Exception {
 		assertThat(may.equals(CalendarInterval.inclusive(may1, may31)), is(true));
 		assertThat(may.equals(may1), is(false));
 		assertThat(may.equals(CalendarInterval.inclusive(may1, may20)), is(false));
+	}
+	
+	/**
+	 * {@link CalendarInterval#includes(CalendarDate)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_Includes() throws Exception {
+		assertThat("apr15", may.includes(apr15), is(false));
+		assertThat("may1", may.includes(may1), is(true));
+		assertThat("may20", may.includes(may20), is(true));
+		assertThat("jun1", may.includes(jun1), is(false));
+		assertThat("may", may.covers(may), is(true));
 	}
 	
 	/**
