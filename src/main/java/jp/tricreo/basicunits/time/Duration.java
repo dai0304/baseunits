@@ -45,7 +45,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration days(int howMany) {
-		return Duration.of(howMany, TimeUnit.day);
+		return Duration.valueOf(howMany, TimeUnit.day);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration hours(int howMany) {
-		return Duration.of(howMany, TimeUnit.hour);
+		return Duration.valueOf(howMany, TimeUnit.hour);
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration milliseconds(long howMany) {
-		return Duration.of(howMany, TimeUnit.millisecond);
+		return Duration.valueOf(howMany, TimeUnit.millisecond);
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration minutes(int howMany) {
-		return Duration.of(howMany, TimeUnit.minute);
+		return Duration.valueOf(howMany, TimeUnit.minute);
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration months(int howMany) {
-		return Duration.of(howMany, TimeUnit.month);
+		return Duration.valueOf(howMany, TimeUnit.month);
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration quarters(int howMany) {
-		return Duration.of(howMany, TimeUnit.quarter);
+		return Duration.valueOf(howMany, TimeUnit.quarter);
 	}
 	
 	/**
@@ -134,7 +134,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration seconds(int howMany) {
-		return Duration.of(howMany, TimeUnit.second);
+		return Duration.valueOf(howMany, TimeUnit.second);
 	}
 	
 	/**
@@ -144,7 +144,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration weeks(int howMany) {
-		return Duration.of(howMany, TimeUnit.week);
+		return Duration.valueOf(howMany, TimeUnit.week);
 	}
 	
 	/**
@@ -154,10 +154,10 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量
 	 */
 	public static Duration years(int howMany) {
-		return Duration.of(howMany, TimeUnit.year);
+		return Duration.valueOf(howMany, TimeUnit.year);
 	}
 	
-	private static Duration of(long howMany, TimeUnit unit) {
+	private static Duration valueOf(long howMany, TimeUnit unit) {
 		return new Duration(howMany, unit);
 	}
 	
@@ -177,7 +177,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 */
 	public Duration(long quantity, TimeUnit unit) {
 		Validate.notNull(unit);
-		checkQuantityPositiveOrZero(quantity);
+		Validate.isTrue(quantity > 0, "Quantity: " + quantity + " must be zero or positive");
 		this.quantity = quantity;
 		this.unit = unit;
 	}
@@ -522,12 +522,6 @@ public class Duration implements Comparable<Duration>, Serializable {
 	private void checkGreaterThanOrEqualTo(Duration other) {
 		if (compareTo(other) < 0) {
 			throw new IllegalArgumentException(this + " is before " + other);
-		}
-	}
-	
-	private void checkQuantityPositiveOrZero(long quantity) {
-		if (quantity < 0) {
-			throw new IllegalArgumentException("Quantity: " + quantity + " must be zero or positive");
 		}
 	}
 	
