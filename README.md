@@ -23,18 +23,20 @@ Basic information
 How to use?
 -----------
 
-    ...
     <project>
       ...
       <repositories>
+        ...
         <repsoitory>
           <id>tricreo-release</id>
           <name>TRICREO Release Repository</name>
           <url>http://earth.tricreo.jp/maven2/</url>
         </repository>
+        ...
       </repositories>
       ...
       <dependencies>
+        ...
         <dependency>
           <groupId>jp.tricreo</groupId>
           <artifactId>basicunits</artifactId>
@@ -42,8 +44,8 @@ How to use?
         </dependency>
         ...
       </dependencies>
+      ...
     </project>
-    ...
 
 How to develop?
 ---------------
