@@ -1,27 +1,19 @@
 Basicunits Library
 ==================
 
-Copyright (c) 2010 TRICREO, Inc.
-Licensed under the Apache License v2.0
 
 Basic information
 -----------------
 
-### Project web site
-
-[http://earth.tricreo.jp/maven2-site/basicunits/latest/]
-
-### Maven release repository
-
-[http://earth.tricreo.jp/maven2/]
-
-### Maven snapshot repository
-
-[http://earth.tricreo.jp/maven2-snapshot/]
+- [Project web site](http://earth.tricreo.jp/maven2-site/basicunits/latest/)
+- [Maven release repository](http://earth.tricreo.jp/maven2/)
+- [Maven snapshot repository](http://earth.tricreo.jp/maven2-snapshot/)
 
 
 How to use?
 -----------
+
+If you're using Maven, add this to your pom.xml under the <repositories> and <dependencies> section:
 
     <project>
       ...
@@ -56,3 +48,10 @@ How to develop?
 4. FindBugs Plug-in (1.3.9 or later)
 
 TBD
+
+License
+-------
+
+Copyright (C) 2010 [TRICREO, Inc.](http://tricreo.jp/).
+
+Distributed under the Apache License v2.0. See the file copyright/LICENSE.txt.
