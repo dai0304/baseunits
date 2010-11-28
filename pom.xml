@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.jiemamy</groupId>
     <artifactId>generic-master</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
   </parent>
   <groupId>jp.tricreo</groupId>
   <artifactId>basicunits</artifactId>
@@ -27,9 +27,9 @@
     </license>
   </licenses>
   <scm>
-    <url>scm:git:git@github.com:dai0304/basicunits.git</url>
-    <connection>scm:git:git@github.com:dai0304/basicunits.git</connection>
-    <developerConnection>scm:git:git@github.com:dai0304/basicunits.git</developerConnection>
+    <url>scm:git:git@github.com:tricreo/basicunits.git</url>
+    <connection>scm:git:git@github.com:tricreo/basicunits.git</connection>
+    <developerConnection>scm:git:git@github.com:tricreo/basicunits.git</developerConnection>
   </scm>
   <build>
     <plugins>
@@ -46,28 +46,6 @@
           <target>1.6</target>
           <encoding>UTF-8</encoding>
         </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <includes>
-            <include>**/*Test.java</include>
-          </includes>
-          <argLine>-enableassertions -Xms512M -Xmx512M</argLine>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
