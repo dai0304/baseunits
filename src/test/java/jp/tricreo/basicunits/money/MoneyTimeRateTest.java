@@ -77,18 +77,6 @@ public class MoneyTimeRateTest {
 	}
 	
 	/**
-	 * {@link MoneyTimeRate#toString()}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test02_toString() throws Exception {
-		Money amount = Money.euros(11.00);
-		MoneyTimeRate rate = amount.per(Duration.days(2));
-		assertThat(rate.toString(), is("EUR 11.00 per 2 days"));
-	}
-	
-	/**
 	 * {@link MoneyTimeRate#over(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -124,5 +112,17 @@ public class MoneyTimeRateTest {
 	public void test06_RoundingScalingRate() throws Exception {
 		MoneyTimeRate rate = new MoneyTimeRate(Money.euros(new BigDecimal("100.00")), Duration.minutes(3));
 		assertThat(rate.over(Duration.minutes(1), 2, Rounding.DOWN), is(Money.euros(new BigDecimal("33.33"))));
+	}
+	
+	/**
+	 * {@link MoneyTimeRate#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_toString() throws Exception {
+		Money amount = Money.euros(11.00);
+		MoneyTimeRate rate = amount.per(Duration.days(2));
+		assertThat(rate.toString(), is("EUR 11.00 per 2 days"));
 	}
 }

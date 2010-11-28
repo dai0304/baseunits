@@ -157,7 +157,7 @@ public class CalendarMonthTest {
 	 */
 	@Test
 	@SuppressWarnings("serial")
-	public void test09_equals() throws Exception {
+	public void test10_equals() throws Exception {
 		assertThat(feb2009.equals(feb2009), is(true));
 		assertThat(feb2009.equals(dec2010), is(false));
 		assertThat(feb2009.equals(null), is(false));

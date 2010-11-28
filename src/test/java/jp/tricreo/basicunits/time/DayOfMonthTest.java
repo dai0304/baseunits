@@ -92,30 +92,6 @@ public class DayOfMonthTest {
 	}
 	
 	/**
-	 * {@link DayOfMonth#isAfter(DayOfMonth)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test03_isAfter() throws Exception {
-		assertThat(DayOfMonth.valueOf(1).isAfter(DayOfMonth.valueOf(1)), is(false));
-		assertThat(DayOfMonth.valueOf(1).isAfter(DayOfMonth.valueOf(2)), is(false));
-		
-		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(1)), is(true));
-		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(2)), is(false));
-		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(3)), is(false));
-		
-		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(2)), is(true));
-		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(3)), is(false));
-		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(4)), is(false));
-		
-		assertThat(DayOfMonth.valueOf(12).isAfter(DayOfMonth.valueOf(11)), is(true));
-		assertThat(DayOfMonth.valueOf(12).isAfter(DayOfMonth.valueOf(12)), is(false));
-		
-		assertThat(DayOfMonth.valueOf(12).isAfter(null), is(false));
-	}
-	
-	/**
 	 * {@link DayOfMonth#isBefore(DayOfMonth)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -140,20 +116,27 @@ public class DayOfMonthTest {
 	}
 	
 	/**
-	 * {@link DayOfMonth#equals(Object)}のテスト。
+	 * {@link DayOfMonth#isAfter(DayOfMonth)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	@SuppressWarnings("serial")
-	public void test04_equals() throws Exception {
-		DayOfMonth dom1 = DayOfMonth.valueOf(1);
-		assertThat(dom1.equals(DayOfMonth.valueOf(1)), is(true));
-		assertThat(dom1.equals(dom1), is(true));
-		assertThat(dom1.equals(DayOfMonth.valueOf(2)), is(false));
-		assertThat(dom1.equals(null), is(false));
-		assertThat(dom1.equals(new DayOfMonth(1) {
-		}), is(false));
+	public void test04_isAfter() throws Exception {
+		assertThat(DayOfMonth.valueOf(1).isAfter(DayOfMonth.valueOf(1)), is(false));
+		assertThat(DayOfMonth.valueOf(1).isAfter(DayOfMonth.valueOf(2)), is(false));
+		
+		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(1)), is(true));
+		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(2)), is(false));
+		assertThat(DayOfMonth.valueOf(2).isAfter(DayOfMonth.valueOf(3)), is(false));
+		
+		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(2)), is(true));
+		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(3)), is(false));
+		assertThat(DayOfMonth.valueOf(3).isAfter(DayOfMonth.valueOf(4)), is(false));
+		
+		assertThat(DayOfMonth.valueOf(12).isAfter(DayOfMonth.valueOf(11)), is(true));
+		assertThat(DayOfMonth.valueOf(12).isAfter(DayOfMonth.valueOf(12)), is(false));
+		
+		assertThat(DayOfMonth.valueOf(12).isAfter(null), is(false));
 	}
 	
 	/**
@@ -181,5 +164,22 @@ public class DayOfMonthTest {
 		assertThat(DayOfMonth.valueOf(1).toString(), is("1"));
 		assertThat(DayOfMonth.valueOf(10).toString(), is("10"));
 		assertThat(DayOfMonth.valueOf(31).toString(), is("31"));
+	}
+	
+	/**
+	 * {@link DayOfMonth#equals(Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	@SuppressWarnings("serial")
+	public void test07_equals() throws Exception {
+		DayOfMonth dom1 = DayOfMonth.valueOf(1);
+		assertThat(dom1.equals(DayOfMonth.valueOf(1)), is(true));
+		assertThat(dom1.equals(dom1), is(true));
+		assertThat(dom1.equals(DayOfMonth.valueOf(2)), is(false));
+		assertThat(dom1.equals(null), is(false));
+		assertThat(dom1.equals(new DayOfMonth(1) {
+		}), is(false));
 	}
 }
