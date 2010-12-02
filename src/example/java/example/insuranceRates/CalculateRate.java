@@ -8,17 +8,17 @@ package example.insuranceRates;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import jp.tricreo.basicunits.intervals.Interval;
-import jp.tricreo.basicunits.intervals.IntervalMap;
-import jp.tricreo.basicunits.intervals.LinearIntervalMap;
-import jp.tricreo.basicunits.money.Money;
-import jp.tricreo.basicunits.money.MoneyTimeRate;
-import jp.tricreo.basicunits.money.Proration;
-import jp.tricreo.basicunits.time.CalendarDate;
-import jp.tricreo.basicunits.time.CalendarInterval;
-import jp.tricreo.basicunits.time.Duration;
-import jp.tricreo.basicunits.util.Ratio;
-import jp.tricreo.basicunits.util.Rounding;
+import jp.tricreo.baseunits.intervals.Interval;
+import jp.tricreo.baseunits.intervals.IntervalMap;
+import jp.tricreo.baseunits.intervals.LinearIntervalMap;
+import jp.tricreo.baseunits.money.Money;
+import jp.tricreo.baseunits.money.MoneyTimeRate;
+import jp.tricreo.baseunits.money.Proration;
+import jp.tricreo.baseunits.time.CalendarDate;
+import jp.tricreo.baseunits.time.CalendarInterval;
+import jp.tricreo.baseunits.time.Duration;
+import jp.tricreo.baseunits.util.Ratio;
+import jp.tricreo.baseunits.util.Rounding;
 
 import org.junit.Ignore;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-Basicunits Library
+BaseUnits Library
 ==================
 
 基礎的な単位にまつわるドメインモデル群を含むクラスライブラリ。現在は「時間」と「金額」を主に扱っているが、
@@ -7,7 +7,7 @@ Basicunits Library
 Basic information
 -----------------
 
-- [Project web site](http://earth.tricreo.jp/maven2-site/basicunits/latest/)
+- [Project web site](http://earth.tricreo.jp/maven2-site/baseunits/latest/)
 - [Maven release repository](http://earth.tricreo.jp/maven2/)
 - [Maven snapshot repository](http://earth.tricreo.jp/maven2-snapshot/)
 
@@ -33,7 +33,7 @@ If you're using Maven, add this to your pom.xml under the <repositories> and <de
         ...
         <dependency>
           <groupId>jp.tricreo</groupId>
-          <artifactId>basicunits</artifactId>
+          <artifactId>baseunits</artifactId>
           <version>LATEST</version>
         </dependency>
         ...

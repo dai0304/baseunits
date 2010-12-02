@@ -11,11 +11,11 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
 
-import jp.tricreo.basicunits.time.CalendarDate;
-import jp.tricreo.basicunits.time.CalendarInterval;
-import jp.tricreo.basicunits.time.DateSpecification;
-import jp.tricreo.basicunits.time.DayOfWeek;
-import jp.tricreo.basicunits.time.Duration;
+import jp.tricreo.baseunits.time.CalendarDate;
+import jp.tricreo.baseunits.time.CalendarInterval;
+import jp.tricreo.baseunits.time.DateSpecification;
+import jp.tricreo.baseunits.time.DayOfWeek;
+import jp.tricreo.baseunits.time.Duration;
 
 import org.junit.Test;
 

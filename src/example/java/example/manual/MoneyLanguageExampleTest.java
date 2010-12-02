@@ -12,11 +12,11 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Currency;
 
-import jp.tricreo.basicunits.money.Money;
-import jp.tricreo.basicunits.money.MoneyTimeRate;
-import jp.tricreo.basicunits.money.Proration;
-import jp.tricreo.basicunits.time.Duration;
-import jp.tricreo.basicunits.util.Rounding;
+import jp.tricreo.baseunits.money.Money;
+import jp.tricreo.baseunits.money.MoneyTimeRate;
+import jp.tricreo.baseunits.money.Proration;
+import jp.tricreo.baseunits.time.Duration;
+import jp.tricreo.baseunits.util.Rounding;
 
 import org.junit.Test;
 
