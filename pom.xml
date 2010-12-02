@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jiemamy</groupId>
     <artifactId>generic-master</artifactId>
     <version>0.1.1</version>
   </parent>
+  <modelVersion>4.0.0</modelVersion>
   <groupId>jp.tricreo</groupId>
   <artifactId>basicunits</artifactId>
   <name>Basic Units Library</name>
@@ -31,32 +31,6 @@
     <connection>scm:git:git@github.com:tricreo/basicunits.git</connection>
     <developerConnection>scm:git:git@github.com:tricreo/basicunits.git</developerConnection>
   </scm>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-site-plugin</artifactId>
-        <configuration>
-          <locales>ja,en</locales>
-          <inputEncoding>UTF-8</inputEncoding>
-          <outputEncoding>UTF-8</outputEncoding>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
   <repositories>
     <repository>
       <id>jiemamy.org-release</id>
