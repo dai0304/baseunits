@@ -45,9 +45,6 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
 		this.spec2 = spec2;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean isSatisfiedBy(T t) {
 		return spec1.isSatisfiedBy(t) && spec2.isSatisfiedBy(t);

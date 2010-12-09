@@ -73,16 +73,16 @@
   </dependencies>
   <distributionManagement>
     <repository>
-      <id>earth.tricreo.jp</id>
-      <url>scp://earth.tricreo.jp/var/www/earth.tricreo.jp/maven2</url>
+      <id>maven.tricreo.jp</id>
+      <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/release</url>
     </repository>
     <snapshotRepository>
-      <id>earth.tricreo.jp</id>
-      <url>scp://earth.tricreo.jp/var/www/earth.tricreo.jp/maven2-snapshot</url>
+      <id>maven.tricreo.jp</id>
+      <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/snapshot</url>
     </snapshotRepository>
     <site>
-      <id>earth.tricreo.jp</id>
-      <url>scp://earth.tricreo.jp/var/www/earth.tricreo.jp/maven2-site/${project.artifactId}/${project.version}</url>
+      <id>maven.tricreo.jp</id>
+      <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/site/${project.artifactId}/${project.version}</url>
     </site>
   </distributionManagement>
 </project>
