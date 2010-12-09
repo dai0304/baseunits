@@ -7,9 +7,9 @@ BaseUnits Library
 Basic information
 -----------------
 
-- [Project web site](http://earth.tricreo.jp/maven2-site/baseunits/latest/)
-- [Maven release repository](http://earth.tricreo.jp/maven2/)
-- [Maven snapshot repository](http://earth.tricreo.jp/maven2-snapshot/)
+- [Project web site](http://maven.tricreo.jp/site/baseunits/latest/)
+- [Maven release repository](http://maven.tricreo.jp/release/)
+- [Maven snapshot repository](http://maven.tricreo.jp/snapshot/)
 
 
 How to use?
@@ -24,7 +24,7 @@ If you're using Maven, add this to your pom.xml under the <repositories> and <de
         <repsoitory>
           <id>tricreo-release</id>
           <name>TRICREO Release Repository</name>
-          <url>http://earth.tricreo.jp/maven2/</url>
+          <url>http://maven.tricreo.jp/release/</url>
         </repository>
         ...
       </repositories>
@@ -81,3 +81,5 @@ License
 Copyright (C) 2010 [TRICREO, Inc.](http://tricreo.jp/).
 
 Distributed under the Apache License v2.0.  See the file copyright/LICENSE.txt.
+
+
