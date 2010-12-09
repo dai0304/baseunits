@@ -13,7 +13,7 @@
   <name>Basic Units Library</name>
   <version>1.0-SNAPSHOT</version>
   <description>The models of basic unit (ex. Time, Money, etc.)</description>
-  <url>http://earth.tricreo.jp/maven2-site/${project.artifactId}/${project.version}/</url>
+  <url>http://maven.tricreo.jp/site/${project.artifactId}/${project.version}/</url>
   <organization>
     <name>TRICREO, Inc.</name>
     <url>http://tricreo.jp/</url>
@@ -58,7 +58,6 @@
       <version>1.8.5</version>
       <scope>test</scope>
     </dependency>
-    
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
