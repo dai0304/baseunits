@@ -40,6 +40,7 @@ public class RecurringAppointmentScenario {
 		CalendarMinute meetingTimeThisDay = scheduledMeetingTime.on(dayOfMeeting);
 		CalendarMinute sameMeetingTimeThisDay = dayOfMeeting.at(scheduledMeetingTime);
 		assertThat(sameMeetingTimeThisDay, is(meetingTimeThisDay));
+		
 		TimePoint meetingTimePoint = meetingTimeThisDay.asTimePoint(HONOLULU_TIME);
 		assertThat(meetingTimePoint, is(TimePoint.at(2006, 4, 19, 10, 0, 0, 0, HONOLULU_TIME)));
 		
