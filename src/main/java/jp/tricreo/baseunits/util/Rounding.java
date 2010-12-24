@@ -22,9 +22,9 @@ package jp.tricreo.baseunits.util;
 import java.math.BigDecimal;
 
 /**
- * 丸めルールを表す列挙型。
+ * 丸めモードを表す列挙型。
  * 
- * <p>演算の結果、数字を丸める際に適用するルールをあらわす。例えば、切り捨て,切り上げ,四捨五入など。</p>
+ * <p>演算の結果、数字を丸める際に適用するモードをあらわす。例えば、切り捨て,切り上げ,四捨五入など。</p>
  * 
  * @deprecated use {@link java.math.RoundingMode}
  */
@@ -32,65 +32,65 @@ import java.math.BigDecimal;
 public enum Rounding {
 	
 	/**
-	 * 切り上げルール UP。
+	 * 切り上げモード UP。
 	 * 
-	 * <p>{@code 0}から遠ざかる方向に向けた丸めルールを表す。</p>
+	 * <p>{@code 0}から遠ざかる方向に向けた丸めモードを表す。</p>
 	 * 
 	 * @see BigDecimal#ROUND_UP
 	 */
 	UP(BigDecimal.ROUND_UP),
 
 	/**
-	 * 切り捨てルール DOWN。
+	 * 切り捨てモード DOWN。
 	 * 
-	 * <p>{@code 0}に近づく方向に向けた丸めルールを表す。</p>
+	 * <p>{@code 0}に近づく方向に向けた丸めモードを表す。</p>
 	 * 
 	 * @see BigDecimal#ROUND_DOWN
 	 */
 	DOWN(BigDecimal.ROUND_DOWN),
 
 	/**
-	 * 切り上げルール CEILING。
+	 * 切り上げモード CEILING。
 	 * 
-	 * <p>正の無限大に向けて切り上げを行う丸めルールを表す。</p>
+	 * <p>正の無限大に向けて切り上げを行う丸めモードを表す。</p>
 	 * 
 	 * @see BigDecimal#ROUND_CEILING
 	 */
 	CEILING(BigDecimal.ROUND_CEILING),
 
 	/**
-	 * 切り捨てルール FLOOR。
+	 * 切り捨てモード FLOOR。
 	 * 
-	 * <p>負の無限大に向けて切り上げを行う丸めルールを表す。</p>
+	 * <p>負の無限大に向けて切り上げを行う丸めモードを表す。</p>
 	 * 
 	 * @see BigDecimal#ROUND_FLOOR
 	 */
 	FLOOR(BigDecimal.ROUND_FLOOR),
 
 	/**
-	 * 丸めルール HALF_UP。
+	 * 丸めモード HALF_UP。
 	 * 
-	 * <p>両隣のうち、近い方に向けて切り上げを行う丸めルールを表す。両者の距離が同一である場合は、
-	 * {@link #UP}ルールを適用する。</p>
+	 * <p>両隣のうち、近い方に向けて切り上げを行う丸めモードを表す。両者の距離が同一である場合は、
+	 * {@link #UP}モードを適用する。</p>
 	 * 
 	 * @see BigDecimal#ROUND_HALF_UP
 	 */
 	HALF_UP(BigDecimal.ROUND_HALF_UP),
 
 	/**
-	 * 丸めルール HALF_DOWN。
+	 * 丸めモード HALF_DOWN。
 	 * 
-	 * <p>両隣のうち、近い方に向けて切り上げを行う丸めルールを表す。両者の距離が同一である場合は、
-	 * {@link #DOWN}ルールを適用する。</p>
+	 * <p>両隣のうち、近い方に向けて切り上げを行う丸めモードを表す。両者の距離が同一である場合は、
+	 * {@link #DOWN}モードを適用する。</p>
 	 * 
 	 * @see BigDecimal#ROUND_HALF_DOWN
 	 */
 	HALF_DOWN(BigDecimal.ROUND_HALF_DOWN),
 
 	/**
-	 * 丸めルール HALF_EVEN。
+	 * 丸めモード HALF_EVEN。
 	 * 
-	 * <p>両隣のうち、近い方に向けて切り上げを行う丸めルールを表す。両者の距離が同一である場合は、
+	 * <p>両隣のうち、近い方に向けて切り上げを行う丸めモードを表す。両者の距離が同一である場合は、
 	 * 偶数側に丸める。</p>
 	 * 
 	 * @see BigDecimal#ROUND_HALF_DOWN
@@ -98,9 +98,9 @@ public enum Rounding {
 	HALF_EVEN(BigDecimal.ROUND_HALF_EVEN),
 
 	/**
-	 * 丸めが不要であることを明示的に表すルール。
+	 * 丸めが不要であることを明示的に表すモード。
 	 * 
-	 * <p>このルールを明示的に指定したが割り切れない場合は、そのメソッドは {@link ArithmeticException}を
+	 * <p>このモードを明示的に指定したが割り切れない場合は、そのメソッドは {@link ArithmeticException}を
 	 * スローする。</p>
 	 * 
 	 * @see BigDecimal#ROUND_UNNECESSARY

@@ -149,7 +149,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param rawAmount 量
 	 * @param currency 通貨単位
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #valueOf(double, Currency, RoundingMode)}
@@ -168,7 +168,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param rawAmount 量
 	 * @param currency 通貨単位
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
@@ -200,7 +200,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param dblAmount 量
 	 * @param currency 通貨単位
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #valueOf(double, Currency, RoundingMode)}
@@ -219,7 +219,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param dblAmount 量
 	 * @param currency 通貨単位
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
@@ -308,16 +308,16 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param ratio 割合
 	 * @param scale スケール
-	 * @param roundingRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #applying(Ratio, int, RoundingMode)}
 	 */
 	@Deprecated
-	public Money applying(Ratio ratio, int scale, Rounding roundingRule) {
+	public Money applying(Ratio ratio, int scale, Rounding roundingMode) {
 		Validate.notNull(ratio);
-		Validate.notNull(roundingRule);
-		BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingRule);
+		Validate.notNull(roundingMode);
+		BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingMode);
 		return Money.valueOf(newAmount, currency);
 	}
 	
@@ -326,14 +326,14 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param ratio 割合
 	 * @param scale スケール
-	 * @param roundingRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public Money applying(Ratio ratio, int scale, RoundingMode roundingRule) {
+	public Money applying(Ratio ratio, int scale, RoundingMode roundingMode) {
 		Validate.notNull(ratio);
-		Validate.notNull(roundingRule);
-		BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingRule);
+		Validate.notNull(roundingMode);
+		BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingMode);
 		return Money.valueOf(newAmount, currency);
 	}
 	
@@ -341,30 +341,30 @@ public class Money implements Comparable<Money>, Serializable {
 	 * この金額に対して、指定した{@code ratio}の割合の金額を返す。
 	 * 
 	 * @param ratio 割合
-	 * @param roundingRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #applying(Ratio, RoundingMode)}
 	 */
 	@Deprecated
-	public Money applying(Ratio ratio, Rounding roundingRule) {
+	public Money applying(Ratio ratio, Rounding roundingMode) {
 		Validate.notNull(ratio);
-		Validate.notNull(roundingRule);
-		return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
+		Validate.notNull(roundingMode);
+		return applying(ratio, currency.getDefaultFractionDigits(), roundingMode);
 	}
 	
 	/**
 	 * この金額に対して、指定した{@code ratio}の割合の金額を返す。
 	 * 
 	 * @param ratio 割合
-	 * @param roundingRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public Money applying(Ratio ratio, RoundingMode roundingRule) {
+	public Money applying(Ratio ratio, RoundingMode roundingMode) {
 		Validate.notNull(ratio);
-		Validate.notNull(roundingRule);
-		return applying(ratio, currency.getDefaultFractionDigits(), roundingRule);
+		Validate.notNull(roundingMode);
+		return applying(ratio, currency.getDefaultFractionDigits(), roundingMode);
 	}
 	
 	/**
@@ -425,7 +425,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
 	 * 
 	 * @param divisor 除数
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #dividedBy(BigDecimal, RoundingMode)}
@@ -442,7 +442,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
 	 * 
 	 * @param divisor 除数
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
@@ -469,7 +469,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
 	 * 
 	 * @param divisor 除数
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #dividedBy(double, RoundingMode)}
@@ -484,7 +484,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * この金額を、{@code divisor}個に均等に分割した場合の金額を返す。
 	 * 
 	 * @param divisor 除数
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
@@ -675,7 +675,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * numbers. So what is scale of times?
 	 * 
 	 * @param factor 係数
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #times(BigDecimal, RoundingMode)}
@@ -694,7 +694,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * numbers. So what is scale of times?
 	 * 
 	 * @param factor 係数
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
@@ -720,7 +720,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * この金額に{@code amount}を掛けた金額を返す。
 	 * 
 	 * @param amount 係数
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #times(double, RoundingMode)}
@@ -735,7 +735,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * この金額に{@code amount}を掛けた金額を返す。
 	 * 
 	 * @param amount 係数
-	 * @param roundingMode 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */

@@ -130,16 +130,16 @@ public class MoneyTimeRate {
 	 * 
 	 * @param duration 時間量
 	 * @param scale スケール
-	 * @param roundRule 丸めルール
+	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #over(Duration, int, RoundingMode)}
 	 */
 	@Deprecated
-	public Money over(Duration duration, int scale, Rounding roundRule) {
+	public Money over(Duration duration, int scale, Rounding roundMode) {
 		Validate.notNull(duration);
-		Validate.notNull(roundRule);
-		return Money.valueOf(rate.over(duration, scale, roundRule), currency);
+		Validate.notNull(roundMode);
+		return Money.valueOf(rate.over(duration, scale, roundMode), currency);
 	}
 	
 	/**
@@ -147,44 +147,44 @@ public class MoneyTimeRate {
 	 * 
 	 * @param duration 時間量
 	 * @param scale スケール
-	 * @param roundRule 丸めルール
+	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public Money over(Duration duration, int scale, RoundingMode roundRule) {
+	public Money over(Duration duration, int scale, RoundingMode roundMode) {
 		Validate.notNull(duration);
-		Validate.notNull(roundRule);
-		return Money.valueOf(rate.over(duration, scale, roundRule), currency);
+		Validate.notNull(roundMode);
+		return Money.valueOf(rate.over(duration, scale, roundMode), currency);
 	}
 	
 	/**
 	 * 時間量に対してこの割合を適用した場合の金額を返す。
 	 * 
 	 * @param duration 時間量
-	 * @param roundRule 丸めルール
+	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #over(Duration, RoundingMode)}
 	 */
 	@Deprecated
-	public Money over(Duration duration, Rounding roundRule) {
+	public Money over(Duration duration, Rounding roundMode) {
 		Validate.notNull(duration);
-		Validate.notNull(roundRule);
-		return over(duration, rate.scale(), roundRule);
+		Validate.notNull(roundMode);
+		return over(duration, rate.scale(), roundMode);
 	}
 	
 	/**
 	 * 時間量に対してこの割合を適用した場合の金額を返す。
 	 * 
 	 * @param duration 時間量
-	 * @param roundRule 丸めルール
+	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public Money over(Duration duration, RoundingMode roundRule) {
+	public Money over(Duration duration, RoundingMode roundMode) {
 		Validate.notNull(duration);
-		Validate.notNull(roundRule);
-		return over(duration, rate.scale(), roundRule);
+		Validate.notNull(roundMode);
+		return over(duration, rate.scale(), roundMode);
 	}
 	
 	@Override

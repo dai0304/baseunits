@@ -129,28 +129,28 @@ public class Ratio {
 	 * 比率を {@link BigDecimal}型で取得する。
 	 *  
 	 * @param scale 小数点以下の有効数字
-	 * @param roundingRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return この比率の {@link BigDecimal} 型の表現
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #decimalValue(int, RoundingMode)}
 	 */
 	@Deprecated
-	public BigDecimal decimalValue(int scale, Rounding roundingRule) {
-		Validate.notNull(roundingRule);
-		return numerator.divide(denominator, scale, roundingRule.value);
+	public BigDecimal decimalValue(int scale, Rounding roundingMode) {
+		Validate.notNull(roundingMode);
+		return numerator.divide(denominator, scale, roundingMode.value);
 	}
 	
 	/**
 	 * 比率を {@link BigDecimal}型で取得する。
 	 *  
 	 * @param scale 小数点以下の有効数字
-	 * @param roundingRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return この比率の {@link BigDecimal} 型の表現
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public BigDecimal decimalValue(int scale, RoundingMode roundingRule) {
-		Validate.notNull(roundingRule);
-		return numerator.divide(denominator, scale, roundingRule);
+	public BigDecimal decimalValue(int scale, RoundingMode roundingMode) {
+		Validate.notNull(roundingMode);
+		return numerator.divide(denominator, scale, roundingMode);
 	}
 	
 	/**

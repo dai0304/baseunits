@@ -34,7 +34,7 @@ public class MoneyLanguageExampleTest {
 	/**
 	 * 税額の計算例。
 	 * 
-	 * <p>税率は{@code 0.06%}で、丸めルールは四捨五入（{@link RoundingMode#HALF_UP}）とするのが
+	 * <p>税率は{@code 0.06%}で、丸めモードは四捨五入（{@link RoundingMode#HALF_UP}）とするのが
 	 * カナダ物品税の仕様（らしい）。そこで、{@code 3.00カナダドル}の税額を計算すると、{@code 0.18カナダドル}
 	 * となる。</p>
 	 */

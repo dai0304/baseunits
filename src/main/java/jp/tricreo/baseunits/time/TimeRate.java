@@ -157,19 +157,19 @@ public class TimeRate {
 	 * 
 	 * @param duration 時間量
 	 * @param scale スケール
-	 * @param roundRule 丸めルール
+	 * @param roundMode 丸めモード
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundRule} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
+	 * @throws ArithmeticException 引数 {@code roundMode} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #over(Duration, int, RoundingMode)}
 	 */
 	@Deprecated
-	public BigDecimal over(Duration duration, int scale, Rounding roundRule) {
+	public BigDecimal over(Duration duration, int scale, Rounding roundMode) {
 		Validate.notNull(duration);
-		Validate.notNull(roundRule);
-		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundRule);
+		Validate.notNull(roundMode);
+		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundMode);
 	}
 	
 	/**
@@ -177,53 +177,53 @@ public class TimeRate {
 	 * 
 	 * @param duration 時間量
 	 * @param scale スケール
-	 * @param roundRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundRule} に {@link RoundingMode#UNNECESSARY} を指定したにもかかわらず、
+	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link RoundingMode#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public BigDecimal over(Duration duration, int scale, RoundingMode roundRule) {
+	public BigDecimal over(Duration duration, int scale, RoundingMode roundingMode) {
 		Validate.notNull(duration);
-		Validate.notNull(roundRule);
-		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundRule);
+		Validate.notNull(roundingMode);
+		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundingMode);
 	}
 	
 	/**
 	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
 	 * 
 	 * @param duration 時間量
-	 * @param roundRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundRule} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
+	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #over(Duration, RoundingMode)}
 	 */
 	@Deprecated
-	public BigDecimal over(Duration duration, Rounding roundRule) {
+	public BigDecimal over(Duration duration, Rounding roundingMode) {
 		Validate.notNull(duration);
-		Validate.notNull(roundRule);
-		return over(duration, scale(), roundRule);
+		Validate.notNull(roundingMode);
+		return over(duration, scale(), roundingMode);
 	}
 	
 	/**
 	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
 	 * 
 	 * @param duration 時間量
-	 * @param roundRule 丸めルール
+	 * @param roundingMode 丸めモード
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundRule} に {@link RoundingMode#UNNECESSARY} を指定したにもかかわらず、
+	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link RoundingMode#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public BigDecimal over(Duration duration, RoundingMode roundRule) {
+	public BigDecimal over(Duration duration, RoundingMode roundingMode) {
 		Validate.notNull(duration);
-		Validate.notNull(roundRule);
-		return over(duration, scale(), roundRule);
+		Validate.notNull(roundingMode);
+		return over(duration, scale(), roundingMode);
 	}
 	
 	/**
