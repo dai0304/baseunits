@@ -20,9 +20,9 @@
 package jp.tricreo.baseunits.money;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import jp.tricreo.baseunits.util.Ratio;
-import jp.tricreo.baseunits.util.Rounding;
 
 import org.apache.commons.lang.Validate;
 
@@ -45,7 +45,7 @@ public final class Proration {
 	 */
 	public static Money[] dividedEvenlyIntoParts(Money total, int n) {
 		Validate.notNull(total);
-		Money lowResult = total.dividedBy(BigDecimal.valueOf(n), Rounding.DOWN);
+		Money lowResult = total.dividedBy(BigDecimal.valueOf(n), RoundingMode.DOWN);
 		Money[] lowResults = new Money[n];
 		for (int i = 0; i < n; i++) {
 			lowResults[i] = lowResult;
@@ -81,8 +81,8 @@ public final class Proration {
 		Validate.notNull(total);
 		Validate.notNull(ratio);
 		int scale = defaultScaleForIntermediateCalculations(total);
-		BigDecimal multiplier = ratio.decimalValue(scale, Rounding.DOWN);
-		return total.times(multiplier, Rounding.DOWN);
+		BigDecimal multiplier = ratio.decimalValue(scale, RoundingMode.DOWN);
+		return total.times(multiplier, RoundingMode.DOWN);
 	}
 	
 	/**
@@ -105,8 +105,8 @@ public final class Proration {
 		int scale = defaultScaleForIntermediateCalculations(total);
 		Ratio[] ratios = ratios(proportions);
 		for (int i = 0; i < ratios.length; i++) {
-			BigDecimal multiplier = ratios[i].decimalValue(scale, Rounding.DOWN);
-			simpleResult[i] = total.times(multiplier, Rounding.DOWN);
+			BigDecimal multiplier = ratios[i].decimalValue(scale, RoundingMode.DOWN);
+			simpleResult[i] = total.times(multiplier, RoundingMode.DOWN);
 		}
 		Money remainder = total.minus(sum(simpleResult));
 		return distributeRemainderOver(simpleResult, remainder);
@@ -136,7 +136,7 @@ public final class Proration {
 	
 	static Money[] distributeRemainderOver(Money[] amounts, Money remainder) {
 		int increments = remainder.dividedBy(remainder.minimumIncrement())
-				.decimalValue(0, Rounding.UNNECESSARY).intValue();
+				.decimalValue(0, RoundingMode.UNNECESSARY).intValue();
 		assert increments <= amounts.length;
 		
 		Money[] results = new Money[amounts.length];

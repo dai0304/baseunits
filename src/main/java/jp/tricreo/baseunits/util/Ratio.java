@@ -20,6 +20,7 @@
 package jp.tricreo.baseunits.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.apache.commons.lang.Validate;
 
@@ -131,10 +132,25 @@ public class Ratio {
 	 * @param roundingRule 丸めルール
 	 * @return この比率の {@link BigDecimal} 型の表現
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @deprecated use {@link #decimalValue(int, RoundingMode)}
 	 */
+	@Deprecated
 	public BigDecimal decimalValue(int scale, Rounding roundingRule) {
 		Validate.notNull(roundingRule);
 		return numerator.divide(denominator, scale, roundingRule.value);
+	}
+	
+	/**
+	 * 比率を {@link BigDecimal}型で取得する。
+	 *  
+	 * @param scale 小数点以下の有効数字
+	 * @param roundingRule 丸めルール
+	 * @return この比率の {@link BigDecimal} 型の表現
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public BigDecimal decimalValue(int scale, RoundingMode roundingRule) {
+		Validate.notNull(roundingRule);
+		return numerator.divide(denominator, scale, roundingRule);
 	}
 	
 	/**

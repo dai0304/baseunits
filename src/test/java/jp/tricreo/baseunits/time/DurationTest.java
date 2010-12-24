@@ -27,9 +27,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import jp.tricreo.baseunits.tests.SerializationTester;
-import jp.tricreo.baseunits.util.Rounding;
 
 import org.junit.Test;
 
@@ -230,7 +230,8 @@ public class DurationTest {
 	 */
 	@Test
 	public void test12_Divide() throws Exception {
-		assertThat(Duration.days(3).dividedBy(Duration.days(2)).decimalValue(1, Rounding.DOWN), is(new BigDecimal(1.5)));
+		assertThat(Duration.days(3).dividedBy(Duration.days(2)).decimalValue(1, RoundingMode.DOWN), is(new BigDecimal(
+				1.5)));
 	}
 	
 	/**

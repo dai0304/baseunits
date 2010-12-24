@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Currency;
 
@@ -16,7 +17,6 @@ import jp.tricreo.baseunits.money.Money;
 import jp.tricreo.baseunits.money.MoneyTimeRate;
 import jp.tricreo.baseunits.money.Proration;
 import jp.tricreo.baseunits.time.Duration;
-import jp.tricreo.baseunits.util.Rounding;
 
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class MoneyLanguageExampleTest {
 	/**
 	 * 税額の計算例。
 	 * 
-	 * <p>税率は{@code 0.06%}で、丸めルールは四捨五入（{@link Rounding#HALF_UP}）とするのが
+	 * <p>税率は{@code 0.06%}で、丸めルールは四捨五入（{@link RoundingMode#HALF_UP}）とするのが
 	 * カナダ物品税の仕様（らしい）。そこで、{@code 3.00カナダドル}の税額を計算すると、{@code 0.18カナダドル}
 	 * となる。</p>
 	 */
@@ -96,7 +96,7 @@ public class MoneyLanguageExampleTest {
 	public void testMoneyRateExample_2() {
 		// Rate calculation with rounding
 		MoneyTimeRate rate = new MoneyTimeRate(Money.euros(100.00), Duration.minutes(3));
-		assertThat(rate.over(Duration.minutes(1), Rounding.DOWN), is(Money.euros(33.33)));
+		assertThat(rate.over(Duration.minutes(1), RoundingMode.DOWN), is(Money.euros(33.33)));
 	}
 	
 	/**
@@ -128,7 +128,7 @@ public class MoneyLanguageExampleTest {
 	}
 	
 	private Money calculateGST(Money amount) {
-		return amount.times(GST_RATE, Rounding.HALF_UP);
+		return amount.times(GST_RATE, RoundingMode.HALF_UP);
 	}
 	
 }

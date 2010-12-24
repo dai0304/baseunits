@@ -25,6 +25,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.junit.Test;
 
@@ -50,24 +51,24 @@ public class RatioTest {
 	@Test
 	public void test01_BigDecimalRatio() throws Exception {
 		Ratio r3over2 = Ratio.of(new BigDecimal(3), new BigDecimal(2));
-		BigDecimal result = r3over2.decimalValue(1, Rounding.UNNECESSARY);
+		BigDecimal result = r3over2.decimalValue(1, RoundingMode.UNNECESSARY);
 		assertThat(result, is(new BigDecimal("1.5")));
 		
 		Ratio r10over3 = Ratio.of(new BigDecimal(10), new BigDecimal(3));
-		result = r10over3.decimalValue(3, Rounding.DOWN);
+		result = r10over3.decimalValue(3, RoundingMode.DOWN);
 		assertThat(result, is(new BigDecimal("3.333")));
 		
-		result = r10over3.decimalValue(3, Rounding.UP);
+		result = r10over3.decimalValue(3, RoundingMode.UP);
 		assertThat(result, is(new BigDecimal("3.334")));
 		
 		Ratio rManyDigits = Ratio.of(new BigDecimal("9.001"), new BigDecimal(3));
-		result = rManyDigits.decimalValue(6, Rounding.UP);
+		result = rManyDigits.decimalValue(6, RoundingMode.UP);
 		assertThat(result, is(new BigDecimal("3.000334")));
 		
-		result = rManyDigits.decimalValue(7, Rounding.UP);
+		result = rManyDigits.decimalValue(7, RoundingMode.UP);
 		assertThat(result, is(new BigDecimal("3.0003334")));
 		
-		result = rManyDigits.decimalValue(7, Rounding.HALF_UP);
+		result = rManyDigits.decimalValue(7, RoundingMode.HALF_UP);
 		assertThat(result, is(new BigDecimal("3.0003333")));
 		
 		try {
@@ -94,7 +95,7 @@ public class RatioTest {
 	@Test
 	public void test02_LongRatio() throws Exception {
 		Ratio rManyDigits = Ratio.of(9001L, 3000L);
-		BigDecimal result = rManyDigits.decimalValue(6, Rounding.UP);
+		BigDecimal result = rManyDigits.decimalValue(6, RoundingMode.UP);
 		assertThat(result, is(new BigDecimal("3.000334")));
 	}
 	
@@ -108,7 +109,7 @@ public class RatioTest {
 		Ratio ratio = Ratio.of(new BigDecimal("3.14159"));
 		assertThat(ratio.breachEncapsulationOfDenominator(), is(BigDecimal.ONE));
 		assertThat(ratio.breachEncapsulationOfNumerator(), is(new BigDecimal("3.14159")));
-		assertThat(ratio.decimalValue(5, Rounding.UNNECESSARY), is(new BigDecimal("3.14159")));
+		assertThat(ratio.decimalValue(5, RoundingMode.UNNECESSARY), is(new BigDecimal("3.14159")));
 	}
 	
 	/**

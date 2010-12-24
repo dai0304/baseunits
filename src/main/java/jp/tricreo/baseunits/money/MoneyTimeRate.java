@@ -19,6 +19,7 @@
  */
 package jp.tricreo.baseunits.money;
 
+import java.math.RoundingMode;
 import java.util.Currency;
 
 import jp.tricreo.baseunits.time.Duration;
@@ -32,6 +33,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>例えば時給、人月単価など。</p>
  */
+@SuppressWarnings("deprecation")
 public class MoneyTimeRate {
 	
 	/** 単位時間あたりの数量 */
@@ -120,7 +122,24 @@ public class MoneyTimeRate {
 	 */
 	public Money over(Duration duration) {
 		Validate.notNull(duration);
-		return over(duration, Rounding.UNNECESSARY);
+		return over(duration, RoundingMode.UNNECESSARY);
+	}
+	
+	/**
+	 * 時間量に対してこの割合を適用した場合の金額を返す。
+	 * 
+	 * @param duration 時間量
+	 * @param scale スケール
+	 * @param roundRule 丸めルール
+	 * @return 金額
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @deprecated use {@link #over(Duration, int, RoundingMode)}
+	 */
+	@Deprecated
+	public Money over(Duration duration, int scale, Rounding roundRule) {
+		Validate.notNull(duration);
+		Validate.notNull(roundRule);
+		return Money.valueOf(rate.over(duration, scale, roundRule), currency);
 	}
 	
 	/**
@@ -132,7 +151,7 @@ public class MoneyTimeRate {
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public Money over(Duration duration, int scale, Rounding roundRule) {
+	public Money over(Duration duration, int scale, RoundingMode roundRule) {
 		Validate.notNull(duration);
 		Validate.notNull(roundRule);
 		return Money.valueOf(rate.over(duration, scale, roundRule), currency);
@@ -145,8 +164,24 @@ public class MoneyTimeRate {
 	 * @param roundRule 丸めルール
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @deprecated use {@link #over(Duration, RoundingMode)}
 	 */
+	@Deprecated
 	public Money over(Duration duration, Rounding roundRule) {
+		Validate.notNull(duration);
+		Validate.notNull(roundRule);
+		return over(duration, rate.scale(), roundRule);
+	}
+	
+	/**
+	 * 時間量に対してこの割合を適用した場合の金額を返す。
+	 * 
+	 * @param duration 時間量
+	 * @param roundRule 丸めルール
+	 * @return 金額
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public Money over(Duration duration, RoundingMode roundRule) {
 		Validate.notNull(duration);
 		Validate.notNull(roundRule);
 		return over(duration, rate.scale(), roundRule);

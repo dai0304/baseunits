@@ -8,6 +8,9 @@ package example.insuranceRates;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import java.math.RoundingMode;
+
 import jp.tricreo.baseunits.intervals.Interval;
 import jp.tricreo.baseunits.intervals.IntervalMap;
 import jp.tricreo.baseunits.intervals.LinearIntervalMap;
@@ -18,7 +21,6 @@ import jp.tricreo.baseunits.time.CalendarDate;
 import jp.tricreo.baseunits.time.CalendarInterval;
 import jp.tricreo.baseunits.time.Duration;
 import jp.tricreo.baseunits.util.Ratio;
-import jp.tricreo.baseunits.util.Rounding;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -79,7 +81,7 @@ public class CalculateRate {
 		Ratio partOfPayment = Ratio.of(remainderOfMonth.lengthInDaysInt(), entireMonth.lengthInDaysInt());
 		
 		// 切り捨てで日割り適用
-		Money firstPayment = monthlyPremium.applying(partOfPayment, Rounding.DOWN);
+		Money firstPayment = monthlyPremium.applying(partOfPayment, RoundingMode.DOWN);
 		assertThat(firstPayment, is(Money.dollars(120.00)));
 		
 		// Alternative, equivalent calculation

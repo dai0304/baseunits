@@ -6,11 +6,12 @@
 
 package example.socialSecurityBenefits;
 
+import java.math.RoundingMode;
+
 import jp.tricreo.baseunits.money.Money;
 import jp.tricreo.baseunits.time.CalendarDate;
 import jp.tricreo.baseunits.time.CalendarInterval;
 import jp.tricreo.baseunits.util.Ratio;
-import jp.tricreo.baseunits.util.Rounding;
 import junit.framework.TestCase;
 
 import org.junit.Ignore;
@@ -47,8 +48,8 @@ public class SocialSecurityBenefitExample extends TestCase {
 		Ratio workerShare = Ratio.of(2, 3);
 		Ratio spouseShare = Ratio.of(1, 3);
 		int roundingScale = 0;
-		Money workerBenefit = benefit.applying(workerShare, roundingScale, Rounding.DOWN);
-		Money spouseBenefit = benefit.applying(spouseShare, roundingScale, Rounding.DOWN);
+		Money workerBenefit = benefit.applying(workerShare, roundingScale, RoundingMode.DOWN);
+		Money spouseBenefit = benefit.applying(spouseShare, roundingScale, RoundingMode.DOWN);
 		assertEquals(Money.dollars(133), workerBenefit);
 		assertEquals(Money.dollars(66), spouseBenefit);
 	}

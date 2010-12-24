@@ -25,6 +25,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -33,7 +34,6 @@ import java.util.Locale;
 
 import jp.tricreo.baseunits.tests.SerializationTester;
 import jp.tricreo.baseunits.util.Ratio;
-import jp.tricreo.baseunits.util.Rounding;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -166,26 +166,26 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * {@link Money#times(double, Rounding)}のテスト。
+	 * {@link Money#times(double, RoundingMode)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test07_MultiplyRounding() throws Exception {
 		assertThat(d100.times(0.66666667), is(Money.dollars(66.67)));
-		assertThat(d100.times(0.66666667, Rounding.DOWN), is(Money.dollars(66.66)));
+		assertThat(d100.times(0.66666667, RoundingMode.DOWN), is(Money.dollars(66.66)));
 	}
 	
 	/**
-	 * {@link Money#times(BigDecimal, Rounding)}のテスト。
+	 * {@link Money#times(BigDecimal, RoundingMode)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test08_MultiplicationWithExplicitRounding() throws Exception {
-		assertThat(d100.times(new BigDecimal("0.666666"), Rounding.HALF_EVEN), is(Money.dollars(66.67)));
-		assertThat(d100.times(new BigDecimal("0.666666"), Rounding.DOWN), is(Money.dollars(66.66)));
-		assertThat(d100.negated().times(new BigDecimal("0.666666"), Rounding.DOWN), is(Money.dollars(-66.66)));
+		assertThat(d100.times(new BigDecimal("0.666666"), RoundingMode.HALF_EVEN), is(Money.dollars(66.67)));
+		assertThat(d100.times(new BigDecimal("0.666666"), RoundingMode.DOWN), is(Money.dollars(66.66)));
+		assertThat(d100.negated().times(new BigDecimal("0.666666"), RoundingMode.DOWN), is(Money.dollars(-66.66)));
 	}
 	
 	/**
@@ -221,20 +221,20 @@ public class MoneyTest {
 	 */
 	@Test
 	public void test11_DivisionByMoney() throws Exception {
-		assertThat(Money.dollars(5.00).dividedBy(Money.dollars(2.00)).decimalValue(1, Rounding.UNNECESSARY),
+		assertThat(Money.dollars(5.00).dividedBy(Money.dollars(2.00)).decimalValue(1, RoundingMode.UNNECESSARY),
 				is(new BigDecimal(2.50)));
-		assertThat(Money.dollars(5.00).dividedBy(Money.dollars(4.00)).decimalValue(2, Rounding.UNNECESSARY),
+		assertThat(Money.dollars(5.00).dividedBy(Money.dollars(4.00)).decimalValue(2, RoundingMode.UNNECESSARY),
 				is(new BigDecimal(1.25)));
-		assertThat(Money.dollars(5.00).dividedBy(Money.dollars(1.00)).decimalValue(0, Rounding.UNNECESSARY),
+		assertThat(Money.dollars(5.00).dividedBy(Money.dollars(1.00)).decimalValue(0, RoundingMode.UNNECESSARY),
 				is(new BigDecimal(5)));
 		try {
-			Money.dollars(5.00).dividedBy(Money.dollars(2.00)).decimalValue(0, Rounding.UNNECESSARY);
+			Money.dollars(5.00).dividedBy(Money.dollars(2.00)).decimalValue(0, RoundingMode.UNNECESSARY);
 			fail("dividedBy(Money) does not allow rounding.");
 		} catch (ArithmeticException e) {
 			// success
 		}
 		try {
-			Money.dollars(10.00).dividedBy(Money.dollars(3.00)).decimalValue(5, Rounding.UNNECESSARY);
+			Money.dollars(10.00).dividedBy(Money.dollars(3.00)).decimalValue(5, RoundingMode.UNNECESSARY);
 			fail("dividedBy(Money) does not allow rounding.");
 		} catch (ArithmeticException e) {
 			// success
@@ -433,14 +433,14 @@ public class MoneyTest {
 	}
 	
 	/**
-	 * {@link Money#applying(Ratio, int, Rounding)}のテスト。
+	 * {@link Money#applying(Ratio, int, RoundingMode)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test24_ApplyRatio() throws Exception {
 		Ratio oneThird = Ratio.of(1, 3);
-		assertThat(Money.dollars(100).applying(oneThird, 1, Rounding.UP), is(Money.dollars(33.40)));
+		assertThat(Money.dollars(100).applying(oneThird, 1, RoundingMode.UP), is(Money.dollars(33.40)));
 	}
 	
 	/**

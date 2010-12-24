@@ -25,11 +25,11 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Currency;
 
 import jp.tricreo.baseunits.time.Duration;
 import jp.tricreo.baseunits.time.TimeRate;
-import jp.tricreo.baseunits.util.Rounding;
 
 import org.junit.Test;
 
@@ -93,25 +93,25 @@ public class MoneyTimeRateTest {
 	}
 	
 	/**
-	 * {@link MoneyTimeRate#over(Duration, Rounding)}のテスト。
+	 * {@link MoneyTimeRate#over(Duration, RoundingMode)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test05_RoundingRate() throws Exception {
 		MoneyTimeRate rate = new MoneyTimeRate(Money.euros(100.00), Duration.minutes(3));
-		assertThat(rate.over(Duration.minutes(1), Rounding.DOWN), is(Money.euros(new BigDecimal("33.33"))));
+		assertThat(rate.over(Duration.minutes(1), RoundingMode.DOWN), is(Money.euros(new BigDecimal("33.33"))));
 	}
 	
 	/**
-	 * {@link MoneyTimeRate#over(Duration, int, Rounding)}のテスト。
+	 * {@link MoneyTimeRate#over(Duration, int, RoundingMode)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test06_RoundingScalingRate() throws Exception {
 		MoneyTimeRate rate = new MoneyTimeRate(Money.euros(new BigDecimal("100.00")), Duration.minutes(3));
-		assertThat(rate.over(Duration.minutes(1), 2, Rounding.DOWN), is(Money.euros(new BigDecimal("33.33"))));
+		assertThat(rate.over(Duration.minutes(1), 2, RoundingMode.DOWN), is(Money.euros(new BigDecimal("33.33"))));
 	}
 	
 	/**

@@ -24,8 +24,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
-
-import jp.tricreo.baseunits.util.Rounding;
+import java.math.RoundingMode;
 
 import org.junit.Test;
 
@@ -66,25 +65,25 @@ public class TimeRateTest {
 	}
 	
 	/**
-	 * {@link TimeRate#over(Duration, Rounding)}のテスト。
+	 * {@link TimeRate#over(Duration, RoundingMode)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test03_RoundingRate() throws Exception {
 		TimeRate rate = new TimeRate("100.00", Duration.minutes(3));
-		assertThat(rate.over(Duration.minutes(1), Rounding.DOWN), is(new BigDecimal("33.33")));
+		assertThat(rate.over(Duration.minutes(1), RoundingMode.DOWN), is(new BigDecimal("33.33")));
 	}
 	
 	/**
-	 * {@link TimeRate#over(Duration, int, Rounding)}のテスト。
+	 * {@link TimeRate#over(Duration, int, RoundingMode)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test04_RoundingScalingRate() throws Exception {
 		TimeRate rate = new TimeRate("100.00", Duration.minutes(3));
-		assertThat(rate.over(Duration.minutes(1), 3, Rounding.DOWN), is(new BigDecimal("33.333")));
+		assertThat(rate.over(Duration.minutes(1), 3, RoundingMode.DOWN), is(new BigDecimal("33.333")));
 	}
 	
 	/**
