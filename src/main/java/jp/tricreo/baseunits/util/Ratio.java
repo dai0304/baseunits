@@ -77,10 +77,10 @@ public class Ratio {
 	}
 	
 
-	/** 分子をあらわず数 */
+	/** 分子をあらわす数 */
 	private final BigDecimal numerator;
 	
-	/** 分母をあらわず数 */
+	/** 分母をあらわす数 */
 	private final BigDecimal denominator;
 	
 
