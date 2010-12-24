@@ -148,7 +148,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #valueOf(double, Currency, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #valueOf(double, Currency, RoundingMode)}
 	 */
 	@Deprecated
 	public static Money valueOf(BigDecimal rawAmount, Currency currency, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -199,7 +200,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #valueOf(double, Currency, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #valueOf(double, Currency, RoundingMode)}
 	 */
 	@Deprecated
 	public static Money valueOf(double dblAmount, Currency currency, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -307,7 +309,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #applying(Ratio, int, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #applying(Ratio, int, RoundingMode)}
 	 */
 	@Deprecated
 	public Money applying(Ratio ratio, int scale, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -340,7 +343,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #applying(Ratio, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #applying(Ratio, RoundingMode)}
 	 */
 	@Deprecated
 	public Money applying(Ratio ratio, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -424,7 +428,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #dividedBy(BigDecimal, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #dividedBy(BigDecimal, RoundingMode)}
 	 */
 	@Deprecated
 	public Money dividedBy(BigDecimal divisor, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -468,7 +473,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #dividedBy(double, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #dividedBy(double, RoundingMode)}
 	 */
 	@Deprecated
 	public Money dividedBy(double divisor, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -674,7 +680,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #times(BigDecimal, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #times(BigDecimal, RoundingMode)}
 	 */
 	@Deprecated
 	public Money times(BigDecimal factor, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -719,7 +726,8 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #times(double, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #times(double, RoundingMode)}
 	 */
 	@Deprecated
 	public Money times(double amount, jp.tricreo.baseunits.util.Rounding roundingMode) {

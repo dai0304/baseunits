@@ -26,7 +26,8 @@ import java.math.BigDecimal;
  * 
  * <p>演算の結果、数字を丸める際に適用するモードをあらわす。例えば、切り捨て,切り上げ,四捨五入など。</p>
  * 
- * @deprecated use {@link java.math.RoundingMode}
+ * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+ * 			use {@link java.math.RoundingMode}
  */
 @Deprecated
 public enum Rounding {

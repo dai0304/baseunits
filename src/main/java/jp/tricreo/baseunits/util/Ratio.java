@@ -132,7 +132,8 @@ public class Ratio {
 	 * @param roundingMode 丸めモード
 	 * @return この比率の {@link BigDecimal} 型の表現
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #decimalValue(int, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #decimalValue(int, RoundingMode)}
 	 */
 	@Deprecated
 	public BigDecimal decimalValue(int scale, Rounding roundingMode) {

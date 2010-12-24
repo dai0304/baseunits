@@ -131,7 +131,8 @@ public class MoneyTimeRate {
 	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #over(Duration, int, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #over(Duration, int, RoundingMode)}
 	 */
 	@Deprecated
 	public Money over(Duration duration, int scale, jp.tricreo.baseunits.util.Rounding roundMode) {
@@ -162,7 +163,8 @@ public class MoneyTimeRate {
 	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #over(Duration, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #over(Duration, RoundingMode)}
 	 */
 	@Deprecated
 	public Money over(Duration duration, jp.tricreo.baseunits.util.Rounding roundMode) {

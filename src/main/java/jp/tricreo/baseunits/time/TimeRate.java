@@ -160,7 +160,8 @@ public class TimeRate {
 	 * @throws ArithmeticException 引数 {@code roundMode} に {@link jp.tricreo.baseunits.util.Rounding#UNNECESSARY} を
 	 * 			指定したにもかかわらず、引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #over(Duration, int, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #over(Duration, int, RoundingMode)}
 	 */
 	@Deprecated
 	public BigDecimal over(Duration duration, int scale, jp.tricreo.baseunits.util.Rounding roundMode) {
@@ -197,7 +198,8 @@ public class TimeRate {
 	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link jp.tricreo.baseunits.util.Rounding#UNNECESSARY} を
 	 * 			指定したにもかかわらず、引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @deprecated use {@link #over(Duration, RoundingMode)}
+	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
+	* 			use {@link #over(Duration, RoundingMode)}
 	 */
 	@Deprecated
 	public BigDecimal over(Duration duration, jp.tricreo.baseunits.util.Rounding roundingMode) {
