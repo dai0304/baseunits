@@ -22,8 +22,6 @@ package jp.tricreo.baseunits.time;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import jp.tricreo.baseunits.util.Rounding;
-
 import org.apache.commons.lang.Validate;
 
 /**
@@ -31,7 +29,6 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>例えば、時給・時速など。</p>
  */
-@SuppressWarnings("deprecation")
 public class TimeRate {
 	
 	/** 単位時間あたりの量 */
@@ -160,13 +157,13 @@ public class TimeRate {
 	 * @param roundMode 丸めモード
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundMode} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
-	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
+	 * @throws ArithmeticException 引数 {@code roundMode} に {@link jp.tricreo.baseunits.util.Rounding#UNNECESSARY} を
+	 * 			指定したにもかかわらず、引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #over(Duration, int, RoundingMode)}
 	 */
 	@Deprecated
-	public BigDecimal over(Duration duration, int scale, Rounding roundMode) {
+	public BigDecimal over(Duration duration, int scale, jp.tricreo.baseunits.util.Rounding roundMode) {
 		Validate.notNull(duration);
 		Validate.notNull(roundMode);
 		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundMode);
@@ -197,13 +194,13 @@ public class TimeRate {
 	 * @param roundingMode 丸めモード
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link Rounding#UNNECESSARY} を指定したにもかかわらず、
-	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
+	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link jp.tricreo.baseunits.util.Rounding#UNNECESSARY} を
+	 * 			指定したにもかかわらず、引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @deprecated use {@link #over(Duration, RoundingMode)}
 	 */
 	@Deprecated
-	public BigDecimal over(Duration duration, Rounding roundingMode) {
+	public BigDecimal over(Duration duration, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(duration);
 		Validate.notNull(roundingMode);
 		return over(duration, scale(), roundingMode);

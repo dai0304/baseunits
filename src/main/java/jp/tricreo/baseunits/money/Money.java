@@ -29,7 +29,6 @@ import java.util.Locale;
 
 import jp.tricreo.baseunits.time.Duration;
 import jp.tricreo.baseunits.util.Ratio;
-import jp.tricreo.baseunits.util.Rounding;
 
 import org.apache.commons.lang.Validate;
 
@@ -38,10 +37,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
  */
-@SuppressWarnings({
-	"serial",
-	"deprecation"
-})
+@SuppressWarnings("serial")
 public class Money implements Comparable<Money>, Serializable {
 	
 	private static final Currency USD = Currency.getInstance("USD");
@@ -155,7 +151,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @deprecated use {@link #valueOf(double, Currency, RoundingMode)}
 	 */
 	@Deprecated
-	public static Money valueOf(BigDecimal rawAmount, Currency currency, Rounding roundingMode) {
+	public static Money valueOf(BigDecimal rawAmount, Currency currency, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(rawAmount);
 		Validate.notNull(currency);
 		Validate.notNull(rawAmount);
@@ -206,7 +202,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @deprecated use {@link #valueOf(double, Currency, RoundingMode)}
 	 */
 	@Deprecated
-	public static Money valueOf(double dblAmount, Currency currency, Rounding roundingMode) {
+	public static Money valueOf(double dblAmount, Currency currency, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(currency);
 		Validate.notNull(roundingMode);
 		BigDecimal rawAmount = new BigDecimal(dblAmount);
@@ -314,7 +310,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @deprecated use {@link #applying(Ratio, int, RoundingMode)}
 	 */
 	@Deprecated
-	public Money applying(Ratio ratio, int scale, Rounding roundingMode) {
+	public Money applying(Ratio ratio, int scale, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(ratio);
 		Validate.notNull(roundingMode);
 		BigDecimal newAmount = ratio.times(amount).decimalValue(scale, roundingMode);
@@ -347,7 +343,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @deprecated use {@link #applying(Ratio, RoundingMode)}
 	 */
 	@Deprecated
-	public Money applying(Ratio ratio, Rounding roundingMode) {
+	public Money applying(Ratio ratio, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(ratio);
 		Validate.notNull(roundingMode);
 		return applying(ratio, currency.getDefaultFractionDigits(), roundingMode);
@@ -431,7 +427,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @deprecated use {@link #dividedBy(BigDecimal, RoundingMode)}
 	 */
 	@Deprecated
-	public Money dividedBy(BigDecimal divisor, Rounding roundingMode) {
+	public Money dividedBy(BigDecimal divisor, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(divisor);
 		Validate.notNull(roundingMode);
 		BigDecimal newAmount = amount.divide(divisor, roundingMode.value);
@@ -475,7 +471,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @deprecated use {@link #dividedBy(double, RoundingMode)}
 	 */
 	@Deprecated
-	public Money dividedBy(double divisor, Rounding roundingMode) {
+	public Money dividedBy(double divisor, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(roundingMode);
 		return dividedBy(new BigDecimal(divisor), roundingMode);
 	}
@@ -681,7 +677,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @deprecated use {@link #times(BigDecimal, RoundingMode)}
 	 */
 	@Deprecated
-	public Money times(BigDecimal factor, Rounding roundingMode) {
+	public Money times(BigDecimal factor, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(factor);
 		Validate.notNull(roundingMode);
 		return Money.valueOf(amount.multiply(factor), currency, roundingMode);
@@ -726,7 +722,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @deprecated use {@link #times(double, RoundingMode)}
 	 */
 	@Deprecated
-	public Money times(double amount, Rounding roundingMode) {
+	public Money times(double amount, jp.tricreo.baseunits.util.Rounding roundingMode) {
 		Validate.notNull(roundingMode);
 		return times(new BigDecimal(amount), roundingMode);
 	}

@@ -24,7 +24,6 @@ import java.util.Currency;
 
 import jp.tricreo.baseunits.time.Duration;
 import jp.tricreo.baseunits.time.TimeRate;
-import jp.tricreo.baseunits.util.Rounding;
 
 import org.apache.commons.lang.Validate;
 
@@ -33,7 +32,6 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>例えば時給、人月単価など。</p>
  */
-@SuppressWarnings("deprecation")
 public class MoneyTimeRate {
 	
 	/** 単位時間あたりの数量 */
@@ -136,7 +134,7 @@ public class MoneyTimeRate {
 	 * @deprecated use {@link #over(Duration, int, RoundingMode)}
 	 */
 	@Deprecated
-	public Money over(Duration duration, int scale, Rounding roundMode) {
+	public Money over(Duration duration, int scale, jp.tricreo.baseunits.util.Rounding roundMode) {
 		Validate.notNull(duration);
 		Validate.notNull(roundMode);
 		return Money.valueOf(rate.over(duration, scale, roundMode), currency);
@@ -167,7 +165,7 @@ public class MoneyTimeRate {
 	 * @deprecated use {@link #over(Duration, RoundingMode)}
 	 */
 	@Deprecated
-	public Money over(Duration duration, Rounding roundMode) {
+	public Money over(Duration duration, jp.tricreo.baseunits.util.Rounding roundMode) {
 		Validate.notNull(duration);
 		Validate.notNull(roundMode);
 		return over(duration, rate.scale(), roundMode);
