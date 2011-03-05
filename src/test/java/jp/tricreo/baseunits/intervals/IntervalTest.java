@@ -786,4 +786,35 @@ public class IntervalTest {
 		assertThat(empty.toString(), is("{}"));
 		assertThat(Interval.closed(10, 10).toString(), is("{10}"));
 	}
+
+	
+	/**
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 *
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test31_RelativeComplementOverlapRightOpen() throws Exception {
+		Interval<Integer> c3_7o = Interval.over(3, true, 6, false);
+		Interval<Integer> c1_5o = Interval.over(1, true, 5, false);
+		List<Interval<Integer>> complement = c3_7o.complementRelativeTo(c1_5o);
+		Interval<Integer> c1_3o = Interval.over(1, true, 3, false);
+		assertThat(complement.size(), is(1));
+		assertThat(complement.get(0), is(c1_3o));
+	}
+
+	/**
+	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
+	 *
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test32_RelativeComplementOverlapLeftOpen() throws Exception {
+		Interval<Integer> o1_5c = Interval.over(1, false, 5, true);
+		Interval<Integer> o3_7c = Interval.over(2, false, 7, true);
+		List<Interval<Integer>> complement = o1_5c.complementRelativeTo(o3_7c);
+		Interval<Integer> o5_7c = Interval.over(5, false, 7, true);
+		assertThat(complement.size(), is(1));
+		assertThat(complement.get(0), is(o5_7c));
+	}
 }

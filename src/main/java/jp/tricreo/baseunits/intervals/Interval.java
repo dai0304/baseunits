@@ -772,16 +772,15 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 		return other.upperLimit();
 	}
 	
+	/**
+	 * この区間の下側<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
+	 *
+	 * @param other 比較対象の区間
+	 * @return この区間の下側の補区間と、与えた区間の共通部分。存在しない場合は {@code null}
+	 */
 	private Interval<T> leftComplementRelativeTo(Interval<T> other) {
-		T lesserOfLowerLimits = lesserOfLowerLimits(other);
-		if (lesserOfLowerLimits == null) {
-			// TODO 何してるか分からないままテストを通すためだけにこのif文を作った。熟考せよ。
-			return null;
-		}
-		if (this.includes(lesserOfLowerLimits)) {
-			return null;
-		}
-		if (lowerLimit().equals(other.lowerLimit()) && other.includesLowerLimit() == false) {
+		// この区間の下側限界値の方が小さいか等しい場合、下側の補区間に共通部分は無い
+		if (this.lowerLimitObject.compareTo(other.lowerLimitObject) <= 0) {
 			return null;
 		}
 		return newOfSameType(other.lowerLimit(), other.includesLowerLimit(), this.lowerLimit(),
@@ -815,16 +814,15 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 		return this.includes(limit) || other.includes(limit);
 	}
 	
+	/**
+	 * この区間の上側<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
+	 *
+	 * @param other 比較対象の区間
+	 * @return この区間の上側の補区間と、与えた区間の共通部分。存在しない場合は {@code null}
+	 */
 	private Interval<T> rightComplementRelativeTo(Interval<T> other) {
-		T greaterOfUpperLimits = greaterOfUpperLimits(other);
-		if (greaterOfUpperLimits == null) {
-			// TODO 何してるか分からないままテストを通すためだけにこのif文を作った。熟考せよ。
-			return null;
-		}
-		if (this.includes(greaterOfUpperLimits)) {
-			return null;
-		}
-		if (upperLimit().equals(other.upperLimit()) && other.includesUpperLimit() == false) {
+		// この区間の上側限界値の方が大きいか等しい場合、上側の補区間に共通部分は無い
+		if (this.upperLimitObject.compareTo(other.upperLimitObject) >= 0) {
 			return null;
 		}
 		return newOfSameType(this.upperLimit(), this.includesUpperLimit() == false, other.upperLimit(),
