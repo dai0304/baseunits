@@ -756,23 +756,6 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	}
 	
 	/**
-	 * この区間と与えた区間 {@code other} の上側限界値のうち、より大きい（限界の広い、制約の小さい）限界値を返す。
-	 * 
-	 * @param other 比較対象の限界値
-	 * @return より小さい限界値. この区間に上側限界がない場合は {@code null}
-	 */
-	private T greaterOfUpperLimits(Interval<T> other) {
-		if (upperLimit() == null) {
-			return null;
-		}
-		int upperComparison = upperLimit().compareTo(other.upperLimit());
-		if (upperComparison >= 0) {
-			return this.upperLimit();
-		}
-		return other.upperLimit();
-	}
-	
-	/**
 	 * この区間の下側<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
 	 *
 	 * @param other 比較対象の区間
@@ -785,23 +768,6 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 		}
 		return newOfSameType(other.lowerLimit(), other.includesLowerLimit(), this.lowerLimit(),
 				this.includesLowerLimit() == false);
-	}
-	
-	/**
-	 * この区間と与えた区間 {@code other} の下側限界値のうち、より小さい（限界の広い、制約の小さい）限界値を返す。
-	 * 
-	 * @param other 比較対象の限界値
-	 * @return より小さい限界値. この区間に下側限界がない場合は {@code null}
-	 */
-	private T lesserOfLowerLimits(Interval<T> other) {
-		if (lowerLimit() == null) {
-			return null;
-		}
-		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
-		if (lowerComparison <= 0) {
-			return this.lowerLimit();
-		}
-		return other.lowerLimit();
 	}
 	
 	private boolean lesserOfUpperIncludedInIntersection(Interval<T> other) {

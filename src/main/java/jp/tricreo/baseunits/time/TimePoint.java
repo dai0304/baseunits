@@ -278,18 +278,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * {@link Calendar}を{@link TimePoint}に変換する。
-	 * 
-	 * @param calendar 元となる日時情報を表す {@link Calendar}インスタンス
-	 * @return {@link TimePoint}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static TimePoint valueOf(Calendar calendar) {
-		Validate.notNull(calendar);
-		return from(calendar.getTime());
-	}
-	
-	/**
 	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
 	 * 
 	 * @param date 日付
@@ -336,7 +324,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す {@link TimePoint}を返す。
 	 * 
 	 * @param dateTimeString 日時を表す文字列
-	 * @param pattern 解析パターン
+	 * @param pattern 解析パターン（{@link SimpleDateFormat}参照）
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws ParseException 文字列の解析に失敗した場合
@@ -356,7 +344,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 日時を表す文字列を、指定したパターンで世界標準時として解析し、その日時を表す {@link TimePoint}を返す。
 	 * 
 	 * @param dateString 日時を表す文字列
-	 * @param pattern 解析パターン
+	 * @param pattern 解析パターン（{@link SimpleDateFormat}参照）
 	 * @return {@link TimePoint}
 	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
@@ -365,6 +353,18 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Validate.notNull(dateString);
 		Validate.notNull(pattern);
 		return parse(dateString, pattern, GMT);
+	}
+	
+	/**
+	 * {@link Calendar}を{@link TimePoint}に変換する。
+	 * 
+	 * @param calendar 元となる日時情報を表す {@link Calendar}インスタンス
+	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static TimePoint valueOf(Calendar calendar) {
+		Validate.notNull(calendar);
+		return from(calendar.getTime());
 	}
 	
 
