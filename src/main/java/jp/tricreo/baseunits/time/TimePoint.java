@@ -32,7 +32,7 @@ import org.apache.commons.lang.Validate;
 /**
  * ミリ秒精度で、ある時間の一点をあらわすクラス。
  * 
- * <p>タイムゾーンのを持っている。</p>
+ * <p>タイムゾーンを持っている。</p>
  */
 @SuppressWarnings("serial")
 public class TimePoint implements Comparable<TimePoint>, Serializable {
