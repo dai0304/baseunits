@@ -45,7 +45,7 @@ import org.apache.commons.lang.Validate;
  * @param <T> 区間要素の型
  */
 @SuppressWarnings("serial")
-public class Interval<T extends Comparable<T>> implements Serializable {
+public class Interval<T extends Comparable<T> & Serializable> implements Serializable {
 	
 	/**
 	 * 下側限界のみを持つ区間を生成する。
@@ -56,7 +56,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @param lower 下側限界値. {@code null}の場合は、限界がないことを表す
 	 * @return 区間
 	 */
-	public static <T extends Comparable<T>>Interval<T> andMore(T lower) {
+	public static <T extends Comparable<T> & Serializable>Interval<T> andMore(T lower) {
 		return closed(lower, null);
 	}
 	
@@ -69,7 +69,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @return 閉区間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい場合
 	 */
-	public static <T extends Comparable<T>>Interval<T> closed(T lower, T upper) {
+	public static <T extends Comparable<T> & Serializable>Interval<T> closed(T lower, T upper) {
 		return new Interval<T>(lower, true, upper, true);
 	}
 	
@@ -82,7 +82,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @param lower 下側限界値. {@code null}の場合は、限界がないことを表す
 	 * @return 区間
 	 */
-	public static <T extends Comparable<T>>Interval<T> moreThan(T lower) {
+	public static <T extends Comparable<T> & Serializable>Interval<T> moreThan(T lower) {
 		return open(lower, null);
 	}
 	
@@ -99,7 +99,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @return 開区間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい場合
 	 */
-	public static <T extends Comparable<T>>Interval<T> open(T lower, T upper) {
+	public static <T extends Comparable<T> & Serializable>Interval<T> open(T lower, T upper) {
 		return new Interval<T>(lower, false, upper, false);
 	}
 	
@@ -116,7 +116,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @return 区間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい場合
 	 */
-	public static <T extends Comparable<T>>Interval<T> over(T lower, boolean lowerIncluded, T upper,
+	public static <T extends Comparable<T> & Serializable>Interval<T> over(T lower, boolean lowerIncluded, T upper,
 			boolean upperIncluded) {
 		return new Interval<T>(lower, lowerIncluded, upper, upperIncluded);
 	}
@@ -129,7 +129,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @return 区間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static <T extends Comparable<T>>Interval<T> singleElement(T element) {
+	public static <T extends Comparable<T> & Serializable>Interval<T> singleElement(T element) {
 		Validate.notNull(element);
 		return closed(element, element);
 	}
@@ -143,7 +143,7 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @param upper 上側限界値. {@code null}の場合は、限界がないことを表す
 	 * @return 区間
 	 */
-	public static <T extends Comparable<T>>Interval<T> under(T upper) {
+	public static <T extends Comparable<T> & Serializable>Interval<T> under(T upper) {
 		return open(null, upper);
 	}
 	
@@ -156,18 +156,18 @@ public class Interval<T extends Comparable<T>> implements Serializable {
 	 * @param upper 上側限界値. {@code null}の場合は、限界がないことを表す
 	 * @return 区間
 	 */
-	public static <T extends Comparable<T>>Interval<T> upTo(T upper) {
+	public static <T extends Comparable<T> & Serializable>Interval<T> upTo(T upper) {
 		return closed(null, upper);
 	}
 	
-
+	
 	/** 下側限界 */
 	final IntervalLimit<T> lowerLimitObject;
 	
 	/** 上側限界 */
 	final IntervalLimit<T> upperLimitObject;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 

@@ -195,6 +195,8 @@ public class DurationTest {
 	@Test
 	public void test10_Add() throws Exception {
 		assertThat(Duration.hours(24).plus(Duration.days(1)), is(Duration.days(2)));
+		assertThat(Duration.hours(24).plus(Duration.days(1)), is(Duration.hours(48)));
+		assertThat(Duration.hours(23).plus(Duration.days(1)), is(Duration.hours(47)));
 		assertThat(Duration.months(1).plus(Duration.quarters(1)), is(Duration.months(4)));
 		
 		try {
@@ -213,6 +215,8 @@ public class DurationTest {
 	@Test
 	public void test11_Subtract() throws Exception {
 		assertThat(Duration.days(3).minus(Duration.hours(24)), is(Duration.days(2)));
+		assertThat(Duration.days(3).minus(Duration.hours(24)), is(Duration.hours(48)));
+		assertThat(Duration.days(3).minus(Duration.hours(23)), is(Duration.hours(49)));
 		assertThat(Duration.quarters(1).minus(Duration.months(1)), is(Duration.months(2)));
 		
 		try {

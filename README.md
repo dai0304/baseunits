@@ -69,7 +69,7 @@ How to develop?
 ---------------
 
 1. Eclipse (3.6 Helios or later)
-2. m2eclipse (0.10.2 or later)
+2. m2eclipse (1.0.0.20110607-2117 or later)
 3. Checkstyle Plug-in (5.1.0 or later)
 4. FindBugs Plug-in (1.3.9 or later)
 
@@ -78,7 +78,9 @@ TBD
 License
 -------
 
+Copyright (C) 2011 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
 Copyright (C) 2010 [TRICREO, Inc.](http://tricreo.jp/).
+Copyright (c) 2004 [Domain Language, Inc.](http://domainlanguage.com)
 
 Distributed under the Apache License v2.0.  See the file copyright/LICENSE.txt.
 

@@ -40,7 +40,7 @@ import java.io.Serializable;
  * @param <T> 限界の型
  */
 @SuppressWarnings("serial")
-class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit<T>>, Serializable {
+class IntervalLimit<T extends Comparable<T> & Serializable> implements Comparable<IntervalLimit<T>>, Serializable {
 	
 	/**
 	 * 下側限界インスタンスを生成する。
@@ -50,7 +50,7 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	 * @param value 限界値. {@code null}の場合は、限界がないことを表す
 	 * @return 下側限界インスタンス
 	 */
-	static <T extends Comparable<T>>IntervalLimit<T> lower(boolean closed, T value) {
+	static <T extends Comparable<T> & Serializable>IntervalLimit<T> lower(boolean closed, T value) {
 		return new IntervalLimit<T>(closed, true, value);
 	}
 	
@@ -62,11 +62,11 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	 * @param value 限界値. {@code null}の場合は、限界がないことを表す
 	 * @return 上側限界インスタンス
 	 */
-	static <T extends Comparable<T>>IntervalLimit<T> upper(boolean closed, T value) {
+	static <T extends Comparable<T> & Serializable>IntervalLimit<T> upper(boolean closed, T value) {
 		return new IntervalLimit<T>(closed, false, value);
 	}
 	
-
+	
 	/** 限界が閉じている場合 {@code true} */
 	private final boolean closed;
 	
@@ -80,7 +80,7 @@ class IntervalLimit<T extends Comparable<T>> implements Comparable<IntervalLimit
 	/** 下側限界を表す場合は {@code true}、上側限界を表す場合は {@code false} */
 	private final boolean lower;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 

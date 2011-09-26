@@ -19,13 +19,15 @@
  */
 package jp.tricreo.baseunits.intervals;
 
+import java.io.Serializable;
+
 /**
  * 区間に対して値をマッピングするクラス。
  * 
  * @param <K> キーとなる区間の型
  * @param <V> 値の型
  */
-public interface IntervalMap<K extends Comparable<K>, V> {
+public interface IntervalMap<K extends Comparable<K> & Serializable, V> {
 	
 	/**
 	 * 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合に {@code true} を返す。

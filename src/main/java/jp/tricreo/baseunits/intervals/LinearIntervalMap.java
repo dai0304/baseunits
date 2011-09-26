@@ -19,6 +19,7 @@
  */
 package jp.tricreo.baseunits.intervals;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +34,12 @@ import org.apache.commons.lang.Validate;
  * @param <K> キーとなる区間が表現する型
  * @param <V> 値の型
  */
-public class LinearIntervalMap<K extends Comparable<K>, V> implements IntervalMap<K, V> {
+@SuppressWarnings("serial")
+public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implements IntervalMap<K, V>, Serializable {
 	
 	final Map<Interval<K>, V> keyValues;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 */

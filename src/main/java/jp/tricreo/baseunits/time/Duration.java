@@ -37,14 +37,14 @@ public class Duration implements Comparable<Duration>, Serializable {
 	/** 長さ {@code 0} の期間 */
 	public static final Duration NONE = milliseconds(0);
 	
-
+	
 	/**
 	 * 長さが {@code howMany} 日の時間量を取得する。
 	 * 
 	 * @param howMany 時間の長さ（日）
 	 * @return 時間量
 	 */
-	public static Duration days(int howMany) {
+	public static Duration days(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.day);
 	}
 	
@@ -59,7 +59,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param milliseconds  時間の長さ（ミリ秒）
 	 * @return 時間量
 	 */
-	public static Duration daysHoursMinutesSecondsMilliseconds(int days, int hours, int minutes, int seconds,
+	public static Duration daysHoursMinutesSecondsMilliseconds(long days, long hours, long minutes, long seconds,
 			long milliseconds) {
 		Duration result = Duration.days(days);
 		if (hours != 0) {
@@ -83,7 +83,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param howMany 時間の長さ（時間）
 	 * @return 時間量
 	 */
-	public static Duration hours(int howMany) {
+	public static Duration hours(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.hour);
 	}
 	
@@ -103,7 +103,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param howMany 時間の長さ（分）
 	 * @return 時間量
 	 */
-	public static Duration minutes(int howMany) {
+	public static Duration minutes(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.minute);
 	}
 	
@@ -113,7 +113,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param howMany 時間の長さ（月）
 	 * @return 時間量
 	 */
-	public static Duration months(int howMany) {
+	public static Duration months(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.month);
 	}
 	
@@ -123,7 +123,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param howMany 時間の長さ（四半期）
 	 * @return 時間量
 	 */
-	public static Duration quarters(int howMany) {
+	public static Duration quarters(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.quarter);
 	}
 	
@@ -133,7 +133,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param howMany 時間の長さ（ミリ）
 	 * @return 時間量
 	 */
-	public static Duration seconds(int howMany) {
+	public static Duration seconds(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.second);
 	}
 	
@@ -161,12 +161,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 		return new Duration(howMany, unit);
 	}
 	
-
+	
 	final long quantity;
 	
 	final TimeUnit unit;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 

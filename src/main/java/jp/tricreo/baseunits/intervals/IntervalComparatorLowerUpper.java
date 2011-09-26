@@ -16,6 +16,7 @@
  */
 package jp.tricreo.baseunits.intervals;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -23,13 +24,13 @@ import java.util.Comparator;
  * 
  * @param <T> 区間要素の型
  */
-public class IntervalComparatorLowerUpper<T extends Comparable<T>> implements Comparator<Interval<T>> {
+public class IntervalComparatorLowerUpper<T extends Comparable<T> & Serializable> implements Comparator<Interval<T>> {
 	
 	private final int lowerFactor;
 	
 	private final int upperFactor;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 

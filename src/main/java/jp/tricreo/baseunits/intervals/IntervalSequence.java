@@ -19,6 +19,7 @@
  */
 package jp.tricreo.baseunits.intervals;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,13 +33,13 @@ import org.apache.commons.lang.Validate;
  * 
  * @param <T> {@link Interval 区間}の型
  */
-public class IntervalSequence<T extends Comparable<T>> implements Iterable<Interval<T>> {
+public class IntervalSequence<T extends Comparable<T> & Serializable> implements Iterable<Interval<T>> {
 	
 	final List<Interval<T>> intervals;
 	
 	final Comparator<Interval<T>> comparator;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 
