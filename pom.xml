@@ -29,6 +29,15 @@
     <connection>scm:git:git@github.com:tricreo/baseunits.git</connection>
     <developerConnection>scm:git:git@github.com:tricreo/baseunits.git</developerConnection>
   </scm>
+  <build>
+   <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>1.0</version>
+      </extension>
+    </extensions>
+  </build>
   <dependencies>
     <!-- TEST DEPENDENCIES -->
     <dependency>
