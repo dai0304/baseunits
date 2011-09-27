@@ -20,6 +20,7 @@
 package jp.tricreo.baseunits.time;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.Validate;
@@ -57,14 +58,14 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 		return new TimeOfDay(HourOfDay.valueOf(hour), MinuteOfHour.valueOf(minute));
 	}
 	
-
+	
 	/** 時 */
 	final HourOfDay hour;
 	
 	/** 分 */
 	final MinuteOfHour minute;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -200,5 +201,18 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	@Override
 	public String toString() {
 		return hour.toString() + ":" + minute.toString();
+	}
+	
+	/**
+	 * この時分を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
+	 * @param pattern {@link SimpleDateFormat}に基づくパターン
+	 * @return 整形済み時分文字列
+	 */
+	public String toString(String pattern) {
+		// Any timezone works, as long as the same one is used throughout.
+		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
+		TimePoint point = asTimePointGiven(TimePoint.from(0).calendarDate(arbitraryZone), arbitraryZone);
+		return point.toString(pattern, arbitraryZone);
 	}
 }

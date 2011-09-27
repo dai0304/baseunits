@@ -25,7 +25,7 @@ import org.hibernate.type.StandardBasicTypes;
 public class PersistentCalendarDate extends AbstractBaseunitsType<CalendarDate, Date> {
 	
 	private static final int[] SQL_TYPES = new int[] {
-		Types.INTEGER
+		Types.DATE
 	};
 	
 	

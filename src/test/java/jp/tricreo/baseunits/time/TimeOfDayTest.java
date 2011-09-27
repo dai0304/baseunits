@@ -47,7 +47,7 @@ public class TimeOfDayTest {
 	
 	private TimeOfDay tenMinutesBeforeMidnight = TimeOfDay.from(23, 50);
 	
-
+	
 	/**
 	 * {@link TimeOfDay#on(CalendarDate)}のテスト。
 	 * 
@@ -236,5 +236,15 @@ public class TimeOfDayTest {
 		CalendarDate mayEleventh = CalendarDate.from(2006, 5, 11);
 		TimePoint mayEleventhAtFiveFifteen = fiveFifteen.asTimePointGiven(mayEleventh, CST);
 		assertThat(mayEleventhAtFiveFifteen, is(TimePoint.at(2006, 5, 11, 17, 15, 0, 0, CST)));
+	}
+	
+	/**
+	 * {@link TimeOfDay#toString()} 及び {@link TimeOfDay#toString(String)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test15_toString() throws Exception {
+		assertThat(midnight.toString(), is("0:00"));
 	}
 }

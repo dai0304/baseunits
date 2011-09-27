@@ -50,6 +50,13 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return new CalendarDate(yearMonth, day);
 	}
 	
+	public static CalendarDate from(Date date, TimeZone zone) {
+		Validate.notNull(date);
+		Validate.notNull(zone);
+		Calendar calendar = TimePoint.from(date).asJavaCalendar(zone);
+		return from(calendar);
+	}
+	
 	/**
 	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
@@ -117,12 +124,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return from(year, month, date);
 	}
 	
-
+	
 	private final CalendarMonth yearMonth;
 	
 	private final DayOfMonth day;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 
