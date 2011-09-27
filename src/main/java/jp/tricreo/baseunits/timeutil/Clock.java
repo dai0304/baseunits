@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,7 +38,7 @@ public final class Clock {
 	/** 日付の算出に使用する {@link TimeZone} */
 	private static TimeZone defaultTimeZone;
 	
-
+	
 	/**
 	 * この時計が日付の算出に使用する {@link TimeZone} を取得する。
 	 * 

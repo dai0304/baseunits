@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -46,7 +47,7 @@ public class CalendarDateTest {
 	
 	private TimeZone ct = TimeZone.getTimeZone("America/Chicago");
 	
-
+	
 	/**
 	 * {@link CalendarDate}のインスタンスがシリアライズできるかどうか検証する。
 	 * 

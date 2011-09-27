@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2010/11/24
  *
@@ -32,7 +33,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	
 	private static final int MAX = 31;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -44,11 +45,11 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 		return new DayOfMonth(day);
 	}
 	
-
+	
 	/** 日をあらわす正数 */
 	final int value;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 

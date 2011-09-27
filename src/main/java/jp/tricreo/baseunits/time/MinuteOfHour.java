@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +36,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	
 	private static final int MAX = 59;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -47,11 +48,11 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 		return new MinuteOfHour(initial);
 	}
 	
-
+	
 	/** 分をあらわす正数 */
 	final int value;
 	
-
+	
 	MinuteOfHour(int initial) {
 		if (initial < MIN || initial > MAX) {
 			throw new IllegalArgumentException("Illegal value for minute: " + initial

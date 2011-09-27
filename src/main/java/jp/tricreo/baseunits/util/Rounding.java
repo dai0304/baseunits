@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,7 +41,7 @@ public enum Rounding {
 	 * @see BigDecimal#ROUND_UP
 	 */
 	UP(BigDecimal.ROUND_UP),
-
+	
 	/**
 	 * 切り捨てモード DOWN。
 	 * 
@@ -49,7 +50,7 @@ public enum Rounding {
 	 * @see BigDecimal#ROUND_DOWN
 	 */
 	DOWN(BigDecimal.ROUND_DOWN),
-
+	
 	/**
 	 * 切り上げモード CEILING。
 	 * 
@@ -58,7 +59,7 @@ public enum Rounding {
 	 * @see BigDecimal#ROUND_CEILING
 	 */
 	CEILING(BigDecimal.ROUND_CEILING),
-
+	
 	/**
 	 * 切り捨てモード FLOOR。
 	 * 
@@ -67,7 +68,7 @@ public enum Rounding {
 	 * @see BigDecimal#ROUND_FLOOR
 	 */
 	FLOOR(BigDecimal.ROUND_FLOOR),
-
+	
 	/**
 	 * 丸めモード HALF_UP。
 	 * 
@@ -77,7 +78,7 @@ public enum Rounding {
 	 * @see BigDecimal#ROUND_HALF_UP
 	 */
 	HALF_UP(BigDecimal.ROUND_HALF_UP),
-
+	
 	/**
 	 * 丸めモード HALF_DOWN。
 	 * 
@@ -87,7 +88,7 @@ public enum Rounding {
 	 * @see BigDecimal#ROUND_HALF_DOWN
 	 */
 	HALF_DOWN(BigDecimal.ROUND_HALF_DOWN),
-
+	
 	/**
 	 * 丸めモード HALF_EVEN。
 	 * 
@@ -97,7 +98,7 @@ public enum Rounding {
 	 * @see BigDecimal#ROUND_HALF_DOWN
 	 */
 	HALF_EVEN(BigDecimal.ROUND_HALF_EVEN),
-
+	
 	/**
 	 * 丸めが不要であることを明示的に表すモード。
 	 * 
@@ -113,7 +114,7 @@ public enum Rounding {
 	 */
 	public final int value;
 	
-
+	
 	Rounding(int value) {
 		this.value = value;
 	}

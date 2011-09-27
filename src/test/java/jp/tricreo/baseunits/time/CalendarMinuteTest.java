@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2010/11/26
  *
@@ -43,7 +44,7 @@ public class CalendarMinuteTest {
 	
 	private TimeZone ct = TimeZone.getTimeZone("America/Chicago");
 	
-
+	
 	/**
 	 * {@link CalendarMinute}のインスタンスがシリアライズできるかどうか検証する。
 	 * 

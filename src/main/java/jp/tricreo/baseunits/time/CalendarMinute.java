@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -83,14 +84,14 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 		return CalendarMinute.from(point.calendarDate(arbitraryZone), point.asTimeOfDay(arbitraryZone));
 	}
 	
-
+	
 	/** 年月日 */
 	final CalendarDate date;
 	
 	/** 時分 */
 	final TimeOfDay time;
 	
-
+	
 	CalendarMinute(CalendarDate date, TimeOfDay time) {
 		Validate.notNull(date);
 		Validate.notNull(time);

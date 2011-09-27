@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -61,21 +62,6 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
-	 * 
-	 * @param dateString 年月を表す文字列 
-	 * @param pattern 解析パターン文字列
-	 * @return {@link CalendarMonth}
-	 * @throws ParseException 文字列の解析に失敗した場合 
-	 */
-	public static CalendarMonth parse(String dateString, String pattern) throws ParseException {
-		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
-		//Any timezone works, as long as the same one is used throughout.
-		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
-		return CalendarMonth.from(point, arbitraryZone);
-	}
-	
-	/**
 	 * 指定したタイムゾーン上で指定した瞬間が属する日付を元に、{@link CalendarDate}のインスタンスを生成する。
 	 * 
 	 * @param timePoint 瞬間
@@ -91,6 +77,21 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		return CalendarMonth.from(calendar);
 	}
 	
+	/**
+	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
+	 * 
+	 * @param dateString 年月を表す文字列 
+	 * @param pattern 解析パターン文字列
+	 * @return {@link CalendarMonth}
+	 * @throws ParseException 文字列の解析に失敗した場合 
+	 */
+	public static CalendarMonth parse(String dateString, String pattern) throws ParseException {
+		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
+		//Any timezone works, as long as the same one is used throughout.
+		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
+		return CalendarMonth.from(point, arbitraryZone);
+	}
+	
 	static CalendarMonth from(Calendar calendar) { // CHECKSTYLE IGNORE THIS LINE
 		// Use timezone already set in calendar.
 		int year = calendar.get(Calendar.YEAR);
@@ -98,12 +99,12 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 		return CalendarMonth.from(year, month);
 	}
 	
-
+	
 	final int year;
 	
 	final MonthOfYear month;
 	
-
+	
 	CalendarMonth(int year, MonthOfYear month) {
 		Validate.notNull(month);
 		this.year = year;

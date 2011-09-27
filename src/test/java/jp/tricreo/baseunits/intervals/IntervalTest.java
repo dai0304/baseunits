@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -247,7 +248,7 @@ public class IntervalTest {
 		return list;
 	}
 	
-
+	
 	private Interval<BigDecimal> c5_10c = Interval.closed(new BigDecimal(5), new BigDecimal(10));
 	
 	private Interval<BigDecimal> c1_10c = Interval.closed(new BigDecimal(1), new BigDecimal(10));
@@ -276,7 +277,7 @@ public class IntervalTest {
 	
 	private Interval<BigDecimal> all = Interval.<BigDecimal> closed(null, null);
 	
-
+	
 	/**
 	 * {@link Interval}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
@@ -786,7 +787,6 @@ public class IntervalTest {
 		assertThat(empty.toString(), is("{}"));
 		assertThat(Interval.closed(10, 10).toString(), is("{10}"));
 	}
-
 	
 	/**
 	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
@@ -802,7 +802,7 @@ public class IntervalTest {
 		assertThat(complement.size(), is(1));
 		assertThat(complement.get(0), is(c1_3o));
 	}
-
+	
 	/**
 	 * {@link Interval#complementRelativeTo(Interval)}のテスト。
 	 *

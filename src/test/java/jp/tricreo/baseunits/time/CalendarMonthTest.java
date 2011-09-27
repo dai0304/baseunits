@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2010/11/27
  *
@@ -38,7 +39,7 @@ public class CalendarMonthTest {
 	
 	CalendarMonth mar1978 = CalendarMonth.from(1978, 3);
 	
-
+	
 	/**
 	 * {@link CalendarMonth}のインスタンスがシリアライズできるかどうか検証する。
 	 * 

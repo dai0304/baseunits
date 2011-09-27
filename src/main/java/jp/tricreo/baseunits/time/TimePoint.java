@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,7 +40,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
 	private static final TimeZone GMT = TimeZone.getTimeZone("Universal");
 	
-
+	
 	/**
 	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
 	 * 
@@ -367,11 +368,11 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		return from(calendar.getTime());
 	}
 	
-
+	
 	/** エポックからの経過ミリ秒 */
 	final long millisecondsFromEpoc;
 	
-
+	
 	private TimePoint(long millisecondsFromEpoc) {
 		this.millisecondsFromEpoc = millisecondsFromEpoc;
 	}

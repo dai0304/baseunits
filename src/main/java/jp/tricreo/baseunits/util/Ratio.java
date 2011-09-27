@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -77,14 +78,14 @@ public class Ratio {
 		return new Ratio(BigDecimal.valueOf(numerator), BigDecimal.valueOf(denominator));
 	}
 	
-
+	
 	/** 分子をあらわす数 */
 	private final BigDecimal numerator;
 	
 	/** 分母をあらわす数 */
 	private final BigDecimal denominator;
 	
-
+	
 	/**
 	* インスタンスを生成する。
 	* 

@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -74,10 +75,10 @@ public class BusinessCalendarTest {
 		return calendar;
 	}
 	
-
+	
 	private BusinessCalendar cal;
 	
-
+	
 	/**
 	 * テストを初期化する。
 	 * 
@@ -357,7 +358,7 @@ public class BusinessCalendarTest {
 				"2010-11-29 2010-11-30 "));
 	}
 	
-
+	
 	/**
 	 * dates are taken from: http://www.opm.gov/fedhol/index.htm note: when a
 	 * holiday falls on a non-workday -- Saturday or Sunday -- the holiday usually
@@ -409,7 +410,7 @@ public class BusinessCalendarTest {
 			"2006/12/25", /* Christmas Day, December 25 */
 		};
 		
-
+		
 		static Set<CalendarDate> defaultHolidays() {
 			Set<CalendarDate> dates = new HashSet<CalendarDate>();
 			String[] strings = COMMON_US_HOLIDAYS;

@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 the Sisioh Project ant the Others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +30,7 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
 	
 	final Specification<T> spec1;
 	
-
+	
 	/**
 	 * Create a new NOT specification based on another spec.
 	 *

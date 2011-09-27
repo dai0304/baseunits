@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2009 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2009/12/08
  *
@@ -15,7 +16,6 @@
  * governing permissions and limitations under the License.
  */
 package jp.tricreo.baseunits.time;
-
 
 /**
  * 現在時刻の取得に失敗したことをあらわす例外。

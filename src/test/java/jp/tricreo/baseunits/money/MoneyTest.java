@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +20,9 @@
  */
 package jp.tricreo.baseunits.money;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -67,7 +70,7 @@ public class MoneyTest {
 	
 	private Money y100minus;
 	
-
+	
 	/**
 	 * テストを初期化する。
 	 * 
@@ -115,8 +118,9 @@ public class MoneyTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
+	@SuppressWarnings("unchecked")
 	public void test03_Yen() throws Exception {
-		assertThat(y50.toString(), is("￥ 50"));
+		assertThat(y50.toString(), is(anyOf(equalTo("¥ 50"), equalTo("￥ 50"))));
 		Money y80 = Money.valueOf(new BigDecimal("80"), JPY);
 		Money y30 = Money.valueOf(30, JPY);
 		assertThat(y50.plus(y30), is(y80));

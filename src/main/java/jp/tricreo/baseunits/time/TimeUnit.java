@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,28 +31,28 @@ public enum TimeUnit {
 	
 	/** ミリ秒単位 */
 	millisecond(Type.millisecond, Type.millisecond, TimeUnitConversionFactor.identical),
-
+	
 	/** 秒単位 */
 	second(Type.second, Type.millisecond, TimeUnitConversionFactor.millisecondsPerSecond),
-
+	
 	/** 分単位 */
 	minute(Type.minute, Type.millisecond, TimeUnitConversionFactor.millisecondsPerMinute),
-
+	
 	/** 時単位 */
 	hour(Type.hour, Type.millisecond, TimeUnitConversionFactor.millisecondsPerHour),
-
+	
 	/** 日単位 */
 	day(Type.day, Type.millisecond, TimeUnitConversionFactor.millisecondsPerDay),
-
+	
 	/** 週単位 */
 	week(Type.week, Type.millisecond, TimeUnitConversionFactor.millisecondsPerWeek),
-
+	
 	/** 月単位 */
 	month(Type.month, Type.month, TimeUnitConversionFactor.identical),
-
+	
 	/** 四半期単位 */
 	quarter(Type.quarter, Type.month, TimeUnitConversionFactor.monthsPerQuarter),
-
+	
 	/** 年単位 */
 	year(Type.year, Type.month, TimeUnitConversionFactor.monthsPerYear);
 	
@@ -89,7 +90,7 @@ public enum TimeUnit {
 	
 	final TimeUnitConversionFactor factor;
 	
-
+	
 	TimeUnit(Type type, Type baseType, TimeUnitConversionFactor factor) {
 		this.type = type;
 		this.baseType = baseType;
@@ -197,7 +198,7 @@ public enum TimeUnit {
 		return buffer.toString();
 	}
 	
-
+	
 	static enum Type {
 		millisecond, second, minute, hour, day, week, month, quarter, year;
 	}

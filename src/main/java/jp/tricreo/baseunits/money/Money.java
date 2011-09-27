@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,7 +49,7 @@ public class Money implements Comparable<Money>, Serializable {
 	
 	private static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_EVEN;
 	
-
+	
 	/**
 	 * {@code amount}で表す量のドルを表すインスタンスを返す。
 	 * 
@@ -264,14 +265,14 @@ public class Money implements Comparable<Money>, Serializable {
 		return Money.valueOf(0.0, currency);
 	}
 	
-
+	
 	/** 量 */
 	final BigDecimal amount;
 	
 	/** 通貨単位 */
 	final Currency currency;
 	
-
+	
 	/**
 	 * The constructor does not complex computations and requires simple, inputs
 	 * consistent with the class invariant. Other creation methods are available

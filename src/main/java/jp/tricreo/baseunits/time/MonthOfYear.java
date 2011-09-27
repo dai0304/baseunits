@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2010/11/24
  *
@@ -26,7 +27,7 @@ public enum MonthOfYear {
 	
 	/** January */
 	JAN(1, DayOfMonth.valueOf(31), Calendar.JANUARY),
-
+	
 	/** Feburary */
 	FEB(2, null, Calendar.FEBRUARY) {
 		
@@ -39,31 +40,31 @@ public enum MonthOfYear {
 	
 	/** March */
 	MAR(3, DayOfMonth.valueOf(31), Calendar.MARCH),
-
+	
 	/** April */
 	APR(4, DayOfMonth.valueOf(30), Calendar.APRIL),
-
+	
 	/** May */
 	MAY(5, DayOfMonth.valueOf(31), Calendar.MAY),
-
+	
 	/** June */
 	JUN(6, DayOfMonth.valueOf(30), Calendar.JUNE),
-
+	
 	/** July */
 	JUL(7, DayOfMonth.valueOf(31), Calendar.JULY),
-
+	
 	/** August */
 	AUG(8, DayOfMonth.valueOf(31), Calendar.AUGUST),
-
+	
 	/** September */
 	SEP(9, DayOfMonth.valueOf(30), Calendar.SEPTEMBER),
-
+	
 	/** October */
 	OCT(10, DayOfMonth.valueOf(31), Calendar.OCTOBER),
-
+	
 	/** November */
 	NOV(11, DayOfMonth.valueOf(30), Calendar.NOVEMBER),
-
+	
 	/** December */
 	DEC(12, DayOfMonth.valueOf(31), Calendar.DECEMBER);
 	
@@ -97,7 +98,7 @@ public enum MonthOfYear {
 		return null;
 	}
 	
-
+	
 	/** 1 based: January = 1, February = 2, ... */
 	final int value;
 	
@@ -107,7 +108,7 @@ public enum MonthOfYear {
 	/** {@link Calendar}に定義する月をあらわす定数値 */
 	final int calendarValue;
 	
-
+	
 	MonthOfYear(int month, DayOfMonth lastDayOfThisMonth, int calendarValue) {
 		value = month;
 		this.lastDayOfThisMonth = lastDayOfThisMonth;

@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +36,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	
 	private static final int MAX = 23;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -82,11 +83,11 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 		return hour + translatedAmPm;
 	}
 	
-
+	
 	/** 時をあらわす正数 */
 	final int value;
 	
-
+	
 	private HourOfDay(int initial) {
 		if (initial < MIN || initial > MAX) {
 			throw new IllegalArgumentException("Illegal value for 24 hour: " + initial
