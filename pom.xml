@@ -9,7 +9,7 @@
   <groupId>jp.tricreo</groupId>
   <artifactId>baseunits</artifactId>
   <name>Base Units Library</name>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <description>The models of basic unit (ex. Time, Money, etc.)</description>
   <url>http://maven.tricreo.jp/site/${project.artifactId}/${project.version}/</url>
   <inceptionYear>2010</inceptionYear>
