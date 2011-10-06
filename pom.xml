@@ -21,9 +21,9 @@
     </license>
   </licenses>
   <scm>
-    <url>scm:git:git@github.com:tricreo/baseunits.git</url>
-    <connection>scm:git:git@github.com:tricreo/baseunits.git</connection>
-    <developerConnection>scm:git:git@github.com:tricreo/baseunits.git</developerConnection>
+    <url>scm:git:git@github.com:dai0304/baseunits.git</url>
+    <connection>scm:git:git@github.com:dai0304/baseunits.git</connection>
+    <developerConnection>scm:git:git@github.com:dai0304/baseunits.git</developerConnection>
   </scm>
   <build>
    <extensions>
