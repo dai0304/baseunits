@@ -22,6 +22,8 @@ import java.util.GregorianCalendar;
 
 /**
  * 1年の中の特定の「月」を表す列挙型。
+ * 
+ * @since 1.0
  */
 public enum MonthOfYear {
 	
@@ -88,6 +90,7 @@ public enum MonthOfYear {
 	 * 
 	 * @param value 月数（1〜12）
 	 * @return {@link MonthOfYear}. 見つからなかった場合は {@code null}
+	 * @since 1.0
 	 */
 	public static MonthOfYear valueOf(int value) {
 		for (MonthOfYear monthOfYear : values()) {
@@ -121,6 +124,7 @@ public enum MonthOfYear {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return {@link Calendar}に定義する月をあらわす定数値（{@link Calendar#JANUARY}〜{@link Calendar#DECEMBER}）
+	 * @since 1.0
 	 */
 	public int breachEncapsulationOfCalendarValue() {
 		return calendarValue;
@@ -132,6 +136,7 @@ public enum MonthOfYear {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 月をあらわす数（1〜12）
+	 * @since 1.0
 	 */
 	public int breachEncapsulationOfValue() {
 		return value;
@@ -145,6 +150,7 @@ public enum MonthOfYear {
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isAfter(MonthOfYear other) {
 		if (other == null) {
@@ -161,6 +167,7 @@ public enum MonthOfYear {
 	 * @param other 対象日
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isBefore(MonthOfYear other) {
 		if (other == null) {
@@ -178,6 +185,7 @@ public enum MonthOfYear {
 	 * 
 	 * @param year 年
 	 * @return 年月
+	 * @since 1.0
 	 */
 	public CalendarMonth on(int year) {
 		return CalendarMonth.from(year, this);

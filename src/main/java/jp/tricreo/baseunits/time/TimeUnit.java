@@ -26,6 +26,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 時間の単位を表す列挙型。
+ * 
+ * @since 1.0
  */
 public enum TimeUnit {
 	
@@ -105,6 +107,7 @@ public enum TimeUnit {
 	 * @param other 変換先単位
 	 * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isConvertibleTo(TimeUnit other) {
 		Validate.notNull(other);
@@ -117,6 +120,7 @@ public enum TimeUnit {
 	 * <p>例えば、分単位はミリ秒単位に変換できるが、四半期単位は（一ヶ月の長さが毎月異なるため）ミリ秒単位に変換できない。</p>
 	 * 
 	 * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isConvertibleToMilliseconds() {
 		return isConvertibleTo(millisecond);

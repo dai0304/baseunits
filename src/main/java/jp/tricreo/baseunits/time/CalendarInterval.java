@@ -34,6 +34,8 @@ import org.apache.commons.lang.Validate;
  * 期間（日付の区間）を表すクラス。
  * 
  * <p>限界の表現には {@link CalendarDate}を利用する。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class CalendarInterval extends Interval<CalendarDate> {
@@ -45,6 +47,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @param startDate 開始日（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
+	 * @since 1.0
 	 */
 	public static CalendarInterval everFrom(CalendarDate startDate) {
 		return inclusive(startDate, null);
@@ -57,6 +60,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @param endDate 終了日（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
+	 * @since 1.0
 	 */
 	public static CalendarInterval everPreceding(CalendarDate endDate) {
 		return inclusive(null, endDate);
@@ -71,6 +75,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @param end 終了日
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
+	 * @since 1.0
 	 */
 	public static CalendarInterval inclusive(CalendarDate start, CalendarDate end) {
 		return new CalendarInterval(start, end);
@@ -89,6 +94,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @param endDay 終了日の日
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
+	 * @since 1.0
 	 */
 	public static CalendarInterval inclusive(int startYear, int startMonth, int startDay, int endYear, int endMonth,
 			int endDay) {
@@ -104,6 +110,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @param month 開始日の年月
 	 * @return 期間
+	 * @since 1.0
 	 */
 	public static CalendarInterval month(CalendarMonth month) {
 		CalendarDate startDate = CalendarDate.from(month, DayOfMonth.valueOf(1));
@@ -119,6 +126,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @param year 開始日の年
 	 * @param month 開始日の月（1〜12）
 	 * @return 期間
+	 * @since 1.0
 	 */
 	public static CalendarInterval month(int year, int month) {
 		return month(year, MonthOfYear.valueOf(month));
@@ -132,6 +140,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @param year 開始日の年
 	 * @param month 開始日の月
 	 * @return 期間
+	 * @since 1.0
 	 */
 	public static CalendarInterval month(int year, MonthOfYear month) {
 		CalendarDate startDate = CalendarDate.from(year, month, DayOfMonth.valueOf(1));
@@ -150,6 +159,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @param length 期間の長さ
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static CalendarInterval startingFrom(CalendarDate start, Duration length) {
 		Validate.notNull(start);
@@ -168,6 +178,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @param year 開始日の年
 	 * @return 期間
+	 * @since 1.0
 	 */
 	public static CalendarInterval year(int year) {
 		CalendarDate startDate = CalendarDate.from(year, 1, 1);
@@ -182,6 +193,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @param start 開始日
 	 * @param end 終了日
+	 * @since 1.0
 	 */
 	protected CalendarInterval(CalendarDate start, CalendarDate end) {
 		super(start, true, end, true);
@@ -195,6 +207,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @param zone タイムゾーン
 	 * @return 時間の期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimeInterval asTimeInterval(TimeZone zone) {
 		Validate.notNull(zone);
@@ -224,6 +237,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @return 日付の反復子
 	 * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
+	 * @since 1.0
 	 */
 	public Iterator<CalendarDate> daysInReverseIterator() {
 		if (hasUpperLimit() == false) {
@@ -274,6 +288,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @return 日付の反復子
 	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
+	 * @since 1.0
 	 */
 	public Iterator<CalendarDate> daysIterator() {
 		if (hasLowerLimit() == false) {
@@ -307,6 +322,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 終了日を取得する。
 	 * 
 	 * @return 終了日. 開始日がない場合は{@code null}
+	 * @since 1.0
 	 */
 	public CalendarDate end() {
 		return upperLimit();
@@ -317,6 +333,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @return 期間の長さ
 	 * @see #length()
+	 * @since 1.0
 	 */
 	public Duration length() {
 		return Duration.days(lengthInDaysInt());
@@ -327,6 +344,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @return 日数
 	 * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
+	 * @since 1.0
 	 */
 	public int lengthInDaysInt() {
 		if (hasLowerLimit() == false || hasUpperLimit() == false) {
@@ -345,6 +363,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @return 期間の長さ
 	 * @see #lengthInMonthsInt()
+	 * @since 1.0
 	 */
 	public Duration lengthInMonths() {
 		return Duration.months(lengthInMonthsInt());
@@ -357,6 +376,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @return 月数
 	 * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
+	 * @since 1.0
 	 */
 	public int lengthInMonthsInt() {
 		if (hasLowerLimit() == false || hasUpperLimit() == false) {
@@ -381,6 +401,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 開始日を取得する。
 	 * 
 	 * @return 開始日. 開始日がない場合は{@code null}
+	 * @since 1.0
 	 */
 	public CalendarDate start() {
 		return lowerLimit();
@@ -411,6 +432,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @return 期間の反復子
 	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
 	 * @throws IllegalArgumentException 引数subintervalLengthの長さ単位が「日」未満の場合
+	 * @since 1.0
 	 */
 	public Iterator<CalendarInterval> subintervalIterator(Duration subintervalLength) {
 		if (hasLowerLimit() == false) {
@@ -442,5 +464,4 @@ public class CalendarInterval extends Interval<CalendarDate> {
 			}
 		};
 	}
-	
 }

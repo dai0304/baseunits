@@ -34,6 +34,8 @@ import org.apache.commons.lang.Validate;
  * ミリ秒精度で、ある時間の一点をあらわすクラス。
  * 
  * <p>タイムゾーンを持っている。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class TimePoint implements Comparable<TimePoint>, Serializable {
@@ -53,6 +55,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint at(CalendarMonth yearMonth, DayOfMonth date, int hour,
 			int minute, int second, int millisecond, TimeZone zone) {
@@ -76,6 +79,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint at(int year, int month, int date, int hour, int minute, int second, int millisecond, // CHECKSTYLE IGNORE THIS LINE
 			TimeZone zone) {
@@ -103,6 +107,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint at(int year, int month, int date, int hour, int minute, int second, TimeZone zone) {
 		Validate.notNull(zone);
@@ -120,6 +125,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint at(int year, int month, int date, int hour, int minute, TimeZone zone) {
 		Validate.notNull(zone);
@@ -139,6 +145,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint at(int year, MonthOfYear month, DayOfMonth date, int hour, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond, TimeZone zone) {
@@ -162,6 +169,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
+	 * @since 1.0
 	 */
 	public static TimePoint at12hr(int year, int month, int date, int hour, String amPm, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond) {
@@ -184,6 +192,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
 	 * @throws IllegalArgumentException 引数{@code zone}に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint at12hr(int year, int month, int date, int hour, String amPm, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond, TimeZone zone) {
@@ -200,6 +209,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param hour 時
 	 * @param minute 分
 	 * @return {@link TimePoint}
+	 * @since 1.0
 	 */
 	public static TimePoint atGMT(int year, int month, int date, int hour, int minute) {
 		return atGMT(year, month, date, hour, minute, 0, 0);
@@ -215,6 +225,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param minute 分
 	 * @param second 秒
 	 * @return {@link TimePoint}
+	 * @since 1.0
 	 */
 	public static TimePoint atGMT(int year, int month, int date, int hour, int minute, int second) {
 		return atGMT(year, month, date, hour, minute, second, 0);
@@ -231,6 +242,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param second 秒
 	 * @param millisecond ミリ秒
 	 * @return {@link TimePoint}
+	 * @since 1.0
 	 */
 	public static TimePoint atGMT(int year, int month, int date, int hour, int minute, int second, int millisecond) {
 		return at(year, month, date, hour, minute, second, millisecond, GMT);
@@ -243,6 +255,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint atMidnight(CalendarDate calendarDate, TimeZone zone) {
 		Validate.notNull(calendarDate);
@@ -260,6 +273,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint atMidnight(int year, int month, int date, TimeZone zone) {
 		Validate.notNull(zone);
@@ -273,6 +287,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param month 月（1〜12）
 	 * @param date 日
 	 * @return {@link TimePoint}
+	 * @since 1.0
 	 */
 	public static TimePoint atMidnightGMT(int year, int month, int date) {
 		return atMidnight(year, month, date, GMT);
@@ -286,6 +301,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint from(CalendarDate date, TimeOfDay time, TimeZone zone) {
 		Validate.notNull(date);
@@ -302,6 +318,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param javaDate 元となる日時情報を表す {@link Date}インスタンス
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint from(Date javaDate) {
 		Validate.notNull(javaDate);
@@ -313,6 +330,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 
 	 * @param milliseconds エポックからの経過ミリ秒
 	 * @return {@link TimePoint}
+	 * @since 1.0
 	 */
 	public static TimePoint from(long milliseconds) {
 		TimePoint result = new TimePoint(milliseconds);
@@ -330,6 +348,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @return {@link TimePoint}
 	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint parse(String dateTimeString, String pattern, TimeZone zone) throws ParseException {
 		Validate.notNull(dateTimeString);
@@ -349,6 +368,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @return {@link TimePoint}
 	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint parseGMTFrom(String dateString, String pattern) throws ParseException {
 		Validate.notNull(dateString);
@@ -362,6 +382,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param calendar 元となる日時情報を表す {@link Calendar}インスタンス
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimePoint valueOf(Calendar calendar) {
 		Validate.notNull(calendar);
@@ -370,17 +391,18 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
 	
 	/** エポックからの経過ミリ秒 */
-	final long millisecondsFromEpoc;
+	final long millisecondsFromEpoch;
 	
 	
 	private TimePoint(long millisecondsFromEpoc) {
-		this.millisecondsFromEpoc = millisecondsFromEpoc;
+		millisecondsFromEpoch = millisecondsFromEpoc;
 	}
 	
 	/**
 	 * このオブジェクトが表現する瞬間をGMTとして扱い、{@link Calendar}型として取得する。
 	 * 
 	 * @return {@link Calendar}
+	 * @since 1.0
 	 */
 	public Calendar asJavaCalendar() {
 		return asJavaCalendar(GMT);
@@ -392,6 +414,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link Calendar}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public Calendar asJavaCalendar(TimeZone zone) {
 		Validate.notNull(zone);
@@ -404,9 +427,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * このオブジェクトが表現する瞬間を、{@link Date}型として取得する。
 	 * 
 	 * @return {@link Date}
+	 * @since 1.0
 	 */
 	public Date asJavaUtilDate() {
-		return new Date(millisecondsFromEpoc);
+		return new Date(millisecondsFromEpoch);
 	}
 	
 	/**
@@ -415,6 +439,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return 時分
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimeOfDay asTimeOfDay(TimeZone zone) {
 		Validate.notNull(zone);
@@ -428,6 +453,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return 午前0時（深夜）の瞬間を表す {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimePoint backToMidnight(TimeZone zone) {
 		Validate.notNull(zone);
@@ -435,14 +461,17 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトの{@link #millisecondsFromEpoc}フィールド（エポックからの経過ミリ秒）を返す。
+	 * このオブジェクトの{@link #millisecondsFromEpoch}フィールド（エポックからの経過ミリ秒）を返す。
 	 * 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return エポックからの経過ミリ秒
+	 * @since 1.0
+	 * @deprecated use {@link #toEpochMillisec()}
 	 */
+	@Deprecated
 	public long breachEncapsulationOfMillisecondsFromEpoc() {
-		return millisecondsFromEpoc;
+		return millisecondsFromEpoch;
 	}
 	
 	/**
@@ -451,6 +480,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return 日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public CalendarDate calendarDate(TimeZone zone) {
 		Validate.notNull(zone);
@@ -465,6 +495,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param otherPoint 比較対象
 	 * @return {@link Comparable#compareTo(Object)}に準じる
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	@Override
 	public int compareTo(TimePoint otherPoint) {
@@ -487,6 +518,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 同じ日時を指している場合は{@code true}、そうでない場合は{@code false}を返す。</p>
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @since 1.0
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -500,7 +532,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 			return false;
 		}
 		TimePoint other = (TimePoint) obj;
-		if (millisecondsFromEpoc != other.millisecondsFromEpoc) {
+		if (millisecondsFromEpoch != other.millisecondsFromEpoch) {
 			return false;
 		}
 		return true;
@@ -508,7 +540,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
 	@Override
 	public int hashCode() {
-		return (int) (millisecondsFromEpoc ^ (millisecondsFromEpoc >>> 32)); // CHECKSTYLE IGNORE THIS LINE;
+		return (int) (millisecondsFromEpoch ^ (millisecondsFromEpoch >>> 32)); // CHECKSTYLE IGNORE THIS LINE;
 	}
 	
 	/**
@@ -517,6 +549,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param interval 基準期間
 	 * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isAfter(TimeInterval interval) {
 		Validate.notNull(interval);
@@ -531,10 +564,11 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param other 対象日時
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isAfter(TimePoint other) {
 		Validate.notNull(other);
-		return millisecondsFromEpoc > other.millisecondsFromEpoc;
+		return millisecondsFromEpoch > other.millisecondsFromEpoch;
 	}
 	
 	/**
@@ -543,6 +577,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param interval 基準期間
 	 * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isBefore(TimeInterval interval) {
 		Validate.notNull(interval);
@@ -557,10 +592,11 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isBefore(TimePoint other) {
 		Validate.notNull(other);
-		return millisecondsFromEpoc < other.millisecondsFromEpoc;
+		return millisecondsFromEpoch < other.millisecondsFromEpoch;
 	}
 	
 	/**
@@ -570,6 +606,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return 等価である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isSameDayAs(TimePoint other, TimeZone zone) {
 		Validate.notNull(other);
@@ -583,6 +620,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param duration 時間の長さ
 	 * @return 過去の日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimePoint minus(Duration duration) {
 		Validate.notNull(duration);
@@ -595,6 +633,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * <p>日内の時間は変化しない。</p>
 	 * 
 	 * @return 1日後
+	 * @since 1.0
 	 */
 	public TimePoint nextDay() {
 		return plus(Duration.days(1));
@@ -606,6 +645,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param duration 時間の長さ
 	 * @return 未来の日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimePoint plus(Duration duration) {
 		Validate.notNull(duration);
@@ -613,9 +653,30 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
+	 * この瞬間をエポックミリ秒に変換して返す。
+	 * 
+	 * @return エポックミリ秒
+	 * @since 1.3
+	 */
+	public long toEpochMillisec() {
+		return millisecondsFromEpoch;
+	}
+	
+	/**
+	 * この瞬間をエポック秒に変換して返す。
+	 * 
+	 * @return エポック秒
+	 * @since 1.3
+	 */
+	public long toEpochSec() {
+		return millisecondsFromEpoch / TimeUnitConversionFactor.millisecondsPerSecond.value;
+	}
+	
+	/**
 	 * この瞬間の文字列表現を取得する。
 	 * 
 	 * @see java.lang.Object#toString()
+	 * @since 1.0
 	 */
 	@Override
 	public String toString() {
@@ -628,6 +689,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @param zone タイムゾーン
 	 * @return 整形済み時間文字列
+	 * @since 1.0
 	 */
 	public String toString(String pattern, TimeZone zone) {
 		DateFormat format = new SimpleDateFormat(pattern);
@@ -642,9 +704,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return {@link TimeInterval}
+	 * @since 1.0
 	 */
 	public TimeInterval until(TimePoint end) {
 		return TimeInterval.over(this, end);
 	}
-	
 }

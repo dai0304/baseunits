@@ -29,6 +29,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 日付の仕様を表現するオブジェクト。
+ * 
+ * @since 1.0
  */
 public abstract class DateSpecification extends AbstractSpecification<CalendarDate> {
 	
@@ -40,6 +42,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @param date マッチする日
 	 * @return 日付仕様
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static DateSpecification fixed(CalendarDate date) {
 		return new FixedDateSpecification(date);
@@ -53,6 +56,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @param day 日を表す正数（1〜31）
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 * @return 日付仕様
+	 * @since 1.0
 	 */
 	public static DateSpecification fixed(int day) {
 		return new MonthlyFixedDateSpecification(DayOfMonth.valueOf(day));
@@ -66,6 +70,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 * @return 日付仕様
+	 * @since 1.0
 	 */
 	public static DateSpecification fixed(int month, int day) {
 		return new AnnualFixedDateSpecification(MonthOfYear.valueOf(month), DayOfMonth.valueOf(day));
@@ -75,6 +80,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * どの日付にもマッチしない日付仕様を返す。
 	 * 
 	 * @return 日付仕様
+	 * @since 1.0
 	 */
 	public static DateSpecification never() {
 		return new DateSpecification() {
@@ -107,6 +113,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @param n 周回数（1〜5）
 	 * @return 日付仕様
 	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static DateSpecification nthOccuranceOfWeekdayInEveryMonth(DayOfWeek dayOfWeek, int n) {
 		return new MonthlyFloatingDateSpecification(dayOfWeek, n);
@@ -120,6 +127,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @param n 周回数（1〜5）
 	 * @return 日付仕様
 	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static DateSpecification nthOccuranceOfWeekdayInMonth(int month, DayOfWeek dayOfWeek, int n) {
 		return new AnnualFloatingDateSpecification(month, dayOfWeek, n);
@@ -131,6 +139,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @param interval 期間
 	 * @return 年月日。但し、仕様を満たす日がなかった場合は{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public abstract CalendarDate firstOccurrenceIn(CalendarInterval interval);
 	
@@ -140,6 +149,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @param date 検証対象の日付
 	 * @return 仕様を満たす場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	@Override
 	public abstract boolean isSatisfiedBy(CalendarDate date);
@@ -150,6 +160,7 @@ public abstract class DateSpecification extends AbstractSpecification<CalendarDa
 	 * @param interval 期間
 	 * @return 反復子
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public abstract Iterator<CalendarDate> iterateOver(CalendarInterval interval);
 	

@@ -33,6 +33,8 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link java.util.Date}と異なり、月未満（日以下）の概念を持っていない。また、{@link TimePoint}と異なり、
  * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
@@ -44,6 +46,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param month 月をあらわす正数（1〜12）
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @since 1.0
 	 */
 	public static CalendarMonth from(int year, int month) {
 		return new CalendarMonth(year, MonthOfYear.valueOf(month));
@@ -56,6 +59,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param month 月
 	 * @return {@link CalendarMonth}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static CalendarMonth from(int year, MonthOfYear month) {
 		return new CalendarMonth(year, month);
@@ -68,6 +72,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static CalendarMonth from(TimePoint timePoint, TimeZone zone) {
 		Validate.notNull(timePoint);
@@ -84,6 +89,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param pattern 解析パターン文字列
 	 * @return {@link CalendarMonth}
 	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @since 1.0
 	 */
 	public static CalendarMonth parse(String dateString, String pattern) throws ParseException {
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
@@ -117,6 +123,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
 	 * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
+	 * @since 1.0
 	 */
 	public CalendarInterval asCalendarInterval() {
 		return CalendarInterval.month(year, month);
@@ -128,6 +135,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param timeZone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
@@ -140,6 +148,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
 	 * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
+	 * @since 1.0
 	 */
 	public CalendarInterval asYearInterval() {
 		return CalendarInterval.year(year);
@@ -151,6 +160,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param day 日（1〜31）
 	 * @return 日時
 	 * @throws IllegalArgumentException 引数{@code day}がこの月に存在しない場合
+	 * @since 1.0
 	 */
 	public CalendarDate at(DayOfMonth day) {
 		return CalendarDate.from(year, month, day);
@@ -162,6 +172,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 月
+	 * @since 1.0
 	 */
 	public MonthOfYear breachEncapsulationOfMonth() {
 		return month;
@@ -173,6 +184,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 西暦年をあらわす数
+	 * @since 1.0
 	 */
 	public int breachEncapsulationOfYear() {
 		return year;
@@ -186,6 +198,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param other 比較対象
 	 * @return {@link Comparable#compareTo(Object)}に準じる
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	@Override
 	public int compareTo(CalendarMonth other) {
@@ -227,6 +240,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * 月末の日付を取得する。
 	 * 
 	 * @return {@link DayOfMonth}
+	 * @since 1.0
 	 */
 	public CalendarDate getLastDay() {
 		return CalendarDate.from(year, month, getLastDayOfMonth());
@@ -236,6 +250,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * 月末の日を取得する。
 	 * 
 	 * @return {@link DayOfMonth}
+	 * @since 1.0
 	 */
 	public DayOfMonth getLastDayOfMonth() {
 		return month.getLastDayOfThisMonth(year);
@@ -259,6 +274,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * 
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isAfter(CalendarMonth other) {
 		if (other == null) {
@@ -275,6 +291,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * 
 	 * @param other 対象年月
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isBefore(CalendarMonth other) {
 		if (other == null) {
@@ -293,6 +310,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * このインスタンスが表現する年月の翌月を返す。
 	 * 
 	 * @return 翌月
+	 * @since 1.0
 	 */
 	public CalendarMonth nextMonth() {
 		return plusMonths(1);
@@ -305,6 +323,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * 
 	 * @param length 時間の長さ
 	 * @return 未来の年月
+	 * @since 1.0
 	 */
 	public CalendarMonth plus(Duration length) {
 		return length.addedTo(this);
@@ -317,6 +336,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * 
 	 * @param increment 加える月数
 	 * @return 計算結果
+	 * @since 1.0
 	 */
 	public CalendarMonth plusMonths(int increment) {
 		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
@@ -330,6 +350,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * このインスタンスが表現する年月の前月を返す。
 	 * 
 	 * @return 前月
+	 * @since 1.0
 	 */
 	public CalendarMonth previousDay() {
 		return plusMonths(-1);
@@ -341,6 +362,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
 	 * 
 	 * @see java.lang.Object#toString()
+	 * @since 1.0
 	 */
 	@Override
 	public String toString() {
@@ -352,6 +374,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * 
 	 * @param pattern パターン
 	 * @return 文字列表現
+	 * @since 1.0
 	 */
 	public String toString(String pattern) {
 		// Any timezone works, as long as the same one is used throughout.

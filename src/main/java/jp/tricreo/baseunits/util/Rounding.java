@@ -27,6 +27,7 @@ import java.math.BigDecimal;
  * 
  * <p>演算の結果、数字を丸める際に適用するモードをあらわす。例えば、切り捨て,切り上げ,四捨五入など。</p>
  * 
+ * @since 1.0
  * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
  * 			use {@link java.math.RoundingMode}
  */
@@ -39,6 +40,7 @@ public enum Rounding {
 	 * <p>{@code 0}から遠ざかる方向に向けた丸めモードを表す。</p>
 	 * 
 	 * @see BigDecimal#ROUND_UP
+	 * @since 1.0
 	 */
 	UP(BigDecimal.ROUND_UP),
 	
@@ -48,6 +50,7 @@ public enum Rounding {
 	 * <p>{@code 0}に近づく方向に向けた丸めモードを表す。</p>
 	 * 
 	 * @see BigDecimal#ROUND_DOWN
+	 * @since 1.0
 	 */
 	DOWN(BigDecimal.ROUND_DOWN),
 	
@@ -57,6 +60,7 @@ public enum Rounding {
 	 * <p>正の無限大に向けて切り上げを行う丸めモードを表す。</p>
 	 * 
 	 * @see BigDecimal#ROUND_CEILING
+	 * @since 1.0
 	 */
 	CEILING(BigDecimal.ROUND_CEILING),
 	
@@ -66,6 +70,7 @@ public enum Rounding {
 	 * <p>負の無限大に向けて切り上げを行う丸めモードを表す。</p>
 	 * 
 	 * @see BigDecimal#ROUND_FLOOR
+	 * @since 1.0
 	 */
 	FLOOR(BigDecimal.ROUND_FLOOR),
 	
@@ -76,6 +81,7 @@ public enum Rounding {
 	 * {@link #UP}モードを適用する。</p>
 	 * 
 	 * @see BigDecimal#ROUND_HALF_UP
+	 * @since 1.0
 	 */
 	HALF_UP(BigDecimal.ROUND_HALF_UP),
 	
@@ -86,6 +92,7 @@ public enum Rounding {
 	 * {@link #DOWN}モードを適用する。</p>
 	 * 
 	 * @see BigDecimal#ROUND_HALF_DOWN
+	 * @since 1.0
 	 */
 	HALF_DOWN(BigDecimal.ROUND_HALF_DOWN),
 	
@@ -96,6 +103,7 @@ public enum Rounding {
 	 * 偶数側に丸める。</p>
 	 * 
 	 * @see BigDecimal#ROUND_HALF_DOWN
+	 * @since 1.0
 	 */
 	HALF_EVEN(BigDecimal.ROUND_HALF_EVEN),
 	
@@ -106,11 +114,14 @@ public enum Rounding {
 	 * スローする。</p>
 	 * 
 	 * @see BigDecimal#ROUND_UNNECESSARY
+	 * @since 1.0
 	 */
 	UNNECESSARY(BigDecimal.ROUND_UNNECESSARY);
 	
 	/**
 	 * {@link BigDecimal}クラスにおける{@code int}型による定義値。
+	 * 
+	 * @since 1.0
 	 */
 	public final int value;
 	

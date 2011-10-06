@@ -34,6 +34,7 @@ import org.hibernate.type.StandardBasicTypes;
  * 
  * @version $Id$
  * @author daisuke
+ * @since 1.2
  */
 @SuppressWarnings("serial")
 public class PersistentCalendarDate extends AbstractBaseunitsType<CalendarDate, Date> {
@@ -45,6 +46,8 @@ public class PersistentCalendarDate extends AbstractBaseunitsType<CalendarDate, 
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @since 1.2
 	 */
 	public PersistentCalendarDate() {
 		super(StandardBasicTypes.DATE);

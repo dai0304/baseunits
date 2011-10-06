@@ -33,6 +33,7 @@ import org.apache.commons.lang.Validate;
  * 区間列（複数の {@link Interval 区間} の列）を表すクラス。
  * 
  * @param <T> {@link Interval 区間}の型
+ * @since 1.0
  */
 public class IntervalSequence<T extends Comparable<T> & Serializable> implements Iterable<Interval<T>> {
 	
@@ -46,6 +47,8 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	 * 
 	 * <p>各区間のソート条件を決定する {@link Comparator} はデフォルト
 	 * （{@link IntervalComparatorUpperLower}の下位結果反転）を利用する。</p>
+	 * 
+	 * @since 1.0
 	 */
 	public IntervalSequence() {
 		this(new IntervalComparatorUpperLower<T>(true, false));
@@ -56,6 +59,7 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	 * 
 	 * @param comparator 各区間のソート条件を決定する {@link Comparator}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public IntervalSequence(Comparator<Interval<T>> comparator) {
 		Validate.notNull(comparator);
@@ -68,6 +72,7 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	 * 
 	 * @param interval 追加する{@link Interval 区間}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public void add(Interval<T> interval) {
 		Validate.notNull(interval);
@@ -80,6 +85,7 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	 * 
 	 * @return 全ての要素区間を内包する、最小の区間
 	 * @throws IllegalStateException 要素が1つもない場合
+	 * @since 1.0
 	 */
 	public Interval<T> extent() {
 		if (intervals.isEmpty()) {
@@ -117,6 +123,7 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	 * その区間は結果の要素に含まない。全てが重なっている場合は、空の区間列を返す。</p>
 	 * 
 	 * @return ギャップ区間列
+	 * @since 1.0
 	 */
 	public IntervalSequence<T> gaps() {
 		IntervalSequence<T> gaps = new IntervalSequence<T>(comparator);
@@ -143,6 +150,7 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	 * その区間は結果の要素に含まない。全てが重ならない場合は、空の区間列を返す。</p>
 	 * 
 	 * @return 共通区間列
+	 * @since 1.0
 	 */
 	public IntervalSequence<T> intersections() {
 		IntervalSequence<T> intersections = new IntervalSequence<T>(comparator);
@@ -164,6 +172,7 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	 * 区間列の要素が空であるかどうかを検証する。
 	 * 
 	 * @return 空である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isEmpty() {
 		return intervals.isEmpty();
@@ -175,6 +184,7 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	 * <p>各要素は、昇順にソートされている。</p>
 	 * 
 	 * @see java.lang.Iterable#iterator()
+	 * @since 1.0
 	 */
 	@Override
 	public Iterator<Interval<T>> iterator() {

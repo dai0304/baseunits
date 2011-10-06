@@ -34,6 +34,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @param <K> キーとなる区間が表現する型
  * @param <V> 値の型
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implements IntervalMap<K, V>, Serializable {
@@ -43,6 +44,8 @@ public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implem
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @since 1.0
 	 */
 	public LinearIntervalMap() {
 		keyValues = new HashMap<Interval<K>, V>();
@@ -119,6 +122,7 @@ public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implem
 	 * @param otherInterval 対象区間
 	 * @return 指定した区間と共通部分を持つ区間の列
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	private List<Interval<K>> intersectingKeys(Interval<K> otherInterval) {
 		Validate.notNull(otherInterval);
@@ -130,5 +134,4 @@ public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implem
 		}
 		return intervalSequence;
 	}
-	
 }

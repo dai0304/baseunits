@@ -27,6 +27,7 @@ import java.io.Serializable;
  * 
  * @param <K> キーとなる区間の型
  * @param <V> 値の型
+ * @since 1.0
  */
 public interface IntervalMap<K extends Comparable<K> & Serializable, V> {
 	
@@ -36,6 +37,7 @@ public interface IntervalMap<K extends Comparable<K> & Serializable, V> {
 	 * @param interval 区間
 	 * @return 指定した区間と共通部分を持つ区間に対するマッピングがマップに含まれている場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	boolean containsIntersectingKey(Interval<K> interval);
 	
@@ -44,6 +46,7 @@ public interface IntervalMap<K extends Comparable<K> & Serializable, V> {
 	 * 
 	 * @param key キー
 	 * @return 指定されたキーを含む区間に対するマッピングがマップに含まれている場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	boolean containsKey(K key);
 	
@@ -57,6 +60,7 @@ public interface IntervalMap<K extends Comparable<K> & Serializable, V> {
 	 * 
 	 * @param key キーとなる値
 	 * @return 値
+	 * @since 1.0
 	 */
 	V get(K key);
 	
@@ -71,6 +75,7 @@ public interface IntervalMap<K extends Comparable<K> & Serializable, V> {
 	 * @param keyInterval キーとなる区間
 	 * @param value 値
 	 * @throws IllegalArgumentException 引数keyIntervalに{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	void put(Interval<K> keyInterval, V value);
 	
@@ -79,6 +84,7 @@ public interface IntervalMap<K extends Comparable<K> & Serializable, V> {
 	 * 
 	 * @param keyInterval 削除する区間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	void remove(Interval<K> keyInterval);
 }

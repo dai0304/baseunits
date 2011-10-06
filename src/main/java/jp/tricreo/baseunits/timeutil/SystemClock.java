@@ -25,6 +25,8 @@ import jp.tricreo.baseunits.time.TimeSource;
 
 /**
  * システム時計に基づき、現在の時刻を返すクラス。
+ * 
+ * @since 1.0
  */
 public final class SystemClock implements TimeSource {
 	
@@ -35,6 +37,7 @@ public final class SystemClock implements TimeSource {
 	 * システム時間に基づき現在の時刻を返す {@link TimeSource} を返す。
 	 * 
 	 * @return システム時間に基づき現在の時刻を返す {@link TimeSource}
+	 * @since 1.0
 	 */
 	public static TimeSource timeSource() {
 		// THINK なぜ INSTANCE を直接返さないのか？ 謎だ。

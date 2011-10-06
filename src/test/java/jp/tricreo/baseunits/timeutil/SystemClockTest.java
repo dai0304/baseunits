@@ -46,8 +46,8 @@ public class SystemClockTest {
 		// The following calls allow polymorphic substitution of TimeSources
 		// either in applications or, more often, in testing.
 		TimeSource source = SystemClock.timeSource();
-		long expectedNow = TimePoint.from(new Date()).breachEncapsulationOfMillisecondsFromEpoc();
-		long now = source.now().breachEncapsulationOfMillisecondsFromEpoc();
+		long expectedNow = TimePoint.from(new Date()).toEpochMillisec();
+		long now = source.now().toEpochMillisec();
 		
 		// タイミングによって成功しない、微妙なテスト…。
 		assertThat((double) now, is(closeTo(expectedNow, 50)));

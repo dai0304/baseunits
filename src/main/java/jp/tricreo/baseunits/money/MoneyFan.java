@@ -34,6 +34,7 @@ import org.apache.commons.lang.Validate;
  * 割り当ての集合。
  * 
  * @param <T> 割り当て対象
+ * @since 1.0
  */
 public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	
@@ -42,6 +43,8 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public MoneyFan() {
@@ -53,6 +56,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * 
 	 * @param allotment 割り当ての要素（単一）
 	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public MoneyFan(Allotment<T> allotment) {
 		Validate.notNull(allotment);
@@ -65,6 +69,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * 
 	 * @param allotments 割り当ての集合。 {@link Set}の仕様と同様、重複は排除される。
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public MoneyFan(Collection<Allotment<T>> allotments) {
 		Validate.noNullElements(allotments);
@@ -80,6 +85,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * 
 	 * @param anEntity 割り当て対象
 	 * @return {@link Allotment}。見つからなかった場合は{@code null}
+	 * @since 1.0
 	 */
 	public Allotment<T> allotment(T anEntity) {
 		for (Allotment<T> allotment : allotments) {
@@ -124,6 +130,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * @param subtracted {@link MoneyFan}
 	 * @return {@link MoneyFan}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public MoneyFan<T> minus(MoneyFan<T> subtracted) {
 		Validate.notNull(subtracted);
@@ -135,6 +142,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * 新しい {@link MoneyFan}を返す。
 	 * 
 	 * @return {@link MoneyFan}
+	 * @since 1.0
 	 */
 	public MoneyFan<T> negated() {
 		Set<Allotment<T>> negatedAllotments = new HashSet<Allotment<T>>();
@@ -152,6 +160,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * @param added {@link MoneyFan}
 	 * @return {@link MoneyFan}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public MoneyFan<T> plus(MoneyFan<T> added) {
 		Validate.notNull(added);
@@ -185,6 +194,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * 全ての割り当ての合計額を返す。
 	 * 
 	 * @return 合計額
+	 * @since 1.0
 	 */
 	public Money total() {
 		return asTally().net();
@@ -203,6 +213,7 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * 新しい {@link MoneyFan}を返す。
 	 * 
 	 * @return {@link MoneyFan}
+	 * @since 1.0
 	 */
 	private MoneyFan<T> withoutZeros() {
 		Set<Allotment<T>> nonZeroAllotments = new HashSet<Allotment<T>>();
@@ -213,5 +224,4 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 		}
 		return new MoneyFan<T>(nonZeroAllotments);
 	}
-	
 }

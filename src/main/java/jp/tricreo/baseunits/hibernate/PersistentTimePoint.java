@@ -32,6 +32,7 @@ import org.hibernate.type.StandardBasicTypes;
  * 
  * @version $Id$
  * @author daisuke
+ * @since 1.2
  */
 @SuppressWarnings("serial")
 public class PersistentTimePoint extends AbstractBaseunitsType<TimePoint, Date> {
@@ -43,6 +44,8 @@ public class PersistentTimePoint extends AbstractBaseunitsType<TimePoint, Date> 
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @since 1.2
 	 */
 	public PersistentTimePoint() {
 		super(StandardBasicTypes.DATE);

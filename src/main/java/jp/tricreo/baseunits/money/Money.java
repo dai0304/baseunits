@@ -37,6 +37,8 @@ import org.apache.commons.lang.Validate;
  * 金額を表すクラス。
  * 
  * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class Money implements Comparable<Money>, Serializable {
@@ -59,6 +61,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param amount 量
 	 * @return {@code amount}で表す量のドルを表すインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money dollars(BigDecimal amount) {
 		Validate.notNull(amount);
@@ -73,6 +76,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param amount 量
 	 * @return {@code amount}で表す量のドルを表すインスタンス
+	 * @since 1.0
 	 */
 	public static Money dollars(double amount) {
 		return Money.valueOf(amount, USD);
@@ -84,6 +88,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param amount 量
 	 * @return {@code amount}で表す量のユーロを表すインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money euros(BigDecimal amount) {
 		Validate.notNull(amount);
@@ -95,6 +100,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * round off the value.
 	 * @param amount 量
 	 * @return {@code amount}で表す量のユーロを表すインスタンス
+	 * @since 1.0
 	 */
 	public static Money euros(double amount) {
 		return Money.valueOf(amount, EUR);
@@ -111,6 +117,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @throws ClassCastException 引数の通貨単位の中に通貨単位が異なるものを含む場合。
 	 * 				ただし、量が0の金額については通貨単位を考慮しないので例外は発生しない。
 	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money sum(Collection<Money> monies) {
 		Validate.notNull(monies);
@@ -134,6 +141,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param currency 通貨単位
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money valueOf(BigDecimal amount, Currency currency) {
 		Validate.notNull(amount);
@@ -149,8 +157,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #valueOf(double, Currency, RoundingMode)}
+	 * 			use {@link #valueOf(double, Currency, RoundingMode)}
 	 */
 	@Deprecated
 	public static Money valueOf(BigDecimal rawAmount, Currency currency, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -169,6 +178,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public static Money valueOf(BigDecimal rawAmount, Currency currency, RoundingMode roundingMode) {
 		Validate.notNull(rawAmount);
@@ -186,6 +196,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param currency 通貨単位
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money valueOf(double dblAmount, Currency currency) {
 		Validate.notNull(currency);
@@ -201,8 +212,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #valueOf(double, Currency, RoundingMode)}
+	 * 			use {@link #valueOf(double, Currency, RoundingMode)}
 	 */
 	@Deprecated
 	public static Money valueOf(double dblAmount, Currency currency, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -221,6 +233,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public static Money valueOf(double dblAmount, Currency currency, RoundingMode roundingMode) {
 		Validate.notNull(currency);
@@ -236,6 +249,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param amount 量
 	 * @return {@code amount}で表す量の円を表すインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money yens(BigDecimal amount) {
 		Validate.notNull(amount);
@@ -248,6 +262,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param amount 量
 	 * @return {@code amount}で表す量の円を表すインスタンス
+	 * @since 1.0
 	 */
 	public static Money yens(double amount) {
 		return Money.valueOf(amount, JPY);
@@ -259,6 +274,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param currency 通貨単位
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money zero(Currency currency) {
 		Validate.notNull(currency);
@@ -282,6 +298,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param currency 通貨単位
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code amount}のスケールと引数{@code currency}のfraction digitsが一致しない場合
+	 * @since 1.0
 	 */
 	public Money(BigDecimal amount, Currency currency) {
 		Validate.notNull(amount);
@@ -297,6 +314,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * Returns a {@link Money} whose amount is the absolute amount of this {@link Money}, and whose scale is this.scale().
 	 * 
 	 * @return 絶対金額
+	 * @since 1.0
 	 */
 	public Money abs() {
 		return Money.valueOf(amount.abs(), currency);
@@ -310,8 +328,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #applying(Ratio, int, RoundingMode)}
+	 * 			use {@link #applying(Ratio, int, RoundingMode)}
 	 */
 	@Deprecated
 	public Money applying(Ratio ratio, int scale, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -329,6 +348,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public Money applying(Ratio ratio, int scale, RoundingMode roundingMode) {
 		Validate.notNull(ratio);
@@ -344,8 +364,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #applying(Ratio, RoundingMode)}
+	 * 			use {@link #applying(Ratio, RoundingMode)}
 	 */
 	@Deprecated
 	public Money applying(Ratio ratio, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -361,6 +382,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public Money applying(Ratio ratio, RoundingMode roundingMode) {
 		Validate.notNull(ratio);
@@ -381,6 +403,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * warning label of sorts. Let us know how you like it.</p>
 	 * 
 	 * @return 量
+	 * @since 1.0
 	 */
 	public BigDecimal breachEncapsulationOfAmount() {
 		return amount;
@@ -392,6 +415,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 通貨単位
+	 * @since 1.0
 	 */
 	public Currency breachEncapsulationOfCurrency() {
 		return currency;
@@ -410,6 +434,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @return {@link Comparable#compareTo(Object)}に準じる
 	 * @throws ClassCastException 比較対象の通貨単位が異なり、かつ双方の量がどちらも0ではない場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	@Override
 	public int compareTo(Money other) {
@@ -429,8 +454,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #dividedBy(BigDecimal, RoundingMode)}
+	 * 			use {@link #dividedBy(BigDecimal, RoundingMode)}
 	 */
 	@Deprecated
 	public Money dividedBy(BigDecimal divisor, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -447,6 +473,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public Money dividedBy(BigDecimal divisor, RoundingMode roundingMode) {
 		Validate.notNull(divisor);
@@ -462,6 +489,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param divisor 除数
 	 * @return 金額
+	 * @since 1.0
 	 */
 	public Money dividedBy(double divisor) {
 		return dividedBy(divisor, DEFAULT_ROUNDING_MODE);
@@ -474,8 +502,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #dividedBy(double, RoundingMode)}
+	 * 			use {@link #dividedBy(double, RoundingMode)}
 	 */
 	@Deprecated
 	public Money dividedBy(double divisor, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -490,6 +519,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public Money dividedBy(double divisor, RoundingMode roundingMode) {
 		Validate.notNull(roundingMode);
@@ -504,6 +534,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 * @throws ArithmeticException 引数{@code divisor}の量が0だった場合
+	 * @since 1.0
 	 */
 	public Ratio dividedBy(Money divisor) {
 		Validate.notNull(divisor);
@@ -554,6 +585,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @return 大きい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isGreaterThan(Money other) {
 		return compareTo(other) > 0;
@@ -568,6 +600,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @return 小さい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isLessThan(Money other) {
 		return compareTo(other) < 0;
@@ -579,6 +612,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * <p>ゼロの場合は{@code false}とする。</p>
 	 * 
 	 * @return 負の金額である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isNegative() {
 		return amount.compareTo(BigDecimal.ZERO) < 0;
@@ -590,6 +624,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * <p>ゼロの場合は{@code false}とする。</p>
 	 * 
 	 * @return 正の金額である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isPositive() {
 		return amount.compareTo(BigDecimal.ZERO) > 0;
@@ -599,6 +634,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * このインスタンがあらわす金額が、ゼロかどうか調べる。
 	 * 
 	 * @return ゼロである場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isZero() {
 		return equals(Money.valueOf(0.0, currency));
@@ -611,6 +647,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @return 差し引き金額
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public Money minus(Money other) {
 		Validate.notNull(other);
@@ -621,6 +658,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * Returns a {@link Money} whose amount is (-amount), and whose scale is this.scale().
 	 * 
 	 * @return 金額
+	 * @since 1.0
 	 */
 	public Money negated() {
 		return Money.valueOf(amount.negate(), currency);
@@ -632,6 +670,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param duration 時間量
 	 * @return 割合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public MoneyTimeRate per(Duration duration) {
 		Validate.notNull(duration);
@@ -645,6 +684,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @return 足した金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @since 1.0
 	 */
 	public Money plus(Money other) {
 		Validate.notNull(other);
@@ -666,6 +706,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param factor 係数
 	 * @return 掛けた金額
+	 * @since 1.0
 	 */
 	public Money times(BigDecimal factor) {
 		return times(factor, DEFAULT_ROUNDING_MODE);
@@ -681,8 +722,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #times(BigDecimal, RoundingMode)}
+	 * 			use {@link #times(BigDecimal, RoundingMode)}
 	 */
 	@Deprecated
 	public Money times(BigDecimal factor, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -701,6 +743,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public Money times(BigDecimal factor, RoundingMode roundingMode) {
 		Validate.notNull(factor);
@@ -715,6 +758,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param amount 係数
 	 * @return 掛けた金額
+	 * @since 1.0
 	 */
 	public Money times(double amount) {
 		return times(new BigDecimal(amount));
@@ -727,8 +771,9 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #times(double, RoundingMode)}
+	 * 			use {@link #times(double, RoundingMode)}
 	 */
 	@Deprecated
 	public Money times(double amount, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -743,6 +788,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param roundingMode 丸めモード
 	 * @return 掛けた金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public Money times(double amount, RoundingMode roundingMode) {
 		Validate.notNull(roundingMode);
@@ -756,6 +802,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param amount 係数
 	 * @return 掛けた金額
+	 * @since 1.0
 	 */
 	public Money times(int amount) {
 		return times(new BigDecimal(amount));
@@ -771,6 +818,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param locale ロケール。{@code null}の場合は {@link Locale#getDefault()} を利用する。
 	 * @return 金額の文字列表現
+	 * @since 1.0
 	 */
 	public String toString(Locale locale) {
 		if (locale == null) {

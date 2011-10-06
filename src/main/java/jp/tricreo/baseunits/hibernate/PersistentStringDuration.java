@@ -28,6 +28,7 @@ import jp.tricreo.baseunits.time.TimeUnit;
  * 
  * @version $Id$
  * @author daisuke
+ * @since 1.2
  */
 @SuppressWarnings("serial")
 public class PersistentStringDuration extends AbstractStringBasedBaseunitsType<Duration> {
@@ -47,5 +48,4 @@ public class PersistentStringDuration extends AbstractStringBasedBaseunitsType<D
 	protected String toNonNullInternalType(Duration value) {
 		return String.format("%s %s", value.breachEncapsulationOfQuantity(), value.breachEncapsulationOfUnit());
 	}
-	
 }

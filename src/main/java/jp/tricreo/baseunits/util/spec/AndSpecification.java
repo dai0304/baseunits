@@ -24,6 +24,7 @@ import org.apache.commons.lang.Validate;
  * <p>2つの {@link Specification} の論理積をとる {@link Specification} 実装クラス。</p>
  * 
  * @param <T> {@link AndSpecification}の型
+ * @since 1.0
  */
 public class AndSpecification<T> extends AbstractSpecification<T> {
 	
@@ -38,6 +39,7 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
 	 * @param spec1 Specification one.
 	 * @param spec2 Specification two.
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public AndSpecification(Specification<T> spec1, Specification<T> spec2) {
 		Validate.notNull(spec1);

@@ -25,17 +25,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.commons.lang.Validate;
 import org.hibernate.HibernateException;
 import org.hibernate.type.SingleColumnType;
 import org.hibernate.usertype.UserType;
 
 /**
- * TODO for daisuke
+ * Baseunitsの型をHibernate用ユーザ定義型として利用するための定義の抽象骨格実装クラス。
  * 
- * @param <E> External Type
- * @param <I> Internal Type
+ * @param <E> External Type（Baseunitsの型）
+ * @param <I> Internal Type（DBに保存できる型）
  * @version $Id$
  * @author daisuke
+ * @since 1.2
  */
 @SuppressWarnings("serial")
 public abstract class AbstractBaseunitsType<E, I> implements UserType, Serializable {
@@ -46,9 +48,12 @@ public abstract class AbstractBaseunitsType<E, I> implements UserType, Serializa
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param sct 
+	 * @param sct {@link SingleColumnType}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.2
 	 */
 	public AbstractBaseunitsType(SingleColumnType<I> sct) {
+		Validate.notNull(sct);
 		this.sct = sct;
 	}
 	
@@ -100,7 +105,10 @@ public abstract class AbstractBaseunitsType<E, I> implements UserType, Serializa
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({
+		"deprecation",
+		"unchecked"
+	})
 	public void nullSafeSet(PreparedStatement st, Object value, int index) throws HibernateException, SQLException {
 		if (value == null) {
 			sct.nullSafeSet(st, null, index);
@@ -117,8 +125,21 @@ public abstract class AbstractBaseunitsType<E, I> implements UserType, Serializa
 	@Override
 	public abstract Class<E> returnedClass();
 	
+	/**
+	 * baseunits型をDB型に変換する。
+	 * 
+	 * @param value baseunits型
+	 * @return DB型
+	 * @since 1.2
+	 */
 	protected abstract E fromNonNullInternalType(I value);
 	
+	/**
+	 * DB型をbaseunits型に変換する。
+	 * 
+	 * @param value DB型
+	 * @return baseunits型
+	 * @since 1.2
+	 */
 	protected abstract I toNonNullInternalType(E value);
-	
 }

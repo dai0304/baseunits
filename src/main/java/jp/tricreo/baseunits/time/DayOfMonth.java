@@ -24,7 +24,9 @@ import org.apache.commons.lang.Validate;
 /**
  * 1ヶ月間の中の特定の「日」を表すクラス。
  * 
- * <p>タイムゾーンの概念はない。</p>
+ * <p>タイムゾーンの概念はない。また、このクラスは特定の瞬間をモデリングしたものではなく、その日1日間全ての範囲を表すクラスである。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
@@ -40,6 +42,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @param day 日をあらわす正数（1〜31）
 	 * @return {@link DayOfMonth}
 	 * @throws IllegalArgumentException 引数の値が1〜31の範囲ではない場合
+	 * @since 1.0
 	 */
 	public static DayOfMonth valueOf(int day) {
 		return new DayOfMonth(day);
@@ -54,6 +57,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * インスタンスを生成する。
 	 * 
 	 * @param initial 日
+	 * @since 1.0
 	 */
 	public DayOfMonth(int initial) {
 		if (initial < MIN || initial > MAX) {
@@ -69,6 +73,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 日をあらわす正数（1〜31）
+	 * @since 1.0
 	 */
 	public int breachEncapsulationOfValue() {
 		return value;
@@ -110,6 +115,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isAfter(DayOfMonth other) {
 		if (other == null) {
@@ -127,6 +133,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @param month 年月
 	 * @return 適用可能な場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isApplyable(CalendarMonth month) {
 		Validate.notNull(month);
@@ -143,6 +150,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @param month 月
 	 * @return 適用可能な場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isApplyable(int year, MonthOfYear month) {
 		return month.getLastDayOfThisMonth(year).isBefore(this) == false;
@@ -156,6 +164,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @param other 対象日
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isBefore(DayOfMonth other) {
 		if (other == null) {
@@ -171,6 +180,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code month}の月にこの日が存在しない場合
+	 * @since 1.0
 	 */
 	public CalendarDate on(CalendarMonth month) {
 		return CalendarDate.from(month, this);

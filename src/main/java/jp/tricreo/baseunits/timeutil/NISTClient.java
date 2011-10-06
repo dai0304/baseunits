@@ -34,6 +34,8 @@ import org.apache.commons.lang.Validate;
  * NISTのdaytimeプロトコルクライアント。
  * 
  * <p>National Institute of Standards and Technology provides an Internet time server.</p>
+ * 
+ * @since 1.0
  */
 public class NISTClient {
 	
@@ -58,6 +60,8 @@ public class NISTClient {
 	 * インスタンスを生成する。
 	 * 
 	 * <p>時間の問い合わせ先は、{@code time.nist.gov:13}を使用する。</p>
+	 * 
+	 * @since 1.0
 	 */
 	public NISTClient() {
 		this(DEFAULT_SERVER, DEFAULT_PORT);
@@ -70,6 +74,7 @@ public class NISTClient {
 	 * 
 	 * @param serverName サーバ名
 	 * @param port ポート番号
+	 * @since 1.0
 	 */
 	public NISTClient(String serverName, int port) {
 		Validate.notNull(serverName);
@@ -82,6 +87,7 @@ public class NISTClient {
 	 * 
 	 * @return ネットワーク時間に基づき現在の時刻を返す {@link TimeSource}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimeSource timeSource() {
 		return new TimeSource() {
@@ -110,6 +116,7 @@ public class NISTClient {
 	 * @return 入力に基づく{@link TimePoint}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ParseException 引数nistRawFormattedStringの解析に失敗した場合
+	 * @since 1.0
 	 */
 	protected TimePoint asTimePoint(String nistRawFormattedString) throws ParseException {
 		Validate.notNull(nistRawFormattedString);

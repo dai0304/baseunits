@@ -39,6 +39,8 @@ import org.apache.commons.lang.Validate;
  * gives control of the precision and rounding rules to the client, when the
  * time comes to compute a decimal value for the ratio. The client typically has
  * the responsibilities that enable an appropriate choice of these parameters.<p>
+ * 
+ * @since 1.0
  */
 public class Ratio {
 	
@@ -48,6 +50,7 @@ public class Ratio {
 	 * @param fractional 分数
 	 * @return 与えた分数であらわされる比率
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Ratio of(BigDecimal fractional) {
 		return new Ratio(fractional, BigDecimal.valueOf(1));
@@ -61,6 +64,7 @@ public class Ratio {
 	 * @return 引数に与えた分子、分母からなる比
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
+	 * @since 1.0
 	 */
 	public static Ratio of(BigDecimal numerator, BigDecimal denominator) {
 		return new Ratio(numerator, denominator);
@@ -73,6 +77,7 @@ public class Ratio {
 	 * @param denominator 分母
 	 * @return 引数に与えた分子、分母からなる比率
 	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
+	 * @since 1.0
 	 */
 	public static Ratio of(long numerator, long denominator) {
 		return new Ratio(BigDecimal.valueOf(numerator), BigDecimal.valueOf(denominator));
@@ -87,13 +92,14 @@ public class Ratio {
 	
 	
 	/**
-	* インスタンスを生成する。
-	* 
-	* @param numerator 分子
-	* @param denominator 分母
-	* @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	* @throws ArithmeticException 引数{@code denominator}が0だった場合
-	*/
+	 * インスタンスを生成する。
+	 * 
+	 * @param numerator 分子
+	 * @param denominator 分母
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
+	 * @since 1.0
+	 */
 	public Ratio(BigDecimal numerator, BigDecimal denominator) {
 		Validate.notNull(numerator);
 		Validate.notNull(denominator);
@@ -110,6 +116,7 @@ public class Ratio {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 分母をあらわず数
+	 * @since 1.0
 	 */
 	public BigDecimal breachEncapsulationOfDenominator() {
 		return denominator;
@@ -121,6 +128,7 @@ public class Ratio {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 分子をあらわす数
+	 * @since 1.0
 	 */
 	public BigDecimal breachEncapsulationOfNumerator() {
 		return numerator;
@@ -133,8 +141,9 @@ public class Ratio {
 	 * @param roundingMode 丸めモード
 	 * @return この比率の {@link BigDecimal} 型の表現
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #decimalValue(int, RoundingMode)}
+	 * 			use {@link #decimalValue(int, RoundingMode)}
 	 */
 	@Deprecated
 	public BigDecimal decimalValue(int scale, Rounding roundingMode) {
@@ -149,6 +158,7 @@ public class Ratio {
 	 * @param roundingMode 丸めモード
 	 * @return この比率の {@link BigDecimal} 型の表現
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public BigDecimal decimalValue(int scale, RoundingMode roundingMode) {
 		Validate.notNull(roundingMode);
@@ -168,6 +178,7 @@ public class Ratio {
 	 * @param obj 比較対象オブジェクト
 	 * @return 同一の場合は{@code true}、そうでない場合は{@code false}
 	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @since 1.0
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -211,6 +222,7 @@ public class Ratio {
 	 * @param multiplier 乗数
 	 * @return 積
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public Ratio times(BigDecimal multiplier) {
 		Validate.notNull(multiplier);
@@ -225,6 +237,7 @@ public class Ratio {
 	 * @param multiplier 乗数比率
 	 * @return 積
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public Ratio times(Ratio multiplier) {
 		Validate.notNull(multiplier);
@@ -236,10 +249,10 @@ public class Ratio {
 	 * <p>"分子/分母"という表記となる。</p>
 	 * 
 	 * @see java.lang.Object#toString()
+	 * @since 1.0
 	 */
 	@Override
 	public String toString() {
 		return numerator.toString() + "/" + denominator;
 	}
-	
 }

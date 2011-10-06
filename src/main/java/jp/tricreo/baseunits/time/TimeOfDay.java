@@ -29,7 +29,10 @@ import org.apache.commons.lang.Validate;
 /**
  * 1日の中の特定の「時分」を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。
+ * また、このクラスは特定の瞬間をモデリングしたものではなく、その1分間全ての範囲を表すクラスである。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
@@ -41,6 +44,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param minute 分
 	 * @return {@link TimeOfDay}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute) {
 		return new TimeOfDay(hour, minute);
@@ -54,6 +58,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @return {@link TimeOfDay}
 	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
+	 * @since 1.0
 	 */
 	public static TimeOfDay from(int hour, int minute) {
 		return new TimeOfDay(HourOfDay.valueOf(hour), MinuteOfHour.valueOf(minute));
@@ -88,6 +93,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param timeZone タイムゾーン
 	 * @return 瞬間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimePoint asTimePointGiven(CalendarDate date, TimeZone timeZone) {
 		Validate.notNull(date);
@@ -102,6 +108,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 時
+	 * @since 1.0
 	 */
 	public HourOfDay breachEncapsulationOfHour() {
 		return hour;
@@ -113,6 +120,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 分
+	 * @since 1.0
 	 */
 	public MinuteOfHour breachEncapsulationOfMinute() {
 		return minute;
@@ -167,6 +175,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param another 基準時分
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isAfter(TimeOfDay another) {
 		Validate.notNull(another);
@@ -181,6 +190,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param another 基準時分
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isBefore(TimeOfDay another) {
 		Validate.notNull(another);
@@ -193,6 +203,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param date 年月日
 	 * @return {@link CalendarMinute}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public CalendarMinute on(CalendarDate date) {
 		Validate.notNull(date);
@@ -209,6 +220,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * 
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @return 整形済み時分文字列
+	 * @since 1.0
 	 */
 	public String toString(String pattern) {
 		// Any timezone works, as long as the same one is used throughout.

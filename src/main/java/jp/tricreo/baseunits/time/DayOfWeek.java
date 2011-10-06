@@ -25,7 +25,9 @@ import java.util.Calendar;
 /**
  * 1週間の中の特定の「曜日」を表す列挙型。
  * 
- * <p>タイムゾーンの概念はない。</p>
+ * <p>タイムゾーンの概念はない。また、このクラスは特定の瞬間をモデリングしたものではなく、その日1日間全ての範囲を表すクラスである。</p>
+ * 
+ * @since 1.0
  */
 public enum DayOfWeek {
 	
@@ -55,6 +57,7 @@ public enum DayOfWeek {
 	 * 
 	 * @param value {@link Calendar}に定義されている定数値
 	 * @return {@link DayOfWeek}. 見つからなかった場合は {@code null}
+	 * @since 1.0
 	 */
 	public static DayOfWeek valueOf(int value) {
 		for (DayOfWeek dayOfWeek : values()) {
@@ -80,9 +83,9 @@ public enum DayOfWeek {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return {@link Calendar}に定義する曜日をあらわす定数値（{@link Calendar#SUNDAY}〜{@link Calendar#SATURDAY}）
+	 * @since 1.0
 	 */
 	public int breachEncapsulationOfValue() {
 		return value;
 	}
-	
 }

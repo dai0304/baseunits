@@ -27,7 +27,10 @@ import org.apache.commons.lang.Validate;
 /**
  * 1時間の中の特定の「分」を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * <p>{@link java.util.Date}と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。
+ * また、このクラスは特定の瞬間をモデリングしたものではなく、その1分間全ての範囲を表すクラスである。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
@@ -43,6 +46,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	 * @param initial 分をあらわす正数
 	 * @return 分（0〜59）
 	 * @throws IllegalArgumentException 引数の値が0〜59の範囲ではない場合
+	 * @since 1.0
 	 */
 	public static MinuteOfHour valueOf(int initial) {
 		return new MinuteOfHour(initial);
@@ -67,6 +71,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 分をあらわす正数（0〜59）
+	 * @since 1.0
 	 */
 	public int breachEncapsulationOfValue() {
 		return value;
@@ -108,6 +113,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	 * @param another 基準分
 	 * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isAfter(MinuteOfHour another) {
 		Validate.notNull(another);
@@ -122,6 +128,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	 * @param another 基準分
 	 * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isBefore(MinuteOfHour another) {
 		Validate.notNull(another);

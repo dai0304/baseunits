@@ -31,6 +31,8 @@ import org.apache.commons.lang.Validate;
  * 時間量（時間の長さ・期間の長さなど）を表すクラス。
  * 
  * <p>負の時間量は表現しない。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class Duration implements Comparable<Duration>, Serializable {
@@ -44,6 +46,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（日）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration days(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.day);
@@ -59,6 +62,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param seconds 時間の長さ（秒）
 	 * @param milliseconds  時間の長さ（ミリ秒）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration daysHoursMinutesSecondsMilliseconds(long days, long hours, long minutes, long seconds,
 			long milliseconds) {
@@ -83,6 +87,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（時間）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration hours(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.hour);
@@ -93,6 +98,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（ミリ秒）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration milliseconds(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.millisecond);
@@ -103,6 +109,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（分）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration minutes(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.minute);
@@ -113,6 +120,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（月）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration months(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.month);
@@ -123,6 +131,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（四半期）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration quarters(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.quarter);
@@ -133,6 +142,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（ミリ）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration seconds(long howMany) {
 		return Duration.valueOf(howMany, TimeUnit.second);
@@ -143,6 +153,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（週）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration weeks(int howMany) {
 		return Duration.valueOf(howMany, TimeUnit.week);
@@ -153,6 +164,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（年）
 	 * @return 時間量
+	 * @since 1.0
 	 */
 	public static Duration years(int howMany) {
 		return Duration.valueOf(howMany, TimeUnit.year);
@@ -175,6 +187,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param unit 量の単位
 	 * @throws IllegalArgumentException 引数quantityが0未満の場合
 	 * @throws IllegalArgumentException 引数unitに{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public Duration(long quantity, TimeUnit unit) {
 		Validate.notNull(unit);
@@ -191,6 +204,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param day 元となる日付
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public CalendarDate addedTo(CalendarDate day) {
 		Validate.notNull(day);
@@ -215,6 +229,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param month 元となる年月
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の年月
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public CalendarMonth addedTo(CalendarMonth month) {
 		Validate.notNull(month);
@@ -238,6 +253,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
+	 * @since 1.0
 	 */
 	public TimePoint addedTo(TimePoint point) {
 		Validate.notNull(point);
@@ -250,6 +266,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 量
+	 * @since 1.0
 	 */
 	public long breachEncapsulationOfQuantity() {
 		return quantity;
@@ -261,6 +278,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 単位
+	 * @since 1.0
 	 */
 	public TimeUnit breachEncapsulationOfUnit() {
 		return unit;
@@ -278,6 +296,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return {@link Comparable#compareTo(Object)}に準じる
 	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	@Override
 	public int compareTo(Duration other) {
@@ -305,6 +324,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @throws IllegalArgumentException 引数divisorの単位を、このオブジェクトの単位に変換できない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ArithmeticException 引数{@code divisor}が0だった場合
+	 * @since 1.0
 	 */
 	public Ratio dividedBy(Duration divisor) {
 		Validate.notNull(divisor);
@@ -350,6 +370,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
 	 * @throws IllegalArgumentException 引数otherの長さが、このオブジェクトよりも長い場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public Duration minus(Duration other) {
 		Validate.notNull(other);
@@ -365,6 +386,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * <p>例えば、1〜23時間, 25〜47時間は hours だが、24時間, 48時間は days である。</p>
 	 * 
 	 * @return 時間単位
+	 * @since 1.0
 	 */
 	public TimeUnit normalizedUnit() {
 		TimeUnit[] units = unit.descendingUnits();
@@ -386,6 +408,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量の和
 	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public Duration plus(Duration other) {
 		Validate.notNull(other);
@@ -400,6 +423,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimeInterval preceding(TimePoint end) {
 		Validate.notNull(end);
@@ -416,6 +440,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public CalendarInterval startingFrom(CalendarDate start) {
 		Validate.notNull(start);
@@ -430,6 +455,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimeInterval startingFrom(TimePoint start) {
 		Validate.notNull(start);
@@ -444,6 +470,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param day 元となる日付
 	 * @return このオブジェクトが表現する長さのを引いた、過去の日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public CalendarDate subtractedFrom(CalendarDate day) {
 		Validate.notNull(day);
@@ -467,6 +494,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return このオブジェクトが表現する長さのを引いた、過去の日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
+	 * @since 1.0
 	 */
 	public TimePoint subtractedFrom(TimePoint point) {
 		Validate.notNull(point);
@@ -477,6 +505,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * この時間量の文字列表現を返す。
 	 * 
 	 * @return 時間量の文字列表現
+	 * @since 1.0
 	 */
 	public String toNormalizedString() {
 		return toNormalizedString(unit.descendingUnits());
@@ -487,6 +516,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @return 時間量の文字列表現
 	 * @see #toNormalizedString()
+	 * @since 1.0
 	 */
 	@Override
 	public String toString() {
@@ -504,7 +534,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	
 	TimePoint addAmountToTimePoint(long amount, TimePoint point) {
 		if (unit.isConvertibleToMilliseconds()) {
-			return TimePoint.from(amount + point.millisecondsFromEpoc);
+			return TimePoint.from(amount + point.millisecondsFromEpoch);
 		} else {
 			Calendar calendar = point.asJavaCalendar();
 			addAmountToCalendar(amount, calendar);

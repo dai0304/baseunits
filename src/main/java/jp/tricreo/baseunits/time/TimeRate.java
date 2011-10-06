@@ -29,6 +29,8 @@ import org.apache.commons.lang.Validate;
  * 単位時間あたりの何らかの量（時間に対する割合）をあらわすクラス。
  * 
  * <p>例えば、時給・時速など。</p>
+ * 
+ * @since 1.0
  */
 public class TimeRate {
 	
@@ -45,6 +47,7 @@ public class TimeRate {
 	 * @param quantity 単位時間あたりの量
 	 * @param unit 単位時間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimeRate(BigDecimal quantity, Duration unit) {
 		Validate.notNull(quantity);
@@ -60,6 +63,7 @@ public class TimeRate {
 	 * @param unit 単位時間
 	 * @throws IllegalArgumentException 引数unitに{@code null}を与えた場合
 	 * @throws NumberFormatException see {@link BigDecimal#BigDecimal(double)}
+	 * @since 1.0
 	 */
 	public TimeRate(double quantity, Duration unit) {
 		this(new BigDecimal(quantity), unit);
@@ -73,6 +77,7 @@ public class TimeRate {
 	 * @throws NullPointerException 引数quantityに{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数unitに{@code null}を与えた場合
 	 * @throws NumberFormatException see {@link BigDecimal#BigDecimal(String)}
+	 * @since 1.0
 	 */
 	public TimeRate(String quantity, Duration unit) {
 		this(new BigDecimal(quantity), unit);
@@ -84,6 +89,7 @@ public class TimeRate {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 単位時間あたりの量
+	 * @since 1.0
 	 */
 	public BigDecimal breachEncapsulationOfQuantity() {
 		return quantity;
@@ -95,6 +101,7 @@ public class TimeRate {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 単位時間
+	 * @since 1.0
 	 */
 	public Duration breachEncapsulationOfUnit() {
 		return unit;
@@ -144,6 +151,7 @@ public class TimeRate {
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
 	 * @throws ArithmeticException 引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public BigDecimal over(Duration duration) {
 		Validate.notNull(duration);
@@ -161,8 +169,9 @@ public class TimeRate {
 	 * @throws ArithmeticException 引数 {@code roundMode} に {@link jp.tricreo.baseunits.util.Rounding#UNNECESSARY} を
 	 * 			指定したにもかかわらず、引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #over(Duration, int, RoundingMode)}
+	 * 			use {@link #over(Duration, int, RoundingMode)}
 	 */
 	@Deprecated
 	public BigDecimal over(Duration duration, int scale, jp.tricreo.baseunits.util.Rounding roundMode) {
@@ -182,6 +191,7 @@ public class TimeRate {
 	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link RoundingMode#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public BigDecimal over(Duration duration, int scale, RoundingMode roundingMode) {
 		Validate.notNull(duration);
@@ -199,8 +209,9 @@ public class TimeRate {
 	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link jp.tricreo.baseunits.util.Rounding#UNNECESSARY} を
 	 * 			指定したにもかかわらず、引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #over(Duration, RoundingMode)}
+	 * 			use {@link #over(Duration, RoundingMode)}
 	 */
 	@Deprecated
 	public BigDecimal over(Duration duration, jp.tricreo.baseunits.util.Rounding roundingMode) {
@@ -219,6 +230,7 @@ public class TimeRate {
 	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link RoundingMode#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public BigDecimal over(Duration duration, RoundingMode roundingMode) {
 		Validate.notNull(duration);
@@ -230,6 +242,7 @@ public class TimeRate {
 	 * スケールを取得する。
 	 * 
 	 * @return スケール
+	 * @since 1.0
 	 */
 	public int scale() {
 		return quantity.scale();

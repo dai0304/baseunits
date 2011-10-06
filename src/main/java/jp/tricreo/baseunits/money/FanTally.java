@@ -30,6 +30,7 @@ import org.apache.commons.lang.Validate;
  * {@link MoneyFan}の集合。
  * 
  * @param <T> 割り当ての対象
+	 * @since 1.0
  */
 public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	
@@ -41,6 +42,7 @@ public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	* 
 	* @param fans {@link MoneyFan}の集合
 	* @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
+	 * @since 1.0
 	*/
 	public FanTally(Collection<MoneyFan<T>> fans) {
 		Validate.noNullElements(fans);
@@ -52,6 +54,7 @@ public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	 * 
 	 * @param fan {@link MoneyFan}の要素（単一）
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")
 	public FanTally(MoneyFan<T> fan) {
@@ -67,6 +70,7 @@ public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	 * 要素の {@link MoneyFan}を全てマージしたものを返す。
 	 * 
 	 * @return {@link MoneyFan}
+	 * @since 1.0
 	 */
 	public MoneyFan<T> net() {
 		MoneyFan<T> sum = new MoneyFan<T>();
@@ -85,6 +89,7 @@ public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	 * 要素の {@link MoneyFan}が含む {@link Allotment}の合計額を返す。
 	 * 
 	 * @return 合計額
+	 * @since 1.0
 	 */
 	public Money total() {
 		return net().total();

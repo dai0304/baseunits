@@ -23,6 +23,7 @@ package jp.tricreo.baseunits.util.spec;
  * 実装済みである。</p>
  * 
  * @param <T> {@link AbstractSpecification}の型
+ * @since 1.0
  */
 public abstract class AbstractSpecification<T> implements Specification<T> {
 	

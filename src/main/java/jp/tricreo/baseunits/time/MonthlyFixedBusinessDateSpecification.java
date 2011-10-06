@@ -24,6 +24,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 毎月Y日（ただし、非営業日の場合は、前営業日/翌営業日）、を表す日付仕様。
+ * 
+ * @since 1.0
  */
 public class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecification {
 	
@@ -41,6 +43,7 @@ public class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecificat
 	 * @param shifter シフト戦略
 	 * @param cal 営業日カレンダー
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public MonthlyFixedBusinessDateSpecification(DayOfMonth day, Shifter shifter, BusinessCalendar cal) {
 		Validate.notNull(day);
@@ -71,6 +74,8 @@ public class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecificat
 	
 	/**
 	 * 指定日が非営業日の場合のシフト戦略。
+	 * 
+	 * @since 1.0
 	 */
 	public enum Shifter {
 		
@@ -94,5 +99,4 @@ public class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecificat
 		
 		abstract CalendarDate shift(CalendarDate date, BusinessCalendar cal);
 	}
-	
 }

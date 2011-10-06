@@ -22,6 +22,8 @@ package jp.tricreo.baseunits.time;
 
 /**
  * 現在時刻を返す責務を表すインターフェイス。
+ * 
+ * @since 1.0
  */
 public interface TimeSource {
 	
@@ -30,6 +32,7 @@ public interface TimeSource {
 	 * 
 	 * @return 現在時刻
 	 * @throws TimeSourceException 現在時刻の取得に失敗した場合
+	 * @since 1.0
 	 */
 	TimePoint now();
 }

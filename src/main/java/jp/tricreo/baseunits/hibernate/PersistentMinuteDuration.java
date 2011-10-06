@@ -34,6 +34,7 @@ import org.hibernate.type.StandardBasicTypes;
  * 
  * @version $Id$
  * @author daisuke
+ * @since 1.2
  */
 @SuppressWarnings("serial")
 public class PersistentMinuteDuration extends AbstractBaseunitsType<Duration, Integer> {
@@ -45,6 +46,8 @@ public class PersistentMinuteDuration extends AbstractBaseunitsType<Duration, In
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @since 1.2
 	 */
 	public PersistentMinuteDuration() {
 		super(StandardBasicTypes.INTEGER);

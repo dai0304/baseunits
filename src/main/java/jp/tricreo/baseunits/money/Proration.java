@@ -29,6 +29,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 比例配分の為のユーティリティ。
+ * 
+ * @since 1.0
  */
 public final class Proration {
 	
@@ -43,6 +45,7 @@ public final class Proration {
 	 * @param n 分割数
 	 * @return 分割結果
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money[] dividedEvenlyIntoParts(Money total, int n) {
 		Validate.notNull(total);
@@ -64,6 +67,7 @@ public final class Proration {
 	 * @return 部分の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ArithmeticException 引数{@code whole}が0だった場合
+	 * @since 1.0
 	 */
 	public static Money partOfWhole(Money total, long portion, long whole) {
 		Validate.notNull(total);
@@ -77,6 +81,7 @@ public final class Proration {
 	 * @param ratio 割合
 	 * @return 指定した割合の金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money partOfWhole(Money total, Ratio ratio) {
 		Validate.notNull(total);
@@ -98,6 +103,7 @@ public final class Proration {
 	 * @return 分割結果
 	 * @throws IllegalArgumentException 引数{@code total}に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code proportions}またはその要素に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money[] proratedOver(Money total, BigDecimal[] proportions) {
 		Validate.notNull(total);
@@ -124,6 +130,7 @@ public final class Proration {
 	 * @param longProportions 比数の配列
 	 * @return 分割結果
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static Money[] proratedOver(Money total, long[] longProportions) {
 		Validate.notNull(total);

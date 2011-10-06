@@ -29,6 +29,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 同じ通貨単位の金額の集合をあらわすクラス。
+ * 
+ * @since 1.0
  */
 public class Tally implements Iterable<Money> {
 	
@@ -42,6 +44,7 @@ public class Tally implements Iterable<Money> {
 	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数の要素数が{@code 0}の場合
 	 * @throws IllegalArgumentException 引数の要素に通貨単位が異なる金額を含む場合
+	 * @since 1.0
 	 */
 	public Tally(Collection<Money> monies) {
 		Validate.noNullElements(monies);
@@ -61,6 +64,7 @@ public class Tally implements Iterable<Money> {
 	 * @param moneies 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数の要素に通貨単位が異なる金額を含む場合
+	 * @since 1.0
 	 */
 	public Tally(Money... moneies) {
 		this(Arrays.asList(moneies));
@@ -70,6 +74,7 @@ public class Tally implements Iterable<Money> {
 	 * 通貨単位を返す。
 	 * 
 	 * @return 通貨単位
+	 * @since 1.0
 	 */
 	public Currency currency() {
 		return monies.iterator().next().breachEncapsulationOfCurrency();
@@ -84,6 +89,7 @@ public class Tally implements Iterable<Money> {
 	 * 合計金額を返す。
 	 * 
 	 * @return 合計
+	 * @since 1.0
 	 */
 	public Money net() {
 		return Money.sum(monies);
@@ -93,5 +99,4 @@ public class Tally implements Iterable<Money> {
 	public String toString() {
 		return monies.toString();
 	}
-	
 }

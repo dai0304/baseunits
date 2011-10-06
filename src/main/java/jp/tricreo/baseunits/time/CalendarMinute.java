@@ -32,6 +32,8 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link java.util.Date}と異なり、分未満（秒以下）の概念を持っていない。また、{@link TimePoint}と異なり、
  * その分1分間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class CalendarMinute implements Comparable<CalendarMinute>, Serializable {
@@ -43,6 +45,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @param aTime 時分
 	 * @return {@link CalendarMinute}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static CalendarMinute from(CalendarDate aDate, TimeOfDay aTime) {
 		Validate.notNull(aDate);
@@ -64,6 +67,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code minute}が0〜59の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+	 * @since 1.0
 	 */
 	public static CalendarMinute from(int year, int month, int day, int hour, int minute) {
 		return new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute));
@@ -76,6 +80,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @param pattern 解析パターン文字列
 	 * @return {@link CalendarMinute}
 	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @since 1.0
 	 */
 	public static CalendarMinute parse(String dateTimeString, String pattern) throws ParseException {
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
@@ -100,12 +105,13 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	}
 	
 	/**
-	* 指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
-	* 
-	* @param timeZone タイムゾーン
-	* @return {@link TimePoint}
-	* @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	*/
+	 * 指定したタイムゾーンにおける、このインスタンスが表す「年月日時分」の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+	 * 
+	 * @param timeZone タイムゾーン
+	 * @return {@link TimePoint}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
+	 */
 	public TimePoint asTimePoint(TimeZone timeZone) {
 		Validate.notNull(timeZone);
 		return TimePoint.from(date, time, timeZone);
@@ -117,6 +123,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 年月日
+	 * @since 1.0
 	 */
 	public CalendarDate breachEncapsulationOfDate() {
 		return date;
@@ -128,6 +135,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 時分
+	 * @since 1.0
 	 */
 	public TimeOfDay breachEncapsulationOfTime() {
 		return time;
@@ -184,6 +192,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @param other 対象年月日時分
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isAfter(CalendarMinute other) {
 		Validate.notNull(other);
@@ -198,6 +207,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @param other 対象年月日時分
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isBefore(CalendarMinute other) {
 		Validate.notNull(other);
@@ -221,6 +231,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @param zone タイムゾーン
 	 * @return 整形済み時間文字列
+	 * @since 1.0
 	 */
 	public String toString(String pattern, TimeZone zone) {
 		TimePoint point = asTimePoint(zone);

@@ -32,6 +32,8 @@ import org.apache.commons.lang.Validate;
  * 単位時間あたりの金額（時間量に対する金額の割合）をあらわすクラス。
  * 
  * <p>例えば時給、人月単価など。</p>
+ * 
+ * @since 1.0
  */
 public class MoneyTimeRate {
 	
@@ -48,6 +50,7 @@ public class MoneyTimeRate {
 	 * @param money 金額
 	 * @param duration 時間量
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public MoneyTimeRate(Money money, Duration duration) {
 		Validate.notNull(money);
@@ -62,6 +65,7 @@ public class MoneyTimeRate {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 通貨単位
+	 * @since 1.0
 	 */
 	public Currency breachEncapsulationOfCurrency() {
 		return currency;
@@ -73,6 +77,7 @@ public class MoneyTimeRate {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 単位時間あたりの数量
+	 * @since 1.0
 	 */
 	public TimeRate breachEncapsulationOfRate() {
 		return rate;
@@ -118,6 +123,7 @@ public class MoneyTimeRate {
 	 * @param duration 時間量
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public Money over(Duration duration) {
 		Validate.notNull(duration);
@@ -132,8 +138,9 @@ public class MoneyTimeRate {
 	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #over(Duration, int, RoundingMode)}
+	 * 			use {@link #over(Duration, int, RoundingMode)}
 	 */
 	@Deprecated
 	public Money over(Duration duration, int scale, jp.tricreo.baseunits.util.Rounding roundMode) {
@@ -150,6 +157,7 @@ public class MoneyTimeRate {
 	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public Money over(Duration duration, int scale, RoundingMode roundMode) {
 		Validate.notNull(duration);
@@ -164,8 +172,9 @@ public class MoneyTimeRate {
 	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	* 			use {@link #over(Duration, RoundingMode)}
+	 * 			use {@link #over(Duration, RoundingMode)}
 	 */
 	@Deprecated
 	public Money over(Duration duration, jp.tricreo.baseunits.util.Rounding roundMode) {
@@ -181,6 +190,7 @@ public class MoneyTimeRate {
 	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.1
 	 */
 	public Money over(Duration duration, RoundingMode roundMode) {
 		Validate.notNull(duration);

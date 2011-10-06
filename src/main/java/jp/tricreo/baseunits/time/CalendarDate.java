@@ -34,6 +34,8 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link Date}と異なり、時間の概念を持っていない。また、{@link TimePoint}と異なり、
  * その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class CalendarDate implements Comparable<CalendarDate>, Serializable {
@@ -46,11 +48,21 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+	 * @since 1.0
 	 */
 	public static CalendarDate from(CalendarMonth yearMonth, DayOfMonth day) {
 		return new CalendarDate(yearMonth, day);
 	}
 	
+	/**
+	 * {@link Date}とタイムゾーンから、その日を表す{@link CalendarDate}のインスタンスを生成する。
+	 * 
+	 * @param date {@link Date}
+	 * @param zone タイムゾーン
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return {@link CalendarDate}
+	 * @since 1.0
+	 */
 	public static CalendarDate from(Date date, TimeZone zone) {
 		Validate.notNull(date);
 		Validate.notNull(zone);
@@ -68,6 +80,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+	 * @since 1.0
 	 */
 	public static CalendarDate from(int year, int month, int day) {
 		return new CalendarDate(CalendarMonth.from(year, month), DayOfMonth.valueOf(day));
@@ -81,6 +94,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param day 日
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数{@code day}が{@code year}年の{@code month}の月に存在しない場合
+	 * @since 1.0
 	 */
 	public static CalendarDate from(int year, MonthOfYear month, DayOfMonth day) {
 		return from(CalendarMonth.from(year, month), day);
@@ -93,6 +107,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public static CalendarDate from(TimePoint timePoint, TimeZone zone) {
 		Validate.notNull(timePoint);
@@ -109,6 +124,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param pattern 解析パターン文字列
 	 * @return {@link CalendarDate}
 	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @since 1.0
 	 */
 	public static CalendarDate parse(String dateString, String pattern) throws ParseException {
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
@@ -151,6 +167,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表現する日を含む年月を表す{@link CalendarMonth}を取得する。
 	 * 
 	 * @return このインスタンスが表現する日を含む年月を表す期間
+	 * @since 1.0
 	 */
 	public CalendarMonth asCalendarMonth() {
 		return yearMonth;
@@ -169,6 +186,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表現する日を含む年月を表す期間を取得する。
 	 * 
 	 * @return このインスタンスが表現する日を含む年月を表す期間
+	 * @since 1.0
 	 */
 	public CalendarInterval asMonthInterval() {
 		return CalendarInterval.month(yearMonth);
@@ -182,6 +200,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return このインスタンスが表現する日の午前0時から丸一日を表現する期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimeInterval asTimeInterval(TimeZone zone) {
 		Validate.notNull(zone);
@@ -192,6 +211,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表現する日を含む年を表す期間を取得する。
 	 * 
 	 * @return このインスタンスが表現する日を含む年を表す期間
+	 * @since 1.0
 	 */
 	public CalendarInterval asYearInterval() {
 		return CalendarInterval.year(yearMonth.breachEncapsulationOfYear());
@@ -202,6 +222,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param timeOfDay 時
 	 * @return 日時
+	 * @since 1.0
 	 */
 	public CalendarMinute at(TimeOfDay timeOfDay) {
 		return CalendarMinute.from(this, timeOfDay);
@@ -213,6 +234,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 日
+	 * @since 1.0
 	 */
 	public DayOfMonth breachEncapsulationOfDay() {
 		return day;
@@ -224,6 +246,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 年月
+	 * @since 1.0
 	 */
 	public CalendarMonth breachEncapsulationOfYearMonth() {
 		return yearMonth;
@@ -237,6 +260,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param other 比較対象
 	 * @return {@link Comparable#compareTo(Object)}に準じる
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	@Override
 	public int compareTo(CalendarDate other) {
@@ -256,6 +280,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * この日付の曜日を返す。
 	 * 
 	 * @return 曜日
+	 * @since 1.0
 	 */
 	public DayOfWeek dayOfWeek() {
 		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
@@ -304,6 +329,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isAfter(CalendarDate other) {
 		if (other == null) {
@@ -320,6 +346,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param other 対象日時
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public boolean isBefore(CalendarDate other) {
 		if (other == null) {
@@ -338,6 +365,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表現する日の翌日を返す。
 	 * 
 	 * @return 翌日
+	 * @since 1.0
 	 */
 	public CalendarDate nextDay() {
 		return plusDays(1);
@@ -350,6 +378,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param length 時間の長さ
 	 * @return 未来の日付
+	 * @since 1.0
 	 */
 	public CalendarDate plus(Duration length) {
 		return length.addedTo(this);
@@ -362,6 +391,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param increment 加える日数
 	 * @return 計算結果
+	 * @since 1.0
 	 */
 	public CalendarDate plusDays(int increment) {
 		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
@@ -379,6 +409,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param increment 加える月数
 	 * @return 計算結果
+	 * @since 1.0
 	 */
 	public CalendarDate plusMonths(int increment) {
 		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
@@ -393,6 +424,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表現する日の前日を返す。
 	 * 
 	 * @return 前日
+	 * @since 1.0
 	 */
 	public CalendarDate previousDay() {
 		return plusDays(-1);
@@ -404,6 +436,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param zone タイムゾーン
 	 * @return このインスタンスが表現する日の午前0時を表現する日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public TimePoint startAsTimePoint(TimeZone zone) {
 		Validate.notNull(zone);
@@ -415,6 +448,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param otherDate 終了日
 	 * @return 期間
+	 * @since 1.0
 	 */
 	public CalendarInterval through(CalendarDate otherDate) {
 		return CalendarInterval.inclusive(this, otherDate);
@@ -426,6 +460,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-MM-dd"}のパターンで整形する。</p>
 	 * 
 	 * @see java.lang.Object#toString()
+	 * @since 1.0
 	 */
 	@Override
 	public String toString() {
@@ -437,6 +472,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @return 整形済み時間文字列
+	 * @since 1.0
 	 */
 	public String toString(String pattern) {
 		// Any timezone works, as long as the same one is used throughout.

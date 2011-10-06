@@ -26,6 +26,7 @@ import org.apache.commons.lang.Validate;
  * 何かに対するお金の割り当てをあらわす。
  * 
  * @param <T> 割り当て対象
+ * @since 1.0
  */
 public class Allotment<T> {
 	
@@ -42,6 +43,7 @@ public class Allotment<T> {
 	* @param entity 割り当て対象
 	* @param amount 割り当て量
 	* @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	*/
 	public Allotment(T entity, Money amount) {
 		Validate.notNull(entity);
@@ -56,6 +58,7 @@ public class Allotment<T> {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 金額
+	 * @since 1.0
 	 */
 	public Money breachEncapsulationOfAmount() {
 		return amount;
@@ -67,6 +70,7 @@ public class Allotment<T> {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 割り当て対象
+	 * @since 1.0
 	 */
 	public T breachEncapsulationOfEntity() {
 		return entity;
@@ -110,6 +114,7 @@ public class Allotment<T> {
 	 * 割り当て量の正負を反転させた新しい割り当てを返す。
 	 * 
 	 * @return 割り当て
+	 * @since 1.0
 	 */
 	public Allotment<T> negated() {
 		return new Allotment<T>(entity, amount.negated());

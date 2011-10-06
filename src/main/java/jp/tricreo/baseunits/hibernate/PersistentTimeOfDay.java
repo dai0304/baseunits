@@ -31,6 +31,7 @@ import org.hibernate.type.StandardBasicTypes;
  * 
  * @version $Id$
  * @author daisuke
+ * @since 1.2
  */
 @SuppressWarnings("serial")
 public class PersistentTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Integer> {
@@ -42,6 +43,8 @@ public class PersistentTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Intege
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @since 1.2
 	 */
 	public PersistentTimeOfDay() {
 		super(StandardBasicTypes.INTEGER);

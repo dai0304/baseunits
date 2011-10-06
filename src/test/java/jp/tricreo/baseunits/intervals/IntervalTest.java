@@ -306,7 +306,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * {@link Interval#upTo(Comparable)}のテスト。
+	 * {@link Interval#upTo}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -320,7 +320,7 @@ public class IntervalTest {
 	}
 	
 	/**
-	 * {@link Interval#andMore(Comparable)}のテスト。
+	 * {@link Interval#andMore}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

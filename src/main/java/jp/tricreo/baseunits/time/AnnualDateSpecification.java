@@ -29,6 +29,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 1年間に1度だけ仕様を満たす日付仕様。
+ * 
+ * @since 1.0
  */
 public abstract class AnnualDateSpecification extends DateSpecification {
 	
@@ -82,6 +84,7 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 	 * 
 	 * @param year 西暦年をあらわす数
 	 * @return {@link CalendarDate}
+	 * @since 1.0
 	 */
 	public abstract CalendarDate ofYear(int year);
 }

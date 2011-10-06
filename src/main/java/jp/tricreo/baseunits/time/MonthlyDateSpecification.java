@@ -29,6 +29,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 毎月1度だけ仕様を満たす日付仕様。
+ * 
+ * @since 1.0
  */
 public abstract class MonthlyDateSpecification extends DateSpecification {
 	
@@ -86,6 +88,7 @@ public abstract class MonthlyDateSpecification extends DateSpecification {
 	 * @param month 年月
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public abstract CalendarDate ofYearMonth(CalendarMonth month);
 }

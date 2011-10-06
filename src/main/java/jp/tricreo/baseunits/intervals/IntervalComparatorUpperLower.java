@@ -24,6 +24,7 @@ import java.util.Comparator;
  * 区間同士の比較を行うコンパレータ。上側限界による比較を優先し、同じであったら下側限界による比較を採用する。
  * 
  * @param <T> 区間要素の型
+ * @since 1.0
  */
 public class IntervalComparatorUpperLower<T extends Comparable<T> & Serializable> implements Comparator<Interval<T>> {
 	
@@ -37,6 +38,7 @@ public class IntervalComparatorUpperLower<T extends Comparable<T> & Serializable
 	 * 
 	 * @param inverseLower 下側限界の比較結果の符号を反転する場合は{@code true}、そうでない場合は{@code false}
 	 * @param inverseUpper 上側限界の比較結果の符号を反転する場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.0
 	 */
 	public IntervalComparatorUpperLower(boolean inverseLower, boolean inverseUpper) {
 		this.lowerFactor = inverseLower ? -1 : 1;
@@ -54,6 +56,7 @@ public class IntervalComparatorUpperLower<T extends Comparable<T> & Serializable
 	 * @param e2 比較対象2
 	 * @return 同値であった場合は {@code 0}、この{@code e1}が比較対象よりも小さい場合は負数、大きい場合は正数
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	@Override
 	public int compare(Interval<T> e1, Interval<T> e2) {

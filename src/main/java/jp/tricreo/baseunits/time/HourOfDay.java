@@ -27,7 +27,10 @@ import org.apache.commons.lang.Validate;
 /**
  * 1日の中の特定の「時」を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * <p>{@link java.util.Date}と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。
+ * また、このクラスは特定の瞬間をモデリングしたものではなく、その1時間全ての範囲を表すクラスである。</p>
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class HourOfDay implements Comparable<HourOfDay>, Serializable {
@@ -43,6 +46,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * @param initial 時をあらわす正数
 	 * @return 時（0〜23）
 	 * @throws IllegalArgumentException 引数の値が0〜23の範囲ではない場合
+	 * @since 1.0
 	 */
 	public static HourOfDay valueOf(int initial) {
 		return new HourOfDay(initial);
@@ -56,6 +60,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * @return 時（0〜11）
 	 * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
+	 * @since 1.0
 	 */
 	public static HourOfDay valueOf(int initial, String amPm) {
 		return new HourOfDay(convertTo24hour(initial, amPm));
@@ -69,6 +74,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * @return 24時間制における時
 	 * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
+	 * @since 1.0
 	 */
 	static int convertTo24hour(int hour, String amPm) {
 		if (("AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm)) == false) {
@@ -102,6 +108,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 時をあらわす正数（0〜23）
+	 * @since 1.0
 	 */
 	public int breachEncapsulationOfValue() {
 		return value;
@@ -141,6 +148,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * @param another 基準時
 	 * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isAfter(HourOfDay another) {
 		Validate.notNull(another);
@@ -153,6 +161,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * @param another 基準時
 	 * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public boolean isBefore(HourOfDay another) {
 		Validate.notNull(another);

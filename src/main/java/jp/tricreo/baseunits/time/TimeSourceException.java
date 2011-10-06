@@ -19,6 +19,8 @@ package jp.tricreo.baseunits.time;
 
 /**
  * 現在時刻の取得に失敗したことをあらわす例外。
+ * 
+ * @since 1.0
  */
 @SuppressWarnings("serial")
 public class TimeSourceException extends RuntimeException {
@@ -28,6 +30,7 @@ public class TimeSourceException extends RuntimeException {
 	 * 
 	 * @param message 例外メッセージ
 	 * @param e 起因例外
+	 * @since 1.0
 	 */
 	public TimeSourceException(String message, Exception e) {
 		super(message, e);

@@ -30,6 +30,7 @@ import org.hibernate.type.StandardBasicTypes;
  * @param <T> User defined type
  * @version $Id$
  * @author daisuke
+ * @since 1.2
  */
 @SuppressWarnings("serial")
 public abstract class AbstractStringBasedBaseunitsType<T> extends AbstractBaseunitsType<T, String> {
@@ -41,6 +42,8 @@ public abstract class AbstractStringBasedBaseunitsType<T> extends AbstractBaseun
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @since 1.2
 	 */
 	public AbstractStringBasedBaseunitsType() {
 		super(StandardBasicTypes.STRING);
