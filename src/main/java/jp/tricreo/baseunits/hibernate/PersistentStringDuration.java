@@ -24,7 +24,7 @@ import jp.tricreo.baseunits.time.Duration;
 import jp.tricreo.baseunits.time.TimeUnit;
 
 /**
- * TODO for daisuke
+ * {@link Duration}を文字列としてDBにデータを保存するHibernateユーザ型。
  * 
  * @version $Id$
  * @author daisuke

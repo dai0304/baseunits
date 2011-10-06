@@ -27,7 +27,7 @@ import jp.tricreo.baseunits.time.TimeOfDay;
 import org.hibernate.type.StandardBasicTypes;
 
 /**
- * TODO for daisuke
+ * {@link TimeOfDay}を午前0時からの経過分数としてDBにデータを保存するHibernateユーザ型。
  * 
  * @version $Id$
  * @author daisuke

@@ -30,7 +30,7 @@ import jp.tricreo.baseunits.time.TimePoint;
 import org.hibernate.type.StandardBasicTypes;
 
 /**
- * TODO for daisuke
+ * {@link CalendarDate}を {@link Date}としてDBにデータを保存するHibernateユーザ型。
  * 
  * @version $Id$
  * @author daisuke

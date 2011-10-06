@@ -25,7 +25,7 @@ import java.sql.Types;
 import org.hibernate.type.StandardBasicTypes;
 
 /**
- * TODO for daisuke
+ * 文字列型としてDBにデータを保存するHibernateユーザ型。
  * 
  * @param <T> User defined type
  * @version $Id$

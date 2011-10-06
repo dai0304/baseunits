@@ -30,7 +30,7 @@ import jp.tricreo.baseunits.util.Ratio;
 import org.hibernate.type.StandardBasicTypes;
 
 /**
- * TODO for daisuke
+ * {@link Duration}を分単位の整数としてDBにデータを保存するHibernateユーザ型。
  * 
  * @version $Id$
  * @author daisuke
