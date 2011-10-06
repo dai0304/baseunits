@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jiemamy</groupId>
     <artifactId>generic-master</artifactId>
-    <version>0.1.2</version>
+    <version>0.2.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.tricreo</groupId>
@@ -12,10 +12,6 @@
   <version>1.2-SNAPSHOT</version>
   <description>The models of basic unit (ex. Time, Money, etc.)</description>
   <url>http://maven.tricreo.jp/site/${project.artifactId}/${project.version}/</url>
-  <organization>
-    <name>TRICREO, Inc.</name>
-    <url>http://tricreo.jp/</url>
-  </organization>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
