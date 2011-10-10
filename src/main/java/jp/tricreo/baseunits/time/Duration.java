@@ -21,6 +21,8 @@
 package jp.tricreo.baseunits.time;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 
 import jp.tricreo.baseunits.util.Ratio;
@@ -170,7 +172,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 		return Duration.valueOf(howMany, TimeUnit.year);
 	}
 	
-	private static Duration valueOf(long howMany, TimeUnit unit) {
+	static Duration valueOf(long howMany, TimeUnit unit) {
 		return new Duration(howMany, unit);
 	}
 	
@@ -499,6 +501,36 @@ public class Duration implements Comparable<Duration>, Serializable {
 	public TimePoint subtractedFrom(TimePoint point) {
 		Validate.notNull(point);
 		return addAmountToTimePoint(-1 * inBaseUnits(), point);
+	}
+	
+	/**
+	 * この時間量を、指定した単位で表現した場合の整数値に変換する。
+	 * 
+	 * <p>序算で発生した余りは切り捨てる。</p>
+	 * 
+	 * <code>
+	 * Duration d1 = Duration.days(2);
+	 * assertThat(d1.to(TimeUnit.day), is(2L));
+	 * assertThat(d1.to(TimeUnit.hour), is(48L));
+	 * 
+	 * Duration d2 = Duration.hours(49);
+	 * assertThat(d2.to(TimeUnit.day), is(2L));
+	 * </code>
+	 * 
+	 * @param unit 単位
+	 * @return 値
+	 * @throws IllegalArgumentException この時間量を引数に指定した単位に変換できない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public long to(TimeUnit unit) {
+		Validate.notNull(unit);
+		if (this.unit == unit) {
+			return quantity;
+		}
+		Duration unitDuration = Duration.valueOf(1, unit);
+		Ratio ratio = dividedBy(unitDuration);
+		BigDecimal decimal = ratio.decimalValue(0, RoundingMode.DOWN);
+		return decimal.longValue();
 	}
 	
 	/**

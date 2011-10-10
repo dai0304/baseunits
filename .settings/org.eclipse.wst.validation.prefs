@@ -1,4 +1,4 @@
-#Thu Oct 06 22:26:13 JST 2011
+#Mon Oct 10 12:21:45 JST 2011
 DELEGATES_PREFERENCE=delegateValidatorList
 USER_BUILD_PREFERENCE=enabledBuildValidatorList
 USER_MANUAL_PREFERENCE=enabledManualValidatorList
@@ -6,4 +6,6 @@ USER_PREFERENCE=overrideGlobalPreferencestruedisableAllValidationfalseversion1.2
 eclipse.preferences.version=1
 override=true
 suspend=false
+vals/org.eclipse.wst.html.ui.HTMLValidator/global=FF01
+vals/org.eclipse.wst.html.ui.HTMLValidator/groups=0107include06111contentType136org.eclipse.wst.html.core.htmlsourceT07fileext04htmlF07fileext05xhtmlF07fileext03htmF07fileext04htplF07fileext03wmlF0107exclude0104file06targetF01
 vf.version=3

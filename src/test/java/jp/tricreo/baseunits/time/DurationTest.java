@@ -381,7 +381,7 @@ public class DurationTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test2o_AddToCalendarMonth() throws Exception {
+	public void test20_AddToCalendarMonth() throws Exception {
 		CalendarMonth oct2003 = CalendarMonth.from(2003, 10);
 		CalendarMonth dec2003 = CalendarMonth.from(2003, 12);
 		
@@ -398,5 +398,28 @@ public class DurationTest {
 		// 単位が日未満の時は日付を変えない。
 		Duration threeHours = Duration.days(30);
 		assertThat(threeHours.addedTo(CalendarMonth.from(2010, 11)), is(CalendarMonth.from(2010, 11)));
+	}
+	
+	/**
+	 * {@link Duration#to(TimeUnit)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test21_To() throws Exception {
+		Duration d1 = Duration.days(2);
+		assertThat(d1.to(TimeUnit.day), is(2L));
+		assertThat(d1.to(TimeUnit.hour), is(48L));
+		
+		Duration d2 = Duration.hours(49);
+		assertThat(d2.to(TimeUnit.day), is(2L));
+		
+		Duration d3 = Duration.months(1);
+		try {
+			d3.to(TimeUnit.day);
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
 	}
 }
