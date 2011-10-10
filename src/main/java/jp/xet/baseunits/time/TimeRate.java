@@ -163,28 +163,6 @@ public class TimeRate {
 	 * 
 	 * @param duration 時間量
 	 * @param scale スケール
-	 * @param roundMode 丸めモード
-	 * @return 絶対量
-	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundMode} に {@link jp.xet.baseunits.util.Rounding#UNNECESSARY} を
-	 * 			指定したにもかかわらず、引数{@code duration}の時間量が単位時間で割り切れない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	 * 			use {@link #over(Duration, int, RoundingMode)}
-	 */
-	@Deprecated
-	public BigDecimal over(Duration duration, int scale, jp.xet.baseunits.util.Rounding roundMode) {
-		Validate.notNull(duration);
-		Validate.notNull(roundMode);
-		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundMode);
-	}
-	
-	/**
-	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
-	 * 
-	 * @param duration 時間量
-	 * @param scale スケール
 	 * @param roundingMode 丸めモード
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
@@ -197,27 +175,6 @@ public class TimeRate {
 		Validate.notNull(duration);
 		Validate.notNull(roundingMode);
 		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundingMode);
-	}
-	
-	/**
-	 * 指定した時間量にこの時間割合を適用した場合の絶対量を取得する。
-	 * 
-	 * @param duration 時間量
-	 * @param roundingMode 丸めモード
-	 * @return 絶対量
-	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
-	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link jp.xet.baseunits.util.Rounding#UNNECESSARY} を
-	 * 			指定したにもかかわらず、引数{@code duration}の時間量が単位時間で割り切れない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	 * 			use {@link #over(Duration, RoundingMode)}
-	 */
-	@Deprecated
-	public BigDecimal over(Duration duration, jp.xet.baseunits.util.Rounding roundingMode) {
-		Validate.notNull(duration);
-		Validate.notNull(roundingMode);
-		return over(duration, scale(), roundingMode);
 	}
 	
 	/**

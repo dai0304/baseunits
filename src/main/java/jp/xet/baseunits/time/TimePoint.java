@@ -461,20 +461,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトの{@link #millisecondsFromEpoch}フィールド（エポックからの経過ミリ秒）を返す。
-	 * 
-	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
-	 * 
-	 * @return エポックからの経過ミリ秒
-	 * @since 1.0
-	 * @deprecated use {@link #toEpochMillisec()}
-	 */
-	@Deprecated
-	public long breachEncapsulationOfMillisecondsFromEpoc() {
-		return millisecondsFromEpoch;
-	}
-	
-	/**
 	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
 	 * 
 	 * @param zone タイムゾーン

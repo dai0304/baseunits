@@ -138,49 +138,12 @@ public class MoneyTimeRate {
 	 * @param roundMode 丸めモード
 	 * @return 金額
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	 * 			use {@link #over(Duration, int, RoundingMode)}
-	 */
-	@Deprecated
-	public Money over(Duration duration, int scale, jp.xet.baseunits.util.Rounding roundMode) {
-		Validate.notNull(duration);
-		Validate.notNull(roundMode);
-		return Money.valueOf(rate.over(duration, scale, roundMode), currency);
-	}
-	
-	/**
-	 * 時間量に対してこの割合を適用した場合の金額を返す。
-	 * 
-	 * @param duration 時間量
-	 * @param scale スケール
-	 * @param roundMode 丸めモード
-	 * @return 金額
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.1
 	 */
 	public Money over(Duration duration, int scale, RoundingMode roundMode) {
 		Validate.notNull(duration);
 		Validate.notNull(roundMode);
 		return Money.valueOf(rate.over(duration, scale, roundMode), currency);
-	}
-	
-	/**
-	 * 時間量に対してこの割合を適用した場合の金額を返す。
-	 * 
-	 * @param duration 時間量
-	 * @param roundMode 丸めモード
-	 * @return 金額
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 * @deprecated 次期メジャーバージョンアップ（v2.0）以降、この機能はサポートされません。
-	 * 			use {@link #over(Duration, RoundingMode)}
-	 */
-	@Deprecated
-	public Money over(Duration duration, jp.xet.baseunits.util.Rounding roundMode) {
-		Validate.notNull(duration);
-		Validate.notNull(roundMode);
-		return over(duration, rate.scale(), roundMode);
 	}
 	
 	/**
