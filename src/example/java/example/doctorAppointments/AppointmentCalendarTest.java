@@ -11,10 +11,10 @@ import static org.junit.Assert.assertThat;
 
 import java.util.TimeZone;
 
-import jp.tricreo.baseunits.time.CalendarDate;
-import jp.tricreo.baseunits.time.Duration;
-import jp.tricreo.baseunits.time.TimeInterval;
-import jp.tricreo.baseunits.time.TimePoint;
+import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.Duration;
+import jp.xet.baseunits.time.TimeInterval;
+import jp.xet.baseunits.time.TimePoint;
 
 import org.junit.Test;
 

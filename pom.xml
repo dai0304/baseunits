@@ -6,12 +6,12 @@
     <version>0.2.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>jp.tricreo</groupId>
+  <groupId>jp.xet</groupId>
   <artifactId>baseunits</artifactId>
   <name>Base Units Library</name>
   <version>2.0-SNAPSHOT</version>
   <description>The models of basic unit (ex. Time, Money, etc.)</description>
-  <url>http://maven.tricreo.jp/site/${project.artifactId}/${project.version}/</url>
+  <url>http://maven.xet.jp/site/${project.artifactId}/${project.version}/</url>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
@@ -83,16 +83,16 @@
   </repositories>
   <distributionManagement>
     <repository>
-      <id>maven.tricreo.jp</id>
-      <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/release</url>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/var/www/maven.xet.jp/release</url>
     </repository>
     <snapshotRepository>
-      <id>maven.tricreo.jp</id>
-      <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/snapshot</url>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/var/www/maven.xet.jp/snapshot</url>
     </snapshotRepository>
     <site>
-      <id>maven.tricreo.jp</id>
-      <url>scp://maven.tricreo.jp/var/www/maven.tricreo.jp/site/${project.artifactId}/${project.version}</url>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/var/www/maven.xet.jp/site/${project.artifactId}/${project.version}</url>
     </site>
   </distributionManagement>
 </project>

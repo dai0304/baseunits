@@ -6,7 +6,7 @@
 
 package example.doctorAppointments;
 
-import jp.tricreo.baseunits.time.TimeInterval;
+import jp.xet.baseunits.time.TimeInterval;
 
 class Appointment {
 	

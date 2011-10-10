@@ -11,16 +11,16 @@ import static org.junit.Assert.assertThat;
 
 import java.math.RoundingMode;
 
-import jp.tricreo.baseunits.intervals.Interval;
-import jp.tricreo.baseunits.intervals.IntervalMap;
-import jp.tricreo.baseunits.intervals.LinearIntervalMap;
-import jp.tricreo.baseunits.money.Money;
-import jp.tricreo.baseunits.money.MoneyTimeRate;
-import jp.tricreo.baseunits.money.Proration;
-import jp.tricreo.baseunits.time.CalendarDate;
-import jp.tricreo.baseunits.time.CalendarInterval;
-import jp.tricreo.baseunits.time.Duration;
-import jp.tricreo.baseunits.util.Ratio;
+import jp.xet.baseunits.intervals.Interval;
+import jp.xet.baseunits.intervals.IntervalMap;
+import jp.xet.baseunits.intervals.LinearIntervalMap;
+import jp.xet.baseunits.money.Money;
+import jp.xet.baseunits.money.MoneyTimeRate;
+import jp.xet.baseunits.money.Proration;
+import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.CalendarInterval;
+import jp.xet.baseunits.time.Duration;
+import jp.xet.baseunits.util.Ratio;
 
 import org.junit.Ignore;
 import org.junit.Test;

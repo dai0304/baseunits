@@ -13,10 +13,10 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Currency;
 
-import jp.tricreo.baseunits.money.Money;
-import jp.tricreo.baseunits.money.MoneyTimeRate;
-import jp.tricreo.baseunits.money.Proration;
-import jp.tricreo.baseunits.time.Duration;
+import jp.xet.baseunits.money.Money;
+import jp.xet.baseunits.money.MoneyTimeRate;
+import jp.xet.baseunits.money.Proration;
+import jp.xet.baseunits.time.Duration;
 
 import org.junit.Test;
 

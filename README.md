@@ -80,7 +80,7 @@ License
 
 Copyright (C) 2011 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
 
-Copyright (C) 2010 [TRICREO, Inc.](http://tricreo.jp/).
+Copyright (C) 2010-2011 [TRICREO, Inc.](http://tricreo.jp/).
 
 Copyright (c) 2004 [Domain Language, Inc.](http://domainlanguage.com)
 

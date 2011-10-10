@@ -8,10 +8,10 @@ package example.socialSecurityBenefits;
 
 import java.math.RoundingMode;
 
-import jp.tricreo.baseunits.money.Money;
-import jp.tricreo.baseunits.time.CalendarDate;
-import jp.tricreo.baseunits.time.CalendarInterval;
-import jp.tricreo.baseunits.util.Ratio;
+import jp.xet.baseunits.money.Money;
+import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.CalendarInterval;
+import jp.xet.baseunits.util.Ratio;
 import junit.framework.TestCase;
 
 import org.junit.Ignore;
