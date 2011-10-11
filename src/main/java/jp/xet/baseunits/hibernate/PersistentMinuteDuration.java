@@ -20,12 +20,10 @@
  */
 package jp.xet.baseunits.hibernate;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Types;
 
 import jp.xet.baseunits.time.Duration;
-import jp.xet.baseunits.util.Ratio;
+import jp.xet.baseunits.time.TimeUnit;
 
 import org.hibernate.type.StandardBasicTypes;
 
@@ -70,8 +68,6 @@ public class PersistentMinuteDuration extends AbstractBaseunitsType<Duration, In
 	
 	@Override
 	protected Integer toNonNullInternalType(Duration value) {
-		Ratio dividedBy = value.dividedBy(Duration.minutes(1));
-		BigDecimal decimalValue = dividedBy.decimalValue(0, RoundingMode.DOWN);
-		return decimalValue.intValue();
+		return Integer.valueOf((int) value.to(TimeUnit.minute));
 	}
 }

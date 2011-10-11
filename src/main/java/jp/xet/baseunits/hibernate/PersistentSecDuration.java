@@ -29,14 +29,14 @@ import jp.xet.baseunits.time.TimeUnit;
 import org.hibernate.type.StandardBasicTypes;
 
 /**
- * {@link Duration}をミリ秒単位の整数としてDBにデータを保存するHibernateユーザ型。
+ * {@link Duration}を秒単位の整数としてDBにデータを保存するHibernateユーザ型。
  * 
  * @version $Id$
  * @author daisuke
  * @since 1.2
  */
 @SuppressWarnings("serial")
-public class PersistentMillisecDuration extends AbstractBaseunitsType<Duration, BigInteger> {
+public class PersistentSecDuration extends AbstractBaseunitsType<Duration, BigInteger> {
 	
 	private static final int[] SQL_TYPES = new int[] {
 		Types.BIGINT
@@ -48,7 +48,7 @@ public class PersistentMillisecDuration extends AbstractBaseunitsType<Duration, 
 	 * 
 	 * @since 1.2
 	 */
-	public PersistentMillisecDuration() {
+	public PersistentSecDuration() {
 		super(StandardBasicTypes.BIG_INTEGER);
 	}
 	
@@ -64,11 +64,11 @@ public class PersistentMillisecDuration extends AbstractBaseunitsType<Duration, 
 	
 	@Override
 	protected Duration fromNonNullInternalType(BigInteger s) {
-		return Duration.milliseconds(s.longValue());
+		return Duration.seconds(s.longValue());
 	}
 	
 	@Override
 	protected BigInteger toNonNullInternalType(Duration value) {
-		return BigInteger.valueOf(value.to(TimeUnit.millisecond));
+		return BigInteger.valueOf(value.to(TimeUnit.second));
 	}
 }
