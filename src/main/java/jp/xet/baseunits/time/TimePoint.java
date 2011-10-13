@@ -444,7 +444,8 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public TimeOfDay asTimeOfDay(TimeZone zone) {
 		Validate.notNull(zone);
 		Calendar calendar = asJavaCalendar(zone);
-		return TimeOfDay.from(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
+		return TimeOfDay.from(calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
+				calendar.get(Calendar.SECOND), calendar.get(Calendar.MILLISECOND));
 	}
 	
 	/**

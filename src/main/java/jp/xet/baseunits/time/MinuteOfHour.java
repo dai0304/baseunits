@@ -106,7 +106,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	}
 	
 	/**
-	 * 同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来かどうか調べる。
+	 * 同日同時において、このインスタンスが表す分が、引数{@code another}で表される分よりも未来かどうか調べる。
 	 * 
 	 * <p>等価である場合は{@code false}を返す。</p>
 	 * 
@@ -121,7 +121,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	}
 	
 	/**
-	 * 同時(hour)において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去かどうか調べる。
+	 * 同日同時において、このインスタンスが表す分が、引数{@code another}で表される分よりも過去かどうか調べる。
 	 * 
 	 * <p>等価である場合は{@code false}を返す。</p>
 	 * 

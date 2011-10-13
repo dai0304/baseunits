@@ -70,7 +70,7 @@ public class CalendarMinute implements Comparable<CalendarMinute>, Serializable 
 	 * @since 1.0
 	 */
 	public static CalendarMinute from(int year, int month, int day, int hour, int minute) {
-		return new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute));
+		return new CalendarMinute(CalendarDate.from(year, month, day), TimeOfDay.from(hour, minute, 0, 0));
 	}
 	
 	/**

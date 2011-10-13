@@ -25,13 +25,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.TimeZone;
 
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarMinute;
-import jp.xet.baseunits.time.HourOfDay;
-import jp.xet.baseunits.time.MinuteOfHour;
-import jp.xet.baseunits.time.TimeOfDay;
-import jp.xet.baseunits.time.TimePoint;
-
 import org.junit.Test;
 
 /**
@@ -43,17 +36,17 @@ public class TimeOfDayTest {
 	
 	private CalendarDate feb17 = CalendarDate.from(2006, 2, 17);
 	
-	private TimeOfDay midnight = TimeOfDay.from(0, 0);
+	private TimeOfDay midnight = TimeOfDay.from(0, 0, 0, 0);
 	
-	private TimeOfDay morning = TimeOfDay.from(10, 20);
+	private TimeOfDay morning = TimeOfDay.from(10, 20, 0, 0);
 	
-	private TimeOfDay noon = TimeOfDay.from(12, 0);
+	private TimeOfDay noon = TimeOfDay.from(12, 0, 0, 0);
 	
-	private TimeOfDay afternoon = TimeOfDay.from(15, 40);
+	private TimeOfDay afternoon = TimeOfDay.from(15, 40, 0, 0);
 	
-	private TimeOfDay twoMinutesBeforeMidnight = TimeOfDay.from(23, 58);
+	private TimeOfDay twoMinutesBeforeMidnight = TimeOfDay.from(23, 58, 0, 0);
 	
-	private TimeOfDay tenMinutesBeforeMidnight = TimeOfDay.from(23, 50);
+	private TimeOfDay tenMinutesBeforeMidnight = TimeOfDay.from(23, 50, 0, 0);
 	
 	
 	/**
@@ -95,20 +88,17 @@ public class TimeOfDayTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	@SuppressWarnings("serial")
 	public void test04_Equals() throws Exception {
-		assertThat(midnight.equals(TimeOfDay.from(0, 0)), is(true));
-		assertThat(morning.equals(TimeOfDay.from(10, 20)), is(true));
-		assertThat(noon.equals(TimeOfDay.from(12, 0)), is(true));
-		assertThat(afternoon.equals(TimeOfDay.from(15, 40)), is(true));
-		assertThat(twoMinutesBeforeMidnight.equals(TimeOfDay.from(23, 58)), is(true));
+		assertThat(midnight.equals(TimeOfDay.from(0, 0, 0, 0)), is(true));
+		assertThat(morning.equals(TimeOfDay.from(10, 20, 0, 0)), is(true));
+		assertThat(noon.equals(TimeOfDay.from(12, 0, 0, 0)), is(true));
+		assertThat(afternoon.equals(TimeOfDay.from(15, 40, 0, 0)), is(true));
+		assertThat(twoMinutesBeforeMidnight.equals(TimeOfDay.from(23, 58, 0, 0)), is(true));
 		
 		assertThat(midnight.equals(morning), is(false));
 		assertThat(morning.equals(null), is(false));
 		assertThat(tenMinutesBeforeMidnight.equals(twoMinutesBeforeMidnight), is(false));
-		assertThat(noon.equals(new TimeOfDay(HourOfDay.valueOf(12), MinuteOfHour.valueOf(0))), is(true));
-		assertThat(noon.equals(new TimeOfDay(HourOfDay.valueOf(12), MinuteOfHour.valueOf(0)) {
-		}), is(false));
+		assertThat(noon.equals(TimeOfDay.from(HourOfDay.valueOf(12), MinuteOfHour.valueOf(0))), is(true));
 	}
 	
 	/**
@@ -118,11 +108,11 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test05_HashCode() throws Exception {
-		assertThat(midnight.hashCode(), is(TimeOfDay.from(0, 0).hashCode()));
-		assertThat(morning.hashCode(), is(TimeOfDay.from(10, 20).hashCode()));
-		assertThat(noon.hashCode(), is(TimeOfDay.from(12, 0).hashCode()));
-		assertThat(afternoon.hashCode(), is(TimeOfDay.from(15, 40).hashCode()));
-		assertThat(twoMinutesBeforeMidnight.hashCode(), is(TimeOfDay.from(23, 58).hashCode()));
+		assertThat(midnight.hashCode(), is(TimeOfDay.from(0, 0, 0, 0).hashCode()));
+		assertThat(morning.hashCode(), is(TimeOfDay.from(10, 20, 0, 0).hashCode()));
+		assertThat(noon.hashCode(), is(TimeOfDay.from(12, 0, 0, 0).hashCode()));
+		assertThat(afternoon.hashCode(), is(TimeOfDay.from(15, 40, 0, 0).hashCode()));
+		assertThat(twoMinutesBeforeMidnight.hashCode(), is(TimeOfDay.from(23, 58, 0, 0).hashCode()));
 	}
 	
 	/**
@@ -240,7 +230,7 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test14_AsTimePoint() throws Exception {
-		TimeOfDay fiveFifteen = TimeOfDay.from(17, 15);
+		TimeOfDay fiveFifteen = TimeOfDay.from(17, 15, 0, 0);
 		CalendarDate mayEleventh = CalendarDate.from(2006, 5, 11);
 		TimePoint mayEleventhAtFiveFifteen = fiveFifteen.asTimePointGiven(mayEleventh, CST);
 		assertThat(mayEleventhAtFiveFifteen, is(TimePoint.at(2006, 5, 11, 17, 15, 0, 0, CST)));
@@ -253,6 +243,14 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test15_toString() throws Exception {
-		assertThat(midnight.toString(), is("00:00"));
+		assertThat(midnight.toString(), is("00:00:00.000"));
+		assertThat(morning.toString(), is("10:20:00.000"));
+		assertThat(noon.toString(), is("12:00:00.000"));
+		assertThat(afternoon.toString(), is("15:40:00.000"));
+		
+		assertThat(midnight.toString("HH-mm"), is("00-00"));
+		assertThat(morning.toString("HH-mm"), is("10-20"));
+		assertThat(noon.toString("HH-mm"), is("12-00"));
+		assertThat(afternoon.toString("HH-mm"), is("15-40"));
 	}
 }

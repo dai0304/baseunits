@@ -27,18 +27,19 @@ import java.util.TimeZone;
 import org.apache.commons.lang.Validate;
 
 /**
- * 1日の中の特定の「時分」を表すクラス。
+ * 1日の中の特定の瞬間を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。
- * また、このクラスは特定の瞬間をモデリングしたものではなく、その1分間全ての範囲を表すクラスである。</p>
+ * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。</p>
  * 
  * @since 1.0
  */
 @SuppressWarnings("serial")
-public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
+public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	
 	/**
-	 * 指定した時分を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 
+	 * <p>秒及びミリ秒は{@code 0}として解釈する。</p>
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -47,11 +48,44 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @since 1.0
 	 */
 	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute) {
-		return new TimeOfDay(hour, minute);
+		return from(hour, minute, SecondOfMinute.valueOf(0), MillisecOfSecond.valueOf(0));
 	}
 	
 	/**
-	 * 指定した時分を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 
+	 * <p>ミリ秒は{@code 0}として解釈する。</p>
+	 * 
+	 * @param hour 時
+	 * @param minute 分
+	 * @param second 秒
+	 * @return {@link TimeOfDay}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
+	 */
+	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute, SecondOfMinute second) {
+		return from(hour, minute, second, MillisecOfSecond.valueOf(0));
+	}
+	
+	/**
+	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 
+	 * @param hour 時
+	 * @param minute 分
+	 * @param second 秒
+	 * @param millisec ミリ秒
+	 * @return {@link TimeOfDay}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
+	 */
+	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute, SecondOfMinute second, MillisecOfSecond millisec) {
+		return new TimeOfDay(hour, minute, second, millisec);
+	}
+	
+	/**
+	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 
+	 * <p>秒及びミリ秒は{@code 0}として解釈する。</p>
 	 * 
 	 * @param hour 時をあらわす正数（0〜23）
 	 * @param minute 分をあらわす正数（0〜59）
@@ -61,7 +95,42 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @since 1.0
 	 */
 	public static TimeOfDay from(int hour, int minute) {
-		return new TimeOfDay(HourOfDay.valueOf(hour), MinuteOfHour.valueOf(minute));
+		return from(hour, minute, 0, 0);
+	}
+	
+	/**
+	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 
+	 * <p>ミリ秒は{@code 0}として解釈する。</p>
+	 * 
+	 * @param hour 時をあらわす正数（0〜23）
+	 * @param minute 分をあらわす正数（0〜59）
+	 * @param second 秒をあらわす正数（0〜59）
+	 * @return {@link TimeOfDay}
+	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code minute}, {@code second}が0〜59の範囲ではない場合
+	 * @since 1.0
+	 */
+	public static TimeOfDay from(int hour, int minute, int second) {
+		return from(hour, minute, second, 0);
+	}
+	
+	/**
+	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 
+	 * @param hour 時をあらわす正数（0〜23）
+	 * @param minute 分をあらわす正数（0〜59）
+	 * @param second 秒をあらわす正数（0〜59）
+	 * @param millisecond ミリ秒をあらわす正数（0〜999）
+	 * @return {@link TimeOfDay}
+	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code minute}, {@code second}が0〜59の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code millisecond}が0〜999の範囲ではない場合
+	 * @since 1.0
+	 */
+	public static TimeOfDay from(int hour, int minute, int second, int millisecond) {
+		return new TimeOfDay(HourOfDay.valueOf(hour), MinuteOfHour.valueOf(minute), SecondOfMinute.valueOf(second),
+				MillisecOfSecond.valueOf(millisecond));
 	}
 	
 	
@@ -71,23 +140,35 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	/** 分 */
 	final MinuteOfHour minute;
 	
+	/** 秒 */
+	final SecondOfMinute second;
+	
+	/** ミリ秒 */
+	final MillisecOfSecond millisec;
+	
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
+	 * @param second 秒
+	 * @param millisec ミリ秒
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	TimeOfDay(HourOfDay hour, MinuteOfHour minute) {
+	TimeOfDay(HourOfDay hour, MinuteOfHour minute, SecondOfMinute second, MillisecOfSecond millisec) {
 		Validate.notNull(hour);
 		Validate.notNull(minute);
+		Validate.notNull(second);
+		Validate.notNull(millisec);
 		this.hour = hour;
 		this.minute = minute;
+		this.second = second;
+		this.millisec = millisec;
 	}
 	
 	/**
-	 * 指定した年月日とタイムゾーンにおける、このインスタンスがあらわす時分の0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+	 * 指定した年月日とタイムゾーンにおける、このインスタンスがあらわす瞬間について {@link TimePoint} 型のインスタンスを返す。
 	 * 
 	 * @param date 年月日
 	 * @param timeZone タイムゾーン
@@ -168,26 +249,44 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスがあらわす時分が、指定した時分よりも未来であるかどうか調べる。
+	 * このインスタンスがあらわす瞬間が、指定した瞬間よりも未来であるかどうか調べる。
 	 * 
 	 * <p>等価の場合は{@code false}を返す。</p>
 	 * 
-	 * @param another 基準時分
+	 * @param another 基準瞬間
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isAfter(TimeOfDay another) {
 		Validate.notNull(another);
-		return hour.isAfter(another.hour) || (hour.equals(another.hour) && minute.isAfter(another.minute));
+		if (hour.isAfter(another.hour)) {
+			return true;
+		}
+		if (hour.equals(another.hour)) {
+			if (minute.isAfter(another.minute)) {
+				return true;
+			}
+			if (minute.equals(another.minute)) {
+				if (second.isAfter(another.second)) {
+					return true;
+				}
+				if (second.equals(another.second)) {
+					if (millisec.isAfter(another.millisec)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**
-	 * このインスタンスがあらわす時分が、指定した時分よりも過去であるかどうか調べる。
+	 * このインスタンスがあらわす瞬間が、指定した瞬間よりも過去であるかどうか調べる。
 	 * 
 	 * <p>等価の場合は{@code false}を返す。</p>
 	 * 
-	 * @param another 基準時分
+	 * @param another 基準瞬間
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -198,7 +297,7 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月日における、このインスタンスがあらわす時分について {@link CalendarMinute} 型のインスタンスを返す。
+	 * 指定した年月日における、このインスタンスがあらわす瞬間について {@link CalendarMinute} 型のインスタンスを返す。
 	 * 
 	 * @param date 年月日
 	 * @return {@link CalendarMinute}
@@ -212,14 +311,14 @@ public class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	
 	@Override
 	public String toString() {
-		return hour.toString() + ":" + minute.toString();
+		return hour.toString() + ":" + minute.toString() + ":" + second.toString() + "." + millisec.toString();
 	}
 	
 	/**
-	 * この時分を、指定したパターンで整形し、その文字列表現を取得する。
+	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
-	 * @return 整形済み時分文字列
+	 * @return 整形済み瞬間文字列
 	 * @since 1.0
 	 */
 	public String toString(String pattern) {

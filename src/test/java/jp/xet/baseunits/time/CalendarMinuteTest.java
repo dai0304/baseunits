@@ -26,10 +26,6 @@ import static org.junit.Assert.assertThat;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.tests.SerializationTester;
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarMinute;
-import jp.xet.baseunits.time.TimeOfDay;
-import jp.xet.baseunits.time.TimePoint;
 
 import org.junit.Test;
 
@@ -141,9 +137,9 @@ public class CalendarMinuteTest {
 		assertThat(feb17_1_23.equals(mar13_3_45), is(false));
 		assertThat(feb17_1_23.equals(null), is(false));
 		assertThat(new CalendarMinute(CalendarDate.from(2003, 2, 17),
-				TimeOfDay.from(1, 23)).equals(feb17_1_23), is(true));
+				TimeOfDay.from(1, 23, 0, 0)).equals(feb17_1_23), is(true));
 		assertThat(new CalendarMinute(CalendarDate.from(2003, 2, 17),
-				TimeOfDay.from(1, 23)) {
+				TimeOfDay.from(1, 23, 0, 0)) {
 			
 			private static final long serialVersionUID = 8307944665463538049L;
 		}.equals(feb17_1_23), is(false));
@@ -163,7 +159,7 @@ public class CalendarMinuteTest {
 	@Test
 	public void test09_breachEncapsulationOf() throws Exception {
 		assertThat(feb17_1_23.breachEncapsulationOfDate(), is(CalendarDate.from(2003, 2, 17)));
-		assertThat(feb17_1_23.breachEncapsulationOfTime(), is(TimeOfDay.from(1, 23)));
+		assertThat(feb17_1_23.breachEncapsulationOfTime(), is(TimeOfDay.from(1, 23, 0, 0)));
 	}
 	
 	/**
@@ -174,7 +170,7 @@ public class CalendarMinuteTest {
 	@Test
 	public void test13_ToString() throws Exception {
 		CalendarMinute date = CalendarMinute.from(2004, 5, 28, 23, 21);
-		assertThat(date.toString(), is("2004-05-28 at 23:21"));
+		assertThat(date.toString(), is("2004-05-28 at 23:21:00.000"));
 	}
 	
 }

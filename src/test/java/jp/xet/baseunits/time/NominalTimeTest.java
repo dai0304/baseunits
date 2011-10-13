@@ -25,11 +25,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.TimeZone;
 
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarMinute;
-import jp.xet.baseunits.time.TimeOfDay;
-import jp.xet.baseunits.time.TimePoint;
-
 import org.junit.Test;
 
 /**
@@ -47,7 +42,7 @@ public class NominalTimeTest {
 	 */
 	@Test
 	public void test01_CombineNominalTimes() throws Exception {
-		TimeOfDay fiveFifteenPM = TimeOfDay.from(17, 15);
+		TimeOfDay fiveFifteenPM = TimeOfDay.from(17, 15, 0, 0);
 		CalendarDate april19_2006 = CalendarDate.from(2006, 4, 19);
 		CalendarMinute expectedCombination = CalendarMinute.from(2006, 4, 19, 17, 15);
 		assertThat(fiveFifteenPM.on(april19_2006), is(expectedCombination));

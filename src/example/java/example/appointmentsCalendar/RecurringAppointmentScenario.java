@@ -25,7 +25,7 @@ public class RecurringAppointmentScenario {
 	
 	private static final TimeZone HONOLULU_TIME = TimeZone.getTimeZone("Pacific/Honolulu");
 	
-
+	
 	/**
 	 * Example.
 	 * 
@@ -35,7 +35,7 @@ public class RecurringAppointmentScenario {
 	 */
 	@Test
 	public void testDailyMeetingAlert() {
-		TimeOfDay scheduledMeetingTime = TimeOfDay.from(10, 0);
+		TimeOfDay scheduledMeetingTime = TimeOfDay.from(10, 0, 0, 0);
 		CalendarDate dayOfMeeting = CalendarDate.from(2006, 4, 19);
 		CalendarMinute meetingTimeThisDay = scheduledMeetingTime.on(dayOfMeeting);
 		CalendarMinute sameMeetingTimeThisDay = dayOfMeeting.at(scheduledMeetingTime);
