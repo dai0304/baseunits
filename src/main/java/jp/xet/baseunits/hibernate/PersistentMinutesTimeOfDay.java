@@ -21,12 +21,8 @@
 package jp.xet.baseunits.hibernate;
 
 import java.sql.Types;
-import java.util.Date;
-import java.util.TimeZone;
 
-import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimeOfDay;
-import jp.xet.baseunits.time.TimePoint;
 
 import org.hibernate.type.StandardBasicTypes;
 
@@ -38,13 +34,11 @@ import org.hibernate.type.StandardBasicTypes;
  * @since 1.2
  */
 @SuppressWarnings("serial")
-public class PersistentTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Date> {
+public class PersistentMinutesTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Integer> {
 	
 	private static final int[] SQL_TYPES = new int[] {
-		Types.TIME
+		Types.INTEGER
 	};
-	
-	private static final CalendarDate EPOCH = CalendarDate.from(1970, 1, 1);
 	
 	
 	/**
@@ -52,8 +46,8 @@ public class PersistentTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Date> 
 	 * 
 	 * @since 1.2
 	 */
-	public PersistentTimeOfDay() {
-		super(StandardBasicTypes.TIME);
+	public PersistentMinutesTimeOfDay() {
+		super(StandardBasicTypes.INTEGER);
 	}
 	
 	@Override
@@ -67,13 +61,14 @@ public class PersistentTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Date> 
 	}
 	
 	@Override
-	protected TimeOfDay fromNonNullInternalType(Date value) {
-		return TimePoint.from(value).asTimeOfDay(TimeZone.getTimeZone("Universal"));
+	protected TimeOfDay fromNonNullInternalType(Integer value) {
+		return TimeOfDay.from(value / 60, value % 60, 0, 0); // CHECKSTYLE IGNORE THIS LINE
 	}
 	
 	@Override
-	protected Date toNonNullInternalType(TimeOfDay value) {
-		TimePoint tp = value.asTimePointGiven(EPOCH, TimeZone.getTimeZone("Universal"));
-		return tp.asJavaUtilDate();
+	protected Integer toNonNullInternalType(TimeOfDay value) {
+		int h = value.breachEncapsulationOfHour().breachEncapsulationOfValue();
+		int m = value.breachEncapsulationOfMinute().breachEncapsulationOfValue();
+		return (h * 60) + m; // CHECKSTYLE IGNORE THIS LINE
 	}
 }
