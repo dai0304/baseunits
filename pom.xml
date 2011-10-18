@@ -79,6 +79,12 @@
       <version>3.6.7.Final</version>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-core</artifactId>
+      <version>1.5.1</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>
