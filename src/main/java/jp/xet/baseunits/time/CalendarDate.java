@@ -124,9 +124,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param pattern 解析パターン文字列
 	 * @return {@link CalendarDate}
 	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarDate parse(String dateString, String pattern) throws ParseException {
+		Validate.notNull(dateString);
+		Validate.notNull(pattern);
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		// Any timezone works, as long as the same one is used throughout.
 		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
