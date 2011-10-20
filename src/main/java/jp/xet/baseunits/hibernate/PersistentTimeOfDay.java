@@ -44,7 +44,7 @@ public class PersistentTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Date> 
 		Types.TIME
 	};
 	
-	private static final CalendarDate EPOCH = CalendarDate.from(1970, 1, 1);
+	private static final CalendarDate EPOCH_DATE = CalendarDate.from(1970, 1, 1);
 	
 	
 	/**
@@ -68,12 +68,15 @@ public class PersistentTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Date> 
 	
 	@Override
 	protected TimeOfDay fromNonNullInternalType(Date value) {
-		return TimePoint.from(value).asTimeOfDay(TimeZone.getTimeZone("Universal"));
+		TimePoint tp = TimePoint.from(value);
+		TimeOfDay tod = tp.asTimeOfDay(TimeZone.getTimeZone("Universal"));
+		return tod;
 	}
 	
 	@Override
 	protected Date toNonNullInternalType(TimeOfDay value) {
-		TimePoint tp = value.asTimePointGiven(EPOCH, TimeZone.getTimeZone("Universal"));
-		return tp.asJavaUtilDate();
+		TimePoint tp = value.asTimePointGiven(EPOCH_DATE, TimeZone.getTimeZone("Universal"));
+		Date date = tp.asJavaUtilDate();
+		return date;
 	}
 }
