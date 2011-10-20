@@ -69,13 +69,13 @@ public class PersistentTimeOfDay extends AbstractBaseunitsType<TimeOfDay, Date> 
 	@Override
 	protected TimeOfDay fromNonNullInternalType(Date value) {
 		TimePoint tp = TimePoint.from(value);
-		TimeOfDay tod = tp.asTimeOfDay(TimeZone.getTimeZone("Universal"));
+		TimeOfDay tod = tp.asTimeOfDay(TimeZone.getDefault());
 		return tod;
 	}
 	
 	@Override
 	protected Date toNonNullInternalType(TimeOfDay value) {
-		TimePoint tp = value.asTimePointGiven(EPOCH_DATE, TimeZone.getTimeZone("Universal"));
+		TimePoint tp = value.asTimePointGiven(EPOCH_DATE, TimeZone.getDefault());
 		Date date = tp.asJavaUtilDate();
 		return date;
 	}
