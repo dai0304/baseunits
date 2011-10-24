@@ -34,6 +34,8 @@ public class TimeOfDayTest {
 	
 	private static final TimeZone CST = TimeZone.getTimeZone("CST");
 	
+	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
+	
 	private CalendarDate feb17 = CalendarDate.from(2006, 2, 17);
 	
 	private TimeOfDay midnight = TimeOfDay.from(0, 0, 0, 0);
@@ -50,36 +52,36 @@ public class TimeOfDayTest {
 	
 	
 	/**
-	 * {@link TimeOfDay#on(CalendarDate)}のテスト。
+	 * {@link TimeOfDay#asTimePointGiven(CalendarDate, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test01_OnStartOfDay() throws Exception {
-		CalendarMinute feb17AtStartOfDay = CalendarMinute.from(2006, 2, 17, 0, 0);
-		assertThat(midnight.on(feb17), is(feb17AtStartOfDay));
+		TimePoint feb17AtStartOfDay = TimePoint.atGMT(2006, 2, 17, 0, 0);
+		assertThat(midnight.asTimePointGiven(feb17, GMT), is(feb17AtStartOfDay));
 	}
 	
 	/**
-	 * {@link TimeOfDay#on(CalendarDate)}のテスト。
+	 * {@link TimeOfDay#asTimePointGiven(CalendarDate, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test02_OnMiddleOfDay() throws Exception {
-		CalendarMinute feb17AtMiddleOfDay = CalendarMinute.from(2006, 2, 17, 12, 0);
-		assertThat(noon.on(feb17), is(feb17AtMiddleOfDay));
+		TimePoint feb17AtMiddleOfDay = TimePoint.atGMT(2006, 2, 17, 12, 0);
+		assertThat(noon.asTimePointGiven(feb17, GMT), is(feb17AtMiddleOfDay));
 	}
 	
 	/**
-	 * {@link TimeOfDay#on(CalendarDate)}のテスト。
+	 * {@link TimeOfDay#asTimePointGiven(CalendarDate, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test03_OnEndOfDay() throws Exception {
-		CalendarMinute feb17AtEndOfDay = CalendarMinute.from(2006, 2, 17, 23, 58);
-		assertThat(twoMinutesBeforeMidnight.on(feb17), is(feb17AtEndOfDay));
+		TimePoint feb17AtEndOfDay = TimePoint.atGMT(2006, 2, 17, 23, 58);
+		assertThat(twoMinutesBeforeMidnight.asTimePointGiven(feb17, GMT), is(feb17AtEndOfDay));
 	}
 	
 	/**

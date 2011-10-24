@@ -179,8 +179,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	public TimePoint asTimePointGiven(CalendarDate date, TimeZone timeZone) {
 		Validate.notNull(date);
 		Validate.notNull(timeZone);
-		CalendarMinute timeOfDayOnDate = on(date);
-		return timeOfDayOnDate.asTimePoint(timeZone);
+		return TimePoint.from(date, this, timeZone);
 	}
 	
 	/**
@@ -294,19 +293,6 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	public boolean isBefore(TimeOfDay another) {
 		Validate.notNull(another);
 		return hour.isBefore(another.hour) || (hour.equals(another.hour) && minute.isBefore(another.minute));
-	}
-	
-	/**
-	 * 指定した年月日における、このインスタンスがあらわす瞬間について {@link CalendarMinute} 型のインスタンスを返す。
-	 * 
-	 * @param date 年月日
-	 * @return {@link CalendarMinute}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 */
-	public CalendarMinute on(CalendarDate date) {
-		Validate.notNull(date);
-		return CalendarMinute.from(date, this);
 	}
 	
 	@Override

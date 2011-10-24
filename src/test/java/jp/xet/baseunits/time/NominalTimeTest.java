@@ -44,9 +44,8 @@ public class NominalTimeTest {
 	public void test01_CombineNominalTimes() throws Exception {
 		TimeOfDay fiveFifteenPM = TimeOfDay.from(17, 15, 0, 0);
 		CalendarDate april19_2006 = CalendarDate.from(2006, 4, 19);
-		CalendarMinute expectedCombination = CalendarMinute.from(2006, 4, 19, 17, 15);
-		assertThat(fiveFifteenPM.on(april19_2006), is(expectedCombination));
-		assertThat(april19_2006.at(fiveFifteenPM), is(expectedCombination));
+		TimePoint expectedCombination = TimePoint.at(2006, 4, 19, 17, 15, 0, 0, HONOLULU_TIME);
+		assertThat(fiveFifteenPM.asTimePointGiven(april19_2006, HONOLULU_TIME), is(expectedCombination));
 	}
 	
 	/**

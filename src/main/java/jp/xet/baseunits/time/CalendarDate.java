@@ -41,6 +41,14 @@ import org.apache.commons.lang.Validate;
 public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
 	/**
+	 * エポックの日付
+	 * 
+	 * @since 2.0
+	 */
+	public static final CalendarDate EPOCH_DATE = CalendarDate.from(1970, 1, 1);
+	
+	
+	/**
 	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
 	 * @param yearMonth 年月

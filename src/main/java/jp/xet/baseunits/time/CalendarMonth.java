@@ -352,7 +352,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @return 前月
 	 * @since 1.0
 	 */
-	public CalendarMonth previousDay() {
+	public CalendarMonth previousMonth() {
 		return plusMonths(-1);
 	}
 	

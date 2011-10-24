@@ -323,6 +323,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @return 終了日. 開始日がない場合は{@code null}
 	 * @since 1.0
+	 * @see #start()
 	 */
 	public CalendarDate end() {
 		return upperLimit();
@@ -402,6 +403,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @return 開始日. 開始日がない場合は{@code null}
 	 * @since 1.0
+	 * @see #end()
 	 */
 	public CalendarDate start() {
 		return lowerLimit();
