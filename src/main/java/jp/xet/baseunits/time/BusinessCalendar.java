@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import jp.xet.baseunits.time.spec.DateSpecification;
 import jp.xet.baseunits.util.ImmutableIterator;
 import jp.xet.baseunits.util.spec.Specification;
 

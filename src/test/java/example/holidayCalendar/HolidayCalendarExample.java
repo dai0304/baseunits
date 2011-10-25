@@ -13,9 +13,9 @@ import java.util.Iterator;
 
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
-import jp.xet.baseunits.time.DateSpecification;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.Duration;
+import jp.xet.baseunits.time.spec.DateSpecification;
 
 import org.junit.Test;
 

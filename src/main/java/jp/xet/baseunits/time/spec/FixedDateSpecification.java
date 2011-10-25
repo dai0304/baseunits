@@ -18,52 +18,65 @@
  * free software is distributed under the "MIT" licence.
  * For more information, see http://timeandmoney.sourceforge.net.
  */
-package jp.xet.baseunits.time;
+package jp.xet.baseunits.time.spec;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.util.ImmutableIterator;
 
 import org.apache.commons.lang.Validate;
 
 /**
- * 毎月1度だけ仕様を満たす日付仕様。
- * 
- * @since 1.0
+ * ある特定の年月日を表す日付仕様。
  */
-public abstract class MonthlyDateSpecification extends DateSpecification {
+class FixedDateSpecification extends DateSpecification {
+	
+	final CalendarDate date;
+	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param date 日付
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	FixedDateSpecification(CalendarDate date) {
+		Validate.notNull(date);
+		this.date = date;
+	}
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
-		CalendarMonth month = interval.start().asCalendarMonth();
-		
-		CalendarDate firstTry = ofYearMonth(month);
-		if (interval.includes(firstTry)) {
-			return firstTry;
-		}
-		
-		CalendarDate secondTry = ofYearMonth(month.nextMonth());
-		if (interval.includes(secondTry)) {
-			return secondTry;
+		if (interval.includes(date)) {
+			return date;
 		}
 		return null;
 	}
 	
 	@Override
-	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
-		Validate.notNull(interval);
+	public boolean isSatisfiedBy(CalendarDate date) {
+		Validate.notNull(date);
+		return date.equals(this.date);
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
+		if (firstOccurrenceIn(interval) == null) {
+			return Collections.EMPTY_LIST.iterator();
+		}
 		return new ImmutableIterator<CalendarDate>() {
 			
-			CalendarDate next = firstOccurrenceIn(interval);
-			
-			CalendarMonth month = next.asCalendarMonth();
+			boolean end;
 			
 			
 			@Override
 			public boolean hasNext() {
-				return next != null;
+				return end;
 			}
 			
 			@Override
@@ -71,24 +84,14 @@ public abstract class MonthlyDateSpecification extends DateSpecification {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
 				}
-				CalendarDate current = next;
-				month = month.nextMonth();
-				next = MonthlyDateSpecification.this.ofYearMonth(month);
-				if (interval.includes(next) == false) {
-					next = null;
-				}
-				return current;
+				end = true;
+				return date;
 			}
 		};
 	}
 	
-	/**
-	 * 指定した年月においてこの日付仕様を満たす年月日を返す。
-	 * 
-	 * @param month 年月
-	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 */
-	public abstract CalendarDate ofYearMonth(CalendarMonth month);
+	@Override
+	public String toString() {
+		return date.toString();
+	}
 }

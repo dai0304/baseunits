@@ -28,12 +28,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import jp.xet.baseunits.time.BusinessCalendar;
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarInterval;
-import jp.xet.baseunits.time.DateSpecification;
-import jp.xet.baseunits.time.DayOfWeek;
-import jp.xet.baseunits.time.Duration;
+import jp.xet.baseunits.time.spec.DateSpecification;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,7 +39,8 @@ import org.junit.Test;
  */
 public class BusinessCalendarTest {
 	
-	static BusinessCalendar japaneseBusinessCalendar() {
+	@SuppressWarnings("javadoc")
+	public static BusinessCalendar japaneseBusinessCalendar() {
 		BusinessCalendar calendar = new BusinessCalendar();
 		
 		// 祝日の登録

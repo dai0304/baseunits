@@ -18,7 +18,12 @@
  * free software is distributed under the "MIT" licence.
  * For more information, see http://timeandmoney.sourceforge.net.
  */
-package jp.xet.baseunits.time;
+package jp.xet.baseunits.time.spec;
+
+import jp.xet.baseunits.time.BusinessCalendar;
+import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.CalendarMonth;
+import jp.xet.baseunits.time.DayOfMonth;
 
 import org.apache.commons.lang.Validate;
 

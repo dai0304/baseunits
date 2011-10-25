@@ -18,7 +18,7 @@
  * free software is distributed under the "MIT" licence.
  * For more information, see http://timeandmoney.sourceforge.net.
  */
-package jp.xet.baseunits.time;
+package jp.xet.baseunits.time.spec;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -29,19 +29,18 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import jp.xet.baseunits.time.AnnualDateSpecification;
-import jp.xet.baseunits.time.AnnualFixedDateSpecification;
-import jp.xet.baseunits.time.AnnualFloatingDateSpecification;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.time.CalendarMonth;
-import jp.xet.baseunits.time.DateSpecification;
 import jp.xet.baseunits.time.DayOfMonth;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.MonthOfYear;
-import jp.xet.baseunits.time.MonthlyDateSpecification;
-import jp.xet.baseunits.time.MonthlyFixedDateSpecification;
-import jp.xet.baseunits.time.MonthlyFloatingDateSpecification;
+import jp.xet.baseunits.time.spec.AnnualDateSpecification;
+import jp.xet.baseunits.time.spec.AnnualFixedDateSpecification;
+import jp.xet.baseunits.time.spec.AnnualFloatingDateSpecification;
+import jp.xet.baseunits.time.spec.MonthlyDateSpecification;
+import jp.xet.baseunits.time.spec.MonthlyFixedDateSpecification;
+import jp.xet.baseunits.time.spec.MonthlyFloatingDateSpecification;
 
 import org.junit.Test;
 

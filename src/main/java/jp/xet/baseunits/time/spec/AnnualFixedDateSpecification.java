@@ -18,78 +18,52 @@
  * free software is distributed under the "MIT" licence.
  * For more information, see http://timeandmoney.sourceforge.net.
  */
-package jp.xet.baseunits.time;
+package jp.xet.baseunits.time.spec;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
-import jp.xet.baseunits.util.ImmutableIterator;
+import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.DayOfMonth;
+import jp.xet.baseunits.time.MonthOfYear;
 
 import org.apache.commons.lang.Validate;
 
 /**
- * ある特定の年月日を表す日付仕様。
+ * 毎年X月Y日、を表す日付仕様。
  */
-class FixedDateSpecification extends DateSpecification {
+class AnnualFixedDateSpecification extends AnnualDateSpecification {
 	
-	final CalendarDate date;
+	final MonthOfYear month;
+	
+	final DayOfMonth day;
 	
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param date 日付
+	 * @param month 月
+	 * @param day 日
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	FixedDateSpecification(CalendarDate date) {
-		Validate.notNull(date);
-		this.date = date;
-	}
-	
-	@Override
-	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		if (interval.includes(date)) {
-			return date;
-		}
-		return null;
+	AnnualFixedDateSpecification(MonthOfYear month, DayOfMonth day) {
+		Validate.notNull(month);
+		Validate.notNull(day);
+		this.month = month;
+		this.day = day;
 	}
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return date.equals(this.date);
+		return day.equals(date.breachEncapsulationOfDay())
+				&& month == date.asCalendarMonth().breachEncapsulationOfMonth();
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
-	public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
-		if (firstOccurrenceIn(interval) == null) {
-			return Collections.EMPTY_LIST.iterator();
-		}
-		return new ImmutableIterator<CalendarDate>() {
-			
-			boolean end;
-			
-			
-			@Override
-			public boolean hasNext() {
-				return end;
-			}
-			
-			@Override
-			public CalendarDate next() {
-				if (hasNext() == false) {
-					throw new NoSuchElementException();
-				}
-				end = true;
-				return date;
-			}
-		};
+	public CalendarDate ofYear(int year) {
+		return CalendarDate.from(year, month, day);
 	}
 	
 	@Override
 	public String toString() {
-		return date.toString();
+		return day.toString() + " " + month.toString();
 	}
 }

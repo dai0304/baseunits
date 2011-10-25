@@ -15,7 +15,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.xet.baseunits.time;
+package jp.xet.baseunits.time.spec;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -28,9 +28,8 @@ import java.util.NoSuchElementException;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.time.CalendarMonth;
-import jp.xet.baseunits.time.DateSpecification;
-import jp.xet.baseunits.time.MonthlyFixedBusinessDateSpecification;
-import jp.xet.baseunits.time.MonthlyFixedDateSpecification;
+import jp.xet.baseunits.time.spec.MonthlyFixedBusinessDateSpecification;
+import jp.xet.baseunits.time.spec.MonthlyFixedDateSpecification;
 
 import org.junit.Test;
 

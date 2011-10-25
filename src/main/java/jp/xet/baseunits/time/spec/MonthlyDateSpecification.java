@@ -18,30 +18,36 @@
  * free software is distributed under the "MIT" licence.
  * For more information, see http://timeandmoney.sourceforge.net.
  */
-package jp.xet.baseunits.time;
+package jp.xet.baseunits.time.spec;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.CalendarInterval;
+import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.util.ImmutableIterator;
 
 import org.apache.commons.lang.Validate;
 
 /**
- * 1年間に1度だけ仕様を満たす日付仕様。
+ * 毎月1度だけ仕様を満たす日付仕様。
  * 
  * @since 1.0
  */
-public abstract class AnnualDateSpecification extends DateSpecification {
+public abstract class MonthlyDateSpecification extends DateSpecification {
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
 		Validate.notNull(interval);
-		CalendarDate firstTry = ofYear(interval.start().asCalendarMonth().breachEncapsulationOfYear());
+		CalendarMonth month = interval.start().asCalendarMonth();
+		
+		CalendarDate firstTry = ofYearMonth(month);
 		if (interval.includes(firstTry)) {
 			return firstTry;
 		}
-		CalendarDate secondTry = ofYear(interval.start().asCalendarMonth().breachEncapsulationOfYear() + 1);
+		
+		CalendarDate secondTry = ofYearMonth(month.nextMonth());
 		if (interval.includes(secondTry)) {
 			return secondTry;
 		}
@@ -55,7 +61,7 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 			
 			CalendarDate next = firstOccurrenceIn(interval);
 			
-			int year = next.asCalendarMonth().breachEncapsulationOfYear();
+			CalendarMonth month = next.asCalendarMonth();
 			
 			
 			@Override
@@ -69,8 +75,8 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 					throw new NoSuchElementException();
 				}
 				CalendarDate current = next;
-				year += 1;
-				next = AnnualDateSpecification.this.ofYear(year);
+				month = month.nextMonth();
+				next = MonthlyDateSpecification.this.ofYearMonth(month);
 				if (interval.includes(next) == false) {
 					next = null;
 				}
@@ -80,11 +86,12 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 	}
 	
 	/**
-	 * 指定した年においてこの日付仕様を満たす年月日を返す。
+	 * 指定した年月においてこの日付仕様を満たす年月日を返す。
 	 * 
-	 * @param year 西暦年をあらわす数
+	 * @param month 年月
 	 * @return {@link CalendarDate}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public abstract CalendarDate ofYear(int year);
+	public abstract CalendarDate ofYearMonth(CalendarMonth month);
 }
