@@ -17,6 +17,31 @@ How to use?
 
 If you're using Maven, add this to your pom.xml under the <repositories> and <dependencies> section:
 
+v2.x or later
+    <project>
+      ...
+      <repositories>
+        ...
+        <repsoitory>
+          <id>maven.xet.jp-release</id>
+          <url>http://maven.xet.jp/release/</url>
+        </repository>
+        ...
+      </repositories>
+      ...
+      <dependencies>
+        ...
+        <dependency>
+          <groupId>jp.xet</groupId>
+          <artifactId>baseunits</artifactId>
+          <version>LATEST</version>
+        </dependency>
+        ...
+      </dependencies>
+      ...
+    </project>
+
+v1.x
     <project>
       ...
       <repositories>
@@ -40,6 +65,7 @@ If you're using Maven, add this to your pom.xml under the <repositories> and <de
       </dependencies>
       ...
     </project>
+
 
 Example
 -------
