@@ -27,11 +27,6 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.tests.SerializationTester;
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarInterval;
-import jp.xet.baseunits.time.DayOfWeek;
-import jp.xet.baseunits.time.TimeInterval;
-import jp.xet.baseunits.time.TimePoint;
 
 import org.junit.Test;
 
@@ -91,13 +86,13 @@ public class CalendarDateTest {
 	}
 	
 	/**
-	 * {@link CalendarDate#asTimeInterval(TimeZone)}のテスト。
+	 * {@link CalendarDate#asTimePointInterval(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test04_AsTimeInterval() throws Exception {
-		TimeInterval feb17AsCt = feb17.asTimeInterval(ct);
+		TimePointInterval feb17AsCt = feb17.asTimePointInterval(ct);
 		TimePoint feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct);
 		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, ct);
 		assertThat("start", feb17AsCt.start(), is(feb17Hour0Ct));

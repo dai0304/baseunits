@@ -13,8 +13,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.TimeInterval;
-
+import jp.xet.baseunits.time.TimePointInterval;
 
 class AppointmentCalendar {
 	
@@ -22,7 +21,7 @@ class AppointmentCalendar {
 	
 	Set<Appointment> events = new HashSet<Appointment>();
 	
-
+	
 	AppointmentCalendar(TimeZone zone) {
 		defaultZone = zone;
 	}
@@ -33,10 +32,10 @@ class AppointmentCalendar {
 	
 	List<Appointment> dailyScheduleFor(CalendarDate calDate) {
 		List<Appointment> daysAppointments = new ArrayList<Appointment>();
-		TimeInterval day = calDate.asTimeInterval(defaultZone);
+		TimePointInterval day = calDate.asTimePointInterval(defaultZone);
 		
 		for (Appointment event : events) {
-			if (event.getTimeInterval().intersects(day)) {
+			if (event.getTimePointInterval().intersects(day)) {
 				daysAppointments.add(event);
 			}
 		}

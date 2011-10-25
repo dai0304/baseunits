@@ -34,7 +34,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecivifation implements
+public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecification implements
 		AnnualDateSpecification {
 	
 	@Override

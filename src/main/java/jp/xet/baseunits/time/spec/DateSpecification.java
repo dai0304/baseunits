@@ -23,11 +23,21 @@ import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.util.spec.Specification;
 
 /**
- * TODO for daisuke
+ * 日付仕様を表すインターフェイス。
  * 
  * @since 2.0
  */
 public interface DateSpecification extends Specification<CalendarDate> {
+	
+	/**
+	 * Create a new specification that is the AND operation of {@code this} specification and another specification.
+	 * 
+	 * @param specification Specification to AND.
+	 * @return A new specification.
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	DateSpecification and(DateSpecification specification);
 	
 	/**
 	 * 指定した期間の中で、この日付仕様を満たす最初の年月日を返す。
@@ -35,7 +45,7 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * @param interval 期間
 	 * @return 年月日。但し、仕様を満たす日がなかった場合は{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @throws IllegalArgumentException 引数に{@code interval}が下側限界（開始日）を持たない場合
+	 * @throws IllegalArgumentException 引数{@code interval}に下側限界（開始日）が必要なロジックで、かつ下側限界を持たない場合
 	 * @since 1.0
 	 */
 	CalendarDate firstOccurrenceIn(CalendarInterval interval);
@@ -61,4 +71,16 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 */
 	Iterator<CalendarDate> iterateOver(CalendarInterval interval);
 	
+	@Override
+	DateSpecification not();
+	
+	/**
+	 * Create a new specification that is the OR operation of {@code this} specification and another specification.
+	 * 
+	 * @param specification Specification to OR.
+	 * @return A new specification.
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
+	 */
+	DateSpecification or(DateSpecification specification);
 }

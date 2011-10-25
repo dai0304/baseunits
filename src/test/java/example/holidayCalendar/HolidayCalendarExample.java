@@ -15,8 +15,9 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.Duration;
-import jp.xet.baseunits.time.spec.DateSpecifications;
+import jp.xet.baseunits.time.MonthOfYear;
 import jp.xet.baseunits.time.spec.DateSpecification;
+import jp.xet.baseunits.time.spec.DateSpecifications;
 
 import org.junit.Test;
 
@@ -54,7 +55,8 @@ public class HolidayCalendarExample {
 	@Test
 	public void testDeriveThanksgiving() {
 		// Calculate Thanksgiving, the 4th Thursday in November, for the year 2005
-		DateSpecification thanksgiving = DateSpecifications.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
+		DateSpecification thanksgiving =
+				DateSpecifications.nthOccuranceOfWeekdayInMonth(MonthOfYear.NOV, DayOfWeek.THURSDAY, 4);
 		// With the specification, you can do checks like
 		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.from(2005, 11, 24)), is(true));
 		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.from(2005, 11, 25)), is(false));

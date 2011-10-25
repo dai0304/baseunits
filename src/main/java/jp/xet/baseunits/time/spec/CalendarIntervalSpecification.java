@@ -21,45 +21,68 @@
 package jp.xet.baseunits.time.spec;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
+import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarMonth;
-import jp.xet.baseunits.time.DayOfMonth;
+import jp.xet.baseunits.time.CalendarInterval;
+
+import com.google.common.collect.Iterators;
 
 import org.apache.commons.lang.Validate;
 
 /**
- * 毎月Y日、を表す日付仕様。
+ * ある特定の期間中にマッチする日付仕様。
  * 
- * @since 1.0
+ * @since 2.0
  */
 @SuppressWarnings("serial")
-class MonthlyFixedDateSpecification extends AbstractMonthlyDateSpecification implements Serializable {
+class CalendarIntervalSpecification extends AbstractDateSpecification implements Serializable {
 	
-	final DayOfMonth day;
+	final CalendarInterval interval;
 	
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param day 日
+	 * @param interval 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	MonthlyFixedDateSpecification(DayOfMonth day) {
-		Validate.notNull(day);
-		this.day = day;
+	CalendarIntervalSpecification(CalendarInterval interval) {
+		Validate.notNull(interval);
+		this.interval = interval;
+	}
+	
+	@Override
+	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
+		Validate.notNull(interval);
+		Validate.isTrue(interval.hasLowerLimit() || this.interval.hasLowerLimit());
+		if (this.interval.intersects(interval) == false) {
+			return null;
+		}
+		
+		Interval<CalendarDate> intersect = this.interval.intersect(interval);
+		return intersect.lowerLimit();
 	}
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return day.equals(date.breachEncapsulationOfDay());
+		return interval.includes(date);
 	}
 	
 	@Override
-	public CalendarDate ofYearMonth(CalendarMonth month) {
-		Validate.notNull(month);
-		return CalendarDate.from(month.breachEncapsulationOfYear(), month.breachEncapsulationOfMonth(), day);
+	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
+		if (firstOccurrenceIn(interval) == null) {
+			return Iterators.emptyIterator();
+		}
+		Interval<CalendarDate> i = this.interval.intersect(interval);
+		CalendarInterval intersect = CalendarInterval.inclusive(i.lowerLimit(), i.upperLimit());
+		return intersect.daysIterator();
 	}
 	
+	@Override
+	public String toString() {
+		return interval.toString();
+	}
 }

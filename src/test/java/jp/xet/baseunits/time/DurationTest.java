@@ -31,13 +31,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import jp.xet.baseunits.tests.SerializationTester;
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarInterval;
-import jp.xet.baseunits.time.CalendarMonth;
-import jp.xet.baseunits.time.Duration;
-import jp.xet.baseunits.time.TimeInterval;
-import jp.xet.baseunits.time.TimePoint;
-import jp.xet.baseunits.time.TimeUnit;
 
 import org.junit.Test;
 
@@ -352,7 +345,7 @@ public class DurationTest {
 	public void test17_StartingFromTimePoint() throws Exception {
 		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
 		TimePoint dec20At3 = TimePoint.atGMT(2003, 12, 20, 03, 0, 0, 0);
-		TimeInterval dec20_1_3 = dec20At1.until(dec20At3);
+		TimePointInterval dec20_1_3 = dec20At1.until(dec20At3);
 		assertThat(Duration.hours(2).startingFrom(dec20At1), is(dec20_1_3));
 	}
 	

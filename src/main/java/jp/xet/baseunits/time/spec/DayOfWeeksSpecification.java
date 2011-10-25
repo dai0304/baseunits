@@ -20,6 +20,7 @@
  */
 package jp.xet.baseunits.time.spec;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -38,7 +39,8 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 2.0
  */
-class DayOfWeeksSpecification extends AbstractDateSpecivifation {
+@SuppressWarnings("serial")
+class DayOfWeeksSpecification extends AbstractDateSpecification implements Serializable {
 	
 	final Set<DayOfWeek> dayOfWeeks;
 	

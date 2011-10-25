@@ -35,10 +35,6 @@ import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.time.DayOfMonth;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.MonthOfYear;
-import jp.xet.baseunits.time.spec.AnnualFixedDateSpecification;
-import jp.xet.baseunits.time.spec.AnnualFloatingDateSpecification;
-import jp.xet.baseunits.time.spec.MonthlyFixedDateSpecification;
-import jp.xet.baseunits.time.spec.MonthlyFloatingDateSpecification;
 
 import org.junit.Test;
 
@@ -70,7 +66,8 @@ public class DateSpecificationTest {
 	 */
 	@Test
 	public void test02_NthWeekdayInMonth() throws Exception {
-		DateSpecification thanksgiving = DateSpecifications.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
+		DateSpecification thanksgiving =
+				DateSpecifications.nthOccuranceOfWeekdayInMonth(MonthOfYear.NOV, DayOfWeek.THURSDAY, 4);
 		assertThat(((AnnualDateSpecification) thanksgiving).ofYear(2004), is(CalendarDate.from(2004, 11, 25)));
 		
 		CalendarInterval y2004 = CalendarInterval.year(2004);
@@ -164,7 +161,7 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * {@link DateSpecifications#firstOccurrenceIn(CalendarInterval)}のテスト。
+	 * {@link DateSpecification#firstOccurrenceIn(CalendarInterval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -182,7 +179,7 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * {@link DateSpecifications#iterateOver(CalendarInterval)}のテスト。
+	 * {@link DateSpecification#iterateOver(CalendarInterval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

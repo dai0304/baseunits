@@ -9,7 +9,7 @@
  * <p>このパッケージでは、Java標準APIに不足している「時分秒以下の精度を持たない、単純な日付を表すクラス」
  * ({@link jp.xet.baseunits.time.CalendarDate})をはじめ、「特定の瞬間を表す不変(immutable)クラス」
  * ({@link jp.xet.baseunits.time.TimePoint})、「期間（時間の範囲）を表すクラス」
- * ({@link jp.xet.baseunits.time.CalendarInterval}や{@link jp.xet.baseunits.time.TimeInterval})、
+ * ({@link jp.xet.baseunits.time.CalendarInterval}や{@link jp.xet.baseunits.time.TimePointInterval})、
  * 「時間量を表すクラス」({@link jp.xet.baseunits.time.Duration})等の基本クラスを提供する。</p>
  */
 package jp.xet.baseunits.time;

@@ -19,7 +19,9 @@ package jp.xet.baseunits.mirage;
 import jp.sf.amateras.mirage.type.ValueType;
 
 /**
- * TODO for daisuke
+ * Baseunits内の型を扱う {@link ValueType}の骨格実装クラス。
+ * 
+ * @since 2.0
  */
 public abstract class AbstractBaseunitsValueType implements ValueType {
 	

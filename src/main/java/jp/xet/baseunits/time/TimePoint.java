@@ -458,7 +458,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public TimePoint backToMidnight(TimeZone zone) {
 		Validate.notNull(zone);
-		return calendarDate(zone).asTimeInterval(zone).start();
+		return calendarDate(zone).asTimePointInterval(zone).start();
 	}
 	
 	/**
@@ -531,19 +531,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
-	 * 
-	 * @param interval 基準期間
-	 * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 */
-	public boolean isAfter(TimeInterval interval) {
-		Validate.notNull(interval);
-		return interval.isBefore(this);
-	}
-	
-	/**
 	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>同一日時である場合は {@code false} を返す。</p>
@@ -559,16 +546,16 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
+	 * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
 	 * 
 	 * @param interval 基準期間
-	 * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
+	 * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public boolean isBefore(TimeInterval interval) {
+	public boolean isAfter(TimePointInterval interval) {
 		Validate.notNull(interval);
-		return interval.isAfter(this);
+		return interval.isBefore(this);
 	}
 	
 	/**
@@ -584,6 +571,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public boolean isBefore(TimePoint other) {
 		Validate.notNull(other);
 		return millisecondsFromEpoch < other.millisecondsFromEpoch;
+	}
+	
+	/**
+	 * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
+	 * 
+	 * @param interval 基準期間
+	 * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
+	 */
+	public boolean isBefore(TimePointInterval interval) {
+		Validate.notNull(interval);
+		return interval.isAfter(this);
 	}
 	
 	/**
@@ -627,7 +627,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * この日時から、指定した時間の長さ分未来の日時を取得する。
+	 * この瞬間から、指定した時間の長さ分未来の瞬間を取得する。
 	 * 
 	 * @param duration 時間の長さ
 	 * @return 未来の日時
@@ -690,10 +690,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
 	 * 
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @return {@link TimeInterval}
+	 * @return {@link TimePointInterval}
 	 * @since 1.0
 	 */
-	public TimeInterval until(TimePoint end) {
-		return TimeInterval.over(this, end);
+	public TimePointInterval until(TimePoint end) {
+		return TimePointInterval.over(this, end);
 	}
 }

@@ -36,8 +36,8 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
 	/**
 	 * Create a new AND specification based on two other spec.
 	 *
-	 * @param spec1 Specification one.
-	 * @param spec2 Specification two.
+	 * @param spec1 left hand Specification.
+	 * @param spec2 right hand Specification.
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */

@@ -308,14 +308,9 @@ public class Duration implements Comparable<Duration>, Serializable {
 		if (other.unit.isConvertibleTo(unit) == false && quantity != 0 && other.quantity != 0) {
 			throw new ClassCastException(other.toString() + " is not convertible to: " + toString());
 		}
-		long difference = inBaseUnits() - other.inBaseUnits();
-		if (difference > 0) {
-			return 1;
-		}
-		if (difference < 0) {
-			return -1;
-		}
-		return 0;
+		long thisValue = inBaseUnits();
+		long anotherValue = other.inBaseUnits();
+		return thisValue < anotherValue ? -1 : ((thisValue == anotherValue) ? 0 : 1);
 	}
 	
 	/**
@@ -365,12 +360,60 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の差を返す。
+	 * TODO for daisuke
+	 * 
+	 * @param other 比較対照
+	 * @return {@code other}よりも大きい場合は{@code true}、そうでない場合は{@code false}
+	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @see #compareTo(Duration)
+	 */
+	public boolean isGreaterThan(Duration other) {
+		return compareTo(other) > 0;
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param other 比較対照
+	 * @return {@code other}よりも大きいまたは等しい場合は{@code true}、そうでない場合は{@code false}
+	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @see #compareTo(Duration)
+	 */
+	public boolean isGreaterThanOrEqual(Duration other) {
+		return compareTo(other) >= 0;
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param other 比較対照
+	 * @return {@code other}よりも小さい場合は{@code true}、そうでない場合は{@code false}
+	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @see #compareTo(Duration)
+	 */
+	public boolean isLessThan(Duration other) {
+		return compareTo(other) < 0;
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param other 比較対照
+	 * @return {@code other}よりも小さいまたは等しい場合は{@code true}、そうでない場合は{@code false}
+	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @see #compareTo(Duration)
+	 */
+	public boolean isLessThanOrEqual(Duration other) {
+		return compareTo(other) <= 0;
+	}
+	
+	/**
+	 * このオブジェクトが表現する時間量と、引数{@code other}に与えた時間量の差を返す。
 	 * 
 	 * @param other 期間
 	 * @return 時間量の差
-	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
-	 * @throws IllegalArgumentException 引数otherの長さが、このオブジェクトよりも長い場合
+	 * @throws IllegalArgumentException 引数{@code other}の単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
+	 * @throws IllegalArgumentException 引数{@code other}の長さが、このオブジェクトよりも長い場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -427,9 +470,9 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public TimeInterval preceding(TimePoint end) {
+	public TimePointInterval preceding(TimePoint end) {
 		Validate.notNull(end);
-		return TimeInterval.preceding(end, this);
+		return TimePointInterval.preceding(end, this);
 	}
 	
 	/**
@@ -450,6 +493,22 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
+	 * 指定した時刻を開始時刻とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
+	 * 
+	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @return 期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 加算の結果が24時を超えた場合
+	 * @since 1.0
+	 */
+	public TimeOfDayInterval startingFrom(TimeOfDay start) {
+		Validate.notNull(start);
+		return TimeOfDayInterval.startingFrom(start, this);
+	}
+	
+	/**
 	 * 指定した日時を開始日時とする、このオブジェクトが表現する長さを持つ期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
@@ -459,9 +518,9 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public TimeInterval startingFrom(TimePoint start) {
+	public TimePointInterval startingFrom(TimePoint start) {
 		Validate.notNull(start);
-		return TimeInterval.startingFrom(start, this);
+		return TimePointInterval.startingFrom(start, this);
 	}
 	
 	/**

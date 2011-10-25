@@ -20,6 +20,8 @@
  */
 package jp.xet.baseunits.time.spec;
 
+import java.io.Serializable;
+
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.time.DayOfMonth;
@@ -32,7 +34,8 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-class MonthlyFloatingDateSpecification extends AbstractMonthlyDateSpecification {
+@SuppressWarnings("serial")
+class MonthlyFloatingDateSpecification extends AbstractMonthlyDateSpecification implements Serializable {
 	
 	final DayOfWeek dayOfWeek;
 	

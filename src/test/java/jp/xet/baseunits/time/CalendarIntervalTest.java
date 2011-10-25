@@ -31,11 +31,6 @@ import java.util.TimeZone;
 
 import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.tests.SerializationTester;
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarInterval;
-import jp.xet.baseunits.time.Duration;
-import jp.xet.baseunits.time.TimeInterval;
-import jp.xet.baseunits.time.TimePoint;
 
 import org.junit.Test;
 
@@ -82,7 +77,7 @@ public class CalendarIntervalTest {
 	 */
 	@Test
 	public void test02_TranslationToTimeInterval() throws Exception {
-		TimeInterval day = may20.asTimeInterval(ct);
+		TimePointInterval day = may20.asTimePointInterval(ct);
 		assertThat("May20Ct", day.start(), is(TimePoint.atMidnight(2004, 5, 20, ct)));
 	}
 	

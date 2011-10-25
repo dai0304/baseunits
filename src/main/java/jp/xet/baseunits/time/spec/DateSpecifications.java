@@ -20,6 +20,7 @@
  */
 package jp.xet.baseunits.time.spec;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -47,25 +48,32 @@ public final class DateSpecifications {
 	 * @since 2.0
 	 */
 	public static DateSpecification always() {
-		return new AbstractDateSpecivifation() {
-			
-			@Override
-			public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-				return interval.start();
-			}
-			
-			@Override
-			public boolean isSatisfiedBy(CalendarDate date) {
-				return true;
-			}
-			
-			@Override
-			public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
-				Validate.notNull(interval);
-				Validate.isTrue(interval.hasLowerLimit());
-				return interval.daysIterator();
-			}
-		};
+		return AlwaysDateSpecification.INSTANCE;
+	}
+	
+	/**
+	 * 指定した期間にマッチする日付仕様を返す。
+	 * 
+	 * @param interval 期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return 日付仕様
+	 * @since 2.0
+	 */
+	public static DateSpecification calendarInterval(CalendarInterval interval) {
+		return new CalendarIntervalSpecification(interval);
+	}
+	
+	/**
+	 * 指定した曜日にマッチする日付仕様を返す。
+	 * 
+	 * @param dayOfWeek 曜日
+	 * @param dayOfWeeks 曜日(optional)
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return 日付仕様
+	 * @since 2.0
+	 */
+	public static DateSpecification dayOfWeek(DayOfWeek dayOfWeek, DayOfWeek... dayOfWeeks) {
+		return new DayOfWeeksSpecification(dayOfWeek, dayOfWeeks);
 	}
 	
 	/**
@@ -87,13 +95,27 @@ public final class DateSpecifications {
 	 * 
 	 * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
 	 * 
+	 * @param day 日
+	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 * @return 日付仕様
+	 * @since 2.0
+	 */
+	public static MonthlyDateSpecification fixed(DayOfMonth day) {
+		return new MonthlyFixedDateSpecification(day);
+	}
+	
+	/**
+	 * 日付仕様「毎月{@code day}日」のインスタンスを生成する。
+	 * 
+	 * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
+	 * 
 	 * @param day 日を表す正数（1〜31）
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
 	 * @return 日付仕様
 	 * @since 1.0
 	 */
 	public static MonthlyDateSpecification fixed(int day) {
-		return new MonthlyFixedDateSpecification(DayOfMonth.valueOf(day));
+		return fixed(DayOfMonth.valueOf(day));
 	}
 	
 	/**
@@ -107,11 +129,25 @@ public final class DateSpecifications {
 	 * @since 1.0
 	 */
 	public static AnnualDateSpecification fixed(int month, int day) {
-		return new AnnualFixedDateSpecification(MonthOfYear.valueOf(month), DayOfMonth.valueOf(day));
+		return fixed(MonthOfYear.valueOf(month), DayOfMonth.valueOf(day));
 	}
 	
 	/**
-	 * 日付仕様「毎月Y日（ただし、非営業日の場合は、前営業日/翌営業日）」のインスタンスを生成する。
+	 * 日付仕様「毎年{@code month}月{@code day}日」のインスタンスを生成する。
+	 * 
+	 * @param month 月を表す正数（1〜12）
+	 * @param day 日を表す正数（1〜31）
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
+	 * @return 日付仕様
+	 * @since 2.0
+	 */
+	public static AnnualDateSpecification fixed(MonthOfYear month, DayOfMonth day) {
+		return new AnnualFixedDateSpecification(month, day);
+	}
+	
+	/**
+	 * 日付仕様「毎月{@code day}日（ただし、非営業日の場合は、前営業日/翌営業日）」のインスタンスを生成する。
 	 * 
 	 * @param day 日
 	 * @param shifter シフト戦略
@@ -130,27 +166,7 @@ public final class DateSpecifications {
 	 * @since 1.0
 	 */
 	public static DateSpecification never() {
-		return new AbstractDateSpecivifation() {
-			
-			@Override
-			public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-				Validate.notNull(interval);
-				return null;
-			}
-			
-			@Override
-			public boolean isSatisfiedBy(CalendarDate date) {
-				Validate.notNull(date);
-				return false;
-			}
-			
-			@Override
-			@SuppressWarnings("unchecked")
-			public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
-				return Collections.EMPTY_LIST.iterator();
-			}
-			
-		};
+		return NeverDateSpecification.INSTANCE;
 	}
 	
 	/**
@@ -177,9 +193,79 @@ public final class DateSpecifications {
 	 * @since 1.0
 	 */
 	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(int month, DayOfWeek dayOfWeek, int n) {
+		return nthOccuranceOfWeekdayInMonth(MonthOfYear.valueOf(month), dayOfWeek, n);
+	}
+	
+	/**
+	 * 日付仕様「{@code month}月の第{@code n}◎曜日仕様のインスタンスを生成する。
+	 * 
+	 * @param month 月
+	 * @param dayOfWeek 曜日◎
+	 * @param n 周回数（1〜5）
+	 * @return 日付仕様
+	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(MonthOfYear month, DayOfWeek dayOfWeek, int n) {
 		return new AnnualFloatingDateSpecification(month, dayOfWeek, n);
 	}
 	
 	private DateSpecifications() {
+	}
+	
+	
+	@SuppressWarnings("serial")
+	private static final class AlwaysDateSpecification extends AbstractDateSpecification implements Serializable {
+		
+		static final AlwaysDateSpecification INSTANCE = new AlwaysDateSpecification();
+		
+		
+		private AlwaysDateSpecification() {
+		}
+		
+		@Override
+		public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
+			return interval.start();
+		}
+		
+		@Override
+		public boolean isSatisfiedBy(CalendarDate date) {
+			return true;
+		}
+		
+		@Override
+		public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
+			Validate.notNull(interval);
+			Validate.isTrue(interval.hasLowerLimit());
+			return interval.daysIterator();
+		}
+	}
+	
+	@SuppressWarnings("serial")
+	private static final class NeverDateSpecification extends AbstractDateSpecification implements Serializable {
+		
+		static final NeverDateSpecification INSTANCE = new NeverDateSpecification();
+		
+		
+		private NeverDateSpecification() {
+		}
+		
+		@Override
+		public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
+			Validate.notNull(interval);
+			return null;
+		}
+		
+		@Override
+		public boolean isSatisfiedBy(CalendarDate date) {
+			Validate.notNull(date);
+			return false;
+		}
+		
+		@Override
+		@SuppressWarnings("unchecked")
+		public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
+			return Collections.EMPTY_LIST.iterator();
+		}
 	}
 }

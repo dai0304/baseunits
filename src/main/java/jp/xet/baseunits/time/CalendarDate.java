@@ -213,9 +213,9 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public TimeInterval asTimeInterval(TimeZone zone) {
+	public TimePointInterval asTimePointInterval(TimeZone zone) {
 		Validate.notNull(zone);
-		return TimeInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
+		return TimePointInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
 	}
 	
 	/**

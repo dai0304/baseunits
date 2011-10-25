@@ -20,8 +20,12 @@
  */
 package jp.xet.baseunits.time.spec;
 
+import java.io.Serializable;
+
 import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.DayOfMonth;
 import jp.xet.baseunits.time.DayOfWeek;
+import jp.xet.baseunits.time.MonthOfYear;
 
 import org.apache.commons.lang.Validate;
 
@@ -30,9 +34,10 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-class AnnualFloatingDateSpecification extends AbstractAnnualDateSpecification {
+@SuppressWarnings("serial")
+class AnnualFloatingDateSpecification extends AbstractAnnualDateSpecification implements Serializable {
 	
-	final int month;
+	final MonthOfYear month;
 	
 	final DayOfWeek dayOfWeek;
 	
@@ -49,8 +54,7 @@ class AnnualFloatingDateSpecification extends AbstractAnnualDateSpecification {
 	 * @throws IllegalArgumentException 引数{@code dayOfWeek}に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code occurrence}が1〜5の範囲ではない場合
 	 */
-	AnnualFloatingDateSpecification(int month, DayOfWeek dayOfWeek, int occurrence) {
-		Validate.isTrue(1 <= month && month <= 12);
+	AnnualFloatingDateSpecification(MonthOfYear month, DayOfWeek dayOfWeek, int occurrence) {
 		Validate.notNull(dayOfWeek);
 		Validate.isTrue(1 <= occurrence && occurrence <= 5);
 		this.month = month;
@@ -66,11 +70,11 @@ class AnnualFloatingDateSpecification extends AbstractAnnualDateSpecification {
 	
 	@Override
 	public CalendarDate ofYear(int year) {
-		CalendarDate firstOfMonth = CalendarDate.from(year, month, 1);
+		CalendarDate firstOfMonth = CalendarDate.from(year, month, DayOfMonth.valueOf(1));
 		int dayOfWeekOffset =
 				dayOfWeek.breachEncapsulationOfValue() - firstOfMonth.dayOfWeek().breachEncapsulationOfValue();
 		int dateOfFirstOccurrenceOfDayOfWeek = dayOfWeekOffset + (dayOfWeekOffset < 0 ? 8 : 1);
 		int date = ((occurrence - 1) * 7) + dateOfFirstOccurrenceOfDayOfWeek;
-		return CalendarDate.from(year, month, date);
+		return CalendarDate.from(year, month, DayOfMonth.valueOf(date));
 	}
 }

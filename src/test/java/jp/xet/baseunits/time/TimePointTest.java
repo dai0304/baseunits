@@ -30,9 +30,6 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.tests.SerializationTester;
-import jp.xet.baseunits.time.Duration;
-import jp.xet.baseunits.time.TimeInterval;
-import jp.xet.baseunits.time.TimePoint;
 
 import org.junit.Test;
 
@@ -249,15 +246,15 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * {@link TimePoint#isBefore(TimeInterval)}, {@link TimePoint#isAfter(TimeInterval)}のテスト。
+	 * {@link TimePoint#isBefore(TimePointInterval)}, {@link TimePoint#isAfter(TimePointInterval)}のテスト。
 	 * 
-	 * This is only an integration test. The primary responsibility is in {@link TimeInterval}.
+	 * This is only an integration test. The primary responsibility is in {@link TimePointInterval}.
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test13_BeforeAfterPeriod() throws Exception {
-		TimeInterval period = TimeInterval.closed(dec20_2003, dec22_2003);
+		TimePointInterval period = TimePointInterval.closed(dec20_2003, dec22_2003);
 		assertThat(dec19_2003.isBefore(period), is(true));
 		assertThat(dec19_2003.isAfter(period), is(false));
 		assertThat(dec20_2003.isBefore(period), is(false));

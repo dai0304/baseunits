@@ -45,17 +45,17 @@ public class BusinessCalendarTest {
 		
 		// 祝日の登録
 		calendar.addHolidaySpec(DateSpecifications.fixed(1, 1)); // 元旦
-		calendar.addHolidaySpec(DateSpecifications.nthOccuranceOfWeekdayInMonth(1, DayOfWeek.MONDAY, 2)); // 成人の日
+		calendar.addHolidaySpec(DateSpecifications.nthOccuranceOfWeekdayInMonth(MonthOfYear.JAN, DayOfWeek.MONDAY, 2)); // 成人の日
 		calendar.addHolidaySpec(DateSpecifications.fixed(2, 11)); // 建国記念日
 		calendar.addHoliday(CalendarDate.from(2010, 3, 21)); // 春分の日
 		calendar.addHolidaySpec(DateSpecifications.fixed(4, 29)); // 昭和の日
 		calendar.addHolidaySpec(DateSpecifications.fixed(5, 3)); // 憲法記念日
 		calendar.addHolidaySpec(DateSpecifications.fixed(5, 4)); // みどりの日
 		calendar.addHolidaySpec(DateSpecifications.fixed(5, 5)); // こどもの日
-		calendar.addHolidaySpec(DateSpecifications.nthOccuranceOfWeekdayInMonth(7, DayOfWeek.MONDAY, 3)); // 海の日
-		calendar.addHolidaySpec(DateSpecifications.nthOccuranceOfWeekdayInMonth(9, DayOfWeek.MONDAY, 3)); // 敬老の日
+		calendar.addHolidaySpec(DateSpecifications.nthOccuranceOfWeekdayInMonth(MonthOfYear.JUL, DayOfWeek.MONDAY, 3)); // 海の日
+		calendar.addHolidaySpec(DateSpecifications.nthOccuranceOfWeekdayInMonth(MonthOfYear.SEP, DayOfWeek.MONDAY, 3)); // 敬老の日
 		calendar.addHoliday(CalendarDate.from(2010, 9, 23)); // 秋分の日
-		calendar.addHolidaySpec(DateSpecifications.nthOccuranceOfWeekdayInMonth(10, DayOfWeek.MONDAY, 2)); // 体育の日
+		calendar.addHolidaySpec(DateSpecifications.nthOccuranceOfWeekdayInMonth(MonthOfYear.OCT, DayOfWeek.MONDAY, 2)); // 体育の日
 		calendar.addHolidaySpec(DateSpecifications.fixed(11, 3)); // 文化の日
 		calendar.addHolidaySpec(DateSpecifications.fixed(11, 23)); // 勤労感謝の日
 		calendar.addHolidaySpec(DateSpecifications.fixed(12, 23)); // 天皇誕生日

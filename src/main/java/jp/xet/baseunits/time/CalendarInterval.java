@@ -209,11 +209,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public TimeInterval asTimeInterval(TimeZone zone) {
+	public TimePointInterval asTimeInterval(TimeZone zone) {
 		Validate.notNull(zone);
-		TimePoint startPoint = lowerLimit().asTimeInterval(zone).start();
-		TimePoint endPoint = upperLimit().asTimeInterval(zone).end();
-		return TimeInterval.over(startPoint, endPoint);
+		TimePoint startPoint = lowerLimit().asTimePointInterval(zone).start();
+		TimePoint endPoint = upperLimit().asTimePointInterval(zone).end();
+		return TimePointInterval.over(startPoint, endPoint);
 	}
 	
 	/**

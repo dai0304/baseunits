@@ -29,16 +29,13 @@ import java.util.NoSuchElementException;
 
 import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.tests.SerializationTester;
-import jp.xet.baseunits.time.Duration;
-import jp.xet.baseunits.time.TimeInterval;
-import jp.xet.baseunits.time.TimePoint;
 
 import org.junit.Test;
 
 /**
- * {@link TimeInterval}のテストクラス。
+ * {@link TimePointInterval}のテストクラス。
  */
-public class TimeIntervalTest {
+public class TimePointIntervalTest {
 	
 	private TimePoint dec19_2003 = TimePoint.atMidnightGMT(2003, 12, 19);
 	
@@ -52,24 +49,24 @@ public class TimeIntervalTest {
 	
 	
 	/**
-	 * {@link TimeInterval}のインスタンスがシリアライズできるかどうか検証する。
+	 * {@link TimePointInterval}のインスタンスがシリアライズできるかどうか検証する。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test01_Serialization() throws Exception {
-		TimeInterval interval = TimeInterval.closed(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.closed(dec20_2003, dec22_2003);
 		SerializationTester.assertCanBeSerialized(interval);
 	}
 	
 	/**
-	 * {@link TimeInterval#isBefore(TimePoint)}のテスト。
+	 * {@link TimePointInterval#isBefore(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test02_BeforeClosed() throws Exception {
-		TimeInterval interval = TimeInterval.closed(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.closed(dec20_2003, dec22_2003);
 		// Only the upper end should matter for this test.
 		assertThat(interval.isBefore(dec21_2003), is(false));
 		assertThat(interval.isBefore(dec22_2003), is(false));
@@ -77,13 +74,13 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#isAfter(TimePoint)}のテスト。
+	 * {@link TimePointInterval#isAfter(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test03_AfterClosed() throws Exception {
-		TimeInterval interval = TimeInterval.closed(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.closed(dec20_2003, dec22_2003);
 		// Only the lower end should matter for this test.
 		assertThat(interval.isAfter(dec19_2003), is(true));
 		assertThat(interval.isAfter(dec20_2003), is(false));
@@ -91,13 +88,13 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#includes(TimePoint)}のテスト。
+	 * {@link TimePointInterval#includes(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test04_IncludesClosed() throws Exception {
-		TimeInterval interval = TimeInterval.closed(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.closed(dec20_2003, dec22_2003);
 		assertThat(interval.includes(dec19_2003), is(false));
 		assertThat(interval.includes(dec20_2003), is(true));
 		assertThat(interval.includes(dec21_2003), is(true));
@@ -106,13 +103,13 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#isBefore(TimePoint)}のテスト。
+	 * {@link TimePointInterval#isBefore(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test05_BeforeOpen() throws Exception {
-		TimeInterval interval = TimeInterval.open(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.open(dec20_2003, dec22_2003);
 		// Only the upper end should matter for this test.
 		assertThat(interval.isBefore(dec21_2003), is(false));
 		assertThat(interval.isBefore(dec22_2003), is(true));
@@ -120,13 +117,13 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#isAfter(TimePoint)}のテスト。
+	 * {@link TimePointInterval#isAfter(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test06_AfterOpen() throws Exception {
-		TimeInterval interval = TimeInterval.open(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.open(dec20_2003, dec22_2003);
 		// Only the lower end should matter for this test.
 		assertThat(interval.isAfter(dec19_2003), is(true));
 		assertThat(interval.isAfter(dec20_2003), is(true));
@@ -134,13 +131,13 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#includes(TimePoint)}のテスト。
+	 * {@link TimePointInterval#includes(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test07_IncludesOpen() throws Exception {
-		TimeInterval interval = TimeInterval.open(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.open(dec20_2003, dec22_2003);
 		assertThat(interval.includes(dec19_2003), is(false));
 		assertThat(interval.includes(dec20_2003), is(false));
 		assertThat(interval.includes(dec21_2003), is(true));
@@ -149,13 +146,13 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#includes(TimePoint)}のテスト。
+	 * {@link TimePointInterval#includes(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test08_IncludesHalfOpen() throws Exception {
-		TimeInterval interval = TimeInterval.over(dec20_2003, true, dec22_2003, false);
+		TimePointInterval interval = TimePointInterval.over(dec20_2003, true, dec22_2003, false);
 		assertThat(interval.includes(dec19_2003), is(false));
 		assertThat(interval.includes(dec20_2003), is(true));
 		assertThat(interval.includes(dec21_2003), is(true));
@@ -164,34 +161,34 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#startingFrom(TimePoint, Duration)}のテスト。
+	 * {@link TimePointInterval#startingFrom(TimePoint, Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test09_CreateWithDurationFrom() throws Exception {
 		Duration twoDays = Duration.days(2);
-		TimeInterval following = TimeInterval.startingFrom(dec20_2003, true, twoDays, true);
+		TimePointInterval following = TimePointInterval.startingFrom(dec20_2003, true, twoDays, true);
 		assertThat("[ dec20", following.start(), is(dec20_2003));
 		assertThat("dec 22]", following.end(), is(dec22_2003));
 		
 	}
 	
 	/**
-	 * {@link TimeInterval#preceding(TimePoint, Duration)}のテスト。
+	 * {@link TimePointInterval#preceding(TimePoint, Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test10_CreateWithDurationUntil() throws Exception {
 		Duration twoDays = Duration.days(2);
-		TimeInterval preceding = TimeInterval.preceding(dec21_2003, true, twoDays, true);
+		TimePointInterval preceding = TimePointInterval.preceding(dec21_2003, true, twoDays, true);
 		assertThat("[ dec19", preceding.start(), is(dec19_2003));
 		assertThat("dec21 )", preceding.end(), is(dec21_2003));
 	}
 	
 	/**
-	 * {@link TimeInterval#over(TimePoint, TimePoint)}のテスト。
+	 * {@link TimePointInterval#over(TimePoint, TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -202,7 +199,7 @@ public class TimeIntervalTest {
 		         Days include 12:00am at their start, but do not
 		         include the 12:00am that end them.
 		*/
-		TimeInterval interval = TimeInterval.over(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.over(dec20_2003, dec22_2003);
 		assertThat(interval.includes(dec19_2003), is(false));
 		assertThat(interval.includes(dec20_2003), is(true));
 		assertThat(interval.includes(dec21_2003), is(true));
@@ -211,7 +208,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#startingFrom(TimePoint, Duration)}のテスト。
+	 * {@link TimePointInterval#startingFrom(TimePoint, Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -222,7 +219,7 @@ public class TimeIntervalTest {
 		         Days include 12:00am at their start, but do not
 		         include the 12:00am that end them.
 		*/
-		TimeInterval interval = TimeInterval.startingFrom(dec20_2003, Duration.hours(48));
+		TimePointInterval interval = TimePointInterval.startingFrom(dec20_2003, Duration.hours(48));
 		assertThat(interval.includes(dec19_2003), is(false));
 		assertThat(interval.includes(dec20_2003), is(true));
 		assertThat(interval.includes(dec21_2003), is(true));
@@ -231,50 +228,50 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#everFrom(TimePoint)}のテスト。
+	 * {@link TimePointInterval#everFrom(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test13_EverFrom() throws Exception {
-		TimeInterval afterDec20 = TimeInterval.everFrom(dec20_2003);
+		TimePointInterval afterDec20 = TimePointInterval.everFrom(dec20_2003);
 		assertThat(afterDec20.includes(TimePoint.atMidnightGMT(2062, 3, 5)), is(true));
 		assertThat(afterDec20.includes(TimePoint.atMidnightGMT(1776, 7, 4)), is(false));
 		assertThat(afterDec20.includes(dec20_2003), is(true));
 	}
 	
 	/**
-	 * {@link TimeInterval#everPreceding(TimePoint)}のテスト。
+	 * {@link TimePointInterval#everPreceding(TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test14_EverUntil() throws Exception {
-		TimeInterval afterDec20 = TimeInterval.everPreceding(dec20_2003);
+		TimePointInterval afterDec20 = TimePointInterval.everPreceding(dec20_2003);
 		assertThat(afterDec20.includes(TimePoint.atMidnightGMT(2062, 3, 5)), is(false));
 		assertThat(afterDec20.includes(TimePoint.atMidnightGMT(1776, 7, 4)), is(true));
 		assertThat(afterDec20.includes(dec20_2003), is(false));
 	}
 	
 	/**
-	 * {@link TimeInterval#open(TimePoint, TimePoint)}のテスト。
+	 * {@link TimePointInterval#open(TimePoint, TimePoint)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test15_Length() throws Exception {
-		TimeInterval interval = TimeInterval.open(dec20_2003, dec22_2003);
+		TimePointInterval interval = TimePointInterval.open(dec20_2003, dec22_2003);
 		assertThat(interval.length(), is(Duration.days(2)));
 		
 		TimePoint first = TimePoint.atGMT(2004, 1, 1, 1, 1, 1, 1);
 		TimePoint second = TimePoint.atGMT(2004, 1, 6, 5, 4, 3, 2);
-		interval = TimeInterval.closed(first, second);
+		interval = TimePointInterval.closed(first, second);
 		Duration expectedLength = Duration.daysHoursMinutesSecondsMilliseconds(5, 4, 3, 2, 1);
 		assertThat(interval.length(), is(expectedLength));
 	}
 	
 	/**
-	 * {@link TimeInterval#daysIterator()}のテスト。
+	 * {@link TimePointInterval#daysIterator()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -282,7 +279,7 @@ public class TimeIntervalTest {
 	public void test16_DaysIterator() throws Exception {
 		TimePoint start = TimePoint.atGMT(2004, 2, 5, 10, 0);
 		TimePoint end = TimePoint.atGMT(2004, 2, 8, 2, 0);
-		TimeInterval interval = TimeInterval.over(start, end);
+		TimePointInterval interval = TimePointInterval.over(start, end);
 		Iterator<TimePoint> it = interval.daysIterator();
 		assertThat(it.hasNext(), is(true));
 		assertThat(it.next(), is(start));
@@ -298,7 +295,7 @@ public class TimeIntervalTest {
 			// success
 		}
 		
-		TimeInterval interval2 = TimeInterval.everPreceding(end);
+		TimePointInterval interval2 = TimePointInterval.everPreceding(end);
 		try {
 			interval2.daysIterator();
 			fail();
@@ -306,7 +303,7 @@ public class TimeIntervalTest {
 			// success
 		}
 		
-		TimeInterval interval3 = TimeInterval.everFrom(start);
+		TimePointInterval interval3 = TimePointInterval.everFrom(start);
 		Iterator<TimePoint> it3 = interval3.daysIterator();
 		for (int i = 0; i < 100; i++) {
 			assertThat(it3.hasNext(), is(true));
@@ -314,7 +311,7 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#subintervalIterator(Duration)}のテスト。
+	 * {@link TimePointInterval#subintervalIterator(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -325,12 +322,12 @@ public class TimeIntervalTest {
 		TimePoint d8_h10 = TimePoint.atGMT(2004, 2, 8, 10, 0);
 		TimePoint d9_h2 = TimePoint.atGMT(2004, 2, 9, 2, 0);
 		
-		TimeInterval interval = TimeInterval.over(d4_h10, d9_h2);
-		Iterator<TimeInterval> iterator = interval.subintervalIterator(Duration.days(2));
+		TimePointInterval interval = TimePointInterval.over(d4_h10, d9_h2);
+		Iterator<TimePointInterval> iterator = interval.subintervalIterator(Duration.days(2));
 		assertThat(iterator.hasNext(), is(true));
-		assertThat(iterator.next(), is(TimeInterval.over(d4_h10, d6_h10)));
+		assertThat(iterator.next(), is(TimePointInterval.over(d4_h10, d6_h10)));
 		assertThat(iterator.hasNext(), is(true));
-		assertThat(iterator.next(), is(TimeInterval.over(d6_h10, d8_h10)));
+		assertThat(iterator.next(), is(TimePointInterval.over(d6_h10, d8_h10)));
 		assertThat(iterator.hasNext(), is(false));
 		try {
 			iterator.next();
@@ -348,16 +345,16 @@ public class TimeIntervalTest {
 		TimePoint h6_m30 = TimePoint.atGMT(2004, 2, 9, 6, 30);
 		TimePoint h8 = TimePoint.atGMT(2004, 2, 9, 8, 0);
 		
-		TimeInterval interval2 = TimeInterval.over(h2, h8);
+		TimePointInterval interval2 = TimePointInterval.over(h2, h8);
 		iterator = interval2.subintervalIterator(Duration.minutes(90));
 		assertThat(iterator.hasNext(), is(true));
-		assertThat(iterator.next(), is(TimeInterval.over(h2, h3_m30)));
+		assertThat(iterator.next(), is(TimePointInterval.over(h2, h3_m30)));
 		assertThat(iterator.hasNext(), is(true));
-		assertThat(iterator.next(), is(TimeInterval.over(h3_m30, h5)));
+		assertThat(iterator.next(), is(TimePointInterval.over(h3_m30, h5)));
 		assertThat(iterator.hasNext(), is(true));
-		assertThat(iterator.next(), is(TimeInterval.over(h5, h6_m30)));
+		assertThat(iterator.next(), is(TimePointInterval.over(h5, h6_m30)));
 		assertThat(iterator.hasNext(), is(true));
-		assertThat(iterator.next(), is(TimeInterval.over(h6_m30, h8)));
+		assertThat(iterator.next(), is(TimePointInterval.over(h6_m30, h8)));
 		assertThat(iterator.hasNext(), is(false));
 		
 		try {
@@ -369,21 +366,21 @@ public class TimeIntervalTest {
 	}
 	
 	/**
-	 * {@link TimeInterval#intersects(Interval)}のテスト。
+	 * {@link TimePointInterval#intersects(Interval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test18_Intersection() throws Exception {
-		TimeInterval i19_22 = TimeInterval.over(dec19_2003, dec22_2003);
-		TimeInterval i20_23 = TimeInterval.over(dec20_2003, dec23_2003);
-		TimeInterval intersection = i19_22.intersect(i20_23);
+		TimePointInterval i19_22 = TimePointInterval.over(dec19_2003, dec22_2003);
+		TimePointInterval i20_23 = TimePointInterval.over(dec20_2003, dec23_2003);
+		TimePointInterval intersection = i19_22.intersect(i20_23);
 		assertThat(intersection.start(), is(dec20_2003));
 		assertThat(intersection.end(), is(dec22_2003));
 		assertThat("intersects true", i19_22.intersects(i20_23), is(true));
 		
-		TimeInterval i19_21 = TimeInterval.over(dec19_2003, dec21_2003);
-		TimeInterval i22_23 = TimeInterval.over(dec22_2003, dec23_2003);
+		TimePointInterval i19_21 = TimePointInterval.over(dec19_2003, dec21_2003);
+		TimePointInterval i22_23 = TimePointInterval.over(dec22_2003, dec23_2003);
 		assertThat("intersects false", i19_21.intersects(i22_23), is(false));
 	}
 	

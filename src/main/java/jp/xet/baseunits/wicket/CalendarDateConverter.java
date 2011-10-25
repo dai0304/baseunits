@@ -17,6 +17,7 @@
 package jp.xet.baseunits.wicket;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import jp.xet.baseunits.time.CalendarDate;
@@ -40,7 +41,6 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	
 	/**
 	 * インスタンスを生成する。
-	 * 
 	 */
 	public CalendarDateConverter() {
 		this(DEFAILT_PATTERN);
@@ -49,7 +49,7 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param datePattern
+	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public CalendarDateConverter(String datePattern) {

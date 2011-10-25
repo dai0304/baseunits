@@ -36,6 +36,13 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	
+	/** {@link TimeOfDay}の最小値 */
+	public static final TimeOfDay MIN = from(0, 0, 0, 0);
+	
+	/** {@link TimeOfDay}の最大値 */
+	public static final TimeOfDay MAX = from(23, 59, 59, 999);
+	
+	
 	/**
 	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
 	 * 
@@ -293,6 +300,39 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	public boolean isBefore(TimeOfDay another) {
 		Validate.notNull(another);
 		return hour.isBefore(another.hour) || (hour.equals(another.hour) && minute.isBefore(another.minute));
+	}
+	
+	/**
+	 * この時刻から、指定した時間の長さ分過去の時刻を取得する。
+	 * 
+	 * @param duration 時間の長さ
+	 * @return 過去の時刻
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 減算の結果が0時を切った場合
+	 * @since 2.0
+	 */
+	public TimeOfDay minus(Duration duration) {
+		Validate.notNull(duration);
+		Duration d = toDuration().minus(duration);
+		return TimeOfDay.MIN.plus(d);
+	}
+	
+	/**
+	 * この時刻から、指定した時間の長さ分未来の時刻を取得する。
+	 * 
+	 * @param duration 時間の長さ
+	 * @return 未来の時刻
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 加算の結果が24時を超えた場合
+	 * @since 2.0
+	 */
+	public TimeOfDay plus(Duration duration) {
+		Validate.notNull(duration);
+		Duration d = toDuration().plus(duration);
+		if (d.isGreaterThanOrEqual(Duration.hours(24))) { // CHECKSTYLE IGNORE THIS LINE
+			throw new IllegalArgumentException();
+		}
+		return TimeOfDay.MIN.plus(d);
 	}
 	
 	/**

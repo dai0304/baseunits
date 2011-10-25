@@ -18,20 +18,19 @@ package example.schedule;
 
 import java.util.TimeZone;
 
-import jp.xet.baseunits.time.TimeInterval;
+import jp.xet.baseunits.time.TimeOfDay;
+import jp.xet.baseunits.time.TimeOfDayInterval;
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.spec.DateSpecification;
 
 import org.apache.commons.lang.Validate;
 
-/**
- * TODO for daisuke
- */
+@SuppressWarnings("javadoc")
 public class RepeatSchedule {
 	
 	private DateSpecification dateSpec;
 	
-	private TimeInterval interval;
+	private TimeOfDayInterval interval;
 	
 	private TimeZone timeZone;
 	
@@ -43,7 +42,7 @@ public class RepeatSchedule {
 	 * @param interval 時間の期間
 	 * @param timeZone タイムゾーン
 	 */
-	public RepeatSchedule(DateSpecification dateSpec, TimeInterval interval, TimeZone timeZone) {
+	public RepeatSchedule(DateSpecification dateSpec, TimeOfDayInterval interval, TimeZone timeZone) {
 		Validate.notNull(dateSpec);
 		Validate.notNull(interval);
 		Validate.notNull(timeZone);
@@ -52,10 +51,38 @@ public class RepeatSchedule {
 		this.timeZone = timeZone;
 	}
 	
+	public DateSpecification getDateSpec() {
+		return dateSpec;
+	}
+	
+	public TimeOfDayInterval getInterval() {
+		return interval;
+	}
+	
+	public TimeZone getTimeZone() {
+		return timeZone;
+	}
+	
 	public boolean isInScheduledTime(TimePoint timePoint) {
 		if (dateSpec.isSatisfiedBy(timePoint.calendarDate(timeZone)) == false) {
 			return false;
 		}
-		return interval.includes(timePoint);
+		TimeOfDay timeOfDay = timePoint.asTimeOfDay(timeZone);
+		return interval.includes(timeOfDay);
+	}
+	
+	public void setDateSpec(DateSpecification dateSpec) {
+		Validate.notNull(dateSpec);
+		this.dateSpec = dateSpec;
+	}
+	
+	public void setInterval(TimeOfDayInterval interval) {
+		Validate.notNull(interval);
+		this.interval = interval;
+	}
+	
+	public void setTimeZone(TimeZone timeZone) {
+		Validate.notNull(timeZone);
+		this.timeZone = timeZone;
 	}
 }

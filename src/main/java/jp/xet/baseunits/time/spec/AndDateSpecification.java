@@ -17,14 +17,34 @@
 package jp.xet.baseunits.time.spec;
 
 import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.util.spec.AbstractSpecification;
+
+import org.apache.commons.lang.Validate;
 
 /**
  * TODO for daisuke
- * 
- * @since 1.0
  */
-public abstract class AbstractDateSpecivifation extends AbstractSpecification<CalendarDate> implements
-		DateSpecification {
+public class AndDateSpecification extends AbstractDateSpecification {
 	
+	private final DateSpecification spec1;
+	
+	private final DateSpecification spec2;
+	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param spec1 left hand Specification.
+	 * @param spec2 right hand Specification.
+	 */
+	public AndDateSpecification(DateSpecification spec1, DateSpecification spec2) {
+		Validate.notNull(spec1);
+		Validate.notNull(spec2);
+		this.spec1 = spec1;
+		this.spec2 = spec2;
+	}
+	
+	@Override
+	public boolean isSatisfiedBy(CalendarDate t) {
+		return spec1.isSatisfiedBy(t) && spec2.isSatisfiedBy(t);
+	}
 }

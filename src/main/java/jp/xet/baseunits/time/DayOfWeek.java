@@ -95,4 +95,13 @@ public enum DayOfWeek {
 	public int breachEncapsulationOfValue() {
 		return value;
 	}
+	
+	/**
+	 * 曜日を表す3文字の文字列を返す。
+	 * 
+	 * @return 3文字の文字列
+	 */
+	public String shortName() {
+		return name().substring(0, 3);
+	}
 }

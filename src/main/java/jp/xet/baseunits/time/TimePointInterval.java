@@ -36,7 +36,7 @@ import org.apache.commons.lang.Validate;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-public class TimeInterval extends Interval<TimePoint> {
+public class TimePointInterval extends Interval<TimePoint> {
 	
 	/**
 	 * 開始日時と終了日時より、閉期間を返す。
@@ -47,7 +47,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
 	 * @since 1.0
 	 */
-	public static TimeInterval closed(TimePoint start, TimePoint end) {
+	public static TimePointInterval closed(TimePoint start, TimePoint end) {
 		return over(start, true, end, true);
 	}
 	
@@ -60,7 +60,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @return 期間
 	 * @since 1.0
 	 */
-	public static TimeInterval everFrom(TimePoint start) {
+	public static TimePointInterval everFrom(TimePoint start) {
 		return over(start, null);
 	}
 	
@@ -73,7 +73,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @return 期間
 	 * @since 1.0
 	 */
-	public static TimeInterval everPreceding(TimePoint end) {
+	public static TimePointInterval everPreceding(TimePoint end) {
 		return over(null, end);
 	}
 	
@@ -86,7 +86,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
 	 * @since 1.0
 	 */
-	public static TimeInterval open(TimePoint start, TimePoint end) {
+	public static TimePointInterval open(TimePoint start, TimePoint end) {
 		return over(start, false, end, false);
 	}
 	
@@ -103,8 +103,8 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
 	 * @since 1.0
 	 */
-	public static TimeInterval over(TimePoint start, boolean startClosed, TimePoint end, boolean endClosed) {
-		return new TimeInterval(start, startClosed, end, endClosed);
+	public static TimePointInterval over(TimePoint start, boolean startClosed, TimePoint end, boolean endClosed) {
+		return new TimePointInterval(start, startClosed, end, endClosed);
 	}
 	
 	/**
@@ -118,7 +118,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 開始日時が終了日時より大きい（未来である）場合
 	 * @since 1.0
 	 */
-	public static TimeInterval over(TimePoint start, TimePoint end) {
+	public static TimePointInterval over(TimePoint start, TimePoint end) {
 		// Uses the common default for time intervals, [start, end).
 		return over(start, true, end, false);
 	}
@@ -134,7 +134,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static TimeInterval preceding(TimePoint end, boolean startClosed, Duration length, boolean endClosed) {
+	public static TimePointInterval preceding(TimePoint end, boolean startClosed, Duration length, boolean endClosed) {
 		Validate.notNull(end);
 		Validate.notNull(length);
 		TimePoint start = end.minus(length);
@@ -150,7 +150,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static TimeInterval preceding(TimePoint end, Duration length) {
+	public static TimePointInterval preceding(TimePoint end, Duration length) {
 		Validate.notNull(end);
 		Validate.notNull(length);
 		// Uses the common default for time intervals, [start, end).
@@ -168,7 +168,8 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static TimeInterval startingFrom(TimePoint start, boolean startClosed, Duration length, boolean endClosed) {
+	public static TimePointInterval startingFrom(TimePoint start, boolean startClosed, Duration length,
+			boolean endClosed) {
 		Validate.notNull(start);
 		Validate.notNull(length);
 		TimePoint end = start.plus(length);
@@ -186,7 +187,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static TimeInterval startingFrom(TimePoint start, Duration length) {
+	public static TimePointInterval startingFrom(TimePoint start, Duration length) {
 		Validate.notNull(start);
 		Validate.notNull(length);
 		// Uses the common default for time intervals, [start, end).
@@ -203,7 +204,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
 	 * @since 1.0
 	 */
-	public TimeInterval(TimePoint start, boolean startIncluded, TimePoint end, boolean endIncluded) {
+	public TimePointInterval(TimePoint start, boolean startIncluded, TimePoint end, boolean endIncluded) {
 		super(start, startIncluded, end, endIncluded);
 	}
 	
@@ -278,9 +279,9 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public TimeInterval intersect(TimeInterval interval) {
+	public TimePointInterval intersect(TimePointInterval interval) {
 		Validate.notNull(interval);
-		return (TimeInterval) super.intersect(interval);
+		return (TimePointInterval) super.intersect(interval);
 	}
 	
 	/**
@@ -338,7 +339,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	 */
 	@Override
 	public Interval<TimePoint> newOfSameType(TimePoint start, boolean isStartClosed, TimePoint end, boolean isEndClosed) {
-		return new TimeInterval(start, isStartClosed, end, isEndClosed);
+		return new TimePointInterval(start, isStartClosed, end, isEndClosed);
 	}
 	
 	/**
@@ -352,7 +353,7 @@ public class TimeInterval extends Interval<TimePoint> {
 	}
 	
 	/**
-	 * この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間 {@link TimeInterval} を
+	 * この期間の開始日時を起点として、指定した時間の長さを持ち前回の終了日時を開始日時とする期間 {@link TimePointInterval} を
 	 * この期間の終了日時を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/01 02:00, 2009/01/10 15:00) で表される期間に対して、
@@ -377,28 +378,28 @@ public class TimeInterval extends Interval<TimePoint> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public Iterator<TimeInterval> subintervalIterator(Duration subintervalLength) {
+	public Iterator<TimePointInterval> subintervalIterator(Duration subintervalLength) {
 		Validate.notNull(subintervalLength);
 		if (hasLowerLimit() == false) {
 			throw new IllegalStateException();
 		}
 		final Duration segmentLength = subintervalLength;
-		return new ImmutableIterator<TimeInterval>() {
+		return new ImmutableIterator<TimePointInterval>() {
 			
-			TimeInterval next = segmentLength.startingFrom(start());
+			TimePointInterval next = segmentLength.startingFrom(start());
 			
 			
 			@Override
 			public boolean hasNext() {
-				return TimeInterval.this.covers(next);
+				return TimePointInterval.this.covers(next);
 			}
 			
 			@Override
-			public TimeInterval next() {
+			public TimePointInterval next() {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
 				}
-				TimeInterval current = next;
+				TimePointInterval current = next;
 				next = segmentLength.startingFrom(next.end());
 				return current;
 			}

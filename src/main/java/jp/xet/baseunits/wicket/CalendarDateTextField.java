@@ -146,6 +146,7 @@ public class CalendarDateTextField extends TextField<CalendarDate> implements IT
 	 * 
 	 * @see org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider#getTextFormat()
 	 */
+	@Override
 	public String getTextFormat() {
 		return datePattern;
 	}

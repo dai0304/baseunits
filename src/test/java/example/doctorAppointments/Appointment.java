@@ -6,18 +6,18 @@
 
 package example.doctorAppointments;
 
-import jp.xet.baseunits.time.TimeInterval;
+import jp.xet.baseunits.time.TimePointInterval;
 
 class Appointment {
 	
-	private TimeInterval timeInterval;
+	private TimePointInterval timePointInterval;
 	
-
-	public Appointment(TimeInterval interval) {
-		timeInterval = interval;
+	
+	public Appointment(TimePointInterval interval) {
+		timePointInterval = interval;
 	}
 	
-	public TimeInterval getTimeInterval() {
-		return timeInterval;
+	public TimePointInterval getTimePointInterval() {
+		return timePointInterval;
 	}
 }

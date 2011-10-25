@@ -20,6 +20,8 @@
  */
 package jp.xet.baseunits.time.spec;
 
+import java.io.Serializable;
+
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.DayOfMonth;
 import jp.xet.baseunits.time.MonthOfYear;
@@ -31,7 +33,8 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-class AnnualFixedDateSpecification extends AbstractAnnualDateSpecification {
+@SuppressWarnings("serial")
+class AnnualFixedDateSpecification extends AbstractAnnualDateSpecification implements Serializable {
 	
 	final MonthOfYear month;
 	

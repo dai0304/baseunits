@@ -20,13 +20,15 @@
  */
 package jp.xet.baseunits.time.spec;
 
-import java.util.Collections;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.util.ImmutableIterator;
+
+import com.google.common.collect.Iterators;
 
 import org.apache.commons.lang.Validate;
 
@@ -35,7 +37,8 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-class FixedDateSpecification extends AbstractDateSpecivifation {
+@SuppressWarnings("serial")
+class FixedDateSpecification extends AbstractDateSpecification implements Serializable {
 	
 	final CalendarDate date;
 	
@@ -68,10 +71,9 @@ class FixedDateSpecification extends AbstractDateSpecivifation {
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
 	public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
 		if (firstOccurrenceIn(interval) == null) {
-			return Collections.EMPTY_LIST.iterator();
+			return Iterators.emptyIterator();
 		}
 		return new ImmutableIterator<CalendarDate>() {
 			

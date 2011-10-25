@@ -13,8 +13,8 @@ import java.util.TimeZone;
 
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.Duration;
-import jp.xet.baseunits.time.TimeInterval;
 import jp.xet.baseunits.time.TimePoint;
+import jp.xet.baseunits.time.TimePointInterval;
 
 import org.junit.Test;
 
@@ -31,11 +31,11 @@ public class AppointmentCalendarTest {
 		TimeZone pt = TimeZone.getTimeZone("America/Los_Angeles");
 		
 		TimePoint jun7at10 = TimePoint.at(2004, 6, 7, 10, 0, 0, 0, pt);
-		TimeInterval shortTime = TimeInterval.startingFrom(jun7at10, Duration.hours(3));
+		TimePointInterval shortTime = TimePointInterval.startingFrom(jun7at10, Duration.hours(3));
 		Appointment shortEvent = new Appointment(shortTime);
 		
 		TimePoint jun9at13 = TimePoint.at(2004, 6, 9, 13, 0, 0, 0, pt);
-		TimeInterval longTime = TimeInterval.over(jun7at10, jun9at13);
+		TimePointInterval longTime = TimePointInterval.over(jun7at10, jun9at13);
 		Appointment longEvent = new Appointment(longTime);
 		
 		AppointmentCalendar cal = new AppointmentCalendar(pt);
