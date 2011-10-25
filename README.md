@@ -18,6 +18,7 @@ How to use?
 If you're using Maven, add this to your pom.xml under the <repositories> and <dependencies> section:
 
 v2.x or later
+
     <project>
       ...
       <repositories>
@@ -42,6 +43,7 @@ v2.x or later
     </project>
 
 v1.x
+
     <project>
       ...
       <repositories>
