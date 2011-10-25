@@ -72,6 +72,13 @@ public enum DayOfWeek {
 	/** {@link Calendar}に定義する曜日をあらわす定数値 */
 	final int value;
 	
+	/**
+	 * 曜日の数
+	 * 
+	 * @since 2.0
+	 */
+	public static final int SIZE = 7;
+	
 	
 	DayOfWeek(int value) {
 		this.value = value;
