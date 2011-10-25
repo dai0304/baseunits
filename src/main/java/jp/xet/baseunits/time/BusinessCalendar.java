@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import jp.xet.baseunits.time.spec.DateSpecification;
+import jp.xet.baseunits.time.spec.DateSpecifications;
 import jp.xet.baseunits.util.ImmutableIterator;
 import jp.xet.baseunits.util.spec.Specification;
 
@@ -59,7 +59,7 @@ public class BusinessCalendar {
 	 * @since 1.0
 	 */
 	public void addHoliday(CalendarDate date) {
-		addHolidaySpec(DateSpecification.fixed(date));
+		addHolidaySpec(DateSpecifications.fixed(date));
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class BusinessCalendar {
 	 */
 	public void addHolidays(Set<CalendarDate> days) {
 		for (CalendarDate date : days) {
-			addHolidaySpec(DateSpecification.fixed(date));
+			addHolidaySpec(DateSpecifications.fixed(date));
 		}
 	}
 	
@@ -306,7 +306,7 @@ public class BusinessCalendar {
 	 * @since 1.0
 	 */
 	protected Specification<CalendarDate> defaultHolidaySpecs() {
-		return DateSpecification.never();
+		return DateSpecifications.never();
 	}
 	
 	/**

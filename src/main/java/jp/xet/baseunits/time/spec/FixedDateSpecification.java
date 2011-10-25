@@ -33,7 +33,7 @@ import org.apache.commons.lang.Validate;
 /**
  * ある特定の年月日を表す日付仕様。
  */
-class FixedDateSpecification extends DateSpecification {
+class FixedDateSpecification extends AbstractDateSpecivifation {
 	
 	final CalendarDate date;
 	

@@ -45,7 +45,7 @@ public class MonthlyFixedDateSpecificationTest {
 	 */
 	@Test
 	public void test01_firstOccurrenceIn() throws Exception {
-		DateSpecification fixed = DateSpecification.fixed(19);
+		DateSpecification fixed = DateSpecifications.fixed(19);
 		CalendarInterval nov2010 = CalendarInterval.month(CalendarMonth.from(2010, 11));
 		assertThat(fixed.firstOccurrenceIn(nov2010), is(CalendarDate.from(2010, 11, 19)));
 		
@@ -67,7 +67,7 @@ public class MonthlyFixedDateSpecificationTest {
 	@Test
 	public void test02_iterateOver() throws Exception {
 		CalendarInterval y2010 = CalendarInterval.year(2010);
-		DateSpecification fixed = DateSpecification.fixed(27);
+		DateSpecification fixed = DateSpecifications.fixed(27);
 		
 		Iterator<CalendarDate> itr = fixed.iterateOver(y2010);
 		assertThat(itr.hasNext(), is(true));

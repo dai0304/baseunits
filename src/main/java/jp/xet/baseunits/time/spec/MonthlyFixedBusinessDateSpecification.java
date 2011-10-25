@@ -32,7 +32,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-public class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecification {
+class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecification {
 	
 	final DayOfMonth day;
 	

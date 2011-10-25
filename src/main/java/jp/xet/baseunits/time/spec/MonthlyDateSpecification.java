@@ -35,7 +35,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-public abstract class MonthlyDateSpecification extends DateSpecification {
+public abstract class MonthlyDateSpecification extends AbstractDateSpecivifation implements IMonthlyDateSpecification {
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
@@ -84,14 +84,4 @@ public abstract class MonthlyDateSpecification extends DateSpecification {
 			}
 		};
 	}
-	
-	/**
-	 * 指定した年月においてこの日付仕様を満たす年月日を返す。
-	 * 
-	 * @param month 年月
-	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 */
-	public abstract CalendarDate ofYearMonth(CalendarMonth month);
 }

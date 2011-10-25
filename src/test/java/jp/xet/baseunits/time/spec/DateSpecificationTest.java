@@ -35,17 +35,15 @@ import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.time.DayOfMonth;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.MonthOfYear;
-import jp.xet.baseunits.time.spec.AnnualDateSpecification;
 import jp.xet.baseunits.time.spec.AnnualFixedDateSpecification;
 import jp.xet.baseunits.time.spec.AnnualFloatingDateSpecification;
-import jp.xet.baseunits.time.spec.MonthlyDateSpecification;
 import jp.xet.baseunits.time.spec.MonthlyFixedDateSpecification;
 import jp.xet.baseunits.time.spec.MonthlyFloatingDateSpecification;
 
 import org.junit.Test;
 
 /**
- * {@link DateSpecification}のテストクラス。
+ * {@link DateSpecifications}のテストクラス。
  */
 public class DateSpecificationTest {
 	
@@ -57,8 +55,8 @@ public class DateSpecificationTest {
 	@Test
 	public void test01_FixedDate() throws Exception {
 		CalendarInterval y2004 = CalendarInterval.year(2004);
-		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
-		assertThat(((AnnualDateSpecification) independenceDay).ofYear(2004), is(CalendarDate.from(2004, 7, 4)));
+		DateSpecification independenceDay = DateSpecifications.fixed(7, 4);
+		assertThat(((IAnnualDateSpecification) independenceDay).ofYear(2004), is(CalendarDate.from(2004, 7, 4)));
 		assertThat(independenceDay.firstOccurrenceIn(y2004), is(CalendarDate.from(2004, 7, 4)));
 		assertThat(independenceDay.isSatisfiedBy(CalendarDate.from(2004, 7, 4)), is(true));
 		assertThat(independenceDay.isSatisfiedBy(CalendarDate.from(2004, 7, 3)), is(false));
@@ -72,8 +70,8 @@ public class DateSpecificationTest {
 	 */
 	@Test
 	public void test02_NthWeekdayInMonth() throws Exception {
-		DateSpecification thanksgiving = DateSpecification.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
-		assertThat(((AnnualDateSpecification) thanksgiving).ofYear(2004), is(CalendarDate.from(2004, 11, 25)));
+		DateSpecification thanksgiving = DateSpecifications.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
+		assertThat(((IAnnualDateSpecification) thanksgiving).ofYear(2004), is(CalendarDate.from(2004, 11, 25)));
 		
 		CalendarInterval y2004 = CalendarInterval.year(2004);
 		assertThat(thanksgiving.firstOccurrenceIn(y2004), is(CalendarDate.from(2004, 11, 25)));
@@ -104,8 +102,8 @@ public class DateSpecificationTest {
 	@Test
 	public void test03_FixedDate() throws Exception {
 		CalendarInterval y2004 = CalendarInterval.year(2004);
-		DateSpecification thirdEveryMonth = DateSpecification.fixed(3);
-		assertThat(((MonthlyDateSpecification) thirdEveryMonth).ofYearMonth(CalendarMonth.from(2010, 11)),
+		DateSpecification thirdEveryMonth = DateSpecifications.fixed(3);
+		assertThat(((IMonthlyDateSpecification) thirdEveryMonth).ofYearMonth(CalendarMonth.from(2010, 11)),
 				is(CalendarDate.from(2010, 11, 3)));
 		assertThat(thirdEveryMonth.firstOccurrenceIn(y2004), is(CalendarDate.from(2004, 1, 3)));
 		assertThat(thirdEveryMonth.isSatisfiedBy(CalendarDate.from(2011, 2, 3)), is(true));
@@ -120,7 +118,7 @@ public class DateSpecificationTest {
 	 */
 	@Test
 	public void test04_NthWeekdayInEveryMonth() throws Exception {
-		DateSpecification tsubasaHoliday = DateSpecification.nthOccuranceOfWeekdayInEveryMonth(DayOfWeek.SATURDAY, 2);
+		DateSpecification tsubasaHoliday = DateSpecifications.nthOccuranceOfWeekdayInEveryMonth(DayOfWeek.SATURDAY, 2);
 		assertThat(((MonthlyFloatingDateSpecification) tsubasaHoliday).ofYearMonth(CalendarMonth.from(2010,
 				MonthOfYear.AUG)), is(CalendarDate.from(2010, MonthOfYear.AUG, DayOfMonth.valueOf(14))));
 		
@@ -147,13 +145,13 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * {@link DateSpecification#never()}のテスト。
+	 * {@link DateSpecifications#never()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test05_never() throws Exception {
-		DateSpecification never = DateSpecification.never();
+		DateSpecification never = DateSpecifications.never();
 		assertThat(never, is(notNullValue()));
 		
 		assertThat(never.firstOccurrenceIn(CalendarInterval.year(2010)), is(nullValue()));
@@ -166,7 +164,7 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * {@link DateSpecification#firstOccurrenceIn(CalendarInterval)}のテスト。
+	 * {@link DateSpecifications#firstOccurrenceIn(CalendarInterval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -176,7 +174,7 @@ public class DateSpecificationTest {
 		CalendarInterval ylate2002_2004 = CalendarInterval.inclusive(2002, 8, 1, 2004, 12, 31);
 		CalendarInterval ylate2002 = CalendarInterval.inclusive(2002, 8, 1, 2002, 12, 31);
 		CalendarInterval ylate2002_early2003 = CalendarInterval.inclusive(2002, 8, 1, 2003, 6, 30);
-		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
+		DateSpecification independenceDay = DateSpecifications.fixed(7, 4);
 		assertThat(independenceDay.firstOccurrenceIn(y2002_2004), is(CalendarDate.from(2002, 7, 4)));
 		assertThat(independenceDay.firstOccurrenceIn(ylate2002_2004), is(CalendarDate.from(2003, 7, 4)));
 		assertThat(independenceDay.firstOccurrenceIn(ylate2002), is(nullValue()));
@@ -184,13 +182,13 @@ public class DateSpecificationTest {
 	}
 	
 	/**
-	 * {@link DateSpecification#iterateOver(CalendarInterval)}のテスト。
+	 * {@link DateSpecifications#iterateOver(CalendarInterval)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test07_IterateThroughInterval() throws Exception {
-		DateSpecification independenceDay = DateSpecification.fixed(7, 4);
+		DateSpecification independenceDay = DateSpecifications.fixed(7, 4);
 		CalendarInterval ylate2002_early2005 = CalendarInterval.inclusive(2002, 8, 1, 2005, 6, 30);
 		Iterator<CalendarDate> it = independenceDay.iterateOver(ylate2002_early2005);
 		assertThat(it.hasNext(), is(true));

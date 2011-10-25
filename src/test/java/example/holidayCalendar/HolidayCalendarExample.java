@@ -15,6 +15,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.Duration;
+import jp.xet.baseunits.time.spec.DateSpecifications;
 import jp.xet.baseunits.time.spec.DateSpecification;
 
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class HolidayCalendarExample {
 	@Test
 	public void testDeriveBirthday() {
 		// Calculate Martin Luther King, Jr.'s birthday, January 15, for the year 2005:
-		DateSpecification mlkBirthday = DateSpecification.fixed(1, 15);
+		DateSpecification mlkBirthday = DateSpecifications.fixed(1, 15);
 		// Then you can do checks like
 		CalendarDate jan15_2005 = CalendarDate.from(2005, 1, 15);
 		assertThat(mlkBirthday.isSatisfiedBy(jan15_2005), is(true));
@@ -53,7 +54,7 @@ public class HolidayCalendarExample {
 	@Test
 	public void testDeriveThanksgiving() {
 		// Calculate Thanksgiving, the 4th Thursday in November, for the year 2005
-		DateSpecification thanksgiving = DateSpecification.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
+		DateSpecification thanksgiving = DateSpecifications.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
 		// With the specification, you can do checks like
 		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.from(2005, 11, 24)), is(true));
 		assertThat(thanksgiving.isSatisfiedBy(CalendarDate.from(2005, 11, 25)), is(false));

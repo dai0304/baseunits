@@ -34,7 +34,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-public abstract class AnnualDateSpecification extends DateSpecification {
+public abstract class AnnualDateSpecification extends AbstractDateSpecivifation implements IAnnualDateSpecification {
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
@@ -80,13 +80,4 @@ public abstract class AnnualDateSpecification extends DateSpecification {
 			}
 		};
 	}
-	
-	/**
-	 * 指定した年においてこの日付仕様を満たす年月日を返す。
-	 * 
-	 * @param year 西暦年をあらわす数
-	 * @return {@link CalendarDate}
-	 * @since 1.0
-	 */
-	public abstract CalendarDate ofYear(int year);
 }
