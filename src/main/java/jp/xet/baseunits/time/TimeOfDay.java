@@ -295,6 +295,19 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 		return hour.isBefore(another.hour) || (hour.equals(another.hour) && minute.isBefore(another.minute));
 	}
 	
+	/**
+	 * 深夜午前0時からこの瞬間までの時間量を返す。
+	 * 
+	 * @return 時間量
+	 */
+	public Duration toDuration() {
+		Duration d = Duration.hours(hour.breachEncapsulationOfValue());
+		d = d.plus(Duration.minutes(minute.breachEncapsulationOfValue()));
+		d = d.plus(Duration.seconds(second.breachEncapsulationOfValue()));
+		d = d.plus(Duration.milliseconds(millisec.breachEncapsulationOfValue()));
+		return d;
+	}
+	
 	@Override
 	public String toString() {
 		return hour.toString() + ":" + minute.toString() + ":" + second.toString() + "." + millisec.toString();

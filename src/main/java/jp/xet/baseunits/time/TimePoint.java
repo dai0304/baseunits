@@ -33,7 +33,8 @@ import org.apache.commons.lang.Validate;
 /**
  * ミリ秒精度で、ある時間の一点をあらわすクラス。
  * 
- * <p>タイムゾーンを持っている。</p>
+ * <p>タイムゾーン情報を含んでいる。つまり、時差のある複数の場所で、同時に「現在」を取得した場合、相互を{@link #equals(Object)}で
+ * 評価した時、結果は{@code true}となる。</p>
  * 
  * @since 1.0
  */
@@ -260,8 +261,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint atMidnight(CalendarDate calendarDate, TimeZone zone) {
 		Validate.notNull(calendarDate);
 		Validate.notNull(zone);
-		return at(calendarDate.asCalendarMonth(),
-				calendarDate.breachEncapsulationOfDay(), 0, 0, 0, 0, zone);
+		return at(calendarDate.asCalendarMonth(), calendarDate.breachEncapsulationOfDay(), 0, 0, 0, 0, zone);
 	}
 	
 	/**
@@ -307,9 +307,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Validate.notNull(date);
 		Validate.notNull(time);
 		Validate.notNull(zone);
-		return at(date.asCalendarMonth(), date.breachEncapsulationOfDay(),
-				time.breachEncapsulationOfHour().value, time.breachEncapsulationOfMinute().value,
-				0, 0, zone);
+		TimePoint tp = date.startAsTimePoint(zone);
+		tp = tp.plus(time.toDuration());
+		return tp;
 	}
 	
 	/**

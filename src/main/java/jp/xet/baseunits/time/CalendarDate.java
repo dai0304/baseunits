@@ -232,11 +232,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表す日付で、引数{@code timeOfDay}で表す時を表す日時を返す。
 	 * 
 	 * @param timeOfDay 時
+	 * @param timeZone タイムゾーン
 	 * @return 日時
-	 * @since 1.0
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
 	 */
-	public CalendarMinute at(TimeOfDay timeOfDay) {
-		return CalendarMinute.from(this, timeOfDay);
+	public TimePoint at(TimeOfDay timeOfDay, TimeZone timeZone) {
+		Validate.notNull(timeOfDay);
+		Validate.notNull(timeZone);
+		return TimePoint.from(this, timeOfDay, timeZone);
 	}
 	
 	/**

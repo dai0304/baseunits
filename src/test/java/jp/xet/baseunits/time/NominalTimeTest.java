@@ -45,18 +45,7 @@ public class NominalTimeTest {
 		TimeOfDay fiveFifteenPM = TimeOfDay.from(17, 15, 0, 0);
 		CalendarDate april19_2006 = CalendarDate.from(2006, 4, 19);
 		TimePoint expectedCombination = TimePoint.at(2006, 4, 19, 17, 15, 0, 0, HONOLULU_TIME);
-		assertThat(fiveFifteenPM.asTimePointGiven(april19_2006, HONOLULU_TIME), is(expectedCombination));
-	}
-	
-	/**
-	 * {@link CalendarMinute#asTimePoint(TimeZone)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test02_ConvertNominalTimeToTimePoint() throws Exception {
-		CalendarMinute calendarMinute = CalendarMinute.from(2006, 4, 19, 17, 15);
-		TimePoint expectedTimePoint = TimePoint.at(2006, 4, 19, 17, 15, 0, 0, HONOLULU_TIME);
-		assertThat(calendarMinute.asTimePoint(HONOLULU_TIME), is(expectedTimePoint));
+		TimePoint actual = fiveFifteenPM.asTimePointGiven(april19_2006, HONOLULU_TIME);
+		assertThat(actual, is(expectedCombination));
 	}
 }
