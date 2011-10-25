@@ -56,7 +56,7 @@ public class DateSpecificationTest {
 	public void test01_FixedDate() throws Exception {
 		CalendarInterval y2004 = CalendarInterval.year(2004);
 		DateSpecification independenceDay = DateSpecifications.fixed(7, 4);
-		assertThat(((IAnnualDateSpecification) independenceDay).ofYear(2004), is(CalendarDate.from(2004, 7, 4)));
+		assertThat(((AnnualDateSpecification) independenceDay).ofYear(2004), is(CalendarDate.from(2004, 7, 4)));
 		assertThat(independenceDay.firstOccurrenceIn(y2004), is(CalendarDate.from(2004, 7, 4)));
 		assertThat(independenceDay.isSatisfiedBy(CalendarDate.from(2004, 7, 4)), is(true));
 		assertThat(independenceDay.isSatisfiedBy(CalendarDate.from(2004, 7, 3)), is(false));
@@ -71,7 +71,7 @@ public class DateSpecificationTest {
 	@Test
 	public void test02_NthWeekdayInMonth() throws Exception {
 		DateSpecification thanksgiving = DateSpecifications.nthOccuranceOfWeekdayInMonth(11, DayOfWeek.THURSDAY, 4);
-		assertThat(((IAnnualDateSpecification) thanksgiving).ofYear(2004), is(CalendarDate.from(2004, 11, 25)));
+		assertThat(((AnnualDateSpecification) thanksgiving).ofYear(2004), is(CalendarDate.from(2004, 11, 25)));
 		
 		CalendarInterval y2004 = CalendarInterval.year(2004);
 		assertThat(thanksgiving.firstOccurrenceIn(y2004), is(CalendarDate.from(2004, 11, 25)));
@@ -103,7 +103,7 @@ public class DateSpecificationTest {
 	public void test03_FixedDate() throws Exception {
 		CalendarInterval y2004 = CalendarInterval.year(2004);
 		DateSpecification thirdEveryMonth = DateSpecifications.fixed(3);
-		assertThat(((IMonthlyDateSpecification) thirdEveryMonth).ofYearMonth(CalendarMonth.from(2010, 11)),
+		assertThat(((MonthlyDateSpecification) thirdEveryMonth).ofYearMonth(CalendarMonth.from(2010, 11)),
 				is(CalendarDate.from(2010, 11, 3)));
 		assertThat(thirdEveryMonth.firstOccurrenceIn(y2004), is(CalendarDate.from(2004, 1, 3)));
 		assertThat(thirdEveryMonth.isSatisfiedBy(CalendarDate.from(2011, 2, 3)), is(true));

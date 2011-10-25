@@ -21,6 +21,8 @@ import jp.xet.baseunits.util.spec.AbstractSpecification;
 
 /**
  * TODO for daisuke
+ * 
+ * @since 1.0
  */
 public abstract class AbstractDateSpecivifation extends AbstractSpecification<CalendarDate> implements
 		DateSpecification {

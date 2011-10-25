@@ -32,7 +32,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecification {
+class MonthlyFixedBusinessDateSpecification extends AbstractMonthlyDateSpecification {
 	
 	final DayOfMonth day;
 	
@@ -50,7 +50,7 @@ class MonthlyFixedBusinessDateSpecification extends MonthlyDateSpecification {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public MonthlyFixedBusinessDateSpecification(DayOfMonth day, Shifter shifter, BusinessCalendar cal) {
+	MonthlyFixedBusinessDateSpecification(DayOfMonth day, Shifter shifter, BusinessCalendar cal) {
 		Validate.notNull(day);
 		Validate.notNull(shifter);
 		Validate.notNull(cal);

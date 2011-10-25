@@ -29,8 +29,10 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 毎月の第Y◎曜日、を表す日付仕様。
+ * 
+ * @since 1.0
  */
-class MonthlyFloatingDateSpecification extends MonthlyDateSpecification {
+class MonthlyFloatingDateSpecification extends AbstractMonthlyDateSpecification {
 	
 	final DayOfWeek dayOfWeek;
 	

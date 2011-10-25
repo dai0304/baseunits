@@ -23,11 +23,13 @@ package jp.xet.baseunits.time.spec;
 import java.util.Collections;
 import java.util.Iterator;
 
+import jp.xet.baseunits.time.BusinessCalendar;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.time.DayOfMonth;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.MonthOfYear;
+import jp.xet.baseunits.time.spec.MonthlyFixedBusinessDateSpecification.Shifter;
 
 import org.apache.commons.lang.Validate;
 
@@ -62,7 +64,7 @@ public final class DateSpecifications {
 	 * @return 日付仕様
 	 * @since 1.0
 	 */
-	public static DateSpecification fixed(int day) {
+	public static MonthlyDateSpecification fixed(int day) {
 		return new MonthlyFixedDateSpecification(DayOfMonth.valueOf(day));
 	}
 	
@@ -76,8 +78,21 @@ public final class DateSpecifications {
 	 * @return 日付仕様
 	 * @since 1.0
 	 */
-	public static DateSpecification fixed(int month, int day) {
+	public static AnnualDateSpecification fixed(int month, int day) {
 		return new AnnualFixedDateSpecification(MonthOfYear.valueOf(month), DayOfMonth.valueOf(day));
+	}
+	
+	/**
+	 * 日付仕様「毎月Y日（ただし、非営業日の場合は、前営業日/翌営業日）」のインスタンスを生成する。
+	 * 
+	 * @param day 日
+	 * @param shifter シフト戦略
+	 * @param cal 営業日カレンダー
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return 日付仕様
+	 */
+	public static MonthlyDateSpecification fixedBusiness(DayOfMonth day, Shifter shifter, BusinessCalendar cal) {
+		return new MonthlyFixedBusinessDateSpecification(day, shifter, cal);
 	}
 	
 	/**
@@ -119,7 +134,7 @@ public final class DateSpecifications {
 	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static DateSpecification nthOccuranceOfWeekdayInEveryMonth(DayOfWeek dayOfWeek, int n) {
+	public static MonthlyDateSpecification nthOccuranceOfWeekdayInEveryMonth(DayOfWeek dayOfWeek, int n) {
 		return new MonthlyFloatingDateSpecification(dayOfWeek, n);
 	}
 	
@@ -133,7 +148,7 @@ public final class DateSpecifications {
 	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static DateSpecification nthOccuranceOfWeekdayInMonth(int month, DayOfWeek dayOfWeek, int n) {
+	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(int month, DayOfWeek dayOfWeek, int n) {
 		return new AnnualFloatingDateSpecification(month, dayOfWeek, n);
 	}
 	

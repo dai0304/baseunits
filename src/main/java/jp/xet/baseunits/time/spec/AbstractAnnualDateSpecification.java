@@ -20,7 +20,6 @@
  */
 package jp.xet.baseunits.time.spec;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -31,54 +30,39 @@ import jp.xet.baseunits.util.ImmutableIterator;
 import org.apache.commons.lang.Validate;
 
 /**
- * ある特定の年月日を表す日付仕様。
+ * 1年間に1度だけ仕様を満たす日付仕様。
  * 
  * @since 1.0
  */
-class FixedDateSpecification extends AbstractDateSpecivifation {
-	
-	final CalendarDate date;
-	
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param date 日付
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	FixedDateSpecification(CalendarDate date) {
-		Validate.notNull(date);
-		this.date = date;
-	}
+public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecivifation implements AnnualDateSpecification {
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		if (interval.includes(date)) {
-			return date;
+		Validate.notNull(interval);
+		CalendarDate firstTry = ofYear(interval.start().asCalendarMonth().breachEncapsulationOfYear());
+		if (interval.includes(firstTry)) {
+			return firstTry;
+		}
+		CalendarDate secondTry = ofYear(interval.start().asCalendarMonth().breachEncapsulationOfYear() + 1);
+		if (interval.includes(secondTry)) {
+			return secondTry;
 		}
 		return null;
 	}
 	
 	@Override
-	public boolean isSatisfiedBy(CalendarDate date) {
-		Validate.notNull(date);
-		return date.equals(this.date);
-	}
-	
-	@Override
-	@SuppressWarnings("unchecked")
-	public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
-		if (firstOccurrenceIn(interval) == null) {
-			return Collections.EMPTY_LIST.iterator();
-		}
+	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
+		Validate.notNull(interval);
 		return new ImmutableIterator<CalendarDate>() {
 			
-			boolean end;
+			CalendarDate next = firstOccurrenceIn(interval);
+			
+			int year = next.asCalendarMonth().breachEncapsulationOfYear();
 			
 			
 			@Override
 			public boolean hasNext() {
-				return end;
+				return next != null;
 			}
 			
 			@Override
@@ -86,14 +70,14 @@ class FixedDateSpecification extends AbstractDateSpecivifation {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
 				}
-				end = true;
-				return date;
+				CalendarDate current = next;
+				year += 1;
+				next = AbstractAnnualDateSpecification.this.ofYear(year);
+				if (interval.includes(next) == false) {
+					next = null;
+				}
+				return current;
 			}
 		};
-	}
-	
-	@Override
-	public String toString() {
-		return date.toString();
 	}
 }

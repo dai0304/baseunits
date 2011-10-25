@@ -28,8 +28,10 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 毎月Y日、を表す日付仕様。
+ * 
+ * @since 1.0
  */
-class MonthlyFixedDateSpecification extends MonthlyDateSpecification {
+class MonthlyFixedDateSpecification extends AbstractMonthlyDateSpecification {
 	
 	final DayOfMonth day;
 	

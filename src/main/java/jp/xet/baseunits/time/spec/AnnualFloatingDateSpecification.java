@@ -27,8 +27,10 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 毎年X月の第Y◎曜日、を表す日付仕様。
+ * 
+ * @since 1.0
  */
-class AnnualFloatingDateSpecification extends AnnualDateSpecification {
+class AnnualFloatingDateSpecification extends AbstractAnnualDateSpecification {
 	
 	final int month;
 	

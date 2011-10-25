@@ -28,8 +28,10 @@ import org.apache.commons.lang.Validate;
 
 /**
  * 毎年X月Y日、を表す日付仕様。
+ * 
+ * @since 1.0
  */
-class AnnualFixedDateSpecification extends AnnualDateSpecification {
+class AnnualFixedDateSpecification extends AbstractAnnualDateSpecification {
 	
 	final MonthOfYear month;
 	
