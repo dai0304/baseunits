@@ -26,6 +26,8 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.TimeSource;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * 時計を表すクラス。
  * 
@@ -37,20 +39,6 @@ public final class Clock {
 	
 	private static TimeSource timeSource;
 	
-	/** 日付の算出に使用する {@link TimeZone} */
-	private static TimeZone defaultTimeZone;
-	
-	
-	/**
-	 * この時計が日付の算出に使用する {@link TimeZone} を取得する。
-	 * 
-	 * @return 日付の算出に使用する {@link TimeZone}
-	 * @since 1.0
-	 */
-	public static TimeZone defaultTimeZone() {
-		// There is no reasonable automatic default.
-		return defaultTimeZone;
-	}
 	
 	/**
 	 * 現在時刻を取得する。
@@ -65,22 +53,11 @@ public final class Clock {
 	/**
 	 * このクラスが保持するステートをリセットする。
 	 * 
-	 * <p>このクラスは、staticに {@link TimeZone} と {@link TimeSource} を保持している。</p>
+	 * <p>このクラスは、staticに {@link TimeSource} を保持している。</p>
 	 * @since 1.0
 	 */
 	public static void reset() {
-		defaultTimeZone = null;
 		timeSource = null;
-	}
-	
-	/**
-	 * 日付の算出に使用する {@link TimeZone} を設定する。
-	 * 
-	 * @param defaultTimeZone 日付の算出に使用する {@link TimeZone}
-	 * @since 1.0
-	 */
-	public static void setDefaultTimeZone(TimeZone defaultTimeZone) {
-		Clock.defaultTimeZone = defaultTimeZone;
 	}
 	
 	/**
@@ -111,28 +88,13 @@ public final class Clock {
 	/**
 	 * 今日の日付を取得する。
 	 * 
-	 * <p>日付は、あらかじめ設定済みの {@link TimeZone} に基づき計算する。
-	 * {@link TimeZone}を未設定の状態でこのメソッドを呼び出してはならない。</p>
-	 * 
-	 * @return 今日の日付
-	 * @throws IllegalStateException {@link TimeZone}が未設定の場合
-	 * @since 1.0
-	 */
-	public static CalendarDate today() {
-		if (defaultTimeZone() == null) {
-			throw new IllegalStateException("CalendarDate cannot be computed without setting a default TimeZone.");
-		}
-		return today(defaultTimeZone());
-	}
-	
-	/**
-	 * 今日の日付を取得する。
-	 * 
 	 * @param timeZone タイムゾーン
 	 * @return 今日の日付
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarDate today(TimeZone timeZone) {
+		Validate.notNull(timeZone);
 		return now().calendarDate(timeZone);
 	}
 	

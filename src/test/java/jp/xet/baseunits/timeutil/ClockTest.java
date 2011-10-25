@@ -22,14 +22,12 @@ package jp.xet.baseunits.timeutil;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 import java.util.TimeZone;
 
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.TimeSource;
-import jp.xet.baseunits.timeutil.Clock;
 
 import org.junit.After;
 import org.junit.Test;
@@ -92,7 +90,7 @@ public class ClockTest {
 	}
 	
 	/**
-	 * {@link Clock#setDefaultTimeZone(TimeZone)}のテスト。
+	 * {@link Clock#today(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -100,30 +98,10 @@ public class ClockTest {
 	public void test03_Today() throws Exception {
 		Clock.setTimeSource(dummySourceDec1_5h);
 		
-		Clock.setDefaultTimeZone(gmt);
-		assertThat(Clock.today(), is(CalendarDate.from(2004, 12, 1)));
+		assertThat(Clock.today(gmt), is(CalendarDate.from(2004, 12, 1)));
 		assertThat(Clock.now(), is(dec1_5am_gmt));
 		
-		Clock.setDefaultTimeZone(pt);
-		assertThat(Clock.today(), is(CalendarDate.from(2004, 11, 30)));
+		assertThat(Clock.today(pt), is(CalendarDate.from(2004, 11, 30)));
 		assertThat(Clock.now(), is(dec1_5am_gmt));
-	}
-	
-	/**
-	 * {@link Clock#today()}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test04_TodayWithoutTimeZone() throws Exception {
-		Clock.setTimeSource(dummySourceDec1_5h);
-		
-		try {
-			Clock.today();
-			fail("Clock cannot answer today() without a timezone.");
-		} catch (RuntimeException e) {
-			// Correctly threw exception
-		}
-		
 	}
 }
