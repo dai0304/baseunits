@@ -241,7 +241,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 */
 	public Iterator<CalendarDate> daysInReverseIterator() {
 		if (hasUpperLimit() == false) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("daysInReverseIterator reqires upper limit (end).");
 		}
 		final CalendarDate start = upperLimit();
 		final CalendarDate end = lowerLimit();
@@ -292,7 +292,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 */
 	public Iterator<CalendarDate> daysIterator() {
 		if (hasLowerLimit() == false) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("daysIterator reqires lower limit (start).");
 		}
 		final CalendarDate start = lowerLimit();
 		final CalendarDate end = upperLimit();
