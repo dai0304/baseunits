@@ -20,43 +20,56 @@
  */
 package jp.xet.baseunits.time.spec;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
+import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.util.ImmutableIterator;
+
+import com.google.common.collect.Sets;
 
 import org.apache.commons.lang.Validate;
 
 /**
- * ある特定の年月日を表す日付仕様。
+ * ある特定の曜日を表す日付仕様。
  * 
- * @since 1.0
+ * @since 2.0
  */
-class FixedDateSpecification extends AbstractDateSpecivifation {
+class DayOfWeeksSpecification extends AbstractDateSpecivifation {
 	
-	final CalendarDate date;
+	final Set<DayOfWeek> dayOfWeeks;
 	
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param date 日付
+	 * @param dayOfWeek 曜日
+	 * @param dayOfWeeks 曜日(optional)
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	FixedDateSpecification(CalendarDate date) {
-		Validate.notNull(date);
-		this.date = date;
+	DayOfWeeksSpecification(DayOfWeek dayOfWeek, DayOfWeek... dayOfWeeks) {
+		Validate.notNull(dayOfWeek);
+		Validate.noNullElements(dayOfWeeks);
+		this.dayOfWeeks = Sets.newHashSet(dayOfWeeks);
+		this.dayOfWeeks.add(dayOfWeek);
 	}
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
 		Validate.notNull(interval);
 		Validate.isTrue(interval.hasLowerLimit());
-		if (interval.includes(date)) {
-			return date;
+		Iterator<CalendarDate> itr = interval.daysIterator();
+		int counter = 0;
+		while (itr.hasNext()) {
+			CalendarDate calendarDate = itr.next();
+			if (dayOfWeeks.contains(calendarDate.dayOfWeek())) {
+				return calendarDate;
+			}
+			counter++;
+			assert counter < DayOfWeek.SIZE; // 7周以上しないはず
 		}
 		return null;
 	}
@@ -64,23 +77,19 @@ class FixedDateSpecification extends AbstractDateSpecivifation {
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return date.equals(this.date);
+		return dayOfWeeks.contains(date.dayOfWeek());
 	}
 	
 	@Override
-	@SuppressWarnings("unchecked")
-	public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
-		if (firstOccurrenceIn(interval) == null) {
-			return Collections.EMPTY_LIST.iterator();
-		}
+	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
 		return new ImmutableIterator<CalendarDate>() {
 			
-			boolean end;
+			CalendarDate next = firstOccurrenceIn(interval);
 			
 			
 			@Override
 			public boolean hasNext() {
-				return end;
+				return next != null;
 			}
 			
 			@Override
@@ -88,14 +97,22 @@ class FixedDateSpecification extends AbstractDateSpecivifation {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
 				}
-				end = true;
-				return date;
+				CalendarDate current = next;
+				
+				do {
+					next = next.nextDay();
+				} while (isSatisfiedBy(next) == false);
+				
+				if (interval.includes(next) == false) {
+					next = null;
+				}
+				return current;
 			}
 		};
 	}
 	
 	@Override
 	public String toString() {
-		return date.toString();
+		return dayOfWeeks.toString();
 	}
 }

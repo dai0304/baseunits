@@ -20,7 +20,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarMonth;
 
 /**
- * TODO for daisuke
+ * 月に一度だけマッチする日付仕様インターフェイス。
  * 
  * @since 2.0
  */

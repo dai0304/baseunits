@@ -35,11 +35,13 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-public abstract class AbstractMonthlyDateSpecification extends AbstractDateSpecivifation implements MonthlyDateSpecification {
+public abstract class AbstractMonthlyDateSpecification extends AbstractDateSpecivifation implements
+		MonthlyDateSpecification {
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
 		Validate.notNull(interval);
+		Validate.isTrue(interval.hasLowerLimit());
 		CalendarMonth month = interval.start().asCalendarMonth();
 		
 		CalendarDate firstTry = ofYearMonth(month);

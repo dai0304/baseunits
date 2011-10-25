@@ -35,6 +35,7 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * @param interval 期間
 	 * @return 年月日。但し、仕様を満たす日がなかった場合は{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code interval}が下側限界（開始日）を持たない場合
 	 * @since 1.0
 	 */
 	CalendarDate firstOccurrenceIn(CalendarInterval interval);

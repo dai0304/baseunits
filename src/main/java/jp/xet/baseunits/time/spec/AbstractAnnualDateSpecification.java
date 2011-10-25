@@ -34,11 +34,13 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 1.0
  */
-public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecivifation implements AnnualDateSpecification {
+public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecivifation implements
+		AnnualDateSpecification {
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
 		Validate.notNull(interval);
+		Validate.isTrue(interval.hasLowerLimit());
 		CalendarDate firstTry = ofYear(interval.start().asCalendarMonth().breachEncapsulationOfYear());
 		if (interval.includes(firstTry)) {
 			return firstTry;

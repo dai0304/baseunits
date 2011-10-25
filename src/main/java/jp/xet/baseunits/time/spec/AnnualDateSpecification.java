@@ -19,7 +19,7 @@ package jp.xet.baseunits.time.spec;
 import jp.xet.baseunits.time.CalendarDate;
 
 /**
- * TODO for daisuke
+ * 年に一度だけマッチする日付仕様インターフェイス。
  * 
  * @since 2.0
  */

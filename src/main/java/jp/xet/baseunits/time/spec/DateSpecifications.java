@@ -41,6 +41,34 @@ import org.apache.commons.lang.Validate;
 public final class DateSpecifications {
 	
 	/**
+	 * どの日付にもマッチする日付仕様を返す。
+	 * 
+	 * @return 日付仕様
+	 * @since 2.0
+	 */
+	public static DateSpecification always() {
+		return new AbstractDateSpecivifation() {
+			
+			@Override
+			public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
+				return interval.start();
+			}
+			
+			@Override
+			public boolean isSatisfiedBy(CalendarDate date) {
+				return true;
+			}
+			
+			@Override
+			public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
+				Validate.notNull(interval);
+				Validate.isTrue(interval.hasLowerLimit());
+				return interval.daysIterator();
+			}
+		};
+	}
+	
+	/**
 	 * 特定のある1日だけにマッチする日付仕様のインスタンスを返す。
 	 * 
 	 * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
