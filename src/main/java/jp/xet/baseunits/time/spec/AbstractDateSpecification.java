@@ -85,8 +85,7 @@ public abstract class AbstractDateSpecification extends AbstractSpecification<Ca
 	@Override
 	public DateSpecification not() {
 		if (this instanceof NotDateSpecification) {
-			NotDateSpecification not = (NotDateSpecification) this;
-			return not.spec1;
+			return ((NotDateSpecification) this).spec;
 		}
 		return new NotDateSpecification(this);
 	}

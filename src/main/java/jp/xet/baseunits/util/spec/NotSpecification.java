@@ -29,23 +29,23 @@ import org.apache.commons.lang.Validate;
  */
 public class NotSpecification<T> extends AbstractSpecification<T> {
 	
-	final Specification<T> spec1;
+	final Specification<T> spec;
 	
 	
 	/**
 	 * Create a new NOT specification based on another spec.
 	 *
-	 * @param spec1 Specification instance to not.
+	 * @param spec Specification instance to not.
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public NotSpecification(final Specification<T> spec1) {
-		Validate.notNull(spec1);
-		this.spec1 = spec1;
+	public NotSpecification(final Specification<T> spec) {
+		Validate.notNull(spec);
+		this.spec = spec;
 	}
 	
 	@Override
 	public boolean isSatisfiedBy(T t) {
-		return spec1.isSatisfiedBy(t) == false;
+		return spec.isSatisfiedBy(t) == false;
 	}
 }

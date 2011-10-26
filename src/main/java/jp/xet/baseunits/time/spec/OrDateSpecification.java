@@ -23,26 +23,29 @@ import org.apache.commons.lang.Validate;
 
 /**
  * TODO for daisuke
+ * 
+ * @since 2.0
  */
 public class OrDateSpecification extends AbstractDateSpecification {
 	
-	private final DateSpecification spec1;
+	final DateSpecification left;
 	
-	private final DateSpecification spec2;
+	final DateSpecification right;
 	
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param spec1 left hand Specification.
-	 * @param spec2 right hand Specification.
+	 * @param left left side Specification.
+	 * @param right right side Specification.
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
 	 */
-	public OrDateSpecification(DateSpecification spec1, DateSpecification spec2) {
-		Validate.notNull(spec1);
-		Validate.notNull(spec2);
-		this.spec1 = spec1;
-		this.spec2 = spec2;
+	public OrDateSpecification(DateSpecification left, DateSpecification right) {
+		Validate.notNull(left);
+		Validate.notNull(right);
+		this.left = left;
+		this.right = right;
 	}
 	
 	@Override
@@ -54,13 +57,13 @@ public class OrDateSpecification extends AbstractDateSpecification {
 		boolean exception2 = false;
 		
 		try {
-			first1 = spec1.firstOccurrenceIn(interval);
+			first1 = left.firstOccurrenceIn(interval);
 		} catch (IllegalArgumentException e) {
 			exception1 = true;
 		}
 		
 		try {
-			first2 = spec2.firstOccurrenceIn(interval);
+			first2 = right.firstOccurrenceIn(interval);
 		} catch (IllegalArgumentException e) {
 			exception2 = true;
 		}
@@ -86,6 +89,6 @@ public class OrDateSpecification extends AbstractDateSpecification {
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate t) {
-		return spec1.isSatisfiedBy(t) || spec2.isSatisfiedBy(t);
+		return left.isSatisfiedBy(t) || right.isSatisfiedBy(t);
 	}
 }

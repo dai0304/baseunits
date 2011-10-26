@@ -35,8 +35,7 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
 	@Override
 	public Specification<T> not() {
 		if (this instanceof NotSpecification) {
-			NotSpecification<T> not = (NotSpecification<T>) this;
-			return not.spec1;
+			return ((NotSpecification<T>) this).spec;
 		}
 		return new NotSpecification<T>(this);
 	}

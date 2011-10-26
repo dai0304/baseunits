@@ -28,28 +28,28 @@ import org.apache.commons.lang.Validate;
  */
 public class OrSpecification<T> extends AbstractSpecification<T> {
 	
-	final Specification<T> spec1;
+	final Specification<T> left;
 	
-	final Specification<T> spec2;
+	final Specification<T> right;
 	
 	
 	/**
 	 * Create a new OR specification based on two other spec.
 	 *
-	 * @param spec1 left hand Specification.
-	 * @param spec2 right hand Specification.
+	 * @param left left side Specification.
+	 * @param right right side Specification.
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public OrSpecification(Specification<T> spec1, Specification<T> spec2) {
-		Validate.notNull(spec1);
-		Validate.notNull(spec2);
-		this.spec1 = spec1;
-		this.spec2 = spec2;
+	public OrSpecification(Specification<T> left, Specification<T> right) {
+		Validate.notNull(left);
+		Validate.notNull(right);
+		this.left = left;
+		this.right = right;
 	}
 	
 	@Override
 	public boolean isSatisfiedBy(T t) {
-		return spec1.isSatisfiedBy(t) || spec2.isSatisfiedBy(t);
+		return left.isSatisfiedBy(t) || right.isSatisfiedBy(t);
 	}
 }

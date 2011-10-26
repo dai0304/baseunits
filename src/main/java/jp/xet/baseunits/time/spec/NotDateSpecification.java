@@ -26,20 +26,23 @@ import org.apache.commons.lang.Validate;
 
 /**
  * TODO for daisuke
+ * 
+ * @since 2.0
  */
 public class NotDateSpecification extends AbstractDateSpecification {
 	
-	final DateSpecification spec1;
+	final DateSpecification spec;
 	
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param spec1 Specification instance to not.
+	 * @param spec Specification instance to not.
+	 * @since 2.0
 	 */
-	public NotDateSpecification(DateSpecification spec1) {
-		Validate.notNull(spec1);
-		this.spec1 = spec1;
+	public NotDateSpecification(DateSpecification spec) {
+		Validate.notNull(spec);
+		this.spec = spec;
 	}
 	
 	@Override
@@ -63,6 +66,6 @@ public class NotDateSpecification extends AbstractDateSpecification {
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate t) {
-		return spec1.isSatisfiedBy(t) == false;
+		return spec.isSatisfiedBy(t) == false;
 	}
 }
