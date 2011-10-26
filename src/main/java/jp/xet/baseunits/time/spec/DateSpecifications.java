@@ -21,6 +21,7 @@
 package jp.xet.baseunits.time.spec;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -61,6 +62,18 @@ public final class DateSpecifications {
 	 */
 	public static DateSpecification calendarInterval(CalendarInterval interval) {
 		return new CalendarIntervalSpecification(interval);
+	}
+	
+	/**
+	 * 指定した曜日にマッチする日付仕様を返す。
+	 * 
+	 * @param dayOfWeeks 曜日
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return 日付仕様
+	 * @since 2.0
+	 */
+	public static DateSpecification dayOfWeek(Collection<DayOfWeek> dayOfWeeks) {
+		return new DayOfWeeksSpecification(dayOfWeeks);
 	}
 	
 	/**

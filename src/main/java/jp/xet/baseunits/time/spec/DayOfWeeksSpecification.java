@@ -21,6 +21,7 @@
 package jp.xet.baseunits.time.spec;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -44,6 +45,16 @@ class DayOfWeeksSpecification extends AbstractDateSpecification implements Seria
 	
 	final Set<DayOfWeek> dayOfWeeks;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param dayOfWeeks 曜日の集合
+	 */
+	public DayOfWeeksSpecification(Collection<DayOfWeek> dayOfWeeks) {
+		Validate.noNullElements(dayOfWeeks);
+		this.dayOfWeeks = Sets.newHashSet(dayOfWeeks);
+	}
 	
 	/**
 	 * インスタンスを生成する。
