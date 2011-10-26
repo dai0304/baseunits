@@ -34,7 +34,10 @@ import org.apache.wicket.util.string.Strings;
 @SuppressWarnings("serial")
 public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	
-	private static final String DEFAILT_PATTERN = "yyyy/MM/dd";
+	/** default date pattern */
+	public static final String DEFAILT_PATTERN_JAVA = "yyyy/MM/dd";
+	
+	public static final String DEFAILT_PATTERN_JQ = "yy/mm/dd";
 	
 	private final String datePattern;
 	
@@ -43,7 +46,7 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	 * インスタンスを生成する。
 	 */
 	public CalendarDateConverter() {
-		this(DEFAILT_PATTERN);
+		this(DEFAILT_PATTERN_JAVA);
 	}
 	
 	/**
