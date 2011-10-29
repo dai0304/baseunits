@@ -37,24 +37,36 @@ public class CalendarDateValueType extends AbstractBaseunitsValueType {
 	@Override
 	public Object get(Class<?> type, CallableStatement cs, int index) throws SQLException {
 		java.sql.Date date = cs.getDate(index);
+		if (date == null) {
+			return null;
+		}
 		return CalendarDate.from(date, TimeZone.getDefault());
 	}
 	
 	@Override
 	public Object get(Class<?> type, CallableStatement cs, String parameterName) throws SQLException {
 		java.sql.Date date = cs.getDate(parameterName);
+		if (date == null) {
+			return null;
+		}
 		return CalendarDate.from(date, TimeZone.getDefault());
 	}
 	
 	@Override
 	public Object get(Class<?> type, ResultSet rs, int index) throws SQLException {
 		java.sql.Date date = rs.getDate(index);
+		if (date == null) {
+			return null;
+		}
 		return CalendarDate.from(date, TimeZone.getDefault());
 	}
 	
 	@Override
 	public Object get(Class<?> type, ResultSet rs, String columnName) throws SQLException {
 		java.sql.Date date = rs.getDate(columnName);
+		if (date == null) {
+			return null;
+		}
 		return CalendarDate.from(date, TimeZone.getDefault());
 	}
 	

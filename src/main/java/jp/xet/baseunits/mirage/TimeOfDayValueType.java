@@ -43,6 +43,9 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	@Override
 	public Object get(Class<?> type, CallableStatement cs, int index) throws SQLException {
 		Time time = cs.getTime(index);
+		if (time == null) {
+			return null;
+		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
 		return tp.asTimeOfDay(TimeZone.getDefault());
@@ -51,6 +54,9 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	@Override
 	public Object get(Class<?> type, CallableStatement cs, String parameterName) throws SQLException {
 		Time time = cs.getTime(parameterName);
+		if (time == null) {
+			return null;
+		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
 		return tp.asTimeOfDay(TimeZone.getDefault());
@@ -59,6 +65,9 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	@Override
 	public Object get(Class<?> type, ResultSet rs, int index) throws SQLException {
 		Time time = rs.getTime(index);
+		if (time == null) {
+			return null;
+		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
 		return tp.asTimeOfDay(TimeZone.getDefault());
@@ -67,6 +76,9 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	@Override
 	public Object get(Class<?> type, ResultSet rs, String columnName) throws SQLException {
 		Time time = rs.getTime(columnName);
+		if (time == null) {
+			return null;
+		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
 		return tp.asTimeOfDay(TimeZone.getDefault());
