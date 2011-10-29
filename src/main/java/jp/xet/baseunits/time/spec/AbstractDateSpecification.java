@@ -83,6 +83,20 @@ public abstract class AbstractDateSpecification extends AbstractSpecification<Ca
 	}
 	
 	@Override
+	public CalendarDate lastOccurrenceIn(CalendarInterval interval) {
+		Validate.notNull(interval);
+		Validate.isTrue(interval.hasUpperLimit());
+		Iterator<CalendarDate> itr = interval.daysInReverseIterator();
+		while (itr.hasNext()) {
+			CalendarDate date = itr.next();
+			if (isSatisfiedBy(date)) {
+				return date;
+			}
+		}
+		return null;
+	}
+	
+	@Override
 	public DateSpecification not() {
 		if (this instanceof NotDateSpecification) {
 			return ((NotDateSpecification) this).spec;

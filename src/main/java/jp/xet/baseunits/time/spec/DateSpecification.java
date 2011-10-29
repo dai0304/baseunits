@@ -40,7 +40,7 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	DateSpecification and(DateSpecification specification);
 	
 	/**
-	 * 指定した期間の中で、この日付仕様を満たす最初の年月日を返す。
+	 * 指定した期間の中で、この日付仕様を満たす最初の日付を返す。
 	 * 
 	 * @param interval 期間
 	 * @return 年月日。但し、仕様を満たす日がなかった場合は{@code null}
@@ -70,6 +70,17 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * @since 1.0
 	 */
 	Iterator<CalendarDate> iterateOver(CalendarInterval interval);
+	
+	/**
+	 * 指定した期間の中で、この日付仕様を満たす最後の日付を返す。
+	 * 
+	 * @param interval 期間
+	 * @return 最後。但し、仕様を満たす日がなかった場合は{@code null}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code interval}に上側限界（終了日）が必要なロジックで、かつ上側限界を持たない場合
+	 * @since 2.0
+	 */
+	CalendarDate lastOccurrenceIn(CalendarInterval interval);
 	
 	@Override
 	DateSpecification not();
