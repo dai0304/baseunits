@@ -194,6 +194,17 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 //	}
 	
 	/**
+	 * TODO for daisuke
+	 * 
+	 * @param timeZone
+	 * @return
+	 */
+	public Date asJavaUtilDate(TimeZone timeZone) {
+		TimePoint tp = at(TimeOfDay.MIN, timeZone);
+		return tp.asJavaUtilDate();
+	}
+	
+	/**
 	 * このインスタンスが表現する日を含む年月を表す期間を取得する。
 	 * 
 	 * @return このインスタンスが表現する日を含む年月を表す期間
