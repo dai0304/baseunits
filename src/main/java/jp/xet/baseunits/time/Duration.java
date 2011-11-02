@@ -360,7 +360,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この時間量が、引数に指定した時間量{@code other}よりも大きいかどうかを調べる。
 	 * 
 	 * @param other 比較対照
 	 * @return {@code other}よりも大きい場合は{@code true}、そうでない場合は{@code false}
@@ -372,7 +372,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この時間量が、引数に指定した時間量{@code other}よりも大きいかまたは等しいどうかを調べる。
 	 * 
 	 * @param other 比較対照
 	 * @return {@code other}よりも大きいまたは等しい場合は{@code true}、そうでない場合は{@code false}
@@ -384,7 +384,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この時間量が、引数に指定した時間量{@code other}よりも小さいかどうかを調べる。
 	 * 
 	 * @param other 比較対照
 	 * @return {@code other}よりも小さい場合は{@code true}、そうでない場合は{@code false}
@@ -396,7 +396,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この時間量が、引数に指定した時間量{@code other}よりも小さいかまたは等しいどうかを調べる。
 	 * 
 	 * @param other 比較対照
 	 * @return {@code other}よりも小さいまたは等しい場合は{@code true}、そうでない場合は{@code false}

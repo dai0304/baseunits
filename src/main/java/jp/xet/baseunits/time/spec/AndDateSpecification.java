@@ -21,7 +21,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import org.apache.commons.lang.Validate;
 
 /**
- * TODO for daisuke
+ * {@link DateSpecification}の論理積をとるクラス。
  * 
  * @since 2.0
  */

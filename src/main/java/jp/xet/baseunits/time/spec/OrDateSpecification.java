@@ -22,7 +22,7 @@ import jp.xet.baseunits.time.CalendarInterval;
 import org.apache.commons.lang.Validate;
 
 /**
- * TODO for daisuke
+ * {@link DateSpecification}の論理和をとるクラス。
  * 
  * @since 2.0
  */
