@@ -22,10 +22,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.util.TimeZone;
 
 import jp.sf.amateras.mirage.type.ValueType;
-import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 
 /**
@@ -97,7 +95,7 @@ public class TimePointValueType extends AbstractBaseunitsValueType {
 		if (value == null) {
 			stmt.setNull(index, Types.TIMESTAMP);
 		} else {
-			long epochMillisec = ((CalendarDate) value).startAsTimePoint(TimeZone.getDefault()).toEpochMillisec();
+			long epochMillisec = ((TimePoint) value).toEpochMillisec();
 			stmt.setTimestamp(index, new Timestamp(epochMillisec));
 		}
 	}
