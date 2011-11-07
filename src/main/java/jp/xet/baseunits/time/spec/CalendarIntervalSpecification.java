@@ -37,7 +37,7 @@ import org.apache.commons.lang.Validate;
  * @since 2.0
  */
 @SuppressWarnings("serial")
-class CalendarIntervalSpecification extends AbstractDateSpecification implements Serializable {
+public final class CalendarIntervalSpecification extends AbstractDateSpecification implements Serializable {
 	
 	final CalendarInterval interval;
 	
@@ -63,6 +63,10 @@ class CalendarIntervalSpecification extends AbstractDateSpecification implements
 		
 		Interval<CalendarDate> intersect = this.interval.intersect(interval);
 		return intersect.lowerLimit();
+	}
+	
+	public CalendarInterval getInterval() {
+		return interval;
 	}
 	
 	@Override

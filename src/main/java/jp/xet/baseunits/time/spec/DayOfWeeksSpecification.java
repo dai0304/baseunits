@@ -41,7 +41,7 @@ import org.apache.commons.lang.Validate;
  * @since 2.0
  */
 @SuppressWarnings("serial")
-class DayOfWeeksSpecification extends AbstractDateSpecification implements Serializable {
+public final class DayOfWeeksSpecification extends AbstractDateSpecification implements Serializable {
 	
 	final Set<DayOfWeek> dayOfWeeks;
 	
@@ -85,6 +85,10 @@ class DayOfWeeksSpecification extends AbstractDateSpecification implements Seria
 			assert counter < DayOfWeek.SIZE; // 7周以上しないはず
 		}
 		return null;
+	}
+	
+	public Set<DayOfWeek> getDayOfWeeks() {
+		return Sets.newHashSet(dayOfWeeks);
 	}
 	
 	@Override

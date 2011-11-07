@@ -33,7 +33,7 @@ import org.apache.commons.lang.Validate;
  * @since 1.0
  */
 // TODO serializability検討
-class MonthlyFixedBusinessDateSpecification extends AbstractMonthlyDateSpecification {
+public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthlyDateSpecification {
 	
 	final DayOfMonth day;
 	
@@ -58,6 +58,18 @@ class MonthlyFixedBusinessDateSpecification extends AbstractMonthlyDateSpecifica
 		this.day = day;
 		this.shifter = shifter;
 		this.cal = cal;
+	}
+	
+	public BusinessCalendar getCal() {
+		return cal;
+	}
+	
+	public DayOfMonth getDay() {
+		return day;
+	}
+	
+	public Shifter getShifter() {
+		return shifter;
 	}
 	
 	@Override

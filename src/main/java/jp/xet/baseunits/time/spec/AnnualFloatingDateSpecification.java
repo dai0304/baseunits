@@ -35,7 +35,7 @@ import org.apache.commons.lang.Validate;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-class AnnualFloatingDateSpecification extends AbstractAnnualDateSpecification implements Serializable {
+public final class AnnualFloatingDateSpecification extends AbstractAnnualDateSpecification implements Serializable {
 	
 	final MonthOfYear month;
 	
@@ -60,6 +60,18 @@ class AnnualFloatingDateSpecification extends AbstractAnnualDateSpecification im
 		this.month = month;
 		this.dayOfWeek = dayOfWeek;
 		this.occurrence = occurrence;
+	}
+	
+	public DayOfWeek getDayOfWeek() {
+		return dayOfWeek;
+	}
+	
+	public MonthOfYear getMonth() {
+		return month;
+	}
+	
+	public int getOccurrence() {
+		return occurrence;
 	}
 	
 	@Override

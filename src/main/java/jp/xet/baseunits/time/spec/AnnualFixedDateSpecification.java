@@ -34,7 +34,7 @@ import org.apache.commons.lang.Validate;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-class AnnualFixedDateSpecification extends AbstractAnnualDateSpecification implements Serializable {
+public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecification implements Serializable {
 	
 	final MonthOfYear month;
 	
@@ -53,6 +53,14 @@ class AnnualFixedDateSpecification extends AbstractAnnualDateSpecification imple
 		Validate.notNull(day);
 		this.month = month;
 		this.day = day;
+	}
+	
+	public DayOfMonth getDay() {
+		return day;
+	}
+	
+	public MonthOfYear getMonth() {
+		return month;
 	}
 	
 	@Override

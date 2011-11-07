@@ -29,7 +29,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 2.0
  */
-public class NotDateSpecification extends AbstractDateSpecification {
+public final class NotDateSpecification extends AbstractDateSpecification {
 	
 	final DateSpecification spec;
 	
@@ -62,6 +62,10 @@ public class NotDateSpecification extends AbstractDateSpecification {
 			throw new NotImplementedException(NotDateSpecification.class);
 		}
 		return null;
+	}
+	
+	public DateSpecification getSpec() {
+		return spec;
 	}
 	
 	@Override

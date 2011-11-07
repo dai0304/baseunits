@@ -35,7 +35,7 @@ import org.apache.commons.lang.Validate;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-class MonthlyFloatingDateSpecification extends AbstractMonthlyDateSpecification implements Serializable {
+public final class MonthlyFloatingDateSpecification extends AbstractMonthlyDateSpecification implements Serializable {
 	
 	final DayOfWeek dayOfWeek;
 	
@@ -55,6 +55,14 @@ class MonthlyFloatingDateSpecification extends AbstractMonthlyDateSpecification 
 		Validate.isTrue(1 <= occurrence && occurrence <= 5);
 		this.dayOfWeek = dayOfWeek;
 		this.occurrence = occurrence;
+	}
+	
+	public DayOfWeek getDayOfWeek() {
+		return dayOfWeek;
+	}
+	
+	public int getOccurrence() {
+		return occurrence;
 	}
 	
 	@Override

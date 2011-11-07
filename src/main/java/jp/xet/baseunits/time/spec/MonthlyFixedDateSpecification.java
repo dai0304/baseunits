@@ -34,7 +34,7 @@ import org.apache.commons.lang.Validate;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-class MonthlyFixedDateSpecification extends AbstractMonthlyDateSpecification implements Serializable {
+public final class MonthlyFixedDateSpecification extends AbstractMonthlyDateSpecification implements Serializable {
 	
 	final DayOfMonth day;
 	
@@ -48,6 +48,10 @@ class MonthlyFixedDateSpecification extends AbstractMonthlyDateSpecification imp
 	MonthlyFixedDateSpecification(DayOfMonth day) {
 		Validate.notNull(day);
 		this.day = day;
+	}
+	
+	public DayOfMonth getDay() {
+		return day;
 	}
 	
 	@Override

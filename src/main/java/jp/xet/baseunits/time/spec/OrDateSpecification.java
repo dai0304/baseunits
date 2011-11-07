@@ -26,7 +26,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 2.0
  */
-public class OrDateSpecification extends AbstractDateSpecification {
+public final class OrDateSpecification extends AbstractDateSpecification {
 	
 	final DateSpecification left;
 	
@@ -85,6 +85,14 @@ public class OrDateSpecification extends AbstractDateSpecification {
 			return first1;
 		}
 		return first2;
+	}
+	
+	public DateSpecification getLeft() {
+		return left;
+	}
+	
+	public DateSpecification getRight() {
+		return right;
 	}
 	
 	@Override

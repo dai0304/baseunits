@@ -38,7 +38,7 @@ import org.apache.commons.lang.Validate;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-class FixedDateSpecification extends AbstractDateSpecification implements Serializable {
+public final class FixedDateSpecification extends AbstractDateSpecification implements Serializable {
 	
 	final CalendarDate date;
 	
@@ -62,6 +62,10 @@ class FixedDateSpecification extends AbstractDateSpecification implements Serial
 			return date;
 		}
 		return null;
+	}
+	
+	public CalendarDate getDate() {
+		return date;
 	}
 	
 	@Override

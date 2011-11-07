@@ -25,7 +25,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @since 2.0
  */
-public class AndDateSpecification extends AbstractDateSpecification {
+public final class AndDateSpecification extends AbstractDateSpecification {
 	
 	final DateSpecification left;
 	
@@ -45,6 +45,14 @@ public class AndDateSpecification extends AbstractDateSpecification {
 		Validate.notNull(right);
 		this.left = left;
 		this.right = right;
+	}
+	
+	public DateSpecification getLeft() {
+		return left;
+	}
+	
+	public DateSpecification getRight() {
+		return right;
 	}
 	
 	@Override
