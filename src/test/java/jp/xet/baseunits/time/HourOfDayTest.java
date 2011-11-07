@@ -23,7 +23,7 @@ package jp.xet.baseunits.time;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import jp.xet.baseunits.time.HourOfDay;
+import jp.xet.baseunits.time.HourOfDay.Meridian;
 
 import org.junit.Test;
 
@@ -43,14 +43,14 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * {@link HourOfDay#valueOf(int, String)}のテスト。
+	 * {@link HourOfDay#valueOf(int, Meridian)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test02_12Simple() throws Exception {
-		assertThat(HourOfDay.valueOf(10, "PM"), is(HourOfDay.valueOf(22)));
-		assertThat(HourOfDay.valueOf(3, "am"), is(HourOfDay.valueOf(3)));
+		assertThat(HourOfDay.valueOf(10, Meridian.PM), is(HourOfDay.valueOf(22)));
+		assertThat(HourOfDay.valueOf(3, Meridian.AM), is(HourOfDay.valueOf(3)));
 	}
 	
 	/**
@@ -84,14 +84,14 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
+	 * {@link HourOfDay#valueOf(int, Meridian)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test05_12IllegalLessThanZero() throws Exception {
 		try {
-			HourOfDay.valueOf(-1, "PM");
+			HourOfDay.valueOf(-1, Meridian.PM);
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success
@@ -99,29 +99,14 @@ public class HourOfDayTest {
 	}
 	
 	/**
-	 * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
+	 * {@link HourOfDay#valueOf(int, Meridian)}の不正引数テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test06_12GreaterThan() throws Exception {
 		try {
-			HourOfDay.valueOf(13, "AM");
-			fail();
-		} catch (IllegalArgumentException ex) {
-			// success
-		}
-	}
-	
-	/**
-	 * {@link HourOfDay#valueOf(int, String)}の不正引数テスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test07_12BadAmPm() throws Exception {
-		try {
-			HourOfDay.valueOf(5, "FD");
+			HourOfDay.valueOf(13, Meridian.AM);
 			fail();
 		} catch (IllegalArgumentException ex) {
 			// success

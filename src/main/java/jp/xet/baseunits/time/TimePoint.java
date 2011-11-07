@@ -28,6 +28,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import jp.xet.baseunits.time.HourOfDay.Meridian;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -163,18 +165,18 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param month 月（1〜12）
 	 * @param date 日
 	 * @param hour 時
-	 * @param amPm 午前午後を表す文字列("AM", "PM"など)
+	 * @param meridian 午前/午後
 	 * @param minute 分
 	 * @param second 秒
 	 * @param millisecond ミリ秒
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
-	 * @since 1.0
+	 * @throws IllegalArgumentException 引数{@code meridian}の値が {@code "AM"} または {@code "PM"} ではない場合
+	 * @since 2.0
 	 */
-	public static TimePoint at12hr(int year, int month, int date, int hour, String amPm, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
+	public static TimePoint at12hr(int year, int month, int date, int hour, Meridian meridian, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond) {
-		return at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, GMT);
+		return at(year, month, date, HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, GMT);
 	}
 	
 	/**
@@ -184,21 +186,20 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param month 月（1〜12）
 	 * @param date 日
 	 * @param hour 時
-	 * @param amPm 午前午後を表す文字列("AM", "PM"など)
+	 * @param meridian 午前/午後
 	 * @param minute 分
 	 * @param second 秒
 	 * @param millisecond ミリ秒
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
-	 * @throws IllegalArgumentException 引数{@code zone}に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code zone}または{@code meridian}に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static TimePoint at12hr(int year, int month, int date, int hour, String amPm, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
+	public static TimePoint at12hr(int year, int month, int date, int hour, Meridian meridian, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond, TimeZone zone) {
 		Validate.notNull(zone);
-		return at(year, month, date, HourOfDay.convertTo24hour(hour, amPm), minute, second, millisecond, zone);
+		return at(year, month, date, HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, zone);
 	}
 	
 	/**

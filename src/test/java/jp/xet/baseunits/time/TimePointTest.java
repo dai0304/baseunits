@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.tests.SerializationTester;
+import jp.xet.baseunits.time.HourOfDay.Meridian;
 
 import org.junit.Test;
 
@@ -37,10 +38,6 @@ import org.junit.Test;
  * {@link TimePoint}のテストクラス。
  */
 public class TimePointTest {
-	
-	private static final String AM = "AM";
-	
-	private static final String PM = "PM";
 	
 	private TimeZone gmt = TimeZone.getTimeZone("Universal");
 	
@@ -77,9 +74,9 @@ public class TimePointTest {
 		TimePoint expected = TimePoint.atGMT(2004, 1, 1, 0, 0, 0, 0);
 		assertThat("at midnight", TimePoint.atMidnightGMT(2004, 1, 1), is(expected));
 		assertThat("hours in 24hr clock", TimePoint.atGMT(2004, 1, 1, 0, 0), is(expected));
-		assertThat("hours in 12hr clock", TimePoint.at12hr(2004, 1, 1, 12, AM, 0, 0, 0, gmt), is(expected));
+		assertThat("hours in 12hr clock", TimePoint.at12hr(2004, 1, 1, 12, Meridian.AM, 0, 0, 0, gmt), is(expected));
 		assertThat("date from formatted String", TimePoint.parseGMTFrom("2004/1/1", "yyyy/MM/dd"), is(expected));
-		assertThat("pm hours in 12hr clock", TimePoint.at12hr(2004, 1, 1, 12, PM, 0, 0, 0, gmt),
+		assertThat("pm hours in 12hr clock", TimePoint.at12hr(2004, 1, 1, 12, Meridian.PM, 0, 0, 0, gmt),
 				is(TimePoint.atGMT(2004, 1, 1, 12, 0)));
 	}
 	

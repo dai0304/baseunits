@@ -56,35 +56,33 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * インスタンスを生成する。
 	 * 
 	 * @param initial 時をあらわす正数
-	 * @param amPm 午前午後を表す文字列
+	 * @param meridian 午前/午後
 	 * @return 時（0〜11）
 	 * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
-	public static HourOfDay valueOf(int initial, String amPm) {
-		return new HourOfDay(convertTo24hour(initial, amPm));
+	public static HourOfDay valueOf(int initial, Meridian meridian) {
+		return new HourOfDay(convertTo24hour(initial, meridian));
 	}
 	
 	/**
 	 * 午前午後記号付き12時間制の時を24時間制の値に変換する。
 	 * 
 	 * @param hour 時（0〜11）
-	 * @param amPm 午前午後を表す文字列
+	 * @param meridian 午前午後
 	 * @return 24時間制における時
 	 * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code amPm}の値が {@code "AM"} または {@code "PM"} ではない場合
-	 * @since 1.0
+	 * @throws IllegalArgumentException 引数{@code meridian}に{@code null}を与えた場合
+	 * @since 2.0
 	 */
-	static int convertTo24hour(int hour, String amPm) {
-		if (("AM".equalsIgnoreCase(amPm) || "PM".equalsIgnoreCase(amPm)) == false) {
-			throw new IllegalArgumentException("AM PM indicator invalid: " + amPm + ", please use AM or PM");
-		}
+	static int convertTo24hour(int hour, Meridian meridian) {
+		Validate.notNull(meridian);
 		if (hour < MIN || hour > 12) {
 			throw new IllegalArgumentException("Illegal value for 12 hour: " + hour
 					+ ", please use a value between 0 and 11");
 		}
-		int translatedAmPm = "AM".equalsIgnoreCase(amPm) ? 0 : 12;
+		int translatedAmPm = meridian == Meridian.AM ? 0 : 12;
 		translatedAmPm -= (hour == 12) ? 12 : 0;
 		return hour + translatedAmPm;
 	}
@@ -171,5 +169,15 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	@Override
 	public String toString() {
 		return String.format("%02d", value);
+	}
+	
+	
+	/** AM/PM enumeration. */
+	public enum Meridian {
+		/** 午前 */
+		AM,
+		
+		/** 午後 */
+		PM
 	}
 }
