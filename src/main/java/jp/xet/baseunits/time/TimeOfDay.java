@@ -36,11 +36,33 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	
-	/** {@link TimeOfDay}の最小値 */
+	/** 
+	 * {@link TimeOfDay}の最小値
+	 * 
+	 * @since 2.0
+	 */
 	public static final TimeOfDay MIN = from(0, 0, 0, 0);
 	
-	/** {@link TimeOfDay}の最大値 */
+	/**
+	 * {@link TimeOfDay}の最大値
+	 * 
+	 * @since 2.0
+	 */
 	public static final TimeOfDay MAX = from(23, 59, 59, 999);
+	
+	/**
+	 * 深夜0時
+	 * 
+	 * @since 2.0
+	 */
+	public static final TimeOfDay MIDNIGHT = from(0, 0, 0, 0);
+	
+	/**
+	 * 正午
+	 * 
+	 * @since 2.0
+	 */
+	public static final TimeOfDay NOON = from(12, 0, 0, 0);
 	
 	
 	/**
