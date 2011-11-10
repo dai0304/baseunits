@@ -16,6 +16,7 @@
  */
 package jp.xet.baseunits.mirage;
 
+import java.lang.ref.WeakReference;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,6 +42,35 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	
 	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 	
+	private static final ThreadLocal<WeakReference<TimeZone>> TIMEZONE = new ThreadLocal<WeakReference<TimeZone>>();
+	
+	
+	public static TimeZone getTimeZone() {
+		WeakReference<TimeZone> tzRef = TIMEZONE.get();
+		if (tzRef == null) {
+			return null;
+		}
+		return tzRef.get();
+	}
+	
+	public static void removeTimeZone() {
+		WeakReference<TimeZone> ref = TIMEZONE.get();
+		if (ref != null && ref.get() == null) {
+			TIMEZONE.remove();
+		}
+	}
+	
+	public static void setTimeZone(TimeZone timeZone) {
+		TIMEZONE.set(new WeakReference<TimeZone>(timeZone));
+	}
+	
+	private static TimeZone getTimeZoneInternal() {
+		TimeZone tz = getTimeZone();
+		if (tz == null) {
+			return GMT;
+		}
+		return tz;
+	}
 	
 	@Override
 	public Object get(Class<?> type, CallableStatement cs, int index) throws SQLException {
@@ -50,7 +80,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
-		return tp.asTimeOfDay(GMT);
+		return tp.asTimeOfDay(getTimeZoneInternal());
 	}
 	
 	@Override
@@ -61,7 +91,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
-		return tp.asTimeOfDay(GMT);
+		return tp.asTimeOfDay(getTimeZoneInternal());
 	}
 	
 	@Override
@@ -72,7 +102,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
-		return tp.asTimeOfDay(GMT);
+		return tp.asTimeOfDay(getTimeZoneInternal());
 	}
 	
 	@Override
@@ -83,7 +113,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
-		return tp.asTimeOfDay(GMT);
+		return tp.asTimeOfDay(getTimeZoneInternal());
 	}
 	
 	@Override
@@ -111,7 +141,8 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		if (value == null) {
 			stmt.setNull(index, Types.TIME);
 		} else {
-			long epochMillisec = ((TimeOfDay) value).asTimePointGiven(EPOCH_DATE, GMT).toEpochMillisec();
+			long epochMillisec =
+					((TimeOfDay) value).asTimePointGiven(EPOCH_DATE, getTimeZoneInternal()).toEpochMillisec();
 			stmt.setTime(index, new Time(epochMillisec));
 		}
 	}
