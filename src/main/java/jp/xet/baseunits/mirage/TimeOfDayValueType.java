@@ -39,6 +39,8 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	
 	private static final CalendarDate EPOCH_DATE = CalendarDate.from(1970, 1, 1);
 	
+	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
+	
 	
 	@Override
 	public Object get(Class<?> type, CallableStatement cs, int index) throws SQLException {
@@ -48,7 +50,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
-		return tp.asTimeOfDay(TimeZone.getDefault());
+		return tp.asTimeOfDay(GMT);
 	}
 	
 	@Override
@@ -59,7 +61,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
-		return tp.asTimeOfDay(TimeZone.getDefault());
+		return tp.asTimeOfDay(GMT);
 	}
 	
 	@Override
@@ -70,7 +72,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
-		return tp.asTimeOfDay(TimeZone.getDefault());
+		return tp.asTimeOfDay(GMT);
 	}
 	
 	@Override
@@ -81,7 +83,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		}
 		long millisec = time.getTime();
 		TimePoint tp = TimePoint.from(millisec);
-		return tp.asTimeOfDay(TimeZone.getDefault());
+		return tp.asTimeOfDay(GMT);
 	}
 	
 	@Override
@@ -109,10 +111,8 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 		if (value == null) {
 			stmt.setNull(index, Types.TIME);
 		} else {
-			long epochMillisec =
-					((TimeOfDay) value).asTimePointGiven(EPOCH_DATE, TimeZone.getDefault()).toEpochMillisec();
+			long epochMillisec = ((TimeOfDay) value).asTimePointGiven(EPOCH_DATE, GMT).toEpochMillisec();
 			stmt.setTime(index, new Time(epochMillisec));
 		}
 	}
-	
 }
