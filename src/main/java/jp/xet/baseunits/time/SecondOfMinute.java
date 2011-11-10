@@ -35,9 +35,19 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class SecondOfMinute implements Comparable<SecondOfMinute>, Serializable {
 	
-	private static final int MIN = 0;
+	/**
+	 * {@link SecondOfMinute}の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN = 0;
 	
-	private static final int MAX = 59;
+	/**
+	 * {@link SecondOfMinute}の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX = 59;
 	
 	
 	/**

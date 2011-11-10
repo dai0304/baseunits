@@ -34,9 +34,19 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class MillisecOfSecond implements Comparable<MillisecOfSecond>, Serializable {
 	
-	private static final int MIN = 0;
+	/**
+	 * {@link MillisecOfSecond}の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN = 0;
 	
-	private static final int MAX = 999;
+	/**
+	 * {@link MillisecOfSecond}の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX = 999;
 	
 	
 	/**

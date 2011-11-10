@@ -35,9 +35,19 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	
-	private static final int MIN = 0;
+	/**
+	 * {@link HourOfDay}の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN = 0;
 	
-	private static final int MAX = 23;
+	/**
+	 * {@link HourOfDay}の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX = 23;
 	
 	
 	/**

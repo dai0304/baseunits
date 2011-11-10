@@ -31,9 +31,19 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	
-	private static final int MIN = 1;
+	/**
+	 * {@link DayOfMonth}の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN = 1;
 	
-	private static final int MAX = 31;
+	/**
+	 * {@link DayOfMonth}の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX = 31;
 	
 	
 	/**
