@@ -16,7 +16,6 @@
  */
 package jp.xet.baseunits.mirage;
 
-import java.lang.ref.WeakReference;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
 import java.util.TimeZone;
+import java.util.WeakHashMap;
 
 import jp.sf.amateras.mirage.type.ValueType;
 import jp.xet.baseunits.time.CalendarDate;
@@ -42,27 +42,36 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	
 	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 	
-	private static final ThreadLocal<WeakReference<TimeZone>> TIMEZONE = new ThreadLocal<WeakReference<TimeZone>>();
+	// ここから...
 	
+	private static final ThreadLocal<TimeZone> TIMEZONE = new ThreadLocal<TimeZone>();
+	
+	private static final WeakHashMap<String, TimeZone> TIMEZONE_CACHE = new WeakHashMap<String, TimeZone>();
+	
+	
+	public static boolean ensureAccessibleTimeZone(String user) {
+		TimeZone tz = TIMEZONE_CACHE.get(user);
+		if (tz != null) {
+			TIMEZONE.set(tz);
+			return true;
+		}
+		return TIMEZONE.get() != null;
+	}
 	
 	public static TimeZone getTimeZone() {
-		WeakReference<TimeZone> tzRef = TIMEZONE.get();
-		if (tzRef == null) {
-			return null;
-		}
-		return tzRef.get();
+		return TIMEZONE.get();
 	}
 	
 	public static void removeTimeZone() {
-		WeakReference<TimeZone> ref = TIMEZONE.get();
-		if (ref != null && ref.get() == null) {
-			TIMEZONE.remove();
-		}
+		TIMEZONE.remove();
 	}
 	
-	public static void setTimeZone(TimeZone timeZone) {
-		TIMEZONE.set(new WeakReference<TimeZone>(timeZone));
+	public static void setTimeZone(String user, TimeZone timeZone) {
+		TIMEZONE_CACHE.put(user, timeZone);
+		TIMEZONE.set(timeZone);
 	}
+	
+	// ...ここまで、イマイチ…。
 	
 	private static TimeZone getTimeZoneInternal() {
 		TimeZone tz = getTimeZone();
