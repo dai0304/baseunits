@@ -23,6 +23,6 @@ import jp.sf.amateras.mirage.type.ValueType;
  * 
  * @since 2.0
  */
-public abstract class AbstractBaseunitsValueType implements ValueType {
+public abstract class AbstractBaseunitsValueType<T> implements ValueType<T> {
 	
 }

@@ -32,10 +32,10 @@ import jp.xet.baseunits.time.CalendarDate;
  * @author daisuke
  * @since 2.0
  */
-public class CalendarDateValueType extends AbstractBaseunitsValueType {
+public class CalendarDateValueType extends AbstractBaseunitsValueType<CalendarDate> {
 	
 	@Override
-	public Object get(Class<?> type, CallableStatement cs, int index) throws SQLException {
+	public CalendarDate get(Class<? extends CalendarDate> type, CallableStatement cs, int index) throws SQLException {
 		java.sql.Date date = cs.getDate(index);
 		if (date == null) {
 			return null;
@@ -44,7 +44,8 @@ public class CalendarDateValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, CallableStatement cs, String parameterName) throws SQLException {
+	public CalendarDate get(Class<? extends CalendarDate> type, CallableStatement cs, String parameterName)
+			throws SQLException {
 		java.sql.Date date = cs.getDate(parameterName);
 		if (date == null) {
 			return null;
@@ -53,7 +54,7 @@ public class CalendarDateValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, ResultSet rs, int index) throws SQLException {
+	public CalendarDate get(Class<? extends CalendarDate> type, ResultSet rs, int index) throws SQLException {
 		java.sql.Date date = rs.getDate(index);
 		if (date == null) {
 			return null;
@@ -62,7 +63,7 @@ public class CalendarDateValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, ResultSet rs, String columnName) throws SQLException {
+	public CalendarDate get(Class<? extends CalendarDate> type, ResultSet rs, String columnName) throws SQLException {
 		java.sql.Date date = rs.getDate(columnName);
 		if (date == null) {
 			return null;
@@ -91,11 +92,12 @@ public class CalendarDateValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public void set(Class<?> type, PreparedStatement stmt, Object value, int index) throws SQLException {
+	public void set(Class<? extends CalendarDate> type, PreparedStatement stmt, CalendarDate value, int index)
+			throws SQLException {
 		if (value == null) {
 			stmt.setNull(index, Types.DATE);
 		} else {
-			long epochMillisec = ((CalendarDate) value).startAsTimePoint(TimeZone.getDefault()).toEpochMillisec();
+			long epochMillisec = value.startAsTimePoint(TimeZone.getDefault()).toEpochMillisec();
 			stmt.setDate(index, new java.sql.Date(epochMillisec));
 		}
 	}

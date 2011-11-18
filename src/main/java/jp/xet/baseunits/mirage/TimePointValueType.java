@@ -32,10 +32,10 @@ import jp.xet.baseunits.time.TimePoint;
  * @author daisuke
  * @since 2.0
  */
-public class TimePointValueType extends AbstractBaseunitsValueType {
+public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 	
 	@Override
-	public Object get(Class<?> type, CallableStatement cs, int index) throws SQLException {
+	public TimePoint get(Class<? extends TimePoint> type, CallableStatement cs, int index) throws SQLException {
 		Timestamp date = cs.getTimestamp(index);
 		if (date == null) {
 			return null;
@@ -44,7 +44,8 @@ public class TimePointValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, CallableStatement cs, String parameterName) throws SQLException {
+	public TimePoint get(Class<? extends TimePoint> type, CallableStatement cs, String parameterName)
+			throws SQLException {
 		Timestamp date = cs.getTimestamp(parameterName);
 		if (date == null) {
 			return null;
@@ -53,7 +54,7 @@ public class TimePointValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, ResultSet rs, int index) throws SQLException {
+	public TimePoint get(Class<? extends TimePoint> type, ResultSet rs, int index) throws SQLException {
 		Timestamp date = rs.getTimestamp(index);
 		if (date == null) {
 			return null;
@@ -62,7 +63,7 @@ public class TimePointValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, ResultSet rs, String columnName) throws SQLException {
+	public TimePoint get(Class<? extends TimePoint> type, ResultSet rs, String columnName) throws SQLException {
 		Timestamp date = rs.getTimestamp(columnName);
 		if (date == null) {
 			return null;
@@ -91,11 +92,12 @@ public class TimePointValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public void set(Class<?> type, PreparedStatement stmt, Object value, int index) throws SQLException {
+	public void set(Class<? extends TimePoint> type, PreparedStatement stmt, TimePoint value, int index)
+			throws SQLException {
 		if (value == null) {
 			stmt.setNull(index, Types.TIMESTAMP);
 		} else {
-			long epochMillisec = ((TimePoint) value).toEpochMillisec();
+			long epochMillisec = value.toEpochMillisec();
 			stmt.setTimestamp(index, new Timestamp(epochMillisec));
 		}
 	}

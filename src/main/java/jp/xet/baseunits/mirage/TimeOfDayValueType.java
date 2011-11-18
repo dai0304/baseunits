@@ -36,7 +36,7 @@ import jp.xet.baseunits.time.TimePoint;
  * @author daisuke
  * @since 2.0
  */
-public class TimeOfDayValueType extends AbstractBaseunitsValueType {
+public class TimeOfDayValueType extends AbstractBaseunitsValueType<TimeOfDay> {
 	
 	private static final CalendarDate EPOCH_DATE = CalendarDate.from(1970, 1, 1);
 	
@@ -82,7 +82,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, CallableStatement cs, int index) throws SQLException {
+	public TimeOfDay get(Class<? extends TimeOfDay> type, CallableStatement cs, int index) throws SQLException {
 		Time time = cs.getTime(index);
 		if (time == null) {
 			return null;
@@ -93,7 +93,8 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, CallableStatement cs, String parameterName) throws SQLException {
+	public TimeOfDay get(Class<? extends TimeOfDay> type, CallableStatement cs, String parameterName)
+			throws SQLException {
 		Time time = cs.getTime(parameterName);
 		if (time == null) {
 			return null;
@@ -104,7 +105,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, ResultSet rs, int index) throws SQLException {
+	public TimeOfDay get(Class<? extends TimeOfDay> type, ResultSet rs, int index) throws SQLException {
 		Time time = rs.getTime(index);
 		if (time == null) {
 			return null;
@@ -115,7 +116,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public Object get(Class<?> type, ResultSet rs, String columnName) throws SQLException {
+	public TimeOfDay get(Class<? extends TimeOfDay> type, ResultSet rs, String columnName) throws SQLException {
 		Time time = rs.getTime(columnName);
 		if (time == null) {
 			return null;
@@ -146,12 +147,13 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public void set(Class<?> type, PreparedStatement stmt, Object value, int index) throws SQLException {
+	public void set(Class<? extends TimeOfDay> type, PreparedStatement stmt, TimeOfDay value, int index)
+			throws SQLException {
 		if (value == null) {
 			stmt.setNull(index, Types.TIME);
 		} else {
 			long epochMillisec =
-					((TimeOfDay) value).asTimePointGiven(EPOCH_DATE, getTimeZoneInternal()).toEpochMillisec();
+					value.asTimePointGiven(EPOCH_DATE, getTimeZoneInternal()).toEpochMillisec();
 			stmt.setTime(index, new Time(epochMillisec));
 		}
 	}

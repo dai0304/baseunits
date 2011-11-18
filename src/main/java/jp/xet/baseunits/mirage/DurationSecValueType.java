@@ -32,28 +32,28 @@ import jp.xet.baseunits.time.TimeUnit;
  * @author daisuke
  * @since 2.0
  */
-public class DurationSecValueType extends AbstractBaseunitsValueType {
+public class DurationSecValueType extends AbstractBaseunitsValueType<Duration> {
 	
 	@Override
-	public Object get(Class<?> type, CallableStatement cs, int index) throws SQLException {
+	public Duration get(Class<? extends Duration> type, CallableStatement cs, int index) throws SQLException {
 		long duration = cs.getLong(index);
 		return Duration.seconds(duration);
 	}
 	
 	@Override
-	public Object get(Class<?> type, CallableStatement cs, String parameterName) throws SQLException {
+	public Duration get(Class<? extends Duration> type, CallableStatement cs, String parameterName) throws SQLException {
 		long duration = cs.getLong(parameterName);
 		return Duration.seconds(duration);
 	}
 	
 	@Override
-	public Object get(Class<?> type, ResultSet rs, int index) throws SQLException {
+	public Duration get(Class<? extends Duration> type, ResultSet rs, int index) throws SQLException {
 		long duration = rs.getLong(index);
 		return Duration.seconds(duration);
 	}
 	
 	@Override
-	public Object get(Class<?> type, ResultSet rs, String columnName) throws SQLException {
+	public Duration get(Class<? extends Duration> type, ResultSet rs, String columnName) throws SQLException {
 		long duration = rs.getLong(columnName);
 		return Duration.seconds(duration);
 	}
@@ -79,11 +79,12 @@ public class DurationSecValueType extends AbstractBaseunitsValueType {
 	}
 	
 	@Override
-	public void set(Class<?> type, PreparedStatement stmt, Object value, int index) throws SQLException {
+	public void set(Class<? extends Duration> type, PreparedStatement stmt, Duration value, int index)
+			throws SQLException {
 		if (value == null) {
 			stmt.setNull(index, Types.BIGINT);
 		} else {
-			long sec = ((Duration) value).to(TimeUnit.second);
+			long sec = value.to(TimeUnit.second);
 			stmt.setLong(index, sec);
 		}
 	}
