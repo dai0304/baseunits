@@ -350,11 +350,19 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 */
 	public TimeOfDay plus(Duration duration) {
 		Validate.notNull(duration);
-		Duration d = toDuration().plus(duration);
-		if (d.isGreaterThanOrEqual(Duration.hours(24))) { // CHECKSTYLE IGNORE THIS LINE
+		Duration total = toDuration().plus(duration);
+		if (total.isGreaterThanOrEqual(Duration.hours(24))) { // CHECKSTYLE IGNORE THIS LINE
 			throw new IllegalArgumentException();
 		}
-		return TimeOfDay.MIN.plus(d);
+		
+		long h = total.to(TimeUnit.hour);
+		Duration minDuration = total.minus(Duration.hours(h));
+		long m = minDuration.to(TimeUnit.minute);
+		Duration secDuration = minDuration.minus(Duration.minutes(m));
+		long s = secDuration.to(TimeUnit.second);
+		Duration millisecDuration = secDuration.minus(Duration.seconds(s));
+		long ms = millisecDuration.to(TimeUnit.millisecond);
+		return TimeOfDay.from((int) h, (int) m, (int) s, (int) ms);
 	}
 	
 	/**

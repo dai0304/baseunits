@@ -255,4 +255,18 @@ public class TimeOfDayTest {
 		assertThat(noon.toString("HH-mm"), is("12-00"));
 		assertThat(afternoon.toString("HH-mm"), is("15-40"));
 	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test16_plus_minus() throws Exception {
+		assertThat(TimeOfDay.NOON.plus(Duration.hours(1)), is(TimeOfDay.from(13, 0)));
+		assertThat(TimeOfDay.from(4, 52, 3, 55).plus(Duration.minutes(12)), is(TimeOfDay.from(5, 4, 3, 55)));
+		
+		assertThat(TimeOfDay.from(13, 0).minus(Duration.hours(2)), is(TimeOfDay.from(11, 0)));
+		assertThat(TimeOfDay.from(5, 4, 3, 55).minus(Duration.minutes(12)), is(TimeOfDay.from(4, 52, 3, 55)));
+	}
 }

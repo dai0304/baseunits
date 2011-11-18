@@ -69,14 +69,14 @@
     
     <!-- Commons DEPS -->
     <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
-    </dependency>
-    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>10.0.1</version>
+      <version>${guava-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>${commons-lang-version}</version>
     </dependency>
     
     <!-- OPTIONAL DEPS -->
@@ -89,12 +89,12 @@
     <dependency>
       <groupId>jp.sf.amateras.mirage</groupId>
       <artifactId>mirage</artifactId>
-      <version>1.1.4-SNAPSHOT</version>
+      <version>${mirage-version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-core</artifactId>
-      <version>1.5.2</version>
+      <version>${wicket-version}</version>
       <optional>true</optional>
     </dependency>
   </dependencies>
@@ -129,4 +129,11 @@
       <url>scp://maven.xet.jp/var/www/maven.xet.jp/site/${project.artifactId}/${project.version}</url>
     </site>
   </distributionManagement>
+  <properties>
+    <guava-version>[10.0.1,10.2)</guava-version>
+    <commons-lang-version>[2.6,3.0)</commons-lang-version>
+    <wicket-version>[1.5.0,1.6.0)</wicket-version>
+    <mirage-version>1.1.4-SNAPSHOT</mirage-version>
+    <spring-data-core-version>1.1.0.RELEASE</spring-data-core-version>
+  </properties>
 </project>
