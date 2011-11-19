@@ -97,6 +97,12 @@
       <version>${wicket-version}</version>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>${icu4j-version}</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>
@@ -135,5 +141,6 @@
     <wicket-version>[1.5.0,1.6.0)</wicket-version>
     <mirage-version>1.1.4-SNAPSHOT</mirage-version>
     <spring-data-core-version>1.1.0.RELEASE</spring-data-core-version>
+    <icu4j-version>[4.8.1.1,4.9)</icu4j-version>
   </properties>
 </project>
