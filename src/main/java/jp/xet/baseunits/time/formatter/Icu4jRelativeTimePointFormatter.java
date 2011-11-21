@@ -16,14 +16,12 @@
  */
 package jp.xet.baseunits.time.formatter;
 
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePoint;
+import jp.xet.baseunits.time.TimeUnit;
 
 import com.ibm.icu.impl.duration.BasicPeriodFormatterService;
-import com.ibm.icu.impl.duration.DateFormatter;
 import com.ibm.icu.impl.duration.DurationFormatter;
 import com.ibm.icu.impl.duration.DurationFormatterFactory;
 
@@ -53,6 +51,7 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 		
 		long t = target.toEpochMillisec();
 		long s = standard.toEpochMillisec();
+		long delta = t - s;
 		
 		DurationFormatterFactory dff = SERVICE.newDurationFormatterFactory();
 		if (SERVICE.getAvailableLocaleNames().contains(locale.getLanguage())) {
@@ -62,42 +61,17 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 			dff.setLocale("en");
 		}
 		if (config != null) {
-			dff.setFallbackLimit(config.getFallbackLimit());
-			dff.setFallback(new FixedDateFormatter(config.getFallbackString()));
+			if (config.getLowerFallbackLimit() != null
+					&& Math.abs(delta) < config.getLowerFallbackLimit().to(TimeUnit.millisecond)) {
+				return config.getLowerFallbackFormatter().format(delta);
+			}
+			if (config.getUpperFallbackLimit() != null) {
+				dff.setFallbackLimit(config.getUpperFallbackLimit().to(TimeUnit.millisecond));
+				dff.setFallback(config.getUpperFallbackFormatter());
+			}
 		}
 		DurationFormatter df = dff.getFormatter();
-		String result = df.formatDurationFrom(t - s, s);
+		String result = df.formatDurationFrom(delta, s);
 		return result;
-	}
-	
-	
-	private static class FixedDateFormatter implements DateFormatter {
-		
-		private final String fixed;
-		
-		
-		FixedDateFormatter(String fixed) {
-			this.fixed = fixed;
-		}
-		
-		@Override
-		public String format(Date date) {
-			return format(date.getTime());
-		}
-		
-		@Override
-		public String format(long date) {
-			return fixed;
-		}
-		
-		@Override
-		public DateFormatter withLocale(String localeName) {
-			return this;
-		}
-		
-		@Override
-		public DateFormatter withTimeZone(TimeZone tz) {
-			return this;
-		}
 	}
 }

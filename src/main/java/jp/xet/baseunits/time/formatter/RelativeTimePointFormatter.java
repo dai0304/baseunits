@@ -18,7 +18,10 @@ package jp.xet.baseunits.time.formatter;
 
 import java.util.Locale;
 
+import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimePoint;
+
+import com.ibm.icu.impl.duration.DateFormatter;
 
 /**
  * TODO for daisuke
@@ -66,36 +69,62 @@ public interface RelativeTimePointFormatter {
 	@SuppressWarnings("javadoc")
 	public class FallbackConfig {
 		
-		private long fallbackLimit;
+		private Duration lowerFallbackLimit;
 		
-		private String fallbackString;
+		private DateFormatter lowerFallbackFormatter;
+		
+		private Duration upperFallbackLimit;
+		
+		private DateFormatter upperFallbackFormatter;
 		
 		
 		/**
 		 * インスタンスを生成する。
 		 * 
-		 * @param fallbackLimit
-		 * @param fallbackString
+		 * @param lowerFallbackLimit
+		 * @param lowerFallbackFormatter
+		 * @param upperFallbackLimit
+		 * @param upperFallbackFormatter
 		 */
-		public FallbackConfig(long fallbackLimit, String fallbackString) {
-			this.fallbackLimit = fallbackLimit;
-			this.fallbackString = fallbackString;
+		public FallbackConfig(Duration lowerFallbackLimit, DateFormatter lowerFallbackFormatter,
+				Duration upperFallbackLimit,
+				DateFormatter upperFallbackFormatter) {
+			this.lowerFallbackLimit = lowerFallbackLimit;
+			this.lowerFallbackFormatter = lowerFallbackFormatter;
+			this.upperFallbackLimit = upperFallbackLimit;
+			this.upperFallbackFormatter = upperFallbackFormatter;
 		}
 		
-		public long getFallbackLimit() {
-			return fallbackLimit;
+		public DateFormatter getLowerFallbackFormatter() {
+			return lowerFallbackFormatter;
 		}
 		
-		public String getFallbackString() {
-			return fallbackString;
+		public Duration getLowerFallbackLimit() {
+			return lowerFallbackLimit;
 		}
 		
-		public void setFallbackLimit(long fallbackLimit) {
-			this.fallbackLimit = fallbackLimit;
+		public DateFormatter getUpperFallbackFormatter() {
+			return upperFallbackFormatter;
 		}
 		
-		public void setFallbackString(String fallbackString) {
-			this.fallbackString = fallbackString;
+		public Duration getUpperFallbackLimit() {
+			return upperFallbackLimit;
+		}
+		
+		public void setLowerFallbackLimit(Duration lowerFallbackLimit) {
+			this.lowerFallbackLimit = lowerFallbackLimit;
+		}
+		
+		public void setLowerFallbackString(DateFormatter lowerFallbackFormatter) {
+			this.lowerFallbackFormatter = lowerFallbackFormatter;
+		}
+		
+		public void setUpperFallbackLimit(Duration upperFallbackLimit) {
+			this.upperFallbackLimit = upperFallbackLimit;
+		}
+		
+		public void setUpperFallbackString(DateFormatter upperFallbackFormatterrmatter) {
+			upperFallbackFormatter = upperFallbackFormatterrmatter;
 		}
 	}
 }
