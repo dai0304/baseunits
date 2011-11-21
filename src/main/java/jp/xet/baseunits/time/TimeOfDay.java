@@ -21,6 +21,7 @@
 package jp.xet.baseunits.time;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
@@ -160,6 +161,24 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	public static TimeOfDay from(int hour, int minute, int second, int millisecond) {
 		return new TimeOfDay(HourOfDay.valueOf(hour), MinuteOfHour.valueOf(minute), SecondOfMinute.valueOf(second),
 				MillisecOfSecond.valueOf(millisecond));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param timeString
+	 * @param pattern
+	 * @return
+	 * @throws ParseException 
+	 * @since 2.0
+	 */
+	public static TimeOfDay parse(String timeString, String pattern) throws ParseException {
+		Validate.notNull(timeString);
+		Validate.notNull(pattern);
+		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
+		// Any timezone works, as long as the same one is used throughout.
+		TimePoint point = TimePoint.parse(timeString, pattern, arbitraryZone);
+		return point.asTimeOfDay(arbitraryZone);
 	}
 	
 	

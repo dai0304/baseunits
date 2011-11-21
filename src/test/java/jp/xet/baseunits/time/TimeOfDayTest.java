@@ -269,4 +269,16 @@ public class TimeOfDayTest {
 		assertThat(TimeOfDay.from(13, 0).minus(Duration.hours(2)), is(TimeOfDay.from(11, 0)));
 		assertThat(TimeOfDay.from(5, 4, 3, 55).minus(Duration.minutes(12)), is(TimeOfDay.from(4, 52, 3, 55)));
 	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test17_parse() throws Exception {
+		assertThat(TimeOfDay.parse("15:20", "HH:mm"), is(TimeOfDay.from(15, 20)));
+		assertThat(TimeOfDay.parse("15:20:30", "HH:mm"), is(TimeOfDay.from(15, 20)));
+		assertThat(TimeOfDay.parse("15時から20分過ぎ", "HH時からmm分過ぎ"), is(TimeOfDay.from(15, 20)));
+	}
 }
