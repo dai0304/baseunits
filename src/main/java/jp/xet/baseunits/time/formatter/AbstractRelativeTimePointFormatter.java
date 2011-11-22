@@ -32,36 +32,16 @@ public abstract class AbstractRelativeTimePointFormatter implements RelativeTime
 	
 	@Override
 	public String format(TimePoint target) {
-		return format(target, Clock.now(), Locale.getDefault(), null);
-	}
-	
-	@Override
-	public String format(TimePoint target, FallbackConfig fallback) {
-		return format(target, Clock.now(), Locale.getDefault(), fallback);
+		return format(target, Clock.now(), Locale.getDefault());
 	}
 	
 	@Override
 	public String format(TimePoint target, Locale locale) {
-		return format(target, Clock.now(), locale, null);
-	}
-	
-	@Override
-	public String format(TimePoint target, Locale locale, FallbackConfig fallback) {
-		return format(target, Clock.now(), locale, fallback);
+		return format(target, Clock.now(), locale);
 	}
 	
 	@Override
 	public String format(TimePoint target, TimePoint standard) {
-		return format(target, standard, Locale.getDefault(), null);
-	}
-	
-	@Override
-	public String format(TimePoint target, TimePoint standard, FallbackConfig fallback) {
-		return format(target, standard, Locale.getDefault(), fallback);
-	}
-	
-	@Override
-	public String format(TimePoint target, TimePoint standard, Locale locale) {
-		return format(target, standard, locale, null);
+		return format(target, standard, Locale.getDefault());
 	}
 }

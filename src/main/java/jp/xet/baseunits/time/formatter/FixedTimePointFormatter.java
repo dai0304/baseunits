@@ -16,37 +16,32 @@
  */
 package jp.xet.baseunits.time.formatter;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.Locale;
 import java.util.TimeZone;
 
-import com.ibm.icu.impl.duration.DateFormatter;
+import jp.xet.baseunits.time.TimePoint;
 
-public class FixedDateFormatter implements DateFormatter {
+/**
+ * TODO for daisuke
+ */
+@SuppressWarnings("serial")
+public class FixedTimePointFormatter extends AbstractTimePointFormatter implements Serializable {
 	
 	private final String fixed;
 	
 	
-	public FixedDateFormatter(String fixed) {
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param fixed 固定文字列
+	 */
+	public FixedTimePointFormatter(String fixed) {
 		this.fixed = fixed;
 	}
 	
 	@Override
-	public String format(Date date) {
-		return format(date.getTime());
-	}
-	
-	@Override
-	public String format(long date) {
+	public String format(TimePoint target, Locale locale, TimeZone timeZone) {
 		return fixed;
-	}
-	
-	@Override
-	public DateFormatter withLocale(String localeName) {
-		return this;
-	}
-	
-	@Override
-	public DateFormatter withTimeZone(TimeZone tz) {
-		return this;
 	}
 }

@@ -16,12 +16,11 @@
  */
 package jp.xet.baseunits.time.formatter;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimePoint;
-
-import com.ibm.icu.impl.duration.DateFormatter;
 
 /**
  * TODO for daisuke
@@ -36,22 +35,10 @@ public interface RelativeTimePointFormatter {
 	String format(TimePoint target);
 	
 	@SuppressWarnings("javadoc")
-	String format(TimePoint target, FallbackConfig fallback);
-	
-	@SuppressWarnings("javadoc")
 	String format(TimePoint target, Locale locale);
 	
 	@SuppressWarnings("javadoc")
-	String format(TimePoint target, Locale locale, FallbackConfig fallback);
-	
-	@SuppressWarnings("javadoc")
 	String format(TimePoint target, TimePoint standard);
-	
-	@SuppressWarnings("javadoc")
-	String format(TimePoint target, TimePoint standard, FallbackConfig fallback);
-	
-	@SuppressWarnings("javadoc")
-	String format(TimePoint target, TimePoint standard, Locale locale);
 	
 	/**
 	 * TODO for daisuke
@@ -59,23 +46,25 @@ public interface RelativeTimePointFormatter {
 	 * @param target 対象時刻
 	 * @param standard 基準となる時刻
 	 * @param locale ロケール
-	 * @param fallback 
 	 * @return 相対時間表現文字列
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	String format(TimePoint target, TimePoint standard, Locale locale, FallbackConfig fallback);
+	String format(TimePoint target, TimePoint standard, Locale locale);
 	
 	
-	@SuppressWarnings("javadoc")
-	public class FallbackConfig {
+	/**
+	 * TODO for daisuke
+	 */
+	@SuppressWarnings("serial")
+	public class FallbackConfig implements Serializable {
 		
 		private Duration lowerFallbackLimit;
 		
-		private DateFormatter lowerFallbackFormatter;
+		private TimePointFormatter lowerFallbackFormatter;
 		
 		private Duration upperFallbackLimit;
 		
-		private DateFormatter upperFallbackFormatter;
+		private TimePointFormatter upperFallbackFormatter;
 		
 		
 		/**
@@ -86,16 +75,15 @@ public interface RelativeTimePointFormatter {
 		 * @param upperFallbackLimit
 		 * @param upperFallbackFormatter
 		 */
-		public FallbackConfig(Duration lowerFallbackLimit, DateFormatter lowerFallbackFormatter,
-				Duration upperFallbackLimit,
-				DateFormatter upperFallbackFormatter) {
+		public FallbackConfig(Duration lowerFallbackLimit, TimePointFormatter lowerFallbackFormatter,
+				Duration upperFallbackLimit, TimePointFormatter upperFallbackFormatter) {
 			this.lowerFallbackLimit = lowerFallbackLimit;
 			this.lowerFallbackFormatter = lowerFallbackFormatter;
 			this.upperFallbackLimit = upperFallbackLimit;
 			this.upperFallbackFormatter = upperFallbackFormatter;
 		}
 		
-		public DateFormatter getLowerFallbackFormatter() {
+		public TimePointFormatter getLowerFallbackFormatter() {
 			return lowerFallbackFormatter;
 		}
 		
@@ -103,7 +91,7 @@ public interface RelativeTimePointFormatter {
 			return lowerFallbackLimit;
 		}
 		
-		public DateFormatter getUpperFallbackFormatter() {
+		public TimePointFormatter getUpperFallbackFormatter() {
 			return upperFallbackFormatter;
 		}
 		
@@ -115,7 +103,7 @@ public interface RelativeTimePointFormatter {
 			this.lowerFallbackLimit = lowerFallbackLimit;
 		}
 		
-		public void setLowerFallbackString(DateFormatter lowerFallbackFormatter) {
+		public void setLowerFallbackString(TimePointFormatter lowerFallbackFormatter) {
 			this.lowerFallbackFormatter = lowerFallbackFormatter;
 		}
 		
@@ -123,8 +111,8 @@ public interface RelativeTimePointFormatter {
 			this.upperFallbackLimit = upperFallbackLimit;
 		}
 		
-		public void setUpperFallbackString(DateFormatter upperFallbackFormatterrmatter) {
-			upperFallbackFormatter = upperFallbackFormatterrmatter;
+		public void setUpperFallbackString(TimePointFormatter upperFallbackFormatter) {
+			this.upperFallbackFormatter = upperFallbackFormatter;
 		}
 	}
 }
