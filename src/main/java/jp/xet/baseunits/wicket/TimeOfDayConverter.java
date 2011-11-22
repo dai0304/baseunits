@@ -37,7 +37,7 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 	/** default time pattern */
 	public static final String DEFAILT_PATTERN = "HH:mm";
 	
-	private final String datePattern;
+	private final String timePattern;
 	
 	
 	/**
@@ -50,12 +50,12 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
+	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public TimeOfDayConverter(String datePattern) {
-		Validate.notNull(datePattern);
-		this.datePattern = datePattern;
+	public TimeOfDayConverter(String timePattern) {
+		Validate.notNull(timePattern);
+		this.timePattern = timePattern;
 	}
 	
 	@Override
@@ -64,7 +64,7 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 			return null;
 		} else {
 			try {
-				return TimeOfDay.parse(value, datePattern);
+				return TimeOfDay.parse(value, timePattern);
 			} catch (ParseException e) {
 				// ignore to return null
 			}
@@ -74,7 +74,7 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 	
 	@Override
 	public String convertToString(TimeOfDay value, Locale locale) {
-		return value.toString(datePattern);
+		return value.toString(timePattern);
 	}
 	
 	@Override
