@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
- * Created on 2011/11/21
+ * Created on 2011/11/22
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,37 +16,33 @@
  */
 package jp.xet.baseunits.time.formatter;
 
-import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
-import com.ibm.icu.impl.duration.DateFormatter;
+import jp.xet.baseunits.time.TimePoint;
 
-public class FixedDateFormatter implements DateFormatter {
+/**
+ * TODO for daisuke
+ */
+public interface TimePointFormatter {
 	
-	private final String fixed;
+	@SuppressWarnings("javadoc")
+	String format(TimePoint target);
 	
+	@SuppressWarnings("javadoc")
+	String format(TimePoint target, Locale locale);
 	
-	public FixedDateFormatter(String fixed) {
-		this.fixed = fixed;
-	}
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param target
+	 * @param locale
+	 * @param timeZone 
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return
+	 */
+	String format(TimePoint target, Locale locale, TimeZone timeZone);
 	
-	@Override
-	public String format(Date date) {
-		return format(date.getTime());
-	}
-	
-	@Override
-	public String format(long date) {
-		return fixed;
-	}
-	
-	@Override
-	public DateFormatter withLocale(String localeName) {
-		return this;
-	}
-	
-	@Override
-	public DateFormatter withTimeZone(TimeZone tz) {
-		return this;
-	}
+	@SuppressWarnings("javadoc")
+	String format(TimePoint target, TimeZone timeZone);
 }

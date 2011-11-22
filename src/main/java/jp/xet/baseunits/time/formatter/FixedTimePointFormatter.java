@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
- * Created on 2011/11/19
+ * Created on 2011/11/21
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,32 @@
  */
 package jp.xet.baseunits.time.formatter;
 
+import java.io.Serializable;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePoint;
-import jp.xet.baseunits.timeutil.Clock;
 
 /**
  * TODO for daisuke
- * 
- * @since 2.0
- * @version $Id$
- * @author daisuke
  */
-public abstract class AbstractRelativeTimePointFormatter implements RelativeTimePointFormatter {
+@SuppressWarnings("serial")
+public class FixedTimePointFormatter extends AbstractTimePointFormatter implements Serializable {
 	
-	@Override
-	public String format(TimePoint target) {
-		return format(target, Clock.now(), Locale.getDefault());
+	private final String fixed;
+	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param fixed 固定文字列
+	 */
+	public FixedTimePointFormatter(String fixed) {
+		this.fixed = fixed;
 	}
 	
 	@Override
-	public String format(TimePoint target, Locale locale) {
-		return format(target, Clock.now(), locale);
-	}
-	
-	@Override
-	public String format(TimePoint target, TimePoint standard) {
-		return format(target, standard, Locale.getDefault());
+	public String format(TimePoint target, Locale locale, TimeZone timeZone) {
+		return fixed;
 	}
 }

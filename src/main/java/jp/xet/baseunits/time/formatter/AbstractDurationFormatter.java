@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
- * Created on 2011/11/19
+ * Created on 2011/11/22
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,30 +18,15 @@ package jp.xet.baseunits.time.formatter;
 
 import java.util.Locale;
 
-import jp.xet.baseunits.time.TimePoint;
-import jp.xet.baseunits.timeutil.Clock;
+import jp.xet.baseunits.time.Duration;
 
 /**
  * TODO for daisuke
- * 
- * @since 2.0
- * @version $Id$
- * @author daisuke
  */
-public abstract class AbstractRelativeTimePointFormatter implements RelativeTimePointFormatter {
+public abstract class AbstractDurationFormatter implements DurationFormatter {
 	
 	@Override
-	public String format(TimePoint target) {
-		return format(target, Clock.now(), Locale.getDefault());
-	}
-	
-	@Override
-	public String format(TimePoint target, Locale locale) {
-		return format(target, Clock.now(), locale);
-	}
-	
-	@Override
-	public String format(TimePoint target, TimePoint standard) {
-		return format(target, standard, Locale.getDefault());
+	public String format(Duration target) {
+		return format(target, Locale.getDefault());
 	}
 }

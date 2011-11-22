@@ -16,7 +16,9 @@
  */
 package jp.xet.baseunits.time.formatter;
 
+import java.io.Serializable;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.TimeUnit;
@@ -36,15 +38,39 @@ import org.slf4j.LoggerFactory;
  * @version $Id$
  * @author daisuke
  */
-public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFormatter {
+@SuppressWarnings("serial")
+public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFormatter implements Serializable {
 	
 	private static Logger logger = LoggerFactory.getLogger(Icu4jRelativeTimePointFormatter.class);
 	
 	private static final BasicPeriodFormatterService SERVICE = BasicPeriodFormatterService.getInstance();
 	
+	FallbackConfig config;
+	
+	TimeZone timeZone;
+	
+	
+	/**
+	 * インスタンスを生成する。
+	 */
+	public Icu4jRelativeTimePointFormatter() {
+		this(null, null);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param config
+	 * @param timeZone
+	 */
+	public Icu4jRelativeTimePointFormatter(FallbackConfig config, TimeZone timeZone) {
+		Validate.isTrue((config == null && timeZone == null) || (config != null && timeZone != null));
+		this.config = config;
+		this.timeZone = timeZone;
+	}
 	
 	@Override
-	public String format(TimePoint target, TimePoint standard, Locale locale, FallbackConfig config) {
+	public String format(TimePoint target, TimePoint standard, Locale locale) {
 		Validate.notNull(target);
 		Validate.notNull(standard);
 		Validate.notNull(locale);
@@ -53,6 +79,15 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 		long s = standard.toEpochMillisec();
 		long delta = t - s;
 		
+		if (config != null && timeZone != null && config.getLowerFallbackLimit() != null
+				&& Math.abs(delta) < config.getLowerFallbackLimit().to(TimeUnit.millisecond)) {
+			return config.getLowerFallbackFormatter().format(target, locale, timeZone);
+		}
+		if (config != null && timeZone != null && config.getUpperFallbackLimit() != null
+				&& Math.abs(delta) >= config.getUpperFallbackLimit().to(TimeUnit.millisecond)) {
+			return config.getUpperFallbackFormatter().format(target, locale, timeZone);
+		}
+		
 		DurationFormatterFactory dff = SERVICE.newDurationFormatterFactory();
 		if (SERVICE.getAvailableLocaleNames().contains(locale.getLanguage())) {
 			dff.setLocale(locale.getLanguage());
@@ -60,16 +95,7 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 			logger.warn("Ignore unsupported locale by ICU4J: {}", locale.getLanguage());
 			dff.setLocale("en");
 		}
-		if (config != null) {
-			if (config.getLowerFallbackLimit() != null
-					&& Math.abs(delta) < config.getLowerFallbackLimit().to(TimeUnit.millisecond)) {
-				return config.getLowerFallbackFormatter().format(delta);
-			}
-			if (config.getUpperFallbackLimit() != null) {
-				dff.setFallbackLimit(config.getUpperFallbackLimit().to(TimeUnit.millisecond));
-				dff.setFallback(config.getUpperFallbackFormatter());
-			}
-		}
+		
 		DurationFormatter df = dff.getFormatter();
 		String result = df.formatDurationFrom(delta, s);
 		return result;

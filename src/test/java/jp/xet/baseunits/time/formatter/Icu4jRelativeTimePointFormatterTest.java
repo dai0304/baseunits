@@ -36,7 +36,13 @@ public class Icu4jRelativeTimePointFormatterTest {
 	
 	private static final TimeZone JST = TimeZone.getTimeZone("JST");
 	
+	private static final FallbackConfig config = new FallbackConfig(
+			Duration.seconds(30), new FixedTimePointFormatter("たった今"),
+			Duration.days(1), new StandardTimePointFormatter("yyyy/MM/dd HH:mm:ss"));
+	
 	Icu4jRelativeTimePointFormatter f = new Icu4jRelativeTimePointFormatter();
+	
+	Icu4jRelativeTimePointFormatter f2 = new Icu4jRelativeTimePointFormatter(config, JST);
 	
 	
 	@Test
@@ -77,80 +83,76 @@ public class Icu4jRelativeTimePointFormatterTest {
 	
 	@Test
 	public void test_fallback() {
-		FallbackConfig config = new FallbackConfig(
-				Duration.seconds(30), new FixedDateFormatter("たった今"),
-				Duration.days(1), new StandardDateFormatter("yyyy/MM/dd HH:mm:ss"));
-		
-		assertThat(f.format(
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 21, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("2011/11/19 08:56:00"));
-		assertThat(f.format(
+				Locale.JAPAN), is("2011/11/19 08:56:00"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 20, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("2011/11/19 08:56:00"));
-		assertThat(f.format(
+				Locale.JAPAN), is("2011/11/19 08:56:00"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 20, 8, 55, 59, 999, JST),
-				Locale.JAPAN, config), is("24時間前"));
-		assertThat(f.format(
+				Locale.JAPAN), is("24時間前"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 9, 56, 0, JST),
-				Locale.JAPAN, config), is("1時間前"));
-		assertThat(f.format(
+				Locale.JAPAN), is("1時間前"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 31, JST),
-				Locale.JAPAN, config), is("31秒前"));
-		assertThat(f.format(
+				Locale.JAPAN), is("31秒前"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 30, JST),
-				Locale.JAPAN, config), is("30秒前"));
-		assertThat(f.format(
+				Locale.JAPAN), is("30秒前"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 29, JST),
-				Locale.JAPAN, config), is("たった今"));
-		assertThat(f.format(
+				Locale.JAPAN), is("たった今"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 10, JST),
-				Locale.JAPAN, config), is("たった今"));
+				Locale.JAPAN), is("たった今"));
 		
-		assertThat(f.format(
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("たった今"));
+				Locale.JAPAN), is("たった今"));
 		
-		assertThat(f.format(
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 10, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("たった今"));
-		assertThat(f.format(
+				Locale.JAPAN), is("たった今"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 29, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("たった今"));
-		assertThat(f.format(
+				Locale.JAPAN), is("たった今"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 30, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("今から30秒後"));
-		assertThat(f.format(
+				Locale.JAPAN), is("今から30秒後"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 8, 56, 31, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("今から31秒後"));
-		assertThat(f.format(
+				Locale.JAPAN), is("今から31秒後"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 9, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("今から1時間後"));
-		assertThat(f.format(
+				Locale.JAPAN), is("今から1時間後"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 19, 9, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("今から1時間後"));
-		assertThat(f.format(
+				Locale.JAPAN), is("今から1時間後"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 20, 8, 55, 59, 999, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("今から24時間後"));
-		assertThat(f.format(
+				Locale.JAPAN), is("今から24時間後"));
+		assertThat(f2.format(
 				TimePoint.at(2011, 11, 20, 8, 56, 0, JST),
 				TimePoint.at(2011, 11, 19, 8, 56, 0, JST),
-				Locale.JAPAN, config), is("2011/11/20 08:56:00"));
+				Locale.JAPAN), is("2011/11/20 08:56:00"));
 	}
 	
 	@Test
