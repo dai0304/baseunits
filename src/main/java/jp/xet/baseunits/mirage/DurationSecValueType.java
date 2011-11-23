@@ -88,5 +88,4 @@ public class DurationSecValueType extends AbstractBaseunitsValueType<Duration> {
 			stmt.setLong(index, sec);
 		}
 	}
-	
 }

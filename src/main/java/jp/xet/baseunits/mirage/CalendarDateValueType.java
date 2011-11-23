@@ -101,5 +101,4 @@ public class CalendarDateValueType extends AbstractBaseunitsValueType<CalendarDa
 			stmt.setDate(index, new java.sql.Date(epochMillisec));
 		}
 	}
-	
 }

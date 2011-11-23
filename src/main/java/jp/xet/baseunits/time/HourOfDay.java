@@ -36,18 +36,32 @@ import org.apache.commons.lang.Validate;
 public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	
 	/**
+	 * {@link HourOfDay}の値の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN_VALUE = 0;
+	
+	/**
+	 * {@link HourOfDay}の値の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX_VALUE = 23;
+	
+	/**
 	 * {@link HourOfDay}の最小値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MIN = 0;
+	public static final HourOfDay MIN = HourOfDay.valueOf(MIN_VALUE);
 	
 	/**
 	 * {@link HourOfDay}の最大値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MAX = 23;
+	public static final HourOfDay MAX = HourOfDay.valueOf(MAX_VALUE);
 	
 	
 	/**
@@ -88,7 +102,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 */
 	static int convertTo24hour(int hour, Meridian meridian) {
 		Validate.notNull(meridian);
-		if (hour < MIN || hour > 12) {
+		if (hour < MIN_VALUE || hour > 12) {
 			throw new IllegalArgumentException("Illegal value for 12 hour: " + hour
 					+ ", please use a value between 0 and 11");
 		}
@@ -103,7 +117,7 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	
 	
 	private HourOfDay(int initial) {
-		if (initial < MIN || initial > MAX) {
+		if (initial < MIN_VALUE || initial > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value for 24 hour: " + initial
 					+ ", please use a value between 0 and 23");
 		}

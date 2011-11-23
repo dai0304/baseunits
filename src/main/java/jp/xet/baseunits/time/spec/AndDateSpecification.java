@@ -47,10 +47,20 @@ public final class AndDateSpecification extends AbstractDateSpecification {
 		this.right = right;
 	}
 	
+	/**
+	 * 左辺値を返す。
+	 * 
+	 * @return 左辺値
+	 */
 	public DateSpecification getLeft() {
 		return left;
 	}
 	
+	/**
+	 * 右辺値を返す。
+	 * 
+	 * @return 右辺値
+	 */
 	public DateSpecification getRight() {
 		return right;
 	}

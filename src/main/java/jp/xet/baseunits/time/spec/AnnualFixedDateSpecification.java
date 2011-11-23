@@ -55,10 +55,20 @@ public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecif
 		this.day = day;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての日（{@link DayOfMonth}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 */
 	public DayOfMonth getDay() {
 		return day;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての月（{@link MonthOfYear}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての月（{@link MonthOfYear}）
+	 */
 	public MonthOfYear getMonth() {
 		return month;
 	}

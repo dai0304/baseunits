@@ -65,6 +65,11 @@ public final class CalendarIntervalSpecification extends AbstractDateSpecificati
 		return intersect.lowerLimit();
 	}
 	
+	/**
+	 * この仕様を満たす条件としての期間を返す。
+	 * 
+	 * @return この仕様を満たす条件としての期間
+	 */
 	public CalendarInterval getInterval() {
 		return interval;
 	}

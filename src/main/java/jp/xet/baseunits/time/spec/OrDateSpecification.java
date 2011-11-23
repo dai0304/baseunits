@@ -87,10 +87,20 @@ public final class OrDateSpecification extends AbstractDateSpecification {
 		return first2;
 	}
 	
+	/**
+	 * 左辺値を返す。
+	 * 
+	 * @return 左辺値
+	 */
 	public DateSpecification getLeft() {
 		return left;
 	}
 	
+	/**
+	 * 右辺値を返す。
+	 * 
+	 * @return 右辺値
+	 */
 	public DateSpecification getRight() {
 		return right;
 	}

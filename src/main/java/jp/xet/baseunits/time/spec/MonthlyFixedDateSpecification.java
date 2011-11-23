@@ -50,6 +50,11 @@ public final class MonthlyFixedDateSpecification extends AbstractMonthlyDateSpec
 		this.day = day;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての日（{@link DayOfMonth}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 */
 	public DayOfMonth getDay() {
 		return day;
 	}

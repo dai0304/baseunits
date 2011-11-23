@@ -36,18 +36,32 @@ import org.apache.commons.lang.Validate;
 public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	
 	/**
+	 * {@link MinuteOfHour}の値の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN_VALUE = 0;
+	
+	/**
+	 * {@link MinuteOfHour}の値の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX_VALUE = 59;
+	
+	/**
 	 * {@link MinuteOfHour}の最小値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MIN = 0;
+	public static final MinuteOfHour MIN = MinuteOfHour.valueOf(MIN_VALUE);
 	
 	/**
 	 * {@link MinuteOfHour}の最大値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MAX = 59;
+	public static final MinuteOfHour MAX = MinuteOfHour.valueOf(MAX_VALUE);
 	
 	
 	/**
@@ -68,7 +82,7 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	
 	
 	MinuteOfHour(int initial) {
-		if (initial < MIN || initial > MAX) {
+		if (initial < MIN_VALUE || initial > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value for minute: " + initial
 					+ ", please use a value between 0 and 59");
 		}

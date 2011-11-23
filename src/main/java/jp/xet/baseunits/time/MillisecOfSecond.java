@@ -35,18 +35,32 @@ import org.apache.commons.lang.Validate;
 public class MillisecOfSecond implements Comparable<MillisecOfSecond>, Serializable {
 	
 	/**
+	 * {@link MillisecOfSecond}の値の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN_VALUE = 0;
+	
+	/**
+	 * {@link MillisecOfSecond}の値の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX_VALUE = 999;
+	
+	/**
 	 * {@link MillisecOfSecond}の最小値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MIN = 0;
+	public static final MillisecOfSecond MIN = MillisecOfSecond.valueOf(MIN_VALUE);
 	
 	/**
 	 * {@link MillisecOfSecond}の最大値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MAX = 999;
+	public static final MillisecOfSecond MAX = MillisecOfSecond.valueOf(MAX_VALUE);
 	
 	
 	/**
@@ -67,7 +81,7 @@ public class MillisecOfSecond implements Comparable<MillisecOfSecond>, Serializa
 	
 	
 	MillisecOfSecond(int initial) {
-		if (initial < MIN || initial > MAX) {
+		if (initial < MIN_VALUE || initial > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value for millisecond: " + initial
 					+ ", please use a value between 0 and 999");
 		}

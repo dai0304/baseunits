@@ -42,9 +42,9 @@ public class StandardTimePointFormatter extends AbstractTimePointFormatter imple
 	}
 	
 	/**
-	 * Creates a new formatter that formats the requested 
-	 * fields.  The formatter defaults to the current locale
-	 * and time zone.
+	 * Creates a new formatter.
+	 * 
+	 * @param format the format string
 	 */
 	public StandardTimePointFormatter(String format) {
 		this.format = format;

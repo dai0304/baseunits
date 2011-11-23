@@ -25,7 +25,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.Validate;
 
 /**
- * TODO for daisuke
+ * {@link DateSpecification}用のNOT（否定）ラッパークラス。
  * 
  * @since 2.0
  */
@@ -64,6 +64,11 @@ public final class NotDateSpecification extends AbstractDateSpecification {
 		return null;
 	}
 	
+	/**
+	 * NOT（否定）の判定基礎となる{@link DateSpecification}を返す。
+	 * 
+	 * @return NOT（否定）の判定基礎となる{@link DateSpecification}
+	 */
 	public DateSpecification getSpec() {
 		return spec;
 	}

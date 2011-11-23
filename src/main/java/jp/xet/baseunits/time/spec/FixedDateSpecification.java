@@ -64,6 +64,11 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 		return null;
 	}
 	
+	/**
+	 * 仕様を満たす唯一の日付を返す。
+	 * 
+	 * @return 日付
+	 */
 	public CalendarDate getDate() {
 		return date;
 	}

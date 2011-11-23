@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
- * Created on 2011/11/22
+ * Created on 2011/11/23
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,29 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.xet.baseunits.time.formatter;
+package jp.xet.baseunits.timeutil;
 
-import java.util.Locale;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import jp.xet.baseunits.time.TimePoint;
 
-import jp.xet.baseunits.time.Duration;
+import org.junit.Test;
 
 /**
- * A formatter for {@link Duration} types.
+ * {@link FixedTimeSource}のテストクラス。
  */
-public interface DurationFormatter {
+public class FixedTimeSourceTest {
 	
+	static final TimePoint TP = TimePoint.atGMT(1978, 3, 4, 6, 56, 0, 0);
+	
+	
+	@Test
 	@SuppressWarnings("javadoc")
-	String format(Duration target);
+	public void test() throws InterruptedException {
+		FixedTimeSource source = new FixedTimeSource(TP);
+		assertThat(source.now(), is(TP));
+		Thread.sleep(1000L);
+		assertThat(source.now(), is(TP));
+	}
 	
-	/**
-	 * Format the {@link Duration} for display.
-	 * 
-	 * @param target the instance to format
-	 * @param locale the current user locale
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @return the formatted text string
-	 */
-	String format(Duration target, Locale locale);
 }

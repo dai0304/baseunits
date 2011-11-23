@@ -164,12 +164,12 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * Parses text strings to produce instances of {@link TimeOfDay}
 	 * 
-	 * @param timeString
-	 * @param pattern
-	 * @return
-	 * @throws ParseException 
+	 * @param timeString the text string whose beginning should be parsed.
+	 * @param pattern the pattern string
+	 * @return the parsed result
+	 * @throws ParseException if fail to parse
 	 * @since 2.0
 	 */
 	public static TimeOfDay parse(String timeString, String pattern) throws ParseException {
@@ -349,12 +349,16 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param duration 時間の長さ
 	 * @return 過去の時刻
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @throws IllegalArgumentException 減算の結果が0時を切った場合
 	 * @since 2.0
 	 */
 	public TimeOfDay minus(Duration duration) {
 		Validate.notNull(duration);
-		Duration d = toDuration().minus(duration);
+		Duration d = toDuration();
+		if (d.isGreaterThan(duration)) {
+			d = d.minus(duration);
+		} else {
+			d = duration.minus(d);
+		}
 		return TimeOfDay.MIN.plus(d);
 	}
 	
@@ -364,14 +368,13 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param duration 時間の長さ
 	 * @return 未来の時刻
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @throws IllegalArgumentException 加算の結果が24時を超えた場合
 	 * @since 2.0
 	 */
 	public TimeOfDay plus(Duration duration) {
 		Validate.notNull(duration);
 		Duration total = toDuration().plus(duration);
-		if (total.isGreaterThanOrEqual(Duration.hours(24))) { // CHECKSTYLE IGNORE THIS LINE
-			throw new IllegalArgumentException();
+		if (total.isGreaterThanOrEqual(Duration.days(1))) {
+			total.minus(Duration.days(1));
 		}
 		
 		long h = total.to(TimeUnit.hour);

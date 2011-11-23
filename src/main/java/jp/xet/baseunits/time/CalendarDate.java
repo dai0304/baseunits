@@ -194,13 +194,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 //	}
 	
 	/**
-	 * TODO for daisuke
+	 * この日付の午前0時を {@link Date} 型として返す。
 	 * 
-	 * @param timeZone
-	 * @return
+	 * @param timeZone タイムゾーン
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return この日付の午前0時を表す {@link Date}
 	 */
 	public Date asJavaUtilDate(TimeZone timeZone) {
-		TimePoint tp = at(TimeOfDay.MIN, timeZone);
+		Validate.notNull(timeZone);
+		TimePoint tp = at(TimeOfDay.MIDNIGHT, timeZone);
 		return tp.asJavaUtilDate();
 	}
 	

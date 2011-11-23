@@ -57,10 +57,20 @@ public final class MonthlyFloatingDateSpecification extends AbstractMonthlyDateS
 		this.occurrence = occurrence;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての曜日（{@link DayOfWeek}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 */
 	public DayOfWeek getDayOfWeek() {
 		return dayOfWeek;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての曜日回数（第3日曜日であれば{@code 3}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての曜日回数
+	 */
 	public int getOccurrence() {
 		return occurrence;
 	}

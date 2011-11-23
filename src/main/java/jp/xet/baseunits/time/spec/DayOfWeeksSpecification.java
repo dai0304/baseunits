@@ -87,6 +87,11 @@ public final class DayOfWeeksSpecification extends AbstractDateSpecification imp
 		return null;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての曜日集合を返す。
+	 * 
+	 * @return この仕様を満たす条件としての曜日集合
+	 */
 	public Set<DayOfWeek> getDayOfWeeks() {
 		return Sets.newHashSet(dayOfWeeks);
 	}

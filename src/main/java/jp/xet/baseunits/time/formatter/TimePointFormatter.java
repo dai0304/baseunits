@@ -22,7 +22,7 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.TimePoint;
 
 /**
- * TODO for daisuke
+ * A formatter for {@link TimePoint} types.
  */
 public interface TimePointFormatter {
 	
@@ -33,13 +33,13 @@ public interface TimePointFormatter {
 	String format(TimePoint target, Locale locale);
 	
 	/**
-	 * TODO for daisuke
+	 * Format the {@link TimePoint} for display.
 	 * 
-	 * @param target
-	 * @param locale
-	 * @param timeZone 
+	 * @param target the instance to format
+	 * @param locale the current user locale
+	 * @param timeZone  the current user timezone
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @return
+	 * @return the formatted text string
 	 */
 	String format(TimePoint target, Locale locale, TimeZone timeZone);
 	

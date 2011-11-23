@@ -32,18 +32,32 @@ import org.apache.commons.lang.Validate;
 public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	
 	/**
+	 * {@link DayOfMonth}の値の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN_VALUE = 1;
+	
+	/**
+	 * {@link DayOfMonth}の値の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX_VALUE = 31;
+	
+	/**
 	 * {@link DayOfMonth}の最小値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MIN = 1;
+	public static final DayOfMonth MIN = DayOfMonth.valueOf(MIN_VALUE);
 	
 	/**
 	 * {@link DayOfMonth}の最大値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MAX = 31;
+	public static final DayOfMonth MAX = DayOfMonth.valueOf(MAX_VALUE);
 	
 	
 	/**
@@ -70,7 +84,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @since 1.0
 	 */
 	public DayOfMonth(int initial) {
-		if (initial < MIN || initial > MAX) {
+		if (initial < MIN_VALUE || initial > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value for day of month: " + initial
 					+ ", please use a value between 1 and 31");
 		}

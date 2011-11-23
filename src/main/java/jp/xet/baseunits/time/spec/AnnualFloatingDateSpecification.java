@@ -62,14 +62,29 @@ public final class AnnualFloatingDateSpecification extends AbstractAnnualDateSpe
 		this.occurrence = occurrence;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての曜日（{@link DayOfWeek}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての曜日（{@link DayOfWeek}）
+	 */
 	public DayOfWeek getDayOfWeek() {
 		return dayOfWeek;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての月（{@link MonthOfYear}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての月（{@link MonthOfYear}）
+	 */
 	public MonthOfYear getMonth() {
 		return month;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての曜日回数（第3日曜日であれば{@code 3}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての曜日回数
+	 */
 	public int getOccurrence() {
 		return occurrence;
 	}

@@ -98,7 +98,9 @@ public class TimeOfDayTest {
 		assertThat(twoMinutesBeforeMidnight.equals(TimeOfDay.from(23, 58, 0, 0)), is(true));
 		
 		assertThat(midnight.equals(morning), is(false));
+		assertThat(midnight.equals(midnight), is(true));
 		assertThat(morning.equals(null), is(false));
+		assertThat(morning.equals(new Object()), is(false));
 		assertThat(tenMinutesBeforeMidnight.equals(twoMinutesBeforeMidnight), is(false));
 		assertThat(noon.equals(TimeOfDay.from(HourOfDay.valueOf(12), MinuteOfHour.valueOf(0))), is(true));
 	}

@@ -36,18 +36,32 @@ import org.apache.commons.lang.Validate;
 public class SecondOfMinute implements Comparable<SecondOfMinute>, Serializable {
 	
 	/**
+	 * {@link SecondOfMinute}の値の最小値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MIN_VALUE = 0;
+	
+	/**
+	 * {@link SecondOfMinute}の値の最大値
+	 * 
+	 * @since 2.0
+	 */
+	public static final int MAX_VALUE = 59;
+	
+	/**
 	 * {@link SecondOfMinute}の最小値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MIN = 0;
+	public static final SecondOfMinute MIN = SecondOfMinute.valueOf(MIN_VALUE);
 	
 	/**
 	 * {@link SecondOfMinute}の最大値
 	 * 
 	 * @since 2.0
 	 */
-	public static final int MAX = 59;
+	public static final SecondOfMinute MAX = SecondOfMinute.valueOf(MAX_VALUE);
 	
 	
 	/**
@@ -68,7 +82,7 @@ public class SecondOfMinute implements Comparable<SecondOfMinute>, Serializable 
 	
 	
 	SecondOfMinute(int initial) {
-		if (initial < MIN || initial > MAX) {
+		if (initial < MIN_VALUE || initial > MAX_VALUE) {
 			throw new IllegalArgumentException("Illegal value for second: " + initial
 					+ ", please use a value between 0 and 59");
 		}

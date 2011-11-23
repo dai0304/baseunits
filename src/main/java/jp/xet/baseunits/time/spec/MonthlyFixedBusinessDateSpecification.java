@@ -60,14 +60,29 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 		this.cal = cal;
 	}
 	
+	/**
+	 * 営業日判定に利用する {@link BusinessCalendar} を返す。
+	 * 
+	 * @return 営業日判定に利用する {@link BusinessCalendar}
+	 */
 	public BusinessCalendar getCal() {
 		return cal;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての日（{@link DayOfMonth}）を返す。
+	 * 
+	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 */
 	public DayOfMonth getDay() {
 		return day;
 	}
 	
+	/**
+	 * この仕様を満たす条件としての日（{@link DayOfMonth}）が非営業日であった場合の日付変更戦略を返す。
+	 * 
+	 * @return 日付変更戦略
+	 */
 	public Shifter getShifter() {
 		return shifter;
 	}
@@ -91,7 +106,7 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 	
 	
 	/**
-	 * 指定日が非営業日の場合のシフト戦略。
+	 * 指定日が非営業日の場合のシフト戦略（日付変更戦略）。
 	 * 
 	 * @since 1.0
 	 */

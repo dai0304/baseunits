@@ -18,13 +18,12 @@
 package jp.xet.baseunits.util.spec;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import jp.xet.baseunits.util.spec.NotSpecification;
-import jp.xet.baseunits.util.spec.Specification;
 
 import org.junit.Test;
 
@@ -65,5 +64,19 @@ public class NotSpecificationTest {
 		assertThat(not.isSatisfiedBy(null), is(false));
 		
 		verify(mock).isSatisfiedBy(null);
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_always_to_always() throws Exception {
+		Specification<Void> always = Specifications.always();
+		Specification<Void> notnot = always.not().not();
+		
+		// 二度連続でnotする場合、wrappingを外して元のインスタンスに戻る
+		assertThat(notnot, is(sameInstance(always)));
 	}
 }

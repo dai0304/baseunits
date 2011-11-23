@@ -1,6 +1,6 @@
 /*
  * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
- * Created on 2011/11/22
+ * Created on 2011/11/23
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,26 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.xet.baseunits.time.formatter;
+package jp.xet.baseunits.util.spec;
 
-import java.util.Locale;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-import jp.xet.baseunits.time.Duration;
+import org.junit.Test;
 
 /**
- * A formatter for {@link Duration} types.
+ * {@link Specifications}のテストクラス。
  */
-public interface DurationFormatter {
-	
-	@SuppressWarnings("javadoc")
-	String format(Duration target);
+public class SpecificationsTest {
 	
 	/**
-	 * Format the {@link Duration} for display.
-	 * 
-	 * @param target the instance to format
-	 * @param locale the current user locale
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @return the formatted text string
+	 * alwaysとneverのテスト。
 	 */
-	String format(Duration target, Locale locale);
+	@Test
+	public void test01_always_and_never() {
+		Specification<Void> always = Specifications.always();
+		Specification<Void> never = Specifications.never();
+		assertThat(always.isSatisfiedBy(null), is(true));
+		assertThat(never.isSatisfiedBy(null), is(false));
+	}
 }
