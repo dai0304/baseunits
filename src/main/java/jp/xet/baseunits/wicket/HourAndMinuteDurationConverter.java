@@ -43,7 +43,7 @@ public class HourAndMinuteDurationConverter extends AbstractConverter<Duration> 
 	
 	@Override
 	public String convertToString(Duration value, Locale locale) {
-		return durationFormatter.format(value, locale);
+		return value == null ? null : durationFormatter.format(value, locale);
 	}
 	
 	@Override

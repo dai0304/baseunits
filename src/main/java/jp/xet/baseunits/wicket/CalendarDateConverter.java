@@ -76,7 +76,7 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	
 	@Override
 	public String convertToString(CalendarDate value, Locale locale) {
-		return value.toString(datePattern);
+		return value == null ? null : value.toString(datePattern);
 	}
 	
 	@Override

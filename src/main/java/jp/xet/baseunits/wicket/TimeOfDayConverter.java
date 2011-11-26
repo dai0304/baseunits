@@ -74,7 +74,7 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 	
 	@Override
 	public String convertToString(TimeOfDay value, Locale locale) {
-		return value.toString(timePattern);
+		return value == null ? null : value.toString(timePattern);
 	}
 	
 	@Override
