@@ -19,7 +19,6 @@ package jp.xet.baseunits.wicket;
 import java.text.SimpleDateFormat;
 
 import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.Duration;
 
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.model.IModel;
@@ -66,7 +65,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C>IConverter<C> getConverter(Class<C> type) {
-		if (type == Duration.class) {
+		if (type == CalendarDate.class) {
 			return (IConverter<C>) new CalendarDateConverter(datePattern);
 		}
 		return super.getConverter(type);
