@@ -269,6 +269,24 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 */
+	public MonthOfYear breachEncapsulationOfMonth() {
+		return yearMonth.breachEncapsulationOfMonth();
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 */
+	public int breachEncapsulationOfYear() {
+		return yearMonth.breachEncapsulationOfYear();
+	}
+	
+	/**
 	 * このオブジェクトの{@link #yearMonth}フィールド（年月）を返す。
 	 * 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>

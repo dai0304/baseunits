@@ -36,7 +36,7 @@ import org.apache.wicket.util.convert.IConverter;
 @SuppressWarnings("serial")
 public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	
-	private final String datePattern;
+	private String datePattern;
 	
 	
 	/**
@@ -70,5 +70,14 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 			return (IConverter<C>) new CalendarDateConverter(datePattern);
 		}
 		return super.getConverter(type);
+	}
+	
+	public String getDatePattern() {
+		return datePattern;
+	}
+	
+	protected void setDatePattern(String datePattern) {
+		Validate.notNull(datePattern);
+		this.datePattern = datePattern;
 	}
 }

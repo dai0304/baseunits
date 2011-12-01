@@ -34,7 +34,7 @@ public enum MonthOfYear {
 	FEB(2, null, Calendar.FEBRUARY) {
 		
 		@Override
-		DayOfMonth getLastDayOfThisMonth(int year) {
+		public DayOfMonth getLastDayOfThisMonth(int year) {
 			GregorianCalendar calendar = new GregorianCalendar(year, 2, 1);
 			return calendar.isLeapYear(year) ? DayOfMonth.valueOf(29) : DayOfMonth.valueOf(28); // CHECKSTYLE IGNORE THIS LINE
 		}
@@ -143,6 +143,17 @@ public enum MonthOfYear {
 	}
 	
 	/**
+	 * その月の最終日を取得する。
+	 * 
+	 * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
+	 * @return 最終日
+	 * @since 2.0
+	 */
+	public DayOfMonth getLastDayOfThisMonth(int year) {
+		return lastDayOfThisMonth;
+	}
+	
+	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
@@ -158,6 +169,10 @@ public enum MonthOfYear {
 		}
 		return isBefore(other) == false && equals(other) == false;
 	}
+	
+//	public DayOfYear at(DayOfMonth month) {
+//		// ...
+//	}
 	
 	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
@@ -176,10 +191,6 @@ public enum MonthOfYear {
 		return value < other.value;
 	}
 	
-//	public DayOfYear at(DayOfMonth month) {
-//		// ...
-//	}
-	
 	/**
 	 * 指定した年の、この月を表す年月を返す。
 	 * 
@@ -189,15 +200,5 @@ public enum MonthOfYear {
 	 */
 	public CalendarMonth on(int year) {
 		return CalendarMonth.from(year, this);
-	}
-	
-	/**
-	 * その月の最終日を取得する。
-	 * 
-	 * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
-	 * @return 最終日
-	 */
-	DayOfMonth getLastDayOfThisMonth(int year) {
-		return lastDayOfThisMonth;
 	}
 }
