@@ -27,6 +27,8 @@ import com.ibm.icu.util.TimeUnitAmount;
 import com.ibm.icu.util.ULocale;
 
 import org.apache.commons.lang.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO for daisuke
@@ -34,12 +36,17 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatter implements Serializable {
 	
+	private static Logger logger = LoggerFactory.getLogger(Icu4jHourAndMinuteDurationFormatter.class);
+	
+	
 	@Override
 	public String format(Duration target, Locale locale) {
 		Validate.notNull(target);
 		Validate.notNull(locale);
 		
-		TimeUnitFormat format = new TimeUnitFormat(ULocale.forLocale(locale));
+		ULocale uLocale = ULocale.forLocale(locale);
+		logger.trace("convert Locale [{}] to ULocale[{}]", locale, uLocale);
+		TimeUnitFormat format = new TimeUnitFormat(uLocale);
 		
 		long h = target.to(TimeUnit.hour);
 		long m = target.minus(Duration.hours(h)).to(TimeUnit.minute);
