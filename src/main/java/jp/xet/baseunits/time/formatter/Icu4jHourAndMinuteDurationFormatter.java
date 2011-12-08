@@ -45,7 +45,9 @@ public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatt
 		Validate.notNull(locale);
 		
 		ULocale uLocale = ULocale.forLocale(locale);
-		logger.trace("convert Locale [{}] to ULocale[{}]", locale, uLocale);
+		if (logger.isTraceEnabled()) {
+			logger.trace("convert Locale [{}] to ULocale[{}]", locale, uLocale);
+		}
 		TimeUnitFormat format = new TimeUnitFormat(uLocale);
 		
 		long h = target.to(TimeUnit.hour);
