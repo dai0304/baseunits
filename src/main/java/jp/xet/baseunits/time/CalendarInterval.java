@@ -466,4 +466,32 @@ public class CalendarInterval extends Interval<CalendarDate> {
 			}
 		};
 	}
+	
+	public Iterator<CalendarMonth> subintervalMonthIterator() {
+		if (hasLowerLimit() == false) {
+			throw new IllegalStateException();
+		}
+		
+		final CalendarMonth start = start().asCalendarMonth();
+		return new ImmutableIterator<CalendarMonth>() {
+			
+			CalendarMonth next = start;
+			
+			
+			@Override
+			public boolean hasNext() {
+				return CalendarInterval.this.intersects(next.asCalendarInterval());
+			}
+			
+			@Override
+			public CalendarMonth next() {
+				if (hasNext() == false) {
+					throw new NoSuchElementException();
+				}
+				CalendarMonth current = next;
+				next = next.nextMonth();
+				return current;
+			}
+		};
+	}
 }
