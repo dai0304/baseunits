@@ -151,6 +151,24 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
+	 * TODO for daisuke
+	 * 
+	 * @param values
+	 * @return
+	 * @since 1.0.0
+	 */
+	public static Duration sum(Iterable<Duration> values) {
+		Validate.notNull(values);
+		Duration result = Duration.NONE;
+		for (Duration v : values) {
+			if (v != null) {
+				result = result.plus(v);
+			}
+		}
+		return result;
+	}
+	
+	/**
 	 * 長さが {@code howMany} 週間の時間量を取得する。
 	 * 
 	 * @param howMany 時間の長さ（週）
@@ -567,14 +585,14 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * <p>序算で発生した余りは切り捨てる。</p>
 	 * 
-	 * <code>
+	 * <code><pre>
 	 * Duration d1 = Duration.days(2);
 	 * assertThat(d1.to(TimeUnit.day), is(2L));
 	 * assertThat(d1.to(TimeUnit.hour), is(48L));
 	 * 
 	 * Duration d2 = Duration.hours(49);
 	 * assertThat(d2.to(TimeUnit.day), is(2L));
-	 * </code>
+	 * </pre></code>
 	 * 
 	 * @param unit 単位
 	 * @return 値
