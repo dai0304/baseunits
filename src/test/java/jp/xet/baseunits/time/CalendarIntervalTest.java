@@ -266,4 +266,23 @@ public class CalendarIntervalTest {
 		CalendarInterval expected2 = CalendarInterval.inclusive(2004, 5, 1, 2004, 5, 1);
 		assertThat(d2, is(expected2));
 	}
+	
+	/**
+	 * {@link CalendarInterval#subintervalMonthIterator()}
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test13_subintervalMonthIterator() throws Exception {
+		CalendarInterval interval = CalendarInterval.inclusive(2010, 5, 10, 2011, 7, 1);
+		Iterator<CalendarMonth> itr = interval.subintervalMonthIterator();
+		
+		CalendarMonth std = CalendarMonth.from(2010, 5);
+		while (itr.hasNext()) {
+			CalendarMonth target = itr.next();
+			assertThat(target, is(std));
+			std = std.nextMonth();
+		}
+		assertThat(std, is(CalendarMonth.from(2011, 8)));
+	}
 }
