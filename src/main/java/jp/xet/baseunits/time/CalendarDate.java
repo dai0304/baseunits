@@ -408,6 +408,19 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
+	 * このオブジェクトが表現する日付から、指定した長さの時間を引いた、過去の日付を取得する。
+	 * 
+	 * <p>引数の長さの単位が "日" 未満である場合は、元の日付をそのまま返す。<p>
+	 * 
+	 * @param length 時間の長さ
+	 * @return 未来の日付
+	 * @since 1.0
+	 */
+	public CalendarDate minus(Duration length) {
+		return length.subtractedFrom(this);
+	}
+	
+	/**
 	 * このインスタンスが表現する日の翌日を返す。
 	 * 
 	 * @return 翌日
