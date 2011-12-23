@@ -227,6 +227,8 @@ public class CalendarDateTest {
 	@Test
 	public void test14_ConversionToJavaUtil() throws Exception {
 		Calendar expected = Calendar.getInstance(gmt);
+		expected.setMinimalDaysInFirstWeek(4);
+		expected.setFirstDayOfWeek(Calendar.MONDAY);
 		expected.set(Calendar.YEAR, 1969);
 		expected.set(Calendar.MONTH, Calendar.JULY);
 		expected.set(Calendar.DATE, 20);

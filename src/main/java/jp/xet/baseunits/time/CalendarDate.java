@@ -194,6 +194,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 //	}
 	
 	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 */
+	public CalendarWeek asCalendarWeek() {
+		return CalendarWeek.from(this);
+	}
+	
+	/**
 	 * この日付の午前0時を {@link Date} 型として返す。
 	 * 
 	 * @param timeZone タイムゾーン
@@ -543,6 +552,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	Calendar asJavaCalendarUniversalZoneMidnight() {
 		TimeZone zone = TimeZone.getTimeZone("Universal");
 		Calendar calendar = Calendar.getInstance(zone);
+		calendar.setMinimalDaysInFirstWeek(4);
+		calendar.setFirstDayOfWeek(Calendar.MONDAY);
 		calendar.set(Calendar.YEAR, yearMonth.breachEncapsulationOfYear());
 		calendar.set(Calendar.MONTH, yearMonth.breachEncapsulationOfMonth().value - 1);
 		calendar.set(Calendar.DATE, day.value);

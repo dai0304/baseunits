@@ -70,7 +70,7 @@ public class SecondOfMinute implements Comparable<SecondOfMinute>, Serializable 
 	 * @param initial 秒をあらわす正数
 	 * @return 秒（0〜59）
 	 * @throws IllegalArgumentException 引数の値が0〜59の範囲ではない場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static SecondOfMinute valueOf(int initial) {
 		return new SecondOfMinute(initial);
@@ -95,7 +95,7 @@ public class SecondOfMinute implements Comparable<SecondOfMinute>, Serializable 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 秒をあらわす正数（0〜59）
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int breachEncapsulationOfValue() {
 		return value;
@@ -152,7 +152,7 @@ public class SecondOfMinute implements Comparable<SecondOfMinute>, Serializable 
 	 * @param another 基準分
 	 * @return 同日同時同分において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isBefore(SecondOfMinute another) {
 		Validate.notNull(another);

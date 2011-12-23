@@ -268,14 +268,14 @@ public class CalendarIntervalTest {
 	}
 	
 	/**
-	 * {@link CalendarInterval#subintervalMonthIterator()}
+	 * {@link CalendarInterval#monthsIterator()}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test13_subintervalMonthIterator() throws Exception {
+	public void test13_monthsIterator() throws Exception {
 		CalendarInterval interval = CalendarInterval.inclusive(2010, 5, 10, 2011, 7, 1);
-		Iterator<CalendarMonth> itr = interval.subintervalMonthIterator();
+		Iterator<CalendarMonth> itr = interval.monthsIterator();
 		
 		CalendarMonth std = CalendarMonth.from(2010, 5);
 		while (itr.hasNext()) {

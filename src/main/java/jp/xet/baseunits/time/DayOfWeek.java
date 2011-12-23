@@ -31,9 +31,6 @@ import java.util.Calendar;
  */
 public enum DayOfWeek {
 	
-	/** 日曜日 */
-	SUNDAY(Calendar.SUNDAY),
-	
 	/** 月曜日 */
 	MONDAY(Calendar.MONDAY),
 	
@@ -50,7 +47,10 @@ public enum DayOfWeek {
 	FRIDAY(Calendar.FRIDAY),
 	
 	/** 土曜日 */
-	SATURDAY(Calendar.SATURDAY);
+	SATURDAY(Calendar.SATURDAY),
+	
+	/** 日曜日 */
+	SUNDAY(Calendar.SUNDAY);
 	
 	/**
 	 * {@link Calendar}に定義されている定数値から、インスタンスを取得する。

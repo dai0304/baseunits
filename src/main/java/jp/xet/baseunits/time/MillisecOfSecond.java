@@ -69,7 +69,7 @@ public class MillisecOfSecond implements Comparable<MillisecOfSecond>, Serializa
 	 * @param initial ミリ秒をあらわす正数
 	 * @return 秒（0〜999）
 	 * @throws IllegalArgumentException 引数の値が0〜59の範囲ではない場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static MillisecOfSecond valueOf(int initial) {
 		return new MillisecOfSecond(initial);
@@ -94,7 +94,7 @@ public class MillisecOfSecond implements Comparable<MillisecOfSecond>, Serializa
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
 	 * @return 秒をあらわす正数（0〜999）
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public int breachEncapsulationOfValue() {
 		return value;
@@ -136,7 +136,7 @@ public class MillisecOfSecond implements Comparable<MillisecOfSecond>, Serializa
 	 * @param another 基準分
 	 * @return 同日同時同分同秒において、このインスタンスが表すミリ秒が、引数{@code another}で表されるミリ秒よりも未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isAfter(MillisecOfSecond another) {
 		Validate.notNull(another);
@@ -151,7 +151,7 @@ public class MillisecOfSecond implements Comparable<MillisecOfSecond>, Serializa
 	 * @param another 基準分
 	 * @return 同日同時同分同秒において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isBefore(MillisecOfSecond another) {
 		Validate.notNull(another);

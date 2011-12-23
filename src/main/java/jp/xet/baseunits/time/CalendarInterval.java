@@ -172,6 +172,37 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
+	 * 指定した週の月曜日からその週末（日曜日）までの、期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * 
+	 * @param week 開始週
+	 * @return 期間
+	 * @since 1.0
+	 */
+	public static CalendarInterval week(CalendarWeek week) {
+		Calendar cal = week.asJavaCalendarUniversalZoneMidnight();
+		CalendarDate startDate = CalendarDate.from(cal);
+		CalendarDate endDate = startDate.plusDays(6);
+		return inclusive(startDate, endDate);
+		
+	}
+	
+	/**
+	 * 指定した週の月曜日からその週末（日曜日）までの、期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * 
+	 * @param year 開始週の年
+	 * @param week 開始週
+	 * @return 期間
+	 * @since 1.0
+	 */
+	public static CalendarInterval week(int year, WeekOfYear week) {
+		return week(CalendarWeek.from(year, week));
+	}
+	
+	/**
 	 * 指定した年の元旦からその年の大晦日までの、期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
@@ -390,6 +421,84 @@ public class CalendarInterval extends Interval<CalendarDate> {
 		return monthDiff;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since 2.0
+	 */
+	public Iterator<CalendarMonth> monthsInReverseIterator() {
+		if (hasUpperLimit() == false) {
+			throw new IllegalStateException("weeksInReverseIterator reqires upper limit (end).");
+		}
+		final CalendarMonth start = upperLimit().asCalendarMonth();
+		final CalendarMonth end;
+		if (hasLowerLimit()) {
+			end = lowerLimit().asCalendarMonth();
+		} else {
+			end = null;
+		}
+		return new ImmutableIterator<CalendarMonth>() {
+			
+			CalendarMonth next = start;
+			
+			
+			@Override
+			public boolean hasNext() {
+				return next.isBefore(end) == false;
+			}
+			
+			@Override
+			public CalendarMonth next() {
+				if (hasNext() == false) {
+					throw new NoSuchElementException();
+				}
+				CalendarMonth current = next;
+				next = next.previousMonth();
+				return current;
+			}
+		};
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since 2.0
+	 */
+	public Iterator<CalendarMonth> monthsIterator() {
+		if (hasLowerLimit() == false) {
+			throw new IllegalStateException("weeksIterator reqires lower limit (start).");
+		}
+		final CalendarMonth start = lowerLimit().asCalendarMonth();
+		final CalendarMonth end;
+		if (hasUpperLimit()) {
+			end = upperLimit().asCalendarMonth();
+		} else {
+			end = null;
+		}
+		return new ImmutableIterator<CalendarMonth>() {
+			
+			CalendarMonth next = start;
+			
+			
+			@Override
+			public boolean hasNext() {
+				return next.isAfter(end) == false;
+			}
+			
+			@Override
+			public CalendarMonth next() {
+				if (hasNext() == false) {
+					throw new NoSuchElementException();
+				}
+				CalendarMonth current = next;
+				next = next.nextMonth();
+				return current;
+			}
+		};
+	}
+	
 	@Override
 	public Interval<CalendarDate> newOfSameType(CalendarDate lower, boolean isLowerClosed, CalendarDate upper,
 			boolean isUpperClosed) {
@@ -467,29 +576,79 @@ public class CalendarInterval extends Interval<CalendarDate> {
 		};
 	}
 	
-	public Iterator<CalendarMonth> subintervalMonthIterator() {
-		if (hasLowerLimit() == false) {
-			throw new IllegalStateException();
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since 2.0
+	 */
+	public Iterator<CalendarWeek> weeksInReverseIterator() {
+		if (hasUpperLimit() == false) {
+			throw new IllegalStateException("weeksInReverseIterator reqires upper limit (end).");
 		}
-		
-		final CalendarMonth start = start().asCalendarMonth();
-		return new ImmutableIterator<CalendarMonth>() {
+		final CalendarWeek start = upperLimit().asCalendarWeek();
+		final CalendarWeek end;
+		if (hasLowerLimit()) {
+			end = lowerLimit().asCalendarWeek();
+		} else {
+			end = null;
+		}
+		return new ImmutableIterator<CalendarWeek>() {
 			
-			CalendarMonth next = start;
+			CalendarWeek next = start;
 			
 			
 			@Override
 			public boolean hasNext() {
-				return CalendarInterval.this.intersects(next.asCalendarInterval());
+				return next.isBefore(end) == false;
 			}
 			
 			@Override
-			public CalendarMonth next() {
+			public CalendarWeek next() {
 				if (hasNext() == false) {
 					throw new NoSuchElementException();
 				}
-				CalendarMonth current = next;
-				next = next.nextMonth();
+				CalendarWeek current = next;
+				next = next.previousWeek();
+				return current;
+			}
+		};
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since 2.0
+	 */
+	public Iterator<CalendarWeek> weeksIterator() {
+		if (hasLowerLimit() == false) {
+			throw new IllegalStateException("weeksIterator reqires lower limit (start).");
+		}
+		final CalendarWeek start = lowerLimit().asCalendarWeek();
+		final CalendarWeek end;
+		if (hasUpperLimit()) {
+			end = upperLimit().asCalendarWeek();
+		} else {
+			end = null;
+		}
+		return new ImmutableIterator<CalendarWeek>() {
+			
+			CalendarWeek next = start;
+			
+			
+			@Override
+			public boolean hasNext() {
+				return next.isAfter(end) == false;
+			}
+			
+			@Override
+			public CalendarWeek next() {
+				if (hasNext() == false) {
+					throw new NoSuchElementException();
+				}
+				CalendarWeek current = next;
+				next = next.nextWeek();
 				return current;
 			}
 		};

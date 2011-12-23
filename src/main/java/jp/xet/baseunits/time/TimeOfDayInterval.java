@@ -41,7 +41,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval closed(TimeOfDay start, TimeOfDay end) {
 		return over(start, true, end, true);
@@ -54,7 +54,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval everFrom(TimeOfDay start) {
 		return over(start, null);
@@ -67,7 +67,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval everPreceding(TimeOfDay end) {
 		return over(null, end);
@@ -80,7 +80,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval open(TimeOfDay start, TimeOfDay end) {
 		return over(start, false, end, false);
@@ -97,7 +97,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval over(TimeOfDay start, boolean startClosed, TimeOfDay end, boolean endClosed) {
 		return new TimeOfDayInterval(start, startClosed, end, endClosed);
@@ -112,7 +112,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @throws IllegalArgumentException 開始日時が終了日時より大きい（未来である）場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval over(TimeOfDay start, TimeOfDay end) {
 		// Uses the common default for time intervals, [start, end).
@@ -128,7 +128,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval preceding(TimeOfDay end, boolean startClosed, Duration length, boolean endClosed) {
 		Validate.notNull(end);
@@ -144,7 +144,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param length 期間の長さ
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval preceding(TimeOfDay end, Duration length) {
 		Validate.notNull(end);
@@ -162,7 +162,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval startingFrom(TimeOfDay start, boolean startClosed, Duration length,
 			boolean endClosed) {
@@ -181,7 +181,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param length 期間の長さ
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static TimeOfDayInterval startingFrom(TimeOfDay start, Duration length) {
 		Validate.notNull(start);
@@ -198,7 +198,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param endIncluded 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TimeOfDayInterval(TimeOfDay start, boolean startIncluded, TimeOfDay end, boolean endIncluded) {
 		super(start, startIncluded, end, endIncluded);
@@ -208,7 +208,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * この期間の終了日時を取得する。
 	 * 
 	 * @return この期間の終了日時. 上側限界がない場合は {@code null}
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TimeOfDay end() {
 		return upperLimit();
@@ -222,7 +222,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param interval 比較対象の期間
 	 * @return 積集合（共通部分）
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TimeOfDayInterval intersect(TimeOfDayInterval interval) {
 		Validate.notNull(interval);
@@ -236,7 +236,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @return 開始日時以前でない場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Interval#isAbove(Comparable)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isAfter(TimeOfDay point) {
 		Validate.notNull(point);
@@ -250,7 +250,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @return 終了日時以後でない場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Interval#isBelow(Comparable)
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public boolean isBefore(TimeOfDay point) {
 		Validate.notNull(point);
@@ -262,7 +262,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * @return 長さ. もし開始日時または終了日時が存在しない（無限）場合は{@code null}を返す。
 	 * @throws IllegalStateException この期間が開始日時（下側限界）または終了日時（下側限界）を持たない場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Duration length() {
 		if (hasLowerLimit() == false || hasUpperLimit() == false) {
@@ -282,7 +282,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 上側限界値. 限界値がない場合は、{@code null}
 	 * @param isEndClosed 上限値を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 新しい期間
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	@Override
 	public Interval<TimeOfDay> newOfSameType(TimeOfDay start, boolean isStartClosed, TimeOfDay end, boolean isEndClosed) {
@@ -293,7 +293,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * この期間の開始日時を取得する。
 	 * 
 	 * @return この期間の開始日時. 下側限界がない場合は {@code null}
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public TimeOfDay start() {
 		return lowerLimit();
@@ -323,7 +323,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @return 期間の反復子
 	 * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public Iterator<TimeOfDayInterval> subintervalIterator(Duration subintervalLength) {
 		Validate.notNull(subintervalLength);
@@ -352,5 +352,4 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 			}
 		};
 	}
-	
 }
