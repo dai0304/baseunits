@@ -39,10 +39,13 @@ import org.junit.Test;
  */
 public class TimePointTest {
 	
+	/** GMT+0 */
 	private static final TimeZone GMT = TimeZone.getTimeZone("Universal");
 	
+	/** GMT-8 */
 	private static final TimeZone PT = TimeZone.getTimeZone("America/Los_Angeles");
 	
+	/** GMT-6 */
 	private static final TimeZone CT = TimeZone.getTimeZone("America/Chicago");
 	
 	private static final TimePoint DEC19_2003 = TimePoint.atMidnightGMT(2003, 12, 19);
@@ -96,9 +99,9 @@ public class TimePointTest {
 		 * The TimeLibrary does not use the default TimeZone operation in Java,
 		 * the selection of the appropriate Timezone is left to the application.
 		 */
-		TimePoint gmt10Hour = TimePoint.at(2004, 3, 5, 10, 10, 0, 0, GMT);
-		TimePoint default10Hour = TimePoint.atGMT(2004, 3, 5, 10, 10, 0, 0);
-		TimePoint pt2Hour = TimePoint.at(2004, 3, 5, 2, 10, 0, 0, PT);
+		TimePoint gmt10Hour = TimePoint.at(2004, 3, 5, 10, 10, 0, 0, GMT); // 2004-03-05T10:10Z
+		TimePoint default10Hour = TimePoint.atGMT(2004, 3, 5, 10, 10, 0, 0); // 2004-03-05T10:10Z
+		TimePoint pt2Hour = TimePoint.at(2004, 3, 5, 2, 10, 0, 0, PT); // 2004-03-05T10:10Z = 2004-03-05T02:10-08
 		assertThat(default10Hour, is(gmt10Hour));
 		assertThat(pt2Hour, is(gmt10Hour));
 		

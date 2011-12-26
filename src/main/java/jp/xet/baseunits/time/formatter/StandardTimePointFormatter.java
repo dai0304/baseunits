@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import jp.xet.baseunits.time.CalendarUtil;
 import jp.xet.baseunits.time.TimePoint;
 
 import org.apache.commons.lang.Validate;
@@ -56,8 +57,7 @@ public class StandardTimePointFormatter extends AbstractTimePointFormatter imple
 		Validate.notNull(locale);
 		Validate.notNull(timeZone);
 		
-		SimpleDateFormat df = new SimpleDateFormat(format, locale);
-		df.setTimeZone(timeZone);
+		SimpleDateFormat df = CalendarUtil.newSimpleDateFormat(format, locale, timeZone);
 		return df.format(target.asJavaUtilDate());
 	}
 }

@@ -310,7 +310,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	/**
 	 * この日付の文字列表現を取得する。
 	 * 
-	 * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
+	 * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-w'th'"}のパターンで整形する。</p>
 	 * 
 	 * @see java.lang.Object#toString()
 	 * @since 2.0
@@ -335,8 +335,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {
-		TimeZone zone = TimeZone.getTimeZone("Universal");
-		Calendar calendar = Calendar.getInstance(zone);
+		Calendar calendar = CalendarUtil.newCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.WEEK_OF_YEAR, week.nth);
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);

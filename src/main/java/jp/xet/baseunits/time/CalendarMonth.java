@@ -384,8 +384,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {
-		TimeZone zone = TimeZone.getTimeZone("Universal");
-		Calendar calendar = Calendar.getInstance(zone);
+		Calendar calendar = CalendarUtil.newCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month.value - 1);
 		calendar.set(Calendar.DATE, 1);

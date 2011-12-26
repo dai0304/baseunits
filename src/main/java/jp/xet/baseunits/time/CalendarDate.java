@@ -550,10 +550,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {
-		TimeZone zone = TimeZone.getTimeZone("Universal");
-		Calendar calendar = Calendar.getInstance(zone);
-		calendar.setMinimalDaysInFirstWeek(4);
-		calendar.setFirstDayOfWeek(Calendar.MONDAY);
+		Calendar calendar = CalendarUtil.newCalendar();
 		calendar.set(Calendar.YEAR, yearMonth.breachEncapsulationOfYear());
 		calendar.set(Calendar.MONTH, yearMonth.breachEncapsulationOfMonth().value - 1);
 		calendar.set(Calendar.DATE, day.value);

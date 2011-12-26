@@ -21,7 +21,6 @@
 package jp.xet.baseunits.time;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -87,7 +86,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint at(int year, int month, int date, int hour, int minute, int second, int millisecond, // CHECKSTYLE IGNORE THIS LINE
 			TimeZone zone) {
 		Validate.notNull(zone);
-		Calendar calendar = Calendar.getInstance(zone);
+		Calendar calendar = CalendarUtil.newCalendar(zone);
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month - 1);
 		calendar.set(Calendar.DATE, date);
@@ -355,8 +354,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Validate.notNull(dateTimeString);
 		Validate.notNull(pattern);
 		Validate.notNull(zone);
-		DateFormat format = new SimpleDateFormat(pattern);
-		format.setTimeZone(zone);
+		SimpleDateFormat format = CalendarUtil.newSimpleDateFormat(pattern, zone);
 		Date date = format.parse(dateTimeString);
 		return from(date);
 	}
@@ -419,9 +417,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public Calendar asJavaCalendar(TimeZone zone) {
 		Validate.notNull(zone);
-		Calendar result = Calendar.getInstance(zone);
-		result.setTime(asJavaUtilDate());
-		return result;
+		Calendar calendar = CalendarUtil.newCalendar(zone);
+		calendar.setTimeInMillis(millisecondsFromEpoch);
+		return calendar;
 	}
 	
 	/**
@@ -680,9 +678,8 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @since 1.0
 	 */
 	public String toString(String pattern, TimeZone zone) {
-		DateFormat format = new SimpleDateFormat(pattern);
-		format.setTimeZone(zone);
-		return format.format(asJavaUtilDate());
+		SimpleDateFormat df = CalendarUtil.newSimpleDateFormat(pattern, zone);
+		return df.format(asJavaUtilDate());
 	}
 	
 	/**
