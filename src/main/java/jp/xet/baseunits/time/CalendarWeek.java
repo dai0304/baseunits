@@ -48,21 +48,33 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	public static CalendarWeek from(CalendarDate date) {
 		Calendar cal = date.asJavaCalendarUniversalZoneMidnight();
 		int year = cal.get(Calendar.YEAR);
-		int nth = cal.get(Calendar.WEEK_OF_YEAR);
-		return from(year, nth);
+		int month = cal.get(Calendar.MONTH);
+		int weekOfYear = cal.get(Calendar.WEEK_OF_YEAR);
+		
+		if (month == Calendar.JANUARY) {
+			if (weekOfYear >= 52) {
+				--year;
+			}
+		} else {
+			if (weekOfYear == 1) {
+				++year;
+			}
+		}
+		
+		return from(year, weekOfYear);
 	}
 	
 	/**
 	 * 指定した週を表す、{@link CalendarWeek}のインスタンスを生成する。
 	 * 
 	 * @param year 西暦年をあらわす数
-	 * @param nth 月をあらわす正数（1〜53）
+	 * @param weekOfYear 週数をあらわす正数（1〜53）
 	 * @return {@link CalendarDate}
 	 * @throws IllegalArgumentException 引数{@code month}が1〜53の範囲ではない場合
 	 * @since 2.0
 	 */
-	public static CalendarWeek from(int year, int nth) {
-		return new CalendarWeek(year, WeekOfYear.valueOf(nth));
+	public static CalendarWeek from(int year, int weekOfYear) {
+		return new CalendarWeek(year, WeekOfYear.valueOf(weekOfYear));
 	}
 	
 	/**
@@ -291,10 +303,10 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	 */
 	public CalendarWeek plusWeeks(int increment) {
 		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
-		calendar.add(Calendar.MONTH, increment);
+		calendar.add(Calendar.WEEK_OF_YEAR, increment);
 		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH) + 1;
-		return CalendarWeek.from(year, month);
+		int week = calendar.get(Calendar.WEEK_OF_YEAR);
+		return CalendarWeek.from(year, week);
 	}
 	
 	/**
@@ -337,7 +349,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	Calendar asJavaCalendarUniversalZoneMidnight() {
 		Calendar calendar = CalendarUtil.newCalendar();
 		calendar.set(Calendar.YEAR, year);
-		calendar.set(Calendar.WEEK_OF_YEAR, week.nth);
+		calendar.set(Calendar.WEEK_OF_YEAR, week.value);
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);

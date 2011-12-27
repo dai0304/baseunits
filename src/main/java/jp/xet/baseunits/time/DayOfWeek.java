@@ -96,6 +96,19 @@ public enum DayOfWeek {
 		return value;
 	}
 	
+	public DayOfWeek nextDay() {
+		return plusDays(1);
+	}
+	
+	public DayOfWeek plusDays(int increment) {
+		int o = (ordinal() + 7 + increment) / values().length;
+		return values()[o];
+	}
+	
+	public DayOfWeek prevDay() {
+		return plusDays(-1);
+	}
+	
 	/**
 	 * 曜日を表す3文字の文字列を返す。
 	 * 

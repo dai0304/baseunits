@@ -66,34 +66,34 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	/**
 	 * 指定した瞬間を表す、{@link WeekOfYear}のインスタンスを生成する。
 	 * 
-	 * @param nth 
+	 * @param value 
 	 * @return {@link WeekOfYear}
 	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code minute}, {@code second}が0〜59の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code millisecond}が0〜999の範囲ではない場合
 	 * @since 2.0
 	 */
-	public static WeekOfYear valueOf(int nth) {
-		return new WeekOfYear(nth);
+	public static WeekOfYear valueOf(int value) {
+		return new WeekOfYear(value);
 	}
 	
 	
-	final int nth;
+	final int value;
 	
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param nth 
+	 * @param value 
 	 */
-	WeekOfYear(int nth) {
-		Validate.isTrue(nth >= MIN_VALUE);
-		Validate.isTrue(nth <= MAX_VALUE);
-		this.nth = nth;
+	WeekOfYear(int value) {
+		Validate.isTrue(value >= MIN_VALUE);
+		Validate.isTrue(value <= MAX_VALUE);
+		this.value = value;
 	}
 	
 	/**
-	 * このオブジェクトの{@link #nth}フィールドを返す。
+	 * このオブジェクトの{@link #value}フィールドを返す。
 	 * 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
@@ -101,12 +101,12 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	 * @since 2.0
 	 */
 	public int breachEncapsulationOfNth() {
-		return nth;
+		return value;
 	}
 	
 	@Override
 	public int compareTo(WeekOfYear other) {
-		return nth < other.nth ? -1 : (nth == other.nth ? 0 : 1);
+		return value < other.value ? -1 : (value == other.value ? 0 : 1);
 	}
 	
 	@Override
@@ -121,7 +121,7 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 			return false;
 		}
 		WeekOfYear other = (WeekOfYear) obj;
-		if (nth != other.nth) {
+		if (value != other.value) {
 			return false;
 		}
 		return true;
@@ -129,7 +129,7 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	
 	@Override
 	public int hashCode() {
-		return nth;
+		return value;
 	}
 	
 	/**
@@ -141,7 +141,7 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	 */
 	public boolean isAfter(WeekOfYear another) {
 		Validate.notNull(another);
-		return nth > another.nth;
+		return value > another.value;
 	}
 	
 	/**
@@ -153,11 +153,11 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	 */
 	public boolean isBefore(WeekOfYear another) {
 		Validate.notNull(another);
-		return nth < another.nth;
+		return value < another.value;
 	}
 	
 	@Override
 	public String toString() {
-		return String.valueOf(nth);
+		return String.valueOf(value);
 	}
 }
