@@ -26,7 +26,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
 
 /**
- * TODO for daisuke
+ * {@link TimeOfDay}を表示するWicketのLabelコンポーネント実装クラス。
  * 
  * @since 1.0.0
  * @version $Id$
@@ -35,8 +35,20 @@ import org.apache.wicket.util.convert.IConverter;
 @SuppressWarnings("serial")
 public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 	
+	private static final String DEFAULT_PATTERN = "HH:mm";
+	
 	private final String timePattern;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 */
+	public TimeOfDayLabel(String id, IModel<TimeOfDay> model) {
+		this(id, model, DEFAULT_PATTERN);
+	}
 	
 	/**
 	 * インスタンスを生成する。
@@ -49,6 +61,16 @@ public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 		super(id, model);
 		Validate.notNull(timePattern);
 		this.timePattern = timePattern;
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timeOfDay 表示する時刻
+	 */
+	public TimeOfDayLabel(String id, TimeOfDay timeOfDay) {
+		this(id, Model.of(timeOfDay), DEFAULT_PATTERN);
 	}
 	
 	/**

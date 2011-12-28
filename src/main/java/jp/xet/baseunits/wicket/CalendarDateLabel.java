@@ -26,7 +26,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
 
 /**
- * TODO for daisuke
+ * {@link CalendarDate}を表示するWicketのLabelコンポーネント実装クラス。
  * 
  * @since 1.0.0
  * @version $Id$
@@ -35,8 +35,20 @@ import org.apache.wicket.util.convert.IConverter;
 @SuppressWarnings("serial")
 public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	
+	private static final String DEFAULT_PATTERN = "yyyy/MM/dd";
+	
 	private String datePattern;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param calendarDate 表示する日付
+	 */
+	public CalendarDateLabel(String id, CalendarDate calendarDate) {
+		this(id, Model.of(calendarDate), DEFAULT_PATTERN);
+	}
 	
 	/**
 	 * インスタンスを生成する。
@@ -47,6 +59,16 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 */
 	public CalendarDateLabel(String id, CalendarDate calendarDate, String datePattern) {
 		this(id, Model.of(calendarDate), datePattern);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 */
+	public CalendarDateLabel(String id, IModel<CalendarDate> model) {
+		this(id, model, DEFAULT_PATTERN);
 	}
 	
 	/**

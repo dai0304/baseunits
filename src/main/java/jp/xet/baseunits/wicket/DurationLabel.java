@@ -23,7 +23,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
 
 /**
- * TODO for daisuke
+ * {@link Duration}を表示するWicketのLabelコンポーネント実装クラス。
  * 
  * @since 1.0.0
  * @version $Id$
