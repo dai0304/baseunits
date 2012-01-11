@@ -164,9 +164,9 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * GMTの午前0時を基準としたミリ秒を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * UTCの午前0時を基準としたミリ秒を表す、{@link TimeOfDay}のインスタンスを生成する。
 	 * 
-	 * @param millisec GMTの午前0時を基準としたミリ秒
+	 * @param millisec UTCの午前0時を基準としたミリ秒
 	 * @return {@link TimeOfDay}
 	 */
 	public static TimeOfDay from(long millisec) {

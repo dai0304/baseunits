@@ -42,7 +42,7 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
-	private static final TimeZone GMT = TimeZone.getTimeZone("Universal");
+	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
 	
 	/**
@@ -158,7 +158,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 世界標準時における、指定した日時を表すインスタンスを取得する。
+	 * 協定世界時における、指定した日時を表すインスタンスを取得する。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -175,7 +175,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public static TimePoint at12hr(int year, int month, int date, int hour, Meridian meridian, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond) {
-		return at(year, month, date, HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, GMT);
+		return at(year, month, date, HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, UTC);
 	}
 	
 	/**
@@ -199,54 +199,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 			int millisecond, TimeZone zone) {
 		Validate.notNull(zone);
 		return at(year, month, date, HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, zone);
-	}
-	
-	/**
-	 * 世界標準時における、指定した日時を表すインスタンスを取得する。
-	 * 
-	 * @param year 年
-	 * @param month 月（1〜12）
-	 * @param date 日
-	 * @param hour 時
-	 * @param minute 分
-	 * @return {@link TimePoint}
-	 * @since 1.0
-	 */
-	public static TimePoint atGMT(int year, int month, int date, int hour, int minute) {
-		return atGMT(year, month, date, hour, minute, 0, 0);
-	}
-	
-	/**
-	 * 世界標準時における、指定した日時を表すインスタンスを取得する。
-	 * 
-	 * @param year 年
-	 * @param month 月（1〜12）
-	 * @param date 日
-	 * @param hour 時
-	 * @param minute 分
-	 * @param second 秒
-	 * @return {@link TimePoint}
-	 * @since 1.0
-	 */
-	public static TimePoint atGMT(int year, int month, int date, int hour, int minute, int second) {
-		return atGMT(year, month, date, hour, minute, second, 0);
-	}
-	
-	/**
-	 * 世界標準時における、指定した日時を表すインスタンスを取得する。
-	 * 
-	 * @param year 年
-	 * @param month 月（1〜12）
-	 * @param date 日
-	 * @param hour 時
-	 * @param minute 分
-	 * @param second 秒
-	 * @param millisecond ミリ秒
-	 * @return {@link TimePoint}
-	 * @since 1.0
-	 */
-	public static TimePoint atGMT(int year, int month, int date, int hour, int minute, int second, int millisecond) {
-		return at(year, month, date, hour, minute, second, millisecond, GMT);
 	}
 	
 	/**
@@ -281,7 +233,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 世界標準時における、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
+	 * 協定世界時における、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -289,8 +241,56 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @return {@link TimePoint}
 	 * @since 1.0
 	 */
-	public static TimePoint atMidnightGMT(int year, int month, int date) {
-		return atMidnight(year, month, date, GMT);
+	public static TimePoint atMidnightUTC(int year, int month, int date) {
+		return atMidnight(year, month, date, UTC);
+	}
+	
+	/**
+	 * 協定世界時における、指定した日時を表すインスタンスを取得する。
+	 * 
+	 * @param year 年
+	 * @param month 月（1〜12）
+	 * @param date 日
+	 * @param hour 時
+	 * @param minute 分
+	 * @return {@link TimePoint}
+	 * @since 1.0
+	 */
+	public static TimePoint atUTC(int year, int month, int date, int hour, int minute) {
+		return atUTC(year, month, date, hour, minute, 0, 0);
+	}
+	
+	/**
+	 * 協定世界時における、指定した日時を表すインスタンスを取得する。
+	 * 
+	 * @param year 年
+	 * @param month 月（1〜12）
+	 * @param date 日
+	 * @param hour 時
+	 * @param minute 分
+	 * @param second 秒
+	 * @return {@link TimePoint}
+	 * @since 1.0
+	 */
+	public static TimePoint atUTC(int year, int month, int date, int hour, int minute, int second) {
+		return atUTC(year, month, date, hour, minute, second, 0);
+	}
+	
+	/**
+	 * 協定世界時における、指定した日時を表すインスタンスを取得する。
+	 * 
+	 * @param year 年
+	 * @param month 月（1〜12）
+	 * @param date 日
+	 * @param hour 時
+	 * @param minute 分
+	 * @param second 秒
+	 * @param millisecond ミリ秒
+	 * @return {@link TimePoint}
+	 * @since 1.0
+	 */
+	public static TimePoint atUTC(int year, int month, int date, int hour, int minute, int second, int millisecond) {
+		return at(year, month, date, hour, minute, second, millisecond, UTC);
 	}
 	
 	/**
@@ -360,7 +360,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 日時を表す文字列を、指定したパターンで世界標準時として解析し、その日時を表す {@link TimePoint}を返す。
+	 * 日時を表す文字列を、指定したパターンで協定世界時として解析し、その日時を表す {@link TimePoint}を返す。
 	 * 
 	 * @param dateString 日時を表す文字列
 	 * @param pattern 解析パターン（{@link SimpleDateFormat}参照）
@@ -369,10 +369,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static TimePoint parseGMTFrom(String dateString, String pattern) throws ParseException {
+	public static TimePoint parseUTCFrom(String dateString, String pattern) throws ParseException {
 		Validate.notNull(dateString);
 		Validate.notNull(pattern);
-		return parse(dateString, pattern, GMT);
+		return parse(dateString, pattern, UTC);
 	}
 	
 	/**
@@ -398,13 +398,13 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間をGMTとして扱い、{@link Calendar}型として取得する。
+	 * このオブジェクトが表現する瞬間をUTCとして扱い、{@link Calendar}型として取得する。
 	 * 
 	 * @return {@link Calendar}
 	 * @since 1.0
 	 */
 	public Calendar asJavaCalendar() {
-		return asJavaCalendar(GMT);
+		return asJavaCalendar(UTC);
 	}
 	
 	/**

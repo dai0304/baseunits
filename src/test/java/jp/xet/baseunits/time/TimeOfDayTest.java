@@ -58,7 +58,7 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test01_OnStartOfDay() throws Exception {
-		TimePoint feb17AtStartOfDay = TimePoint.atGMT(2006, 2, 17, 0, 0);
+		TimePoint feb17AtStartOfDay = TimePoint.atUTC(2006, 2, 17, 0, 0);
 		assertThat(midnight.asTimePointGiven(feb17, GMT), is(feb17AtStartOfDay));
 	}
 	
@@ -69,7 +69,7 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test02_OnMiddleOfDay() throws Exception {
-		TimePoint feb17AtMiddleOfDay = TimePoint.atGMT(2006, 2, 17, 12, 0);
+		TimePoint feb17AtMiddleOfDay = TimePoint.atUTC(2006, 2, 17, 12, 0);
 		assertThat(noon.asTimePointGiven(feb17, GMT), is(feb17AtMiddleOfDay));
 	}
 	
@@ -80,7 +80,7 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test03_OnEndOfDay() throws Exception {
-		TimePoint feb17AtEndOfDay = TimePoint.atGMT(2006, 2, 17, 23, 58);
+		TimePoint feb17AtEndOfDay = TimePoint.atUTC(2006, 2, 17, 23, 58);
 		assertThat(twoMinutesBeforeMidnight.asTimePointGiven(feb17, GMT), is(feb17AtEndOfDay));
 	}
 	

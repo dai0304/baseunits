@@ -27,7 +27,7 @@ import org.junit.Test;
  */
 public class FixedTimeSourceTest {
 	
-	static final TimePoint TP = TimePoint.atGMT(1978, 3, 4, 6, 56, 0, 0);
+	static final TimePoint TP = TimePoint.atUTC(1978, 3, 4, 6, 56, 0, 0);
 	
 	
 	@Test

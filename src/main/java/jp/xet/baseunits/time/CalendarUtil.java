@@ -31,8 +31,6 @@ public class CalendarUtil {
 	
 	public static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
-	public static final TimeZone GMT = TimeZone.getTimeZone("GMT");
-	
 	
 	public static Calendar newCalendar() {
 		return newCalendar(UTC);

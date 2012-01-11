@@ -121,7 +121,7 @@ public class NISTClient {
 	protected TimePoint asTimePoint(String nistRawFormattedString) throws ParseException {
 		Validate.notNull(nistRawFormattedString);
 		String nistGist = nistRawFormattedString.substring(7, 24); // CHECKSTYLE IGNORE THIS LINE
-		return TimePoint.parseGMTFrom(nistGist, PATTERN);
+		return TimePoint.parseUTCFrom(nistGist, PATTERN);
 	}
 	
 	TimePoint now(String serverName, int port) throws IOException, ParseException {

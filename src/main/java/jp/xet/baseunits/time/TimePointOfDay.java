@@ -36,11 +36,25 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable {
 	
-	private static final TimeZone GMT = TimeZone.getTimeZone("Universal");
+	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
+	
+	/**
+	 * UTCにおける深夜0時
+	 * 
+	 * @since 2.0
+	 */
+	public static final TimePointOfDay UTC_MIDNIGHT = at(0, 0, 0, 0, UTC);
+	
+	/**
+	 * UTCにおける正午
+	 * 
+	 * @since 2.0
+	 */
+	public static final TimePointOfDay UTC_NOON = at(12, 0, 0, 0, UTC);
 	
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -51,8 +65,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
-	public static TimePointOfDay at(int hour, int minute, int second, int millisecond,
-			TimeZone zone) {
+	public static TimePointOfDay at(int hour, int minute, int second, int millisecond, TimeZone zone) {
 		Validate.notNull(zone);
 		Calendar calendar = CalendarUtil.newCalendar(zone);
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
@@ -63,7 +76,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -79,7 +92,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -94,7 +107,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 世界標準時における、指定した日時を表すインスタンスを取得する。
+	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
 	 * 
 	 * @param hour 時
 	 * @param meridian 午前/午後
@@ -106,13 +119,12 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * @throws IllegalArgumentException 引数{@code meridian}の値が {@code "AM"} または {@code "PM"} ではない場合
 	 * @since 2.0
 	 */
-	public static TimePointOfDay at12hr(int hour, Meridian meridian, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
-			int millisecond) {
-		return at(HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, GMT);
+	public static TimePointOfDay at12hr(int hour, Meridian meridian, int minute, int second, int millisecond) {
+		return at(HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, UTC);
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
 	 * 
 	 * @param hour 時
 	 * @param meridian 午前/午後
@@ -125,53 +137,14 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * @throws IllegalArgumentException 引数{@code zone}または{@code meridian}に{@code null}を与えた場合
 	 * @since 2.0
 	 */
-	public static TimePointOfDay at12hr(int hour, Meridian meridian, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
-			int millisecond, TimeZone zone) {
+	public static TimePointOfDay at12hr(int hour, Meridian meridian, int minute, int second, int millisecond,
+			TimeZone zone) {
 		Validate.notNull(zone);
 		return at(HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, zone);
 	}
 	
 	/**
-	 * 世界標準時における、指定した日時を表すインスタンスを取得する。
-	 * 
-	 * @param hour 時
-	 * @param minute 分
-	 * @return {@link TimePointOfDay}
-	 * @since 2.0
-	 */
-	public static TimePointOfDay atGMT(int hour, int minute) {
-		return atGMT(hour, minute, 0, 0);
-	}
-	
-	/**
-	 * 世界標準時における、指定した日時を表すインスタンスを取得する。
-	 * 
-	 * @param hour 時
-	 * @param minute 分
-	 * @param second 秒
-	 * @return {@link TimePointOfDay}
-	 * @since 2.0
-	 */
-	public static TimePointOfDay atGMT(int hour, int minute, int second) {
-		return atGMT(hour, minute, second, 0);
-	}
-	
-	/**
-	 * 世界標準時における、指定した日時を表すインスタンスを取得する。
-	 * 
-	 * @param hour 時
-	 * @param minute 分
-	 * @param second 秒
-	 * @param millisecond ミリ秒
-	 * @return {@link TimePointOfDay}
-	 * @since 2.0
-	 */
-	public static TimePointOfDay atGMT(int hour, int minute, int second, int millisecond) {
-		return at(hour, minute, second, millisecond, GMT);
-	}
-	
-	/**
-	 * 指定したタイムゾーンにおける、指定した日時の午前0時（深夜）を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける午前0時（深夜）を表すインスタンスを取得する。
 	 * 
 	 * @param zone タイムゾーン
 	 * @return {@link TimePointOfDay}
@@ -184,30 +157,56 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 世界標準時における、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
+	 * 協定世界時における午前0時（深夜）を表すインスタンスを取得する。
 	 * 
 	 * @return {@link TimePointOfDay}
 	 * @since 2.0
 	 */
-	public static TimePointOfDay atMidnightGMT() {
-		return atMidnight(GMT);
+	public static TimePointOfDay atMidnightUTC() {
+		return atMidnight(UTC);
 	}
 	
 	/**
-	 * {@link Date}を{@link TimePointOfDay}に変換する。
+	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
 	 * 
-	 * @param javaDate 元となる日時情報を表す {@link Date}インスタンス
+	 * @param hour 時
+	 * @param minute 分
 	 * @return {@link TimePointOfDay}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
-	public static TimePointOfDay from(Date javaDate) {
-		Validate.notNull(javaDate);
-		return from(javaDate.getTime());
+	public static TimePointOfDay atUTC(int hour, int minute) {
+		return atUTC(hour, minute, 0, 0);
 	}
 	
 	/**
-	 * GMTにおける深夜0時からの経過ミリ秒を {@link TimePointOfDay} に変換する。
+	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
+	 * 
+	 * @param hour 時
+	 * @param minute 分
+	 * @param second 秒
+	 * @return {@link TimePointOfDay}
+	 * @since 2.0
+	 */
+	public static TimePointOfDay atUTC(int hour, int minute, int second) {
+		return atUTC(hour, minute, second, 0);
+	}
+	
+	/**
+	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
+	 * 
+	 * @param hour 時
+	 * @param minute 分
+	 * @param second 秒
+	 * @param millisecond ミリ秒
+	 * @return {@link TimePointOfDay}
+	 * @since 2.0
+	 */
+	public static TimePointOfDay atUTC(int hour, int minute, int second, int millisecond) {
+		return at(hour, minute, second, millisecond, UTC);
+	}
+	
+	/**
+	 * UTCにおける深夜0時からの経過ミリ秒を {@link TimePointOfDay} に変換する。
 	 * 
 	 * @param milliseconds エポックからの経過ミリ秒
 	 * @return {@link TimePointOfDay}
@@ -237,9 +236,9 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す {@link TimePointOfDay}を返す。
+	 * 時刻を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その時刻を表す {@link TimePointOfDay}を返す。
 	 * 
-	 * @param dateTimeString 日時を表す文字列
+	 * @param timeString 時刻を表す文字列
 	 * @param pattern 解析パターン（{@link SimpleDateFormat}参照）
 	 * @param zone タイムゾーン
 	 * @return {@link TimePointOfDay}
@@ -247,51 +246,64 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
-	public static TimePointOfDay parse(String dateTimeString, String pattern, TimeZone zone) throws ParseException {
-		Validate.notNull(dateTimeString);
+	public static TimePointOfDay parse(String timeString, String pattern, TimeZone zone) throws ParseException {
+		Validate.notNull(timeString);
 		Validate.notNull(pattern);
 		Validate.notNull(zone);
 		SimpleDateFormat format = CalendarUtil.newSimpleDateFormat(pattern, zone);
-		Date date = format.parse(dateTimeString);
+		Date date = format.parse(timeString);
 		return from(date);
 	}
 	
 	/**
-	 * 日時を表す文字列を、指定したパターンで世界標準時として解析し、その日時を表す {@link TimePointOfDay}を返す。
+	 * 時刻を表す文字列を、指定したパターンで協定世界時として解析し、その時刻を表す {@link TimePointOfDay}を返す。
 	 * 
-	 * @param dateString 日時を表す文字列
+	 * @param dateString 時刻を表す文字列
 	 * @param pattern 解析パターン（{@link SimpleDateFormat}参照）
 	 * @return {@link TimePointOfDay}
 	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
-	public static TimePointOfDay parseGMTFrom(String dateString, String pattern) throws ParseException {
+	public static TimePointOfDay parseUTCFrom(String dateString, String pattern) throws ParseException {
 		Validate.notNull(dateString);
 		Validate.notNull(pattern);
-		return parse(dateString, pattern, GMT);
+		return parse(dateString, pattern, UTC);
+	}
+	
+	/**
+	 * {@link Date}を{@link TimePointOfDay}に変換する。
+	 * 
+	 * @param javaDate 元となる時刻情報を表す {@link Date}インスタンス
+	 * @return {@link TimePointOfDay}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	static TimePointOfDay from(Date javaDate) {
+		Validate.notNull(javaDate);
+		return from(javaDate.getTime());
 	}
 	
 	/**
 	 * {@link Calendar}を{@link TimePointOfDay}に変換する。
 	 * 
-	 * @param calendar 元となる日時情報を表す {@link Calendar}インスタンス
+	 * @param calendar 元となる時刻情報を表す {@link Calendar}インスタンス
 	 * @return {@link TimePointOfDay}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
-	public static TimePointOfDay valueOf(Calendar calendar) {
+	static TimePointOfDay valueOf(Calendar calendar) {
 		Validate.notNull(calendar);
 		return from(calendar.getTime());
 	}
 	
 	
-	/** GMTの午前0時からの経過ミリ秒 */
-	final long millisecondsFromGMTMidnight;
+	/** UTCの午前0時からの経過ミリ秒 */
+	final long millisecondsFromUTCMidnight;
 	
 	
-	private TimePointOfDay(long millisecondsFromGMTMidnight) {
-		this.millisecondsFromGMTMidnight = millisecondsFromGMTMidnight;
+	private TimePointOfDay(long millisecondsFromUTCMidnight) {
+		this.millisecondsFromUTCMidnight = millisecondsFromUTCMidnight;
 	}
 	
 	/**
@@ -337,7 +349,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
 	 * 
 	 * <p>与えたオブジェクトが {@code null} ではなく、かつ {@link TimePointOfDay}型であった場合、
-	 * 同じ日時を指している場合は{@code true}、そうでない場合は{@code false}を返す。</p>
+	 * 同じ時刻を指している場合は{@code true}、そうでない場合は{@code false}を返す。</p>
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 * @since 2.0
@@ -354,7 +366,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 			return false;
 		}
 		TimePointOfDay other = (TimePointOfDay) obj;
-		if (millisecondsFromGMTMidnight != other.millisecondsFromGMTMidnight) {
+		if (millisecondsFromUTCMidnight != other.millisecondsFromUTCMidnight) {
 			return false;
 		}
 		return true;
@@ -362,83 +374,63 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	
 	@Override
 	public int hashCode() {
-		return (int) (millisecondsFromGMTMidnight ^ (millisecondsFromGMTMidnight >>> 32)); // CHECKSTYLE IGNORE THIS LINE;
+		return (int) (millisecondsFromUTCMidnight ^ (millisecondsFromUTCMidnight >>> 32)); // CHECKSTYLE IGNORE THIS LINE;
 	}
 	
 	/**
-	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
+	 * 指定した時刻 {@code other} が、このオブジェクトが表現する時刻よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>同一日時である場合は {@code false} を返す。</p>
+	 * <p>同一時刻である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 対象時刻
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public boolean isAfter(TimePointOfDay other) {
 		Validate.notNull(other);
-		return millisecondsFromGMTMidnight > other.millisecondsFromGMTMidnight;
+		return millisecondsFromUTCMidnight > other.millisecondsFromUTCMidnight;
 	}
 	
 	/**
-	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
+	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する時刻よりも過去であるかどうかを検証する。
 	 * 
-	 * <p>同一日時である場合は {@code false} を返す。</p>
+	 * <p>同一時刻である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 対象時刻
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public boolean isBefore(TimePointOfDay other) {
 		Validate.notNull(other);
-		return millisecondsFromGMTMidnight < other.millisecondsFromGMTMidnight;
+		return millisecondsFromUTCMidnight < other.millisecondsFromUTCMidnight;
 	}
 	
 	/**
-	 * この日時の、指定した時間の長さ分過去の日時を取得する。
+	 * この時刻の、指定した時間の長さ分過去の時刻を取得する。
 	 * 
 	 * @param duration 時間の長さ
-	 * @return 過去の日時
+	 * @return 過去の時刻
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimePointOfDay minus(Duration duration) {
 		Validate.notNull(duration);
-		return TimePointOfDay.from(millisecondsFromGMTMidnight - duration.to(TimeUnit.millisecond));
+		return TimePointOfDay.from(millisecondsFromUTCMidnight - duration.to(TimeUnit.millisecond));
 	}
 	
 	/**
-	 * この瞬間から、指定した時間の長さ分未来の瞬間を取得する。
+	 * この時刻から、指定した時間の長さ分未来の時刻を取得する。
 	 * 
 	 * @param duration 時間の長さ
-	 * @return 未来の日時
+	 * @return 未来の時刻
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimePointOfDay plus(Duration duration) {
 		Validate.notNull(duration);
-		return TimePointOfDay.from(millisecondsFromGMTMidnight + duration.to(TimeUnit.millisecond));
-	}
-	
-	/**
-	 * GMTの午前0時を基準としたミリ秒を返す。
-	 * 
-	 * @return エポックミリ秒
-	 * @since 2.0
-	 */
-	public long toGMTMidnightMillisec() {
-		return millisecondsFromGMTMidnight;
-	}
-	
-	/**
-	 * この瞬間をエポック秒に変換して返す。
-	 * 
-	 * @return エポック秒
-	 * @since 2.0
-	 */
-	public long toGMTMidnightSec() {
-		return millisecondsFromGMTMidnight / TimeUnitConversionFactor.millisecondsPerSecond.value;
+		return TimePointOfDay.from(millisecondsFromUTCMidnight + duration.to(TimeUnit.millisecond));
 	}
 	
 	/**
@@ -466,13 +458,33 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間をGMTとして扱い、{@link Calendar}型として取得する。
+	 * UTCの午前0時を基準としたミリ秒を返す。
+	 * 
+	 * @return エポックミリ秒
+	 * @since 2.0
+	 */
+	public long toUTCMidnightMillisec() {
+		return millisecondsFromUTCMidnight;
+	}
+	
+	/**
+	 * この瞬間をエポック秒に変換して返す。
+	 * 
+	 * @return エポック秒
+	 * @since 2.0
+	 */
+	public long toUTCMidnightSec() {
+		return millisecondsFromUTCMidnight / TimeUnitConversionFactor.millisecondsPerSecond.value;
+	}
+	
+	/**
+	 * このオブジェクトが表現する瞬間をUTCとして扱い、{@link Calendar}型として取得する。
 	 * 
 	 * @return {@link Calendar}
 	 * @since 2.0
 	 */
 	Calendar asJavaCalendar() {
-		return asJavaCalendar(GMT);
+		return asJavaCalendar(UTC);
 	}
 	
 	/**
@@ -486,7 +498,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	Calendar asJavaCalendar(TimeZone zone) {
 		Validate.notNull(zone);
 		Calendar calendar = CalendarUtil.newCalendar(zone);
-		calendar.setTimeInMillis(millisecondsFromGMTMidnight);
+		calendar.setTimeInMillis(millisecondsFromUTCMidnight);
 		return calendar;
 	}
 	
@@ -497,6 +509,6 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * @since 2.0
 	 */
 	Date asJavaUtilDate() {
-		return new Date(millisecondsFromGMTMidnight);
+		return new Date(millisecondsFromUTCMidnight);
 	}
 }

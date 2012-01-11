@@ -38,9 +38,7 @@ import jp.xet.baseunits.time.TimePoint;
  */
 public class TimeOfDayValueType extends AbstractBaseunitsValueType<TimeOfDay> {
 	
-	private static final CalendarDate EPOCH_DATE = CalendarDate.from(1970, 1, 1);
-	
-	private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
+	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
 	// ここから...
 	
@@ -76,7 +74,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType<TimeOfDay> {
 	private static TimeZone getTimeZoneInternal() {
 		TimeZone tz = getTimeZone();
 		if (tz == null) {
-			return GMT;
+			return UTC;
 		}
 		return tz;
 	}
@@ -153,7 +151,7 @@ public class TimeOfDayValueType extends AbstractBaseunitsValueType<TimeOfDay> {
 			stmt.setNull(index, Types.TIME);
 		} else {
 			long epochMillisec =
-					value.asTimePointGiven(EPOCH_DATE, getTimeZoneInternal()).toEpochMillisec();
+					value.asTimePointGiven(CalendarDate.EPOCH_DATE, getTimeZoneInternal()).toEpochMillisec();
 			stmt.setTime(index, new Time(epochMillisec));
 		}
 	}

@@ -56,8 +56,8 @@ public class DurationTest {
 	 */
 	@Test
 	public void test02_AddMillisecondsToPoint() throws Exception {
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
-		TimePoint dec22At1 = TimePoint.atGMT(2003, 12, 22, 01, 0, 0, 0);
+		TimePoint dec20At1 = TimePoint.atUTC(2003, 12, 20, 01, 0, 0, 0);
+		TimePoint dec22At1 = TimePoint.atUTC(2003, 12, 22, 01, 0, 0, 0);
 		Duration twoDays = Duration.days(2);
 		assertThat(twoDays.addedTo(dec20At1), is(dec22At1));
 		
@@ -72,8 +72,8 @@ public class DurationTest {
 	 */
 	@Test
 	public void test03_AddMonthsToPoint() throws Exception {
-		TimePoint oct20At1 = TimePoint.atGMT(2003, 10, 20, 01, 0, 0, 0);
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
+		TimePoint oct20At1 = TimePoint.atUTC(2003, 10, 20, 01, 0, 0, 0);
+		TimePoint dec20At1 = TimePoint.atUTC(2003, 12, 20, 01, 0, 0, 0);
 		Duration twoMonths = Duration.months(2);
 		assertThat(twoMonths.addedTo(oct20At1), is(dec20At1));
 	}
@@ -85,8 +85,8 @@ public class DurationTest {
 	 */
 	@Test
 	public void test04_SubtractMillisecondsFromPoint() throws Exception {
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
-		TimePoint dec18At1 = TimePoint.atGMT(2003, 12, 18, 01, 0, 0, 0);
+		TimePoint dec20At1 = TimePoint.atUTC(2003, 12, 20, 01, 0, 0, 0);
+		TimePoint dec18At1 = TimePoint.atUTC(2003, 12, 18, 01, 0, 0, 0);
 		Duration twoDays = Duration.days(2);
 		assertThat(twoDays.subtractedFrom(dec20At1), is(dec18At1));
 		
@@ -101,12 +101,12 @@ public class DurationTest {
 	 */
 	@Test
 	public void test05_SubtractMonthsFromPoint() throws Exception {
-		TimePoint oct20At1 = TimePoint.atGMT(2003, 10, 20, 01, 0, 0, 0);
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
+		TimePoint oct20At1 = TimePoint.atUTC(2003, 10, 20, 01, 0, 0, 0);
+		TimePoint dec20At1 = TimePoint.atUTC(2003, 12, 20, 01, 0, 0, 0);
 		Duration twoMonths = Duration.months(2);
 		assertThat(twoMonths.subtractedFrom(dec20At1), is(oct20At1));
 		
-		TimePoint dec20At1_2001 = TimePoint.atGMT(2001, 12, 20, 01, 0, 0, 0);
+		TimePoint dec20At1_2001 = TimePoint.atUTC(2001, 12, 20, 01, 0, 0, 0);
 		Duration twoYears = Duration.years(2);
 		assertThat(twoYears.subtractedFrom(dec20At1), is(dec20At1_2001));
 	}
@@ -343,8 +343,8 @@ public class DurationTest {
 	 */
 	@Test
 	public void test17_StartingFromTimePoint() throws Exception {
-		TimePoint dec20At1 = TimePoint.atGMT(2003, 12, 20, 01, 0, 0, 0);
-		TimePoint dec20At3 = TimePoint.atGMT(2003, 12, 20, 03, 0, 0, 0);
+		TimePoint dec20At1 = TimePoint.atUTC(2003, 12, 20, 01, 0, 0, 0);
+		TimePoint dec20At3 = TimePoint.atUTC(2003, 12, 20, 03, 0, 0, 0);
 		TimePointInterval dec20_1_3 = dec20At1.until(dec20At3);
 		assertThat(Duration.hours(2).startingFrom(dec20At1), is(dec20_1_3));
 	}

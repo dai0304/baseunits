@@ -103,7 +103,7 @@ public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePoin
 		if (value == null) {
 			stmt.setNull(index, Types.TIME);
 		} else {
-			long millisec = value.toGMTMidnightMillisec();
+			long millisec = value.toUTCMidnightMillisec();
 			stmt.setTime(index, new Time(millisec));
 		}
 	}

@@ -35,6 +35,9 @@ import org.junit.Test;
  */
 public class JavaUtilCalendarQuirksTest {
 	
+	static final TimeZone UTC = TimeZone.getTimeZone("Universal");
+	
+	
 	/**
 	 * {@link Calendar#set(int, int)}で {@link Calendar#HOUR} を設定した場合の挙動確認。
 	 * 
@@ -42,8 +45,7 @@ public class JavaUtilCalendarQuirksTest {
 	 */
 	@Test
 	public void test01_Hour() throws Exception {
-		TimeZone gmt = TimeZone.getTimeZone("Universal");
-		Calendar test = Calendar.getInstance(gmt);
+		Calendar test = Calendar.getInstance(UTC);
 		test.set(Calendar.YEAR, 1969);
 		test.set(Calendar.MONTH, Calendar.JULY);
 		test.set(Calendar.DATE, 20);
@@ -65,8 +67,7 @@ public class JavaUtilCalendarQuirksTest {
 	 */
 	@Test
 	public void test02_HourOfDay() throws Exception {
-		TimeZone gmt = TimeZone.getTimeZone("Universal");
-		Calendar test = Calendar.getInstance(gmt);
+		Calendar test = Calendar.getInstance(UTC);
 		test.set(Calendar.YEAR, 1969);
 		test.set(Calendar.MONTH, Calendar.JULY);
 		test.set(Calendar.DATE, 20);

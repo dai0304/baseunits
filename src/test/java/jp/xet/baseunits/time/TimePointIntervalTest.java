@@ -37,15 +37,15 @@ import org.junit.Test;
  */
 public class TimePointIntervalTest {
 	
-	private TimePoint dec19_2003 = TimePoint.atMidnightGMT(2003, 12, 19);
+	private TimePoint dec19_2003 = TimePoint.atMidnightUTC(2003, 12, 19);
 	
-	private TimePoint dec20_2003 = TimePoint.atMidnightGMT(2003, 12, 20);
+	private TimePoint dec20_2003 = TimePoint.atMidnightUTC(2003, 12, 20);
 	
-	private TimePoint dec21_2003 = TimePoint.atMidnightGMT(2003, 12, 21);
+	private TimePoint dec21_2003 = TimePoint.atMidnightUTC(2003, 12, 21);
 	
-	private TimePoint dec22_2003 = TimePoint.atMidnightGMT(2003, 12, 22);
+	private TimePoint dec22_2003 = TimePoint.atMidnightUTC(2003, 12, 22);
 	
-	private TimePoint dec23_2003 = TimePoint.atMidnightGMT(2003, 12, 23);
+	private TimePoint dec23_2003 = TimePoint.atMidnightUTC(2003, 12, 23);
 	
 	
 	/**
@@ -235,8 +235,8 @@ public class TimePointIntervalTest {
 	@Test
 	public void test13_EverFrom() throws Exception {
 		TimePointInterval afterDec20 = TimePointInterval.everFrom(dec20_2003);
-		assertThat(afterDec20.includes(TimePoint.atMidnightGMT(2062, 3, 5)), is(true));
-		assertThat(afterDec20.includes(TimePoint.atMidnightGMT(1776, 7, 4)), is(false));
+		assertThat(afterDec20.includes(TimePoint.atMidnightUTC(2062, 3, 5)), is(true));
+		assertThat(afterDec20.includes(TimePoint.atMidnightUTC(1776, 7, 4)), is(false));
 		assertThat(afterDec20.includes(dec20_2003), is(true));
 	}
 	
@@ -248,8 +248,8 @@ public class TimePointIntervalTest {
 	@Test
 	public void test14_EverUntil() throws Exception {
 		TimePointInterval afterDec20 = TimePointInterval.everPreceding(dec20_2003);
-		assertThat(afterDec20.includes(TimePoint.atMidnightGMT(2062, 3, 5)), is(false));
-		assertThat(afterDec20.includes(TimePoint.atMidnightGMT(1776, 7, 4)), is(true));
+		assertThat(afterDec20.includes(TimePoint.atMidnightUTC(2062, 3, 5)), is(false));
+		assertThat(afterDec20.includes(TimePoint.atMidnightUTC(1776, 7, 4)), is(true));
 		assertThat(afterDec20.includes(dec20_2003), is(false));
 	}
 	
@@ -263,8 +263,8 @@ public class TimePointIntervalTest {
 		TimePointInterval interval = TimePointInterval.open(dec20_2003, dec22_2003);
 		assertThat(interval.length(), is(Duration.days(2)));
 		
-		TimePoint first = TimePoint.atGMT(2004, 1, 1, 1, 1, 1, 1);
-		TimePoint second = TimePoint.atGMT(2004, 1, 6, 5, 4, 3, 2);
+		TimePoint first = TimePoint.atUTC(2004, 1, 1, 1, 1, 1, 1);
+		TimePoint second = TimePoint.atUTC(2004, 1, 6, 5, 4, 3, 2);
 		interval = TimePointInterval.closed(first, second);
 		Duration expectedLength = Duration.daysHoursMinutesSecondsMilliseconds(5, 4, 3, 2, 1);
 		assertThat(interval.length(), is(expectedLength));
@@ -277,16 +277,16 @@ public class TimePointIntervalTest {
 	 */
 	@Test
 	public void test16_DaysIterator() throws Exception {
-		TimePoint start = TimePoint.atGMT(2004, 2, 5, 10, 0);
-		TimePoint end = TimePoint.atGMT(2004, 2, 8, 2, 0);
+		TimePoint start = TimePoint.atUTC(2004, 2, 5, 10, 0);
+		TimePoint end = TimePoint.atUTC(2004, 2, 8, 2, 0);
 		TimePointInterval interval = TimePointInterval.over(start, end);
 		Iterator<TimePoint> it = interval.daysIterator();
 		assertThat(it.hasNext(), is(true));
 		assertThat(it.next(), is(start));
 		assertThat(it.hasNext(), is(true));
-		assertThat(it.next(), is(TimePoint.atGMT(2004, 2, 6, 10, 0)));
+		assertThat(it.next(), is(TimePoint.atUTC(2004, 2, 6, 10, 0)));
 		assertThat(it.hasNext(), is(true));
-		assertThat(it.next(), is(TimePoint.atGMT(2004, 2, 7, 10, 0)));
+		assertThat(it.next(), is(TimePoint.atUTC(2004, 2, 7, 10, 0)));
 		assertThat(it.hasNext(), is(false));
 		try {
 			it.next();
@@ -317,10 +317,10 @@ public class TimePointIntervalTest {
 	 */
 	@Test
 	public void test17_SubintervalIterator() throws Exception {
-		TimePoint d4_h10 = TimePoint.atGMT(2004, 2, 4, 10, 0);
-		TimePoint d6_h10 = TimePoint.atGMT(2004, 2, 6, 10, 0);
-		TimePoint d8_h10 = TimePoint.atGMT(2004, 2, 8, 10, 0);
-		TimePoint d9_h2 = TimePoint.atGMT(2004, 2, 9, 2, 0);
+		TimePoint d4_h10 = TimePoint.atUTC(2004, 2, 4, 10, 0);
+		TimePoint d6_h10 = TimePoint.atUTC(2004, 2, 6, 10, 0);
+		TimePoint d8_h10 = TimePoint.atUTC(2004, 2, 8, 10, 0);
+		TimePoint d9_h2 = TimePoint.atUTC(2004, 2, 9, 2, 0);
 		
 		TimePointInterval interval = TimePointInterval.over(d4_h10, d9_h2);
 		Iterator<TimePointInterval> iterator = interval.subintervalIterator(Duration.days(2));
@@ -340,10 +340,10 @@ public class TimePointIntervalTest {
 		assertThat(iterator.hasNext(), is(false));
 		
 		TimePoint h2 = d9_h2;
-		TimePoint h3_m30 = TimePoint.atGMT(2004, 2, 9, 3, 30);
-		TimePoint h5 = TimePoint.atGMT(2004, 2, 9, 5, 0);
-		TimePoint h6_m30 = TimePoint.atGMT(2004, 2, 9, 6, 30);
-		TimePoint h8 = TimePoint.atGMT(2004, 2, 9, 8, 0);
+		TimePoint h3_m30 = TimePoint.atUTC(2004, 2, 9, 3, 30);
+		TimePoint h5 = TimePoint.atUTC(2004, 2, 9, 5, 0);
+		TimePoint h6_m30 = TimePoint.atUTC(2004, 2, 9, 6, 30);
+		TimePoint h8 = TimePoint.atUTC(2004, 2, 9, 8, 0);
 		
 		TimePointInterval interval2 = TimePointInterval.over(h2, h8);
 		iterator = interval2.subintervalIterator(Duration.minutes(90));

@@ -43,7 +43,7 @@ public class CalendarDateTest {
 	
 	private CalendarDate may20 = CalendarDate.from(2004, 5, 20);
 	
-	private TimeZone gmt = TimeZone.getTimeZone("Universal");
+	private TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
 	private TimeZone ct = TimeZone.getTimeZone("America/Chicago");
 	
@@ -130,7 +130,7 @@ public class CalendarDateTest {
 	 */
 	@Test
 	public void test07_FromTimePoint() throws Exception {
-		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, gmt);
+		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, UTC);
 		CalendarDate mapped = CalendarDate.from(feb18Hour0Ct, ct);
 		assertThat(mapped, is(CalendarDate.from(2003, 2, 17)));
 	}
@@ -226,7 +226,7 @@ public class CalendarDateTest {
 	 */
 	@Test
 	public void test14_ConversionToJavaUtil() throws Exception {
-		Calendar expected = Calendar.getInstance(gmt);
+		Calendar expected = Calendar.getInstance(UTC);
 		expected.setMinimalDaysInFirstWeek(4);
 		expected.setFirstDayOfWeek(Calendar.MONDAY);
 		expected.set(Calendar.YEAR, 1969);
