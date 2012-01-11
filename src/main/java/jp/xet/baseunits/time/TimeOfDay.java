@@ -164,6 +164,39 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
+	 * GMTの午前0時を基準としたミリ秒を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 
+	 * @param millisec GMTの午前0時を基準としたミリ秒
+	 * @return {@link TimeOfDay}
+	 */
+	public static TimeOfDay from(long millisec) {
+		Duration duration = Duration.milliseconds(millisec);
+		
+		long h = duration.to(TimeUnit.hour);
+		Duration minDuration = duration.minus(Duration.hours(h));
+		long m = minDuration.to(TimeUnit.minute);
+		Duration secDuration = minDuration.minus(Duration.minutes(m));
+		long s = secDuration.to(TimeUnit.second);
+		Duration millisecDuration = secDuration.minus(Duration.seconds(s));
+		long ms = millisecDuration.to(TimeUnit.millisecond);
+		return TimeOfDay.from((int) h, (int) m, (int) s, (int) ms);
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param tpod
+	 * @param zone タイムゾーン
+	 * @return {@link TimeOfDay}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static TimeOfDay from(TimePointOfDay tpod, TimeZone zone) {
+		Validate.notNull(tpod);
+		Validate.notNull(zone);
+		return tpod.asTimeOfDay(zone);
+	}
+	
+	/**
 	 * Parses text strings to produce instances of {@link TimeOfDay}
 	 * 
 	 * @param timeString the text string whose beginning should be parsed.
@@ -376,15 +409,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 		if (total.isGreaterThanOrEqual(Duration.days(1))) {
 			total.minus(Duration.days(1));
 		}
-		
-		long h = total.to(TimeUnit.hour);
-		Duration minDuration = total.minus(Duration.hours(h));
-		long m = minDuration.to(TimeUnit.minute);
-		Duration secDuration = minDuration.minus(Duration.minutes(m));
-		long s = secDuration.to(TimeUnit.second);
-		Duration millisecDuration = secDuration.minus(Duration.seconds(s));
-		long ms = millisecDuration.to(TimeUnit.millisecond);
-		return TimeOfDay.from((int) h, (int) m, (int) s, (int) ms);
+		return from(total.to(TimeUnit.millisecond));
 	}
 	
 	/**
