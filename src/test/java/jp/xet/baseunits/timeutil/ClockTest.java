@@ -37,7 +37,7 @@ import org.junit.Test;
  */
 public class ClockTest {
 	
-	TimePoint dec1_5amGMT = TimePoint.atUTC(2004, 12, 1, 5, 0);
+	static final TimePoint DEC1_5AM_GMT = TimePoint.atUTC(2004, 12, 1, 5, 0);
 	
 	static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
@@ -45,12 +45,12 @@ public class ClockTest {
 	
 	static final TimeZone CT = TimeZone.getTimeZone("America/Chicago");
 	
-	/** 現在時間を問われた時、常に{@link #dec1_5amGMT}を返す {@link TimeSource} */
+	/** 現在時間を問われた時、常に{@link #DEC1_5AM_GMT}を返す {@link TimeSource} */
 	TimeSource dummySourceDec1_5h = new TimeSource() {
 		
 		@Override
 		public TimePoint now() {
-			return dec1_5amGMT;
+			return DEC1_5AM_GMT;
 		}
 	};
 	
@@ -73,7 +73,7 @@ public class ClockTest {
 	@Test
 	public void test01_Now() throws Exception {
 		Clock.setTimeSource(dummySourceDec1_5h);
-		assertThat(Clock.now(), is(dec1_5amGMT));
+		assertThat(Clock.now(), is(DEC1_5AM_GMT));
 	}
 	
 	//
@@ -99,9 +99,9 @@ public class ClockTest {
 		Clock.setTimeSource(dummySourceDec1_5h);
 		
 		assertThat(Clock.today(UTC), is(CalendarDate.from(2004, 12, 1)));
-		assertThat(Clock.now(), is(dec1_5amGMT));
+		assertThat(Clock.now(), is(DEC1_5AM_GMT));
 		
 		assertThat(Clock.today(PT), is(CalendarDate.from(2004, 11, 30)));
-		assertThat(Clock.now(), is(dec1_5amGMT));
+		assertThat(Clock.now(), is(DEC1_5AM_GMT));
 	}
 }
