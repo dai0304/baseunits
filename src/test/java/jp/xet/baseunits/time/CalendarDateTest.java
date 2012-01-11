@@ -43,9 +43,9 @@ public class CalendarDateTest {
 	
 	private CalendarDate may20 = CalendarDate.from(2004, 5, 20);
 	
-	private TimeZone UTC = TimeZone.getTimeZone("Universal");
+	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
-	private TimeZone ct = TimeZone.getTimeZone("America/Chicago");
+	private static final TimeZone CT = TimeZone.getTimeZone("America/Chicago");
 	
 	
 	/**
@@ -80,8 +80,8 @@ public class CalendarDateTest {
 	 */
 	@Test
 	public void test03_StartAsTimePoint() throws Exception {
-		TimePoint feb17StartAsCt = feb17.startAsTimePoint(ct);
-		TimePoint feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct);
+		TimePoint feb17StartAsCt = feb17.startAsTimePoint(CT);
+		TimePoint feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, CT);
 		assertThat(feb17StartAsCt, is(feb17Hour0Ct));
 	}
 	
@@ -92,9 +92,9 @@ public class CalendarDateTest {
 	 */
 	@Test
 	public void test04_AsTimeInterval() throws Exception {
-		TimePointInterval feb17AsCt = feb17.asTimePointInterval(ct);
-		TimePoint feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, ct);
-		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, ct);
+		TimePointInterval feb17AsCt = feb17.asTimePointInterval(CT);
+		TimePoint feb17Hour0Ct = TimePoint.atMidnight(2003, 2, 17, CT);
+		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, CT);
 		assertThat("start", feb17AsCt.start(), is(feb17Hour0Ct));
 		assertThat("end", feb17AsCt.end(), is(feb18Hour0Ct));
 	}
@@ -131,7 +131,7 @@ public class CalendarDateTest {
 	@Test
 	public void test07_FromTimePoint() throws Exception {
 		TimePoint feb18Hour0Ct = TimePoint.atMidnight(2003, 2, 18, UTC);
-		CalendarDate mapped = CalendarDate.from(feb18Hour0Ct, ct);
+		CalendarDate mapped = CalendarDate.from(feb18Hour0Ct, CT);
 		assertThat(mapped, is(CalendarDate.from(2003, 2, 17)));
 	}
 	
