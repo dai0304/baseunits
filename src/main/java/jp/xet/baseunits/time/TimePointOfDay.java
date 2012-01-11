@@ -434,14 +434,14 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * この瞬間の文字列表現を取得する。
+	 * この時刻のUTCにおける文字列表現を取得する。
 	 * 
 	 * @see java.lang.Object#toString()
 	 * @since 2.0
 	 */
 	@Override
 	public String toString() {
-		return asJavaUtilDate().toString();
+		return toString("HH:mm:ss,sss", UTC);
 	}
 	
 	/**
