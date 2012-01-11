@@ -264,6 +264,19 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
+	 * TODO for daisuke
+	 * 
+	 * @param timeZone タイムゾーン
+	 * @return {@link TimePointOfDay}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	public TimePointOfDay asTimePointOfDay(TimeZone timeZone) {
+		Validate.notNull(timeZone);
+		return TimePointOfDay.from(this, timeZone);
+	}
+	
+	/**
 	 * このオブジェクトの{@link #hour}フィールド（時）を返す。
 	 * 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
