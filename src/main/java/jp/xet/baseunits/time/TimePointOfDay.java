@@ -481,7 +481,6 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * このオブジェクトが表現する瞬間をUTCとして扱い、{@link Calendar}型として取得する。
 	 * 
 	 * @return {@link Calendar}
-	 * @since 2.0
 	 */
 	Calendar asJavaCalendar() {
 		return asJavaCalendar(UTC);
@@ -493,7 +492,6 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * @param zone タイムゾーン
 	 * @return {@link Calendar}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 2.0
 	 */
 	Calendar asJavaCalendar(TimeZone zone) {
 		Validate.notNull(zone);
@@ -506,7 +504,6 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * このオブジェクトが表現する瞬間を、{@link Date}型として取得する。
 	 * 
 	 * @return {@link Date}
-	 * @since 2.0
 	 */
 	Date asJavaUtilDate() {
 		return new Date(millisecondsFromUTCMidnight);

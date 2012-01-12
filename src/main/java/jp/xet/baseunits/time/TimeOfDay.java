@@ -272,7 +272,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @since 2.0
 	 */
 	public TimePointOfDay asTimePointOfDay(TimeZone timeZone) {
-		Validate.notNull(timeZone);
+		Validate.notNull(timeZone, "timeZone");
 		return TimePointOfDay.from(this, timeZone);
 	}
 	
