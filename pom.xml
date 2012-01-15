@@ -90,6 +90,7 @@
       <groupId>jp.sf.amateras.mirage</groupId>
       <artifactId>mirage</artifactId>
       <version>${mirage-version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.apache.wicket</groupId>
