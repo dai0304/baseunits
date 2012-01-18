@@ -41,11 +41,11 @@ public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecif
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
 		Validate.notNull(interval);
 		Validate.isTrue(interval.hasLowerLimit());
-		CalendarDate firstTry = ofYear(interval.start().asCalendarMonth().breachEncapsulationOfYear());
+		CalendarDate firstTry = ofYear(interval.start().asCalendarMonth().getYear());
 		if (interval.includes(firstTry)) {
 			return firstTry;
 		}
-		CalendarDate secondTry = ofYear(interval.start().asCalendarMonth().breachEncapsulationOfYear() + 1);
+		CalendarDate secondTry = ofYear(interval.start().asCalendarMonth().getYear() + 1);
 		if (interval.includes(secondTry)) {
 			return secondTry;
 		}
@@ -59,7 +59,7 @@ public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecif
 			
 			CalendarDate next = firstOccurrenceIn(interval);
 			
-			int year = next.asCalendarMonth().breachEncapsulationOfYear();
+			int year = next.asCalendarMonth().getYear();
 			
 			
 			@Override

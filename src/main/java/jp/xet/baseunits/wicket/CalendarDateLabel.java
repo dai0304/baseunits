@@ -93,10 +93,21 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 		return super.getConverter(type);
 	}
 	
+	/**
+	 * {@link SimpleDateFormat}に基づくパターン文字列を返す。
+	 * 
+	 * @return {@link SimpleDateFormat}に基づくパターン
+	 */
 	public String getDatePattern() {
 		return datePattern;
 	}
 	
+	/**
+	 * {@link SimpleDateFormat}に基づくパターンを設定する。
+	 * 
+	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	protected void setDatePattern(String datePattern) {
 		Validate.notNull(datePattern);
 		this.datePattern = datePattern;

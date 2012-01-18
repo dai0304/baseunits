@@ -96,15 +96,34 @@ public enum DayOfWeek {
 		return value;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since 2.0
+	 */
 	public DayOfWeek nextDay() {
 		return plusDays(1);
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param increment
+	 * @return
+	 * @since 2.0
+	 */
 	public DayOfWeek plusDays(int increment) {
 		int o = (ordinal() + 7 + increment) / values().length;
 		return values()[o];
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since 2.0
+	 */
 	public DayOfWeek prevDay() {
 		return plusDays(-1);
 	}
@@ -113,6 +132,7 @@ public enum DayOfWeek {
 	 * 曜日を表す3文字の文字列を返す。
 	 * 
 	 * @return 3文字の文字列
+	 * @since 2.0
 	 */
 	public String shortName() {
 		return name().substring(0, 3);

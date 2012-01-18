@@ -194,9 +194,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 //	}
 	
 	/**
-	 * TODO for daisuke
+	 * この日付を含む「週」を返す。
 	 * 
-	 * @return
+	 * @return 週
+	 * @since 2.0
 	 */
 	public CalendarWeek asCalendarWeek() {
 		return CalendarWeek.from(this);
@@ -247,7 +248,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 1.0
 	 */
 	public CalendarInterval asYearInterval() {
-		return CalendarInterval.year(yearMonth.breachEncapsulationOfYear());
+		return CalendarInterval.year(yearMonth.getYear());
 	}
 	
 	/**
@@ -263,48 +264,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		Validate.notNull(timeOfDay);
 		Validate.notNull(timeZone);
 		return TimePoint.from(this, timeOfDay, timeZone);
-	}
-	
-	/**
-	 * このオブジェクトの{@link #day}フィールド（日）を返す。
-	 * 
-	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
-	 * 
-	 * @return 日
-	 * @since 1.0
-	 */
-	public DayOfMonth breachEncapsulationOfDay() {
-		return day;
-	}
-	
-	/**
-	 * TODO for daisuke
-	 * 
-	 * @return
-	 */
-	public MonthOfYear breachEncapsulationOfMonth() {
-		return yearMonth.breachEncapsulationOfMonth();
-	}
-	
-	/**
-	 * TODO for daisuke
-	 * 
-	 * @return
-	 */
-	public int breachEncapsulationOfYear() {
-		return yearMonth.breachEncapsulationOfYear();
-	}
-	
-	/**
-	 * このオブジェクトの{@link #yearMonth}フィールド（年月）を返す。
-	 * 
-	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
-	 * 
-	 * @return 年月
-	 * @since 1.0
-	 */
-	public CalendarMonth breachEncapsulationOfYearMonth() {
-		return yearMonth;
 	}
 	
 	/**
@@ -363,6 +322,46 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * この日付が属する日を返す。
+	 * 
+	 * @return 日
+	 * @since 1.0
+	 */
+	public DayOfMonth getDayOfMonth() {
+		return day;
+	}
+	
+	/**
+	 * この日付が属する月を返す。
+	 * 
+	 * @return 月
+	 * @since 1.0
+	 */
+	public MonthOfYear getMonthOfYear() {
+		return yearMonth.getMonthOfYear();
+	}
+	
+	/**
+	 * この日付が属する年を返す。
+	 * 
+	 * @return 年
+	 * @since 1.0
+	 */
+	public int getYear() {
+		return yearMonth.getYear();
+	}
+	
+	/**
+	 * この日付が属する年月を返す。
+	 * 
+	 * @return 年月
+	 * @since 1.0
+	 */
+	public CalendarMonth getYearMonth() {
+		return yearMonth;
 	}
 	
 	@Override
@@ -551,8 +550,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {
 		Calendar calendar = CalendarUtil.newCalendar();
-		calendar.set(Calendar.YEAR, yearMonth.breachEncapsulationOfYear());
-		calendar.set(Calendar.MONTH, yearMonth.breachEncapsulationOfMonth().value - 1);
+		calendar.set(Calendar.YEAR, yearMonth.getYear());
+		calendar.set(Calendar.MONTH, yearMonth.getMonthOfYear().value - 1);
 		calendar.set(Calendar.DATE, day.value);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);

@@ -65,6 +65,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
+	 * @param timeZone time zone
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, TimeZone timeZone) {
 		this(id, model, DEFAULT_PATTERN, timeZone);
@@ -76,6 +77,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param id The non-null id of this component
 	 * @param calendarDate 表示する日付
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
+	 * @param timeZone time zone
 	 */
 	public TimePointLabel(String id, TimePoint calendarDate, String datePattern, TimeZone timeZone) {
 		this(id, Model.of(calendarDate), datePattern, timeZone);
@@ -86,6 +88,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param calendarDate 表示する日付
+	 * @param timeZone time zone
 	 */
 	public TimePointLabel(String id, TimePoint calendarDate, TimeZone timeZone) {
 		this(id, Model.of(calendarDate), DEFAULT_PATTERN, timeZone);
@@ -100,10 +103,21 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 		return super.getConverter(type);
 	}
 	
+	/**
+	 * {@link SimpleDateFormat}に基づくパターン文字列を返す。
+	 * 
+	 * @return {@link SimpleDateFormat}に基づくパターン
+	 */
 	public String getDatePattern() {
 		return datePattern;
 	}
 	
+	/**
+	 * {@link SimpleDateFormat}に基づくパターンを設定する。
+	 * 
+	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	protected void setDatePattern(String datePattern) {
 		Validate.notNull(datePattern);
 		this.datePattern = datePattern;

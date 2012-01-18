@@ -92,7 +92,7 @@ public final class AnnualFloatingDateSpecification extends AbstractAnnualDateSpe
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return ofYear(date.asCalendarMonth().breachEncapsulationOfYear()).equals(date);
+		return ofYear(date.asCalendarMonth().getYear()).equals(date);
 	}
 	
 	@Override

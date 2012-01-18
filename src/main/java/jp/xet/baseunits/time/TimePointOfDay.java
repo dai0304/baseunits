@@ -436,12 +436,13 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	/**
 	 * この時刻のUTCにおける文字列表現を取得する。
 	 * 
+	 * @return 整形済み時間文字列
 	 * @see java.lang.Object#toString()
 	 * @since 2.0
 	 */
 	@Override
 	public String toString() {
-		return toString("HH:mm:ss,sss", UTC);
+		return toString("HH:mm:ss,sss zzz", UTC);
 	}
 	
 	/**
@@ -450,11 +451,26 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @param zone タイムゾーン
 	 * @return 整形済み時間文字列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public String toString(String pattern, TimeZone zone) {
+		Validate.notNull(pattern);
+		Validate.notNull(zone);
 		SimpleDateFormat df = CalendarUtil.newSimpleDateFormat(pattern, zone);
 		return df.format(asJavaUtilDate());
+	}
+	
+	/**
+	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
+	 * @param zone タイムゾーン
+	 * @return 整形済み時間文字列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	public String toString(TimeZone zone) {
+		return toString("HH:mm:ss,sss zzz", zone);
 	}
 	
 	/**

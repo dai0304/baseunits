@@ -64,7 +64,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Validate.notNull(yearMonth);
 		Validate.notNull(date);
 		Validate.notNull(zone);
-		return at(yearMonth.breachEncapsulationOfYear(), yearMonth.breachEncapsulationOfMonth().value,
+		return at(yearMonth.getYear(), yearMonth.getMonthOfYear().value,
 				date.value, hour, minute, second, millisecond, zone);
 	}
 	
@@ -213,7 +213,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint atMidnight(CalendarDate calendarDate, TimeZone zone) {
 		Validate.notNull(calendarDate);
 		Validate.notNull(zone);
-		return at(calendarDate.asCalendarMonth(), calendarDate.breachEncapsulationOfDay(), 0, 0, 0, 0, zone);
+		return at(calendarDate.asCalendarMonth(), calendarDate.getDayOfMonth(), 0, 0, 0, 0, zone);
 	}
 	
 	/**
@@ -433,7 +433,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * この瞬間を「時分」として返す。
+	 * この瞬間を、指定したタイムゾーンにおける「時分」として返す。
 	 * 
 	 * @param zone タイムゾーン
 	 * @return 時分
@@ -445,6 +445,17 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Calendar calendar = asJavaCalendar(zone);
 		return TimeOfDay.from(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
 				calendar.get(Calendar.SECOND), calendar.get(Calendar.MILLISECOND));
+	}
+	
+	/**
+	 * この瞬間を、「時分」として返す。
+	 * 
+	 * @return 時分
+	 * @since 2.0
+	 */
+	public TimePointOfDay asTimePointOfDay() {
+		long t = millisecondsFromEpoch % TimeUnitConversionFactor.millisecondsPerDay.value;
+		return TimePointOfDay.from(t);
 	}
 	
 	/**
@@ -675,9 +686,12 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @param zone タイムゾーン
 	 * @return 整形済み時間文字列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public String toString(String pattern, TimeZone zone) {
+		Validate.notNull(pattern);
+		Validate.notNull(zone);
 		SimpleDateFormat df = CalendarUtil.newSimpleDateFormat(pattern, zone);
 		return df.format(asJavaUtilDate());
 	}

@@ -34,7 +34,8 @@ public class TimePointOfDayTest {
 	public void test01_toString() {
 		TimePointOfDay jstNoon = TimePointOfDay.from(TimeOfDay.NOON, TimeZone.getTimeZone("JST"));
 		
-		assertThat(jstNoon, hasToString("03:00:00,000")); // JST 12:00 = UTC 03:00
-		assertThat(jstNoon.toString("HH:mm", TimeZone.getTimeZone("JST")), is("12:00"));
+		assertThat(jstNoon, hasToString("03:00:00,000 UTC")); // JST 12:00 = UTC 03:00
+		assertThat(jstNoon.toString("HH:mm zzz", TimeZone.getTimeZone("JST")), is("12:00 JST"));
+		assertThat(jstNoon.toString("HH:mm zzz", TimeZone.getTimeZone("UTC")), is("03:00 UTC"));
 	}
 }

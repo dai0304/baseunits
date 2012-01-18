@@ -59,6 +59,7 @@ public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecif
 	 * この仕様を満たす条件としての日（{@link DayOfMonth}）を返す。
 	 * 
 	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 * @since 2.0
 	 */
 	public DayOfMonth getDay() {
 		return day;
@@ -68,6 +69,7 @@ public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecif
 	 * この仕様を満たす条件としての月（{@link MonthOfYear}）を返す。
 	 * 
 	 * @return この仕様を満たす条件としての月（{@link MonthOfYear}）
+	 * @since 2.0
 	 */
 	public MonthOfYear getMonth() {
 		return month;
@@ -76,8 +78,8 @@ public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecif
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return day.equals(date.breachEncapsulationOfDay())
-				&& month == date.asCalendarMonth().breachEncapsulationOfMonth();
+		return day.equals(date.getDayOfMonth())
+				&& month == date.asCalendarMonth().getMonthOfYear();
 	}
 	
 	@Override

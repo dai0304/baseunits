@@ -91,7 +91,7 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
 		if (cal.isBusinessDay(date)) {
-			CalendarDate thisMonth = ofYearMonth(date.breachEncapsulationOfYearMonth());
+			CalendarDate thisMonth = ofYearMonth(date.getYearMonth());
 			return thisMonth.equals(date);
 		}
 		return false;
@@ -101,7 +101,7 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 	public CalendarDate ofYearMonth(CalendarMonth month) {
 		Validate.notNull(month);
 		return shifter.shift(
-				CalendarDate.from(month.breachEncapsulationOfYear(), month.breachEncapsulationOfMonth(), day), cal);
+				CalendarDate.from(month.getYear(), month.getMonthOfYear(), day), cal);
 	}
 	
 	

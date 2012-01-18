@@ -440,7 +440,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	
 	@Override
 	public String toString() {
-		return hour.toString() + ":" + minute.toString() + ":" + second.toString() + "." + millisec.toString();
+		return hour.toString() + ":" + minute.toString() + ":" + second.toString() + "," + millisec.toString();
 	}
 	
 	/**

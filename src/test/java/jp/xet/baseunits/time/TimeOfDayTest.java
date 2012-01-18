@@ -247,10 +247,10 @@ public class TimeOfDayTest {
 	 */
 	@Test
 	public void test15_toString() throws Exception {
-		assertThat(midnight.toString(), is("00:00:00.000"));
-		assertThat(morning.toString(), is("10:20:00.000"));
-		assertThat(noon.toString(), is("12:00:00.000"));
-		assertThat(afternoon.toString(), is("15:40:00.000"));
+		assertThat(midnight.toString(), is("00:00:00,000"));
+		assertThat(morning.toString(), is("10:20:00,000"));
+		assertThat(noon.toString(), is("12:00:00,000"));
+		assertThat(afternoon.toString(), is("15:40:00,000"));
 		
 		assertThat(midnight.toString("HH-mm"), is("00-00"));
 		assertThat(morning.toString("HH-mm"), is("10-20"));

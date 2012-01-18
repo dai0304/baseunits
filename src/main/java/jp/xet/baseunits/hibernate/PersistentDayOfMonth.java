@@ -67,6 +67,6 @@ public class PersistentDayOfMonth extends AbstractBaseunitsType<DayOfMonth, Inte
 	
 	@Override
 	protected Integer toNonNullInternalType(DayOfMonth value) {
-		return value.breachEncapsulationOfValue();
+		return value.toInt();
 	}
 }

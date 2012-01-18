@@ -62,13 +62,13 @@ public final class MonthlyFixedDateSpecification extends AbstractMonthlyDateSpec
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
 		Validate.notNull(date);
-		return day.equals(date.breachEncapsulationOfDay());
+		return day.equals(date.getDayOfMonth());
 	}
 	
 	@Override
 	public CalendarDate ofYearMonth(CalendarMonth month) {
 		Validate.notNull(month);
-		return CalendarDate.from(month.breachEncapsulationOfYear(), month.breachEncapsulationOfMonth(), day);
+		return CalendarDate.from(month.getYear(), month.getMonthOfYear(), day);
 	}
 	
 }

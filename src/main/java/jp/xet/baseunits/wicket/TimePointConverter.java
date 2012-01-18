@@ -62,6 +62,8 @@ public class TimePointConverter extends AbstractConverter<TimePoint> {
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @param timeZone タイムゾーン
 	 */
 	public TimePointConverter(TimeZone timeZone) {
 		this(DEFAILT_PATTERN_JAVA, timeZone);

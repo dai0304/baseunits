@@ -91,18 +91,6 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 		value = initial;
 	}
 	
-	/**
-	 * このオブジェクトの{@link #value}フィールド（日をあらわす正数）を返す。
-	 * 
-	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
-	 * 
-	 * @return 日をあらわす正数（1〜31）
-	 * @since 1.0
-	 */
-	public int breachEncapsulationOfValue() {
-		return value;
-	}
-	
 	@Override
 	public int compareTo(DayOfMonth other) {
 		return value - other.value;
@@ -208,6 +196,16 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 */
 	public CalendarDate on(CalendarMonth month) {
 		return CalendarDate.from(month, this);
+	}
+	
+	/**
+	 * この日をあらわす正数を返す。
+	 * 
+	 * @return 日をあらわす正数（1〜31）
+	 * @since 2.0
+	 */
+	public int toInt() {
+		return value;
 	}
 	
 	@Override

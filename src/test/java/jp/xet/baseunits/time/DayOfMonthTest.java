@@ -40,7 +40,7 @@ public class DayOfMonthTest {
 	public void test01_create() throws Exception {
 		for (int i = 1; i <= 31; i++) {
 			DayOfMonth m = DayOfMonth.valueOf(i);
-			assertThat(m.breachEncapsulationOfValue(), is(i));
+			assertThat(m.toInt(), is(i));
 		}
 		
 		try {

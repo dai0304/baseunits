@@ -422,9 +422,26 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この期間の終了日を含む年月を起点として、前回の前月を
+	 * この期間の開始日を含む年月を超過しない範囲で順次取得する反復子を取得する。
 	 * 
-	 * @return
+	 * <p>例えば [2009/01/10, 2009/04/04] で表される期間に対してこのメソッドを呼び出した場合、
+	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * <ol>
+	 *   <li>2009/01/04</li>
+	 *   <li>2009/01/03</li>
+	 *   <li>2009/01/02</li>
+	 *   <li>2009/01/01</li>
+	 * </ol>
+	 * </p>
+	 * 
+	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+	 * 
+	 * <p>この期間が開始日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * {@code true}を返すので、無限ループに注意すること。</p>
+	 * 
+	 * @return 年月の反復子
+	 * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
 	 * @since 2.0
 	 */
 	public Iterator<CalendarMonth> monthsInReverseIterator() {
@@ -461,9 +478,27 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 期間の開始日を含む年月を起点として、前回の翌月を
+	 * この期間の終了日を含む年月を超過しない範囲で順次取得する反復子を取得する。
 	 * 
-	 * @return
+	 * <p>例えば [2009/01/10, 2009/05/04] で表される期間に対してこのメソッドを呼び出した場合、
+	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * <ol>
+	 *   <li>2009/01</li>
+	 *   <li>2009/02</li>
+	 *   <li>2009/03</li>
+	 *   <li>2009/04</li>
+	 *   <li>2009/05</li>
+	 * </ol>
+	 * </p>
+	 * 
+	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+	 * 
+	 * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * {@code true}を返すので、無限ループに注意すること。</p>
+	 * 
+	 * @return 年月の反復子
+	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
 	 * @since 2.0
 	 */
 	public Iterator<CalendarMonth> monthsIterator() {
@@ -577,9 +612,16 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * この期間の終了日を含む週を起点として、前回の前週を
+	 * この期間の開始日を含む週を超過しない範囲で順次取得する反復子を取得する。
 	 * 
-	 * @return
+	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+	 * 
+	 * <p>この期間が開始日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * {@code true}を返すので、無限ループに注意すること。</p>
+	 * 
+	 * @return 年月の反復子
+	 * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
 	 * @since 2.0
 	 */
 	public Iterator<CalendarWeek> weeksInReverseIterator() {
@@ -616,9 +658,16 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 期間の開始日を含む週を起点として、前回の翌週を
+	 * この期間の終了日を含む週を超過しない範囲で順次取得する反復子を取得する。
 	 * 
-	 * @return
+	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
+	 * 
+	 * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * {@code true}を返すので、無限ループに注意すること。</p>
+	 * 
+	 * @return 年月の反復子
+	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
 	 * @since 2.0
 	 */
 	public Iterator<CalendarWeek> weeksIterator() {
