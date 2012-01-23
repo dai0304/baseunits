@@ -97,8 +97,9 @@ public class CalendarDateValueType extends AbstractBaseunitsValueType<CalendarDa
 		if (value == null) {
 			stmt.setNull(index, Types.DATE);
 		} else {
-			long epochMillisec = value.startAsTimePoint(TimeZone.getDefault()).toEpochMillisec();
-			stmt.setDate(index, new java.sql.Date(epochMillisec));
+//			long epochMillisec = value.startAsTimePoint(TimeZone.getDefault()).toEpochMillisec();
+//			stmt.setDate(index, new java.sql.Date(epochMillisec));
+			stmt.setString(index, value.toString("yyyy-MM-dd"));
 		}
 	}
 }
