@@ -22,8 +22,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import jp.sf.amateras.mirage.type.ValueType;
+import jp.xet.baseunits.time.CalendarUtil;
 import jp.xet.baseunits.time.TimePoint;
 
 /**
@@ -34,12 +37,18 @@ import jp.xet.baseunits.time.TimePoint;
  */
 public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 	
+	private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
+	
+	private static final Calendar CALENDAR = CalendarUtil.newCalendar(UTC);
+	
+	
 	@Override
 	public TimePoint get(Class<? extends TimePoint> type, CallableStatement cs, int index) throws SQLException {
 		Timestamp date = cs.getTimestamp(index);
 		if (date == null) {
 			return null;
 		}
+		date = convertTimeZone(date, TimeZone.getDefault(), UTC);
 		return TimePoint.from(date);
 	}
 	
@@ -50,6 +59,7 @@ public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 		if (date == null) {
 			return null;
 		}
+		date = convertTimeZone(date, TimeZone.getDefault(), UTC);
 		return TimePoint.from(date);
 	}
 	
@@ -59,6 +69,7 @@ public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 		if (date == null) {
 			return null;
 		}
+		date = convertTimeZone(date, TimeZone.getDefault(), UTC);
 		return TimePoint.from(date);
 	}
 	
@@ -68,6 +79,7 @@ public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 		if (date == null) {
 			return null;
 		}
+		date = convertTimeZone(date, TimeZone.getDefault(), UTC);
 		return TimePoint.from(date);
 	}
 	
@@ -98,7 +110,24 @@ public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 			stmt.setNull(index, Types.TIMESTAMP);
 		} else {
 			long epochMillisec = value.toEpochMillisec();
-			stmt.setTimestamp(index, new Timestamp(epochMillisec));
+			stmt.setTimestamp(index, new Timestamp(epochMillisec), CALENDAR);
 		}
+	}
+	
+	/**
+	 * tsのタイムゾーンを変換する。
+	 * 
+	 * <p>本来 {@link Timestamp} はタイムゾーンを織り込んだ時刻を表すが、それを強引に{@code from}のタイムゾーンとして解釈し、
+	 * {@code to}のタイムゾーンに変換する。通常 {@link CallableStatement#getTimestamp(String, Calendar)}や
+	 * {@link ResultSet#getTimestamp(String, Calendar)}等を利用すべきだが、log4jdbc-remixに
+	 * <a href="http://code.google.com/p/log4jdbc-remix/issues/detail?id=8">バグ</a>があるため、自前回避をしている。</p> 
+	 * 
+	 * @param ts 変換前のTS
+	 * @param from {@code ts}を解釈するタイムゾーン
+	 * @param to 変換後のタイムゾーン
+	 * @return 変換後のTS
+	 */
+	private Timestamp convertTimeZone(Timestamp ts, TimeZone from, TimeZone to) {
+		return new Timestamp(ts.getTime() + from.getRawOffset() - to.getRawOffset());
 	}
 }
