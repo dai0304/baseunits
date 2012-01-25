@@ -19,7 +19,6 @@ package jp.xet.baseunits.wicket;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 
 import org.apache.commons.lang.Validate;
@@ -75,29 +74,29 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param calendarDate 表示する日付
+	 * @param timePoint 表示する日付
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone time zone
 	 */
-	public TimePointLabel(String id, TimePoint calendarDate, String datePattern, TimeZone timeZone) {
-		this(id, Model.of(calendarDate), datePattern, timeZone);
+	public TimePointLabel(String id, TimePoint timePoint, String datePattern, TimeZone timeZone) {
+		this(id, Model.of(timePoint), datePattern, timeZone);
 	}
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param calendarDate 表示する日付
+	 * @param timePoint 表示する日付
 	 * @param timeZone time zone
 	 */
-	public TimePointLabel(String id, TimePoint calendarDate, TimeZone timeZone) {
-		this(id, Model.of(calendarDate), DEFAULT_PATTERN, timeZone);
+	public TimePointLabel(String id, TimePoint timePoint, TimeZone timeZone) {
+		this(id, Model.of(timePoint), DEFAULT_PATTERN, timeZone);
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C>IConverter<C> getConverter(Class<C> type) {
-		if (type == CalendarDate.class) {
+		if (type == TimePoint.class) {
 			return (IConverter<C>) new TimePointConverter(datePattern, timeZone);
 		}
 		return super.getConverter(type);
