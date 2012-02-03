@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.time.HourOfDay.Meridian;
@@ -684,6 +685,24 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
+	 * @param locale ロケール
+	 * @param zone タイムゾーン
+	 * @return 整形済み時間文字列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	public String toString(String pattern, Locale locale, TimeZone zone) {
+		Validate.notNull(pattern);
+		Validate.notNull(locale);
+		Validate.notNull(zone);
+		SimpleDateFormat df = CalendarUtil.newSimpleDateFormat(pattern, locale, zone);
+		return df.format(asJavaUtilDate());
+	}
+	
+	/**
+	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
+	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @param zone タイムゾーン
 	 * @return 整形済み時間文字列
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
@@ -692,8 +711,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public String toString(String pattern, TimeZone zone) {
 		Validate.notNull(pattern);
 		Validate.notNull(zone);
-		SimpleDateFormat df = CalendarUtil.newSimpleDateFormat(pattern, zone);
-		return df.format(asJavaUtilDate());
+		return toString(pattern, Locale.getDefault(), zone);
 	}
 	
 	/**

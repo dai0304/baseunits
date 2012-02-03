@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.Validate;
@@ -542,10 +543,22 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 1.0
 	 */
 	public String toString(String pattern) {
+		return toString(pattern, Locale.getDefault());
+	}
+	
+	/**
+	 * この日付を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
+	 * @param pattern {@link SimpleDateFormat}に基づくパターン
+	 * @param locale ロケール
+	 * @return 整形済み時間文字列
+	 * @since 2.0
+	 */
+	public String toString(String pattern, Locale locale) {
 		// Any timezone works, as long as the same one is used throughout.
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		TimePoint point = startAsTimePoint(arbitraryZone);
-		return point.toString(pattern, arbitraryZone);
+		return point.toString(pattern, locale, arbitraryZone);
 	}
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {

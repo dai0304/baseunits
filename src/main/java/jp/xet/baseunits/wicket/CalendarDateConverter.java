@@ -42,8 +42,11 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	private final String datePattern;
 	
 	
+	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @since 1.0
 	 */
 	public CalendarDateConverter() {
 		this(DEFAILT_PATTERN_JAVA);
@@ -54,6 +57,7 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
 	 */
 	public CalendarDateConverter(String datePattern) {
 		Validate.notNull(datePattern);
@@ -76,7 +80,7 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	
 	@Override
 	public String convertToString(CalendarDate value, Locale locale) {
-		return value == null ? null : value.toString(datePattern);
+		return value == null ? null : value.toString(datePattern, locale);
 	}
 	
 	@Override
