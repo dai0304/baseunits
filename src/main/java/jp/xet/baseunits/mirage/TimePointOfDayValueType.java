@@ -22,11 +22,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 import jp.sf.amateras.mirage.type.ValueType;
-import jp.xet.baseunits.time.CalendarUtil;
 import jp.xet.baseunits.time.TimePointOfDay;
 
 /**
@@ -37,15 +34,10 @@ import jp.xet.baseunits.time.TimePointOfDay;
  */
 public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePointOfDay> {
 	
-	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
-	
-	private static final Calendar CALENDAR = CalendarUtil.newCalendar(UTC);
-	
-	
 	@Override
 	public TimePointOfDay get(Class<? extends TimePointOfDay> type, CallableStatement cs, int index)
 			throws SQLException {
-		Time time = cs.getTime(index, CALENDAR);
+		Time time = cs.getTime(index);
 		if (time == null) {
 			return null;
 		}
@@ -55,7 +47,7 @@ public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePoin
 	@Override
 	public TimePointOfDay get(Class<? extends TimePointOfDay> type, CallableStatement cs, String parameterName)
 			throws SQLException {
-		Time time = cs.getTime(parameterName, CALENDAR);
+		Time time = cs.getTime(parameterName);
 		if (time == null) {
 			return null;
 		}
@@ -64,7 +56,7 @@ public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePoin
 	
 	@Override
 	public TimePointOfDay get(Class<? extends TimePointOfDay> type, ResultSet rs, int index) throws SQLException {
-		Time time = rs.getTime(index, CALENDAR);
+		Time time = rs.getTime(index);
 		if (time == null) {
 			return null;
 		}
@@ -74,7 +66,7 @@ public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePoin
 	@Override
 	public TimePointOfDay get(Class<? extends TimePointOfDay> type, ResultSet rs, String columnName)
 			throws SQLException {
-		Time time = rs.getTime(columnName, CALENDAR);
+		Time time = rs.getTime(columnName);
 		if (time == null) {
 			return null;
 		}
@@ -107,7 +99,7 @@ public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePoin
 		if (value == null) {
 			stmt.setNull(index, Types.TIME);
 		} else {
-			stmt.setTime(index, new Time(value.toUTCMidnightMillisec()), CALENDAR);
+			stmt.setTime(index, new Time(value.toUTCMidnightMillisec()));
 		}
 	}
 }
