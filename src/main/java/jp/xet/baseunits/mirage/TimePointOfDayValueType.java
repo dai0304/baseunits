@@ -22,10 +22,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
-import java.text.ParseException;
+import java.util.Calendar;
 import java.util.TimeZone;
 
 import jp.sf.amateras.mirage.type.ValueType;
+import jp.xet.baseunits.time.CalendarUtil;
 import jp.xet.baseunits.time.TimePointOfDay;
 
 /**
@@ -36,64 +37,48 @@ import jp.xet.baseunits.time.TimePointOfDay;
  */
 public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePointOfDay> {
 	
-	private static final String PATTERN = "HH:mm:ss";
+	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
-	private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
+	private static final Calendar CALENDAR = CalendarUtil.newCalendar(UTC);
 	
 	
 	@Override
 	public TimePointOfDay get(Class<? extends TimePointOfDay> type, CallableStatement cs, int index)
 			throws SQLException {
-		String time = cs.getString(index);
+		Time time = cs.getTime(index, CALENDAR);
 		if (time == null) {
 			return null;
 		}
-		try {
-			return TimePointOfDay.parse(time, PATTERN, UTC);
-		} catch (ParseException e) {
-			return null;
-		}
+		return TimePointOfDay.from(time.getTime());
 	}
 	
 	@Override
 	public TimePointOfDay get(Class<? extends TimePointOfDay> type, CallableStatement cs, String parameterName)
 			throws SQLException {
-		String time = cs.getString(parameterName);
+		Time time = cs.getTime(parameterName, CALENDAR);
 		if (time == null) {
 			return null;
 		}
-		try {
-			return TimePointOfDay.parse(time, PATTERN, UTC);
-		} catch (ParseException e) {
-			return null;
-		}
+		return TimePointOfDay.from(time.getTime());
 	}
 	
 	@Override
 	public TimePointOfDay get(Class<? extends TimePointOfDay> type, ResultSet rs, int index) throws SQLException {
-		String time = rs.getString(index);
+		Time time = rs.getTime(index, CALENDAR);
 		if (time == null) {
 			return null;
 		}
-		try {
-			return TimePointOfDay.parse(time, PATTERN, UTC);
-		} catch (ParseException e) {
-			return null;
-		}
+		return TimePointOfDay.from(time.getTime());
 	}
 	
 	@Override
 	public TimePointOfDay get(Class<? extends TimePointOfDay> type, ResultSet rs, String columnName)
 			throws SQLException {
-		String time = rs.getString(columnName);
+		Time time = rs.getTime(columnName, CALENDAR);
 		if (time == null) {
 			return null;
 		}
-		try {
-			return TimePointOfDay.parse(time, PATTERN, UTC);
-		} catch (ParseException e) {
-			return null;
-		}
+		return TimePointOfDay.from(time.getTime());
 	}
 	
 	@Override
@@ -122,7 +107,7 @@ public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePoin
 		if (value == null) {
 			stmt.setNull(index, Types.TIME);
 		} else {
-			stmt.setString(index, value.toString(PATTERN, UTC));
+			stmt.setTime(index, new Time(value.toUTCMidnightMillisec()), CALENDAR);
 		}
 	}
 }

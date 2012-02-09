@@ -37,7 +37,7 @@ import jp.xet.baseunits.time.TimePoint;
  */
 public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 	
-	private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
+	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
 	private static final Calendar CALENDAR = CalendarUtil.newCalendar(UTC);
 	
