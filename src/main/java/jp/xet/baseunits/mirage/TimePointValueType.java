@@ -44,42 +44,38 @@ public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 	
 	@Override
 	public TimePoint get(Class<? extends TimePoint> type, CallableStatement cs, int index) throws SQLException {
-		Timestamp date = cs.getTimestamp(index);
+		Timestamp date = cs.getTimestamp(index, CALENDAR);
 		if (date == null) {
 			return null;
 		}
-		date = convertTimeZone(date, TimeZone.getDefault(), UTC);
 		return TimePoint.from(date);
 	}
 	
 	@Override
 	public TimePoint get(Class<? extends TimePoint> type, CallableStatement cs, String parameterName)
 			throws SQLException {
-		Timestamp date = cs.getTimestamp(parameterName);
+		Timestamp date = cs.getTimestamp(parameterName, CALENDAR);
 		if (date == null) {
 			return null;
 		}
-		date = convertTimeZone(date, TimeZone.getDefault(), UTC);
 		return TimePoint.from(date);
 	}
 	
 	@Override
 	public TimePoint get(Class<? extends TimePoint> type, ResultSet rs, int index) throws SQLException {
-		Timestamp date = rs.getTimestamp(index);
+		Timestamp date = rs.getTimestamp(index, CALENDAR);
 		if (date == null) {
 			return null;
 		}
-		date = convertTimeZone(date, TimeZone.getDefault(), UTC);
 		return TimePoint.from(date);
 	}
 	
 	@Override
 	public TimePoint get(Class<? extends TimePoint> type, ResultSet rs, String columnName) throws SQLException {
-		Timestamp date = rs.getTimestamp(columnName);
+		Timestamp date = rs.getTimestamp(columnName, CALENDAR);
 		if (date == null) {
 			return null;
 		}
-		date = convertTimeZone(date, TimeZone.getDefault(), UTC);
 		return TimePoint.from(date);
 	}
 	
@@ -112,22 +108,5 @@ public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 			long epochMillisec = value.toEpochMillisec();
 			stmt.setTimestamp(index, new Timestamp(epochMillisec), CALENDAR);
 		}
-	}
-	
-	/**
-	 * tsのタイムゾーンを変換する。
-	 * 
-	 * <p>本来 {@link Timestamp} はタイムゾーンを織り込んだ時刻を表すが、それを強引に{@code from}のタイムゾーンとして解釈し、
-	 * {@code to}のタイムゾーンに変換する。通常 {@link CallableStatement#getTimestamp(String, Calendar)}や
-	 * {@link ResultSet#getTimestamp(String, Calendar)}等を利用すべきだが、log4jdbc-remixに
-	 * <a href="http://code.google.com/p/log4jdbc-remix/issues/detail?id=8">バグ</a>があるため、自前回避をしている。</p> 
-	 * 
-	 * @param ts 変換前のTS
-	 * @param from {@code ts}を解釈するタイムゾーン
-	 * @param to 変換後のタイムゾーン
-	 * @return 変換後のTS
-	 */
-	private Timestamp convertTimeZone(Timestamp ts, TimeZone from, TimeZone to) {
-		return new Timestamp(ts.getTime() + from.getRawOffset() - to.getRawOffset());
 	}
 }
