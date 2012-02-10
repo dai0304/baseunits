@@ -72,14 +72,13 @@ public class TimePointOfDayConverter extends AbstractConverter<TimePointOfDay> {
 	public TimePointOfDay convertToObject(String value, Locale locale) {
 		if (Strings.isNullOrEmpty(value)) {
 			return null;
-		} else {
-			try {
-				return TimePointOfDay.parse(value, timePattern, timeZone);
-			} catch (ParseException e) {
-				// ignore to return null
-			}
 		}
-		return null;
+		
+		try {
+			return TimePointOfDay.parse(value, timePattern, timeZone);
+		} catch (ParseException e) {
+			throw newConversionException("Cannot convert '" + value + "' to TimePointOfDay", value, locale);
+		}
 	}
 	
 	@Override

@@ -74,14 +74,13 @@ public class TimePointConverter extends AbstractConverter<TimePoint> {
 	public TimePoint convertToObject(String value, Locale locale) {
 		if (Strings.isNullOrEmpty(value)) {
 			return null;
-		} else {
-			try {
-				return TimePoint.parse(value, datePattern, timeZone);
-			} catch (ParseException e) {
-				// ignore to return null
-			}
 		}
-		return null;
+		
+		try {
+			return TimePoint.parse(value, datePattern, timeZone);
+		} catch (ParseException e) {
+			throw newConversionException("Cannot convert '" + value + "' to TimePoint", value, locale);
+		}
 	}
 	
 	@Override

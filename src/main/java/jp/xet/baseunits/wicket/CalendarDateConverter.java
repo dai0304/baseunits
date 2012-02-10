@@ -68,14 +68,13 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	public CalendarDate convertToObject(String value, Locale locale) {
 		if (Strings.isNullOrEmpty(value)) {
 			return null;
-		} else {
-			try {
-				return CalendarDate.parse(value, datePattern);
-			} catch (ParseException e) {
-				// ignore to return null
-			}
 		}
-		return null;
+		
+		try {
+			return CalendarDate.parse(value, datePattern);
+		} catch (ParseException e) {
+			throw newConversionException("Cannot convert '" + value + "' to CalendarDate", value, locale);
+		}
 	}
 	
 	@Override

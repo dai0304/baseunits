@@ -63,14 +63,13 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 	public TimeOfDay convertToObject(String value, Locale locale) {
 		if (Strings.isNullOrEmpty(value)) {
 			return null;
-		} else {
-			try {
-				return TimeOfDay.parse(value, timePattern);
-			} catch (ParseException e) {
-				// ignore to return null
-			}
 		}
-		return null;
+		
+		try {
+			return TimeOfDay.parse(value, timePattern);
+		} catch (ParseException e) {
+			throw newConversionException("Cannot convert '" + value + "' to TimeOfDay", value, locale);
+		}
 	}
 	
 	@Override
