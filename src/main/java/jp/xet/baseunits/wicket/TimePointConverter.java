@@ -24,9 +24,10 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 
+import com.google.common.base.Strings;
+
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
-import org.apache.wicket.util.string.Strings;
 
 /**
  * Converts from Object to {@link CalendarDate}.
@@ -71,7 +72,7 @@ public class TimePointConverter extends AbstractConverter<TimePoint> {
 	
 	@Override
 	public TimePoint convertToObject(String value, Locale locale) {
-		if (Strings.isEmpty(value)) {
+		if (Strings.isNullOrEmpty(value)) {
 			return null;
 		} else {
 			try {

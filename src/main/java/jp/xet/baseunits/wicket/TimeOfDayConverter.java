@@ -22,9 +22,10 @@ import java.util.Locale;
 
 import jp.xet.baseunits.time.TimeOfDay;
 
+import com.google.common.base.Strings;
+
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
-import org.apache.wicket.util.string.Strings;
 
 /**
  * Converts from Object to {@link TimeOfDay}.
@@ -60,7 +61,7 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 	
 	@Override
 	public TimeOfDay convertToObject(String value, Locale locale) {
-		if (Strings.isEmpty(value)) {
+		if (Strings.isNullOrEmpty(value)) {
 			return null;
 		} else {
 			try {
