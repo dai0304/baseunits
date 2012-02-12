@@ -22,7 +22,6 @@ import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.util.Ratio;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -33,25 +32,6 @@ public class CalculateRate {
 	/** 契約日 */
 	private static final CalendarDate policyEffectiveDate = CalendarDate.from(2004, 11, 7);
 	
-
-	/**
-	 * Example.
-	 */
-	@Test
-	@Ignore
-	public void testLookUpMoreComplicated() {
-//		BusinessCalendar paymentCalendar = new BusinessCalendar();
-//		CalendarInterval paymentQuarter = paymentCalendar.currentQuarter();
-//		
-//		CalendarDate birthdate = null;
-//		Duration age = birthdate.through(paymentQuarter.start()).length();
-//		Rate rate = insuranceSchedule().get(age);
-//		Money quarterlyPayment = rate.times(Duration.quarters(1));
-//		CalendarDate effectiveDate = null;
-//		CalendarInterval remainingQuarter = paymentQuarter.cropForwardFrom(effectiveDate);
-//		BigDecimal ratio = remainingQuarter.duration().dividedBy(paymentQuarter);
-//		Money firstPayment = quarterlyPayment.prorate(ratio);
-	}
 	
 	/**
 	 * Example.

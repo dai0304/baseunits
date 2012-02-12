@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.tests.SerializationTester;
 
 import org.junit.Test;
@@ -266,15 +265,19 @@ public class IntervalTest {
 	
 	private Interval<BigDecimal> c1_1o = Interval.over(new BigDecimal(1), true, new BigDecimal(1), false);
 	
-	private Interval<BigDecimal> c1_1c = Interval.over(new BigDecimal(1), true, new BigDecimal(1), true);
+	private Interval<BigDecimal> c1_1c = Interval.singleElement(new BigDecimal(1));
 	
 	private Interval<BigDecimal> o1_1o = Interval.over(new BigDecimal(1), false, new BigDecimal(1), false);
 	
 	private Interval<BigDecimal> _2o = Interval.over(null, true, new BigDecimal(2), false);
 	
-	private Interval<BigDecimal> o9_ = Interval.over(new BigDecimal(9), false, null, true);
+	private Interval<BigDecimal> _3o = Interval.over(null, true, new BigDecimal(3), false);
 	
-	private Interval<BigDecimal> empty = Interval.open(new BigDecimal(1), new BigDecimal(1));
+	private Interval<BigDecimal> o9_ = Interval.moreThan(new BigDecimal(9));
+	
+	private Interval<BigDecimal> o4_ = Interval.moreThan(new BigDecimal(4));
+	
+	private Interval<BigDecimal> empty = Interval.empty(new BigDecimal(1));
 	
 	private Interval<BigDecimal> all = Interval.<BigDecimal> closed(null, null);
 	
@@ -500,6 +503,9 @@ public class IntervalTest {
 		assertThat(c1_1o.intersects(c5_15c), is(false));
 		assertThat(c1_1c.intersects(c5_15c), is(false));
 		assertThat(o1_1o.intersects(c12_16c), is(false));
+		assertThat(_2o.intersects(_3o), is(true));
+		assertThat(_2o.intersects(o4_), is(false));
+		assertThat(o9_.intersects(o4_), is(true));
 		assertThat(empty.intersects(o10_12c), is(false));
 		assertThat(all.intersects(o10_12c), is(true));
 	}
@@ -746,7 +752,9 @@ public class IntervalTest {
 		assertThat(c1_1o, is(o1_1c));
 		assertThat(c1_1c, is(o1_1c));
 		assertThat(c1_1c, is(c1_1o));
+		assertThat(o1_1c.equals(null), is(false));
 		assertThat(o1_1c.equals(o1_1o), is(false));
+		assertThat(o1_1c.equals(o10_12c), is(false));
 	}
 	
 	/**

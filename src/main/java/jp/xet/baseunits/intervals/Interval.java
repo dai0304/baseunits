@@ -77,6 +77,10 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 		return new Interval<T>(lower, true, upper, true);
 	}
 	
+	public static <T extends Comparable<T> & Serializable>Interval<T> empty(T someValue) {
+		return new Interval<T>(someValue, false, someValue, false);
+	}
+	
 	/**
 	 * 下側限界のみを持つ区間を生成する。
 	 * 
@@ -90,10 +94,6 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	public static <T extends Comparable<T> & Serializable>Interval<T> moreThan(T lower) {
 		return open(lower, null);
 	}
-	
-//	public static <T extends Comparable<T>>Interval<T> empty(T someValue) {
-//		return new Interval<T>(someValue, false, someValue, false);
-//	}
 	
 	/**
 	 * 開区間を生成する。
