@@ -178,6 +178,8 @@ public class TimePointTest {
 		assertThat(dec20_2003, is(createdFromJavaDate));
 		assertThat(createdFromJavaDate.equals(dec20_2003), is(true));
 		assertThat(createdFromJavaDate.equals(dec5_2003), is(false));
+		assertThat(createdFromJavaDate.equals(new Object()), is(false));
+		assertThat(createdFromJavaDate.equals(null), is(false));
 	}
 	
 	/**

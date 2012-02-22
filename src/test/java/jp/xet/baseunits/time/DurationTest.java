@@ -23,14 +23,16 @@ package jp.xet.baseunits.time;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 import jp.xet.baseunits.tests.SerializationTester;
+
+import com.google.common.collect.Lists;
 
 import org.junit.Test;
 
@@ -178,14 +180,19 @@ public class DurationTest {
 	 */
 	@Test
 	public void test09_Equals() throws Exception {
-		assertThat(Duration.hours(48), is(Duration.days(2)));
-		assertThat(Duration.quarters(4), is(Duration.years(1)));
-		assertThat(Duration.months(6), is(Duration.quarters(2)));
+		assertThat(Duration.hours(48).equals(Duration.days(2)), is(true));
+		assertThat(Duration.quarters(4).equals(Duration.years(1)), is(true));
+		assertThat(Duration.months(6).equals(Duration.quarters(2)), is(true));
 		
-		assertThat(Duration.months(1), is(not(Duration.days(28))));
-		assertThat(Duration.months(1), is(not(Duration.days(29))));
-		assertThat(Duration.months(1), is(not(Duration.days(30))));
-		assertThat(Duration.months(1), is(not(Duration.days(31))));
+		assertThat(Duration.months(1).equals(Duration.days(28)), is(false));
+		assertThat(Duration.months(1).equals(Duration.days(29)), is(false));
+		assertThat(Duration.months(1).equals(Duration.days(30)), is(false));
+		assertThat(Duration.months(1).equals(Duration.days(31)), is(false));
+		
+		Duration twoMonths = Duration.months(2);
+		assertThat(twoMonths.equals(twoMonths), is(true));
+		assertThat(twoMonths.equals(new Object()), is(false));
+		assertThat(twoMonths.equals(null), is(false));
 	}
 	
 	/**
@@ -421,5 +428,36 @@ public class DurationTest {
 		} catch (IllegalArgumentException e) {
 			// success
 		}
+	}
+	
+	/**
+	 * {@link Duration#diff(TimePoint, TimePoint)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test22_diff() throws Exception {
+		TimePoint a = TimePoint.atUTC(1978, 3, 4, 7, 6, 0);
+		TimePoint b = TimePoint.atUTC(1978, 3, 6, 7, 7, 0);
+		assertThat(Duration.diff(a, a), is(Duration.NONE));
+		assertThat(Duration.diff(a, b), is(Duration.days(2).plus(Duration.minutes(1))));
+		assertThat(Duration.diff(b, a), is(Duration.days(2).plus(Duration.minutes(1))));
+	}
+	
+	/**
+	 * {@link Duration#sum(Iterable)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test23_sum() throws Exception {
+		List<Duration> durations = Lists.newArrayList();
+		durations.add(Duration.hours(23));
+		durations.add(Duration.minutes(50));
+		durations.add(Duration.minutes(9));
+		durations.add(null);
+		durations.add(Duration.seconds(61));
+		
+		assertThat(Duration.sum(durations), is(Duration.days(1).plus(Duration.seconds(1))));
 	}
 }

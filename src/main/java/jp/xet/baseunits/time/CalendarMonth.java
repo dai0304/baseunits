@@ -192,7 +192,6 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		assert month != null;
 		if (this == obj) {
 			return true;
 		}

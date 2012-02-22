@@ -21,6 +21,8 @@
 package jp.xet.baseunits.time;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import jp.xet.baseunits.time.HourOfDay.Meridian;
@@ -183,5 +185,36 @@ public class HourOfDayTest {
 		HourOfDay anHour = HourOfDay.valueOf(8);
 		HourOfDay anotherHour = HourOfDay.valueOf(8);
 		assertThat(anHour.isBefore(anotherHour), is(false));
+	}
+	
+	/**
+	 * {@link HourOfDay#equals(Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test14_equals() throws Exception {
+		HourOfDay eightHours = HourOfDay.valueOf(8);
+		HourOfDay eightHours2 = HourOfDay.valueOf(8);
+		HourOfDay sixHours = HourOfDay.valueOf(6);
+		assertThat(eightHours.equals(eightHours), is(true));
+		assertThat(eightHours.equals(eightHours2), is(true));
+		assertThat(eightHours.equals(sixHours), is(false));
+		assertThat(eightHours.equals(new Object()), is(false));
+		assertThat(eightHours.equals(null), is(false));
+	}
+	
+	/**
+	 * {@link HourOfDay#compareTo(HourOfDay)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test15_compareTo() throws Exception {
+		HourOfDay eightHours = HourOfDay.valueOf(8);
+		HourOfDay sixHours = HourOfDay.valueOf(6);
+		assertThat(eightHours.compareTo(eightHours), is(0));
+		assertThat(eightHours.compareTo(sixHours), is(greaterThan(0)));
+		assertThat(sixHours.compareTo(eightHours), is(lessThan(0)));
 	}
 }

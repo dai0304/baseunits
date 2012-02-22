@@ -165,8 +165,6 @@ public class Ratio {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		assert denominator != null;
-		assert numerator != null;
 		if (this == obj) {
 			return true;
 		}
@@ -188,8 +186,6 @@ public class Ratio {
 	
 	@Override
 	public int hashCode() {
-		assert denominator != null;
-		assert numerator != null;
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + denominator.hashCode();

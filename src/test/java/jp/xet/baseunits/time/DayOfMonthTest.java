@@ -22,7 +22,6 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import jp.xet.baseunits.time.DayOfMonth;
 
 import org.junit.Test;
 
@@ -183,5 +182,26 @@ public class DayOfMonthTest {
 		assertThat(dom1.equals(null), is(false));
 		assertThat(dom1.equals(new DayOfMonth(1) {
 		}), is(false));
+	}
+	
+	/**
+	 * {@link DayOfMonth#isApplyable(int, MonthOfYear)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_isApplyable() throws Exception {
+		assertThat(DayOfMonth.valueOf(1).isApplyable(1978, MonthOfYear.MAR), is(true));
+		assertThat(DayOfMonth.valueOf(31).isApplyable(1978, MonthOfYear.APR), is(false));
+	}
+	
+	/**
+	 * {@link DayOfMonth#on(CalendarMonth)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_on() throws Exception {
+		assertThat(DayOfMonth.valueOf(4).on(CalendarMonth.from(1978, 3)), is(CalendarDate.from(1978, 3, 4)));
 	}
 }

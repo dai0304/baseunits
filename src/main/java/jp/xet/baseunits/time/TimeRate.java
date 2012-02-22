@@ -109,8 +109,6 @@ public class TimeRate {
 	
 	@Override
 	public boolean equals(Object obj) {
-		assert quantity != null;
-		assert unit != null;
 		if (this == obj) {
 			return true;
 		}

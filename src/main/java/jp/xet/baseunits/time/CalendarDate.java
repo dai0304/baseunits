@@ -304,8 +304,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		assert day != null;
-		assert yearMonth != null;
 		if (this == obj) {
 			return true;
 		}

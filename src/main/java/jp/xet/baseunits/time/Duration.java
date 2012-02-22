@@ -473,7 +473,6 @@ public class Duration implements Comparable<Duration>, Serializable {
 			}
 		}
 		return null;
-		
 	}
 	
 	/**
