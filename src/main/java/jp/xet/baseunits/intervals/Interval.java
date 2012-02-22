@@ -374,7 +374,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	
 	@Override
 	public int hashCode() {
-		return lowerLimit().hashCode() ^ upperLimit().hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((lowerLimitObject == null) ? 0 : lowerLimitObject.hashCode());
+		result = prime * result + ((upperLimitObject == null) ? 0 : upperLimitObject.hashCode());
+		return result;
 	}
 	
 	/**

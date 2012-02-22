@@ -17,11 +17,14 @@
  */
 package jp.xet.baseunits.intervals;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -29,6 +32,9 @@ import org.junit.Test;
  * {@link IntervalComparatorUpperLower}のテストクラス。
  */
 public class IntervalComparatorUpperLowerTest {
+	
+	Random r = new Random();
+	
 	
 	/**
 	 * {@link IntervalComparatorUpperLower#compare(Interval, Interval)}のテスト。
@@ -39,7 +45,15 @@ public class IntervalComparatorUpperLowerTest {
 	public void test01_compare() throws Exception {
 		List<Interval<Integer>> list = IntervalTest.newIntegerIntervalList2();
 		Collections.sort(list, new IntervalComparatorUpperLower<Integer>(true, false));
-		// TODO assertion
+		
+		assertThat(list.get(0), is(Interval.empty(r.nextInt())));
+		assertThat(list.get(1), is(Interval.empty(r.nextInt())));
+		assertThat(list.get(2), is(Interval.empty(r.nextInt())));
+		assertThat(list.get(3), is(Interval.empty(r.nextInt())));
+		assertThat(list.get(4), is(Interval.empty(r.nextInt())));
+		assertThat(list.get(5), is(Interval.over(null, false, 0, false)));
+		assertThat(list.get(6), is(Interval.singleElement(0)));
+		// ...
 	}
 	
 	@Test

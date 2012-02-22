@@ -33,7 +33,6 @@ import org.apache.commons.lang.Validate;
  * @author daisuke
  * @since 1.0
  */
-// TODO serializability検討
 public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthlyDateSpecification {
 	
 	final DayOfMonth day;

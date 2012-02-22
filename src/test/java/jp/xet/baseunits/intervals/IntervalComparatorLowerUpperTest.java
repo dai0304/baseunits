@@ -17,6 +17,8 @@
  */
 package jp.xet.baseunits.intervals;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.fail;
 
 import java.util.Collections;
@@ -39,7 +41,11 @@ public class IntervalComparatorLowerUpperTest {
 	public void test01_compare() throws Exception {
 		List<Interval<Integer>> list = IntervalTest.newIntegerIntervalList2();
 		Collections.sort(list, new IntervalComparatorLowerUpper<Integer>(false, true));
-		// TODO assertion
+		
+		assertThat(list.get(0), is(Interval.<Integer> over(null, false, null, false)));
+		assertThat(list.get(1), is(Interval.over(null, false, 20, true)));
+		assertThat(list.get(2), is(Interval.over(null, false, 20, false)));
+		// ...
 	}
 	
 	@Test

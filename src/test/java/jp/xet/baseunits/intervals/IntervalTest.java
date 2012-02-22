@@ -241,7 +241,7 @@ public class IntervalTest {
 		list.add(Interval.over(null, false, 20, false));
 		list.add(Interval.over(null, false, 20, true));
 		
-		// freedom
+		// all
 		list.add(Interval.<Integer> over(null, false, null, false));
 		
 		Collections.shuffle(list); // 念のためシャッフル
