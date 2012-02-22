@@ -28,9 +28,8 @@ import org.apache.wicket.util.convert.IConverter;
 /**
  * {@link CalendarDate}を表示するWicketのLabelコンポーネント実装クラス。
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class CalendarDateLabel extends GenericLabel<CalendarDate> {

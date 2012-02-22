@@ -30,7 +30,6 @@ import org.hibernate.type.StandardBasicTypes;
 /**
  * {@link TimePoint}を {@link Date}としてDBにデータを保存するHibernateユーザ型。
  * 
- * @version $Id$
  * @author daisuke
  * @since 1.2
  */

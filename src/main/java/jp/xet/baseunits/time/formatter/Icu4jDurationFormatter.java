@@ -97,5 +97,4 @@ public class Icu4jDurationFormatter extends AbstractDurationFormatter implements
 		}
 		return new TimeUnitAmount(number, unit);
 	}
-	
 }

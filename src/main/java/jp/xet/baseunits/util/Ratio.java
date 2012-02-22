@@ -40,6 +40,7 @@ import org.apache.commons.lang.Validate;
  * time comes to compute a decimal value for the ratio. The client typically has
  * the responsibilities that enable an appropriate choice of these parameters.<p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 public class Ratio {

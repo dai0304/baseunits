@@ -35,7 +35,6 @@ import org.hibernate.usertype.UserType;
  * 
  * @param <E> External Type（Baseunitsの型）
  * @param <I> Internal Type（DBに保存できる型）
- * @version $Id$
  * @author daisuke
  * @since 1.2
  */

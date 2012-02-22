@@ -45,9 +45,9 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 	
 	private static final BasicPeriodFormatterService SERVICE = BasicPeriodFormatterService.getInstance();
 	
-	FallbackConfig config;
+	private final FallbackConfig config;
 	
-	TimeZone timeZone;
+	private final TimeZone timeZone;
 	
 	
 	/**

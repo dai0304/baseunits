@@ -26,6 +26,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>タイムゾーンの概念はない。また、このクラスは特定の瞬間をモデリングしたものではなく、その日1日間全ての範囲を表すクラスである。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

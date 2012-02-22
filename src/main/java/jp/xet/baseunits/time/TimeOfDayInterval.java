@@ -29,6 +29,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>限界の表現には {@link TimeOfDay}を利用する。</p>
  * 
+ * @author daisuke
  * @since 2.0
  */
 @SuppressWarnings("serial")

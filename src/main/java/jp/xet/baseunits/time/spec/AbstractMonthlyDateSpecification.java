@@ -33,6 +33,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 毎月1度だけ仕様を満たす日付仕様。
  * 
+ * @author daisuke
  * @since 1.0
  */
 public abstract class AbstractMonthlyDateSpecification extends AbstractDateSpecification implements

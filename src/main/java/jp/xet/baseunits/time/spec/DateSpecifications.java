@@ -38,6 +38,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 日付の仕様を表現するオブジェクト。
  * 
+ * @author daisuke
  * @since 2.0
  */
 public final class DateSpecifications {

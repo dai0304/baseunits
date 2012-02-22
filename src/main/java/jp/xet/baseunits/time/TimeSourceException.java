@@ -20,6 +20,7 @@ package jp.xet.baseunits.time;
 /**
  * 現在時刻の取得に失敗したことをあらわす例外。
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

@@ -24,9 +24,8 @@ import jp.xet.baseunits.timeutil.Clock;
 /**
  * {@link RelativeTimePointFormatter}の骨格実装クラス。
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 public abstract class AbstractRelativeTimePointFormatter implements RelativeTimePointFormatter {
 	

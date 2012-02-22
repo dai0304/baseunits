@@ -23,6 +23,7 @@ import java.util.GregorianCalendar;
 /**
  * 1年の中の特定の「月」を表す列挙型。
  * 
+ * @author daisuke
  * @since 1.0
  */
 public enum MonthOfYear {

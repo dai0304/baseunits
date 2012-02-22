@@ -33,6 +33,7 @@ import org.apache.commons.lang.Validate;
  * <p>{@link java.util.Date}と異なり、週未満（日以下）の概念を持っていない。また、{@link TimePoint}と異なり、
  * その週全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  * 
+ * @author daisuke
  * @since 2.0
  */
 @SuppressWarnings("serial")

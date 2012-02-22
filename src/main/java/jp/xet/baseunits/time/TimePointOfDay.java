@@ -31,6 +31,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link TimeOfDay}と異なり、タイムゾーン情報を含んでいる。</p>
  * 
+ * @author daisuke
  * @since 2.0
  */
 @SuppressWarnings("serial")

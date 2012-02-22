@@ -23,9 +23,8 @@ import jp.xet.baseunits.time.Duration;
 /**
  * A formatter for {@link Duration} types.
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 public interface DurationFormatter {
 	

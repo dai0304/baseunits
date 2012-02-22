@@ -44,6 +44,7 @@ import org.apache.commons.lang.Validate;
  * which implements Comparable can have intervals defined this way.
  * 
  * @param <T> 区間要素の型
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

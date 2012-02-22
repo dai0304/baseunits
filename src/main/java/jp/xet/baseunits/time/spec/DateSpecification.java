@@ -25,6 +25,7 @@ import jp.xet.baseunits.util.spec.Specification;
 /**
  * 日付仕様を表すインターフェイス。
  * 
+ * @author daisuke
  * @since 2.0
  */
 public interface DateSpecification extends Specification<CalendarDate> {

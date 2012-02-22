@@ -36,6 +36,7 @@ import org.apache.commons.lang.Validate;
  * <p>営業日と非営業日を判定する責務を持つ。非営業日とは休日（祝日）及び週末（土日）を表し、営業日とは非営業日でない日を表す。
  * 週末は休日ではないが、週末かつ休日は休日である。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 public class BusinessCalendar {

@@ -21,6 +21,7 @@ import jp.xet.baseunits.time.CalendarDate;
 /**
  * 年に一度だけマッチする日付仕様インターフェイス。
  * 
+ * @author daisuke
  * @since 2.0
  */
 public interface AnnualDateSpecification extends DateSpecification {

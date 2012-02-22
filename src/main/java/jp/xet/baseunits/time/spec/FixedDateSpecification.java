@@ -35,6 +35,7 @@ import org.apache.commons.lang.Validate;
 /**
  * ある特定の年月日を表す日付仕様。
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

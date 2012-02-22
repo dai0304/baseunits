@@ -26,9 +26,8 @@ import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 /**
  * 日付期間の開始と終了を表す2つの {@link FormComponent} について、開始日が終了日より未来でないことを検証するバリデータ。
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class CalendarRangeValidator extends AbstractFormValidator {

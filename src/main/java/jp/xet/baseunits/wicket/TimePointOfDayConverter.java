@@ -31,9 +31,8 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
 /**
  * Converts from Object to {@link TimePointOfDay}.
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class TimePointOfDayConverter extends AbstractConverter<TimePointOfDay> {

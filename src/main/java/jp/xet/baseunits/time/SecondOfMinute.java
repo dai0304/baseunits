@@ -30,6 +30,7 @@ import org.apache.commons.lang.Validate;
  * <p>{@link java.util.Date}と異なり、日付や時、分、ミリ秒以下（秒未満）の概念を持っていない。またタイムゾーンの概念もない。
  * また、このクラスは特定の瞬間をモデリングしたものではなく、その1秒間全ての範囲を表すクラスである。</p>
  * 
+ * @author daisuke
  * @since 2.0
  */
 @SuppressWarnings("serial")

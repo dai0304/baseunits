@@ -32,6 +32,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 毎年X月の第Y◎曜日、を表す日付仕様。
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

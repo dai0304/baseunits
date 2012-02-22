@@ -22,6 +22,7 @@ import jp.xet.baseunits.time.CalendarMonth;
 /**
  * 月に一度だけマッチする日付仕様インターフェイス。
  * 
+ * @author daisuke
  * @since 2.0
  */
 public interface MonthlyDateSpecification extends DateSpecification {

@@ -26,6 +26,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>主にデバッグ用途を意図している。</p>
  * 
+ * @author daisuke
  * @since 2.0
  */
 public final class FixedTimeSource implements TimeSource {
