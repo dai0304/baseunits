@@ -22,10 +22,22 @@ import jp.xet.baseunits.time.Duration;
 
 /**
  * A formatter for {@link Duration} types.
+ * 
+ * @since 2.0
+ * @version $Id$
+ * @author daisuke
  */
 public interface DurationFormatter {
 	
-	@SuppressWarnings("javadoc")
+	/**
+	 * Format the {@link Duration} for display.
+	 * 
+	 * <p>using default {@link Locale}</p>
+	 * 
+	 * @param target the instance to format
+	 * @return the formatted text string
+	 * @since 2.0
+	 */
 	String format(Duration target);
 	
 	/**
@@ -35,6 +47,7 @@ public interface DurationFormatter {
 	 * @param locale the current user locale
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @return the formatted text string
+	 * @since 2.0
 	 */
 	String format(Duration target, Locale locale);
 }

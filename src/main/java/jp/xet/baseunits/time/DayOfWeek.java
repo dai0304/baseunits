@@ -97,9 +97,9 @@ public enum DayOfWeek {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 翌日の曜日を返す。
 	 * 
-	 * @return
+	 * @return 翌日の曜日
 	 * @since 2.0
 	 */
 	public DayOfWeek nextDay() {
@@ -107,21 +107,21 @@ public enum DayOfWeek {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定日後の曜日を返す。
 	 * 
-	 * @param increment
-	 * @return
+	 * @param increment 日数
+	 * @return 曜日
 	 * @since 2.0
 	 */
 	public DayOfWeek plusDays(int increment) {
-		int o = (ordinal() + 7 + increment) / values().length;
+		int o = (ordinal() + increment) / values().length;
 		return values()[o];
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 前日の曜日を返す。
 	 * 
-	 * @return
+	 * @return 前日の曜日
 	 * @since 2.0
 	 */
 	public DayOfWeek prevDay() {

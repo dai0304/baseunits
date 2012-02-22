@@ -30,6 +30,8 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
 /**
  * Converts from Object to {@link TimeOfDay}.
  * 
+ * @since 2.0
+ * @version $Id$
  * @author daisuke
  */
 @SuppressWarnings("serial")

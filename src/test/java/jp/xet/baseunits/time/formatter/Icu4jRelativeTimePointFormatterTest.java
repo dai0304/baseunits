@@ -29,7 +29,7 @@ import jp.xet.baseunits.time.formatter.RelativeTimePointFormatter.FallbackConfig
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link Icu4jRelativeTimePointFormatter}のテストクラス。
  */
 @SuppressWarnings("javadoc")
 public class Icu4jRelativeTimePointFormatterTest {

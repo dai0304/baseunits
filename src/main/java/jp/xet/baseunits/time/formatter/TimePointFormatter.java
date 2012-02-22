@@ -23,6 +23,10 @@ import jp.xet.baseunits.time.TimePoint;
 
 /**
  * A formatter for {@link TimePoint} types.
+ * 
+ * @since 2.0
+ * @version $Id$
+ * @author daisuke
  */
 public interface TimePointFormatter {
 	

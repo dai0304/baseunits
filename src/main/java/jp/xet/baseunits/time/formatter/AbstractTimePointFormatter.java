@@ -22,7 +22,11 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.TimePoint;
 
 /**
- * TODO for daisuke
+ * {@link TimePointFormatter}の骨格実装クラス。
+ * 
+ * @since 2.0
+ * @version $Id$
+ * @author daisuke
  */
 public abstract class AbstractTimePointFormatter implements TimePointFormatter {
 	

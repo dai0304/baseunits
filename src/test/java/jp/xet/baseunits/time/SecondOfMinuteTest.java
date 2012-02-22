@@ -25,6 +25,7 @@ import org.junit.Test;
 /**
  * {@link SecondOfMinute}のテストクラス。
  */
+@SuppressWarnings("javadoc")
 public class SecondOfMinuteTest {
 	
 	static final SecondOfMinute TEN = SecondOfMinute.valueOf(10);
@@ -32,9 +33,6 @@ public class SecondOfMinuteTest {
 	static final SecondOfMinute TWENTY = SecondOfMinute.valueOf(20);
 	
 	
-	/**
-	 * TODO for daisuke
-	 */
 	@Test
 	public void test01_before_after() {
 		assertThat(SecondOfMinute.MIN.isAfter(TEN), is(false));
@@ -43,9 +41,6 @@ public class SecondOfMinuteTest {
 		assertThat(SecondOfMinute.MIN.isBefore(TWENTY), is(true));
 	}
 	
-	/**
-	 * TODO for daisuke
-	 */
 	@Test
 	public void test02_illegal() {
 		try {
@@ -62,9 +57,6 @@ public class SecondOfMinuteTest {
 		}
 	}
 	
-	/**
-	 * TODO for daisuke
-	 */
 	@Test
 	public void test03_equals() {
 		assertThat(TEN.equals(TEN), is(true));
@@ -74,5 +66,4 @@ public class SecondOfMinuteTest {
 		assertThat(SecondOfMinute.valueOf(10).equals(TEN), is(true));
 		assertThat(SecondOfMinute.valueOf(20).equals(TWENTY), is(true));
 	}
-	
 }

@@ -183,9 +183,9 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePointOfDay}を{@link TimeOfDay}に変換して返す。
 	 * 
-	 * @param tpod
+	 * @param tpod {@link TimePointOfDay}
 	 * @param zone タイムゾーン
 	 * @return {@link TimeOfDay}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
@@ -264,7 +264,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePointOfDay}に変換する。
 	 * 
 	 * @param timeZone タイムゾーン
 	 * @return {@link TimePointOfDay}

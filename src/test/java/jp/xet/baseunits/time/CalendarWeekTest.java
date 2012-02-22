@@ -16,18 +16,21 @@
  */
 package jp.xet.baseunits.time;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link CalendarWeek}のテストクラス。
  */
+@SuppressWarnings("javadoc")
 public class CalendarWeekTest {
 	
 	@Test
-	public void test() {
-		CalendarWeek a = CalendarWeek.from(2011, 53);
-		
-		System.out.println(a.toString());
+	public void testToString() {
+		assertThat(CalendarWeek.from(2011, 52).toString(), is("2011-52th"));
+		assertThat(CalendarWeek.from(2011, 53).toString(), is("2012-1th"));
+		assertThat(CalendarWeek.from(2012, 1).toString(), is("2012-1th"));
 	}
-	
 }

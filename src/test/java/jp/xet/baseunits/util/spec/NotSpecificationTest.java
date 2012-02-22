@@ -67,7 +67,7 @@ public class NotSpecificationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 二重notのテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

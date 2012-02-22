@@ -77,7 +77,15 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 		return new Interval<T>(lower, true, upper, true);
 	}
 	
+	/**
+	 * 空区間を生成する。
+	 * 
+	 * @param someValue {@code null}ではない何らかの値。なんでもよい。
+	 * @return 空区間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public static <T extends Comparable<T> & Serializable>Interval<T> empty(T someValue) {
+		Validate.notNull(someValue);
 		return new Interval<T>(someValue, false, someValue, false);
 	}
 	

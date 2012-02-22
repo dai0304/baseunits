@@ -23,7 +23,13 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.TimePoint;
 
 /**
- * TODO for daisuke
+ * 常に指定した文字列を返すフォーマッタ。
+ * 
+ * <p>主に「たった今」や「ずっと昔」等のフォールバック値を表示することを想定する。</p>
+ * 
+ * @since 2.0
+ * @version $Id$
+ * @author daisuke
  */
 @SuppressWarnings("serial")
 public class FixedTimePointFormatter extends AbstractTimePointFormatter implements Serializable {

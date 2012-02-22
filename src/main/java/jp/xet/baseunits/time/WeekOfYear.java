@@ -66,11 +66,9 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	/**
 	 * 指定した瞬間を表す、{@link WeekOfYear}のインスタンスを生成する。
 	 * 
-	 * @param value 
+	 * @param value 1年間の第1週から数えた週数
 	 * @return {@link WeekOfYear}
-	 * @throws IllegalArgumentException 引数{@code hour}が0〜23の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code minute}, {@code second}が0〜59の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code millisecond}が0〜999の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code value}が1〜53の範囲ではない場合
 	 * @since 2.0
 	 */
 	public static WeekOfYear valueOf(int value) {
@@ -84,7 +82,7 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param value 
+	 * @param value 週数
 	 */
 	WeekOfYear(int value) {
 		Validate.isTrue(value >= MIN_VALUE);
@@ -97,7 +95,7 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	 * 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
-	 * @return 回
+	 * @return 1年間の第1週から数えた週数
 	 * @since 2.0
 	 */
 	public int breachEncapsulationOfNth() {
@@ -133,26 +131,34 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した週 {@code another} が、このオブジェクトが表現する週よりも過去であるかどうかを検証する。
 	 * 
-	 * @param another
-	 * @return
+	 * <p>{@code another} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * 
+	 * @param another 対象週
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.0
 	 */
 	public boolean isAfter(WeekOfYear another) {
-		Validate.notNull(another);
-		return value > another.value;
+		if (another == null) {
+			return false;
+		}
+		return isBefore(another) == false && equals(another) == false;
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した日 {@code another} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
 	 * 
-	 * @param another
-	 * @return
+	 * <p>{@code another} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * 
+	 * @param another 対象日
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.0
 	 */
 	public boolean isBefore(WeekOfYear another) {
-		Validate.notNull(another);
+		if (another == null) {
+			return false;
+		}
 		return value < another.value;
 	}
 	

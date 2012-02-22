@@ -39,20 +39,22 @@ import org.apache.commons.lang.Validate;
 public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	
 	/**
-	 * TODO for daisuke
+	 * 指定した日付を含む週を返す。
 	 * 
-	 * @param date
-	 * @return
+	 * @param date 日付
+	 * @return 週
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static CalendarWeek from(CalendarDate date) {
+		Validate.notNull(date);
 		Calendar cal = date.asJavaCalendarUniversalZoneMidnight();
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 		int weekOfYear = cal.get(Calendar.WEEK_OF_YEAR);
 		
 		if (month == Calendar.JANUARY) {
-			if (weekOfYear >= 52) {
+			if (weekOfYear >= 52) { // CHECKSTYLE IGNORE THIS LINE
 				--year;
 			}
 		} else {

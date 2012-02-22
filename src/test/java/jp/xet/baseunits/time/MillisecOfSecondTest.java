@@ -23,8 +23,9 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link MillisecOfSecond}のテストクラス。
  */
+@SuppressWarnings("javadoc")
 public class MillisecOfSecondTest {
 	
 	static final MillisecOfSecond TEN = MillisecOfSecond.valueOf(10);
@@ -32,9 +33,6 @@ public class MillisecOfSecondTest {
 	static final MillisecOfSecond HUNDRED = MillisecOfSecond.valueOf(100);
 	
 	
-	/**
-	 * TODO for daisuke
-	 */
 	@Test
 	public void test01_before_after() {
 		assertThat(MillisecOfSecond.MIN.isAfter(TEN), is(false));
@@ -43,9 +41,6 @@ public class MillisecOfSecondTest {
 		assertThat(MillisecOfSecond.MIN.isBefore(HUNDRED), is(true));
 	}
 	
-	/**
-	 * TODO for daisuke
-	 */
 	@Test
 	public void test02_illegal() {
 		try {
@@ -62,9 +57,6 @@ public class MillisecOfSecondTest {
 		}
 	}
 	
-	/**
-	 * TODO for daisuke
-	 */
 	@Test
 	public void test03_equals() {
 		assertThat(TEN.equals(TEN), is(true));

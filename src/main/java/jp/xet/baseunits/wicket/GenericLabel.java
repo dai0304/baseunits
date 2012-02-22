@@ -23,7 +23,7 @@ import org.apache.wicket.model.IModel;
  * A {@link Label} with typesafe getters and setters for the model and its underlying object
  * 
  * @param <T> the type of the label's model object
- * @since 1.0.0
+ * @since 2.0
  * @version $Id: GenericLabel.java 1092 2011-11-21 02:24:50Z miyamoto $
  * @author daisuke
  */

@@ -29,7 +29,7 @@ import org.apache.wicket.util.convert.IConverter;
 /**
  * {@link TimePoint}を表示するWicketのLabelコンポーネント実装クラス。
  * 
- * @since 1.0.0
+ * @since 2.0
  * @version $Id$
  * @author daisuke
  */

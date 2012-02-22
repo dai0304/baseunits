@@ -22,7 +22,7 @@ import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.timeutil.Clock;
 
 /**
- * TODO for daisuke
+ * {@link RelativeTimePointFormatter}の骨格実装クラス。
  * 
  * @since 2.0
  * @version $Id$

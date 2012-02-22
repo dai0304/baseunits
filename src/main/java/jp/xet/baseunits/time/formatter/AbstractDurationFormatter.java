@@ -21,7 +21,11 @@ import java.util.Locale;
 import jp.xet.baseunits.time.Duration;
 
 /**
- * TODO for daisuke
+ * {@link DurationFormatter}の骨格実装クラス。
+ * 
+ * @since 2.0
+ * @version $Id$
+ * @author daisuke
  */
 public abstract class AbstractDurationFormatter implements DurationFormatter {
 	

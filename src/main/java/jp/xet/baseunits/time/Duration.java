@@ -85,6 +85,18 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
+	 * 2つの時刻の差を表す時間量を返す。
+	 * 
+	 * @param tp1 時刻
+	 * @param tp2 時刻
+	 * @return 時間量
+	 * @since 2.0
+	 */
+	public static Duration diff(TimePoint tp1, TimePoint tp2) {
+		return Duration.milliseconds(Math.abs(tp1.toEpochMillisec() - tp2.toEpochMillisec()));
+	}
+	
+	/**
 	 * 長さが {@code howMany} 時間の時間量を取得する。
 	 * 
 	 * @param howMany 時間の長さ（時間）
@@ -151,11 +163,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 複数の {@link Duration} の総和を返す。
 	 * 
-	 * @param values
-	 * @return
-	 * @since 1.0.0
+	 * @param values 複数{@link Duration}
+	 * @return 総和
+	 * @since 2.0
 	 */
 	public static Duration sum(Iterable<Duration> values) {
 		Validate.notNull(values);

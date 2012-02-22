@@ -23,7 +23,9 @@ import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimePoint;
 
 /**
- * TODO for daisuke
+ * 指定した時刻からの相対時間を表示するフォーマッタ。
+ * 
+ * <p>「5分前」「3日後」など。</p>
  * 
  * @since 2.0
  * @version $Id$
@@ -41,7 +43,7 @@ public interface RelativeTimePointFormatter {
 	String format(TimePoint target, TimePoint standard);
 	
 	/**
-	 * TODO for daisuke
+	 * 基準時刻からの相対時間を表示するフォーマッタ。
 	 * 
 	 * @param target 対象時刻
 	 * @param standard 基準となる時刻
@@ -54,6 +56,10 @@ public interface RelativeTimePointFormatter {
 	
 	/**
 	 * TODO for daisuke
+	 * 
+	 * @since 2.0
+	 * @version $Id$
+	 * @author daisuke
 	 */
 	@SuppressWarnings("serial")
 	public class FallbackConfig implements Serializable {

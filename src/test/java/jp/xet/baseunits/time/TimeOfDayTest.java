@@ -259,7 +259,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#plus(Duration)}及び{@link TimeOfDay#minus(Duration)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -273,7 +273,7 @@ public class TimeOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimeOfDay#parse(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

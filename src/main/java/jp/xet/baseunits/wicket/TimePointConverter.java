@@ -32,15 +32,18 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
 /**
  * Converts from Object to {@link CalendarDate}.
  * 
+ * @since 2.0
+ * @version $Id$
  * @author daisuke
  */
 @SuppressWarnings("serial")
 public class TimePointConverter extends AbstractConverter<TimePoint> {
 	
-	/** default date pattern */
-	public static final String DEFAILT_PATTERN_JAVA = "yyyy/MM/dd";
+	/** default date pattern for {@link SimpleDateFormat} */
+	public static final String DEFAILT_PATTERN_JAVA = "yyyy/MM/dd HH:mm:ss.SSS";
 	
-	public static final String DEFAILT_PATTERN_JQ = "yy/mm/dd";
+//	/** default date pattern for JQuery */
+//	public static final String DEFAILT_PATTERN_JQ = "yy/mm/dd";
 	
 	private final String datePattern;
 	

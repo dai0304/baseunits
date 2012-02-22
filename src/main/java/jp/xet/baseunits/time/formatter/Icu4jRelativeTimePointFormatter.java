@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO for daisuke
+ * ICU4Jを利用した {@link RelativeTimePointFormatter} 実装クラス。
  * 
  * @since 2.0
  * @version $Id$
@@ -61,7 +61,7 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 	 * インスタンスを生成する。
 	 * 
 	 * @param config
-	 * @param timeZone
+	 * @param timeZone タイムゾーン
 	 */
 	public Icu4jRelativeTimePointFormatter(FallbackConfig config, TimeZone timeZone) {
 		Validate.isTrue((config == null && timeZone == null) || (config != null && timeZone != null));

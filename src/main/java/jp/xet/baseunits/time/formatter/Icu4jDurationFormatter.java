@@ -29,7 +29,11 @@ import com.ibm.icu.util.ULocale;
 import org.apache.commons.lang.Validate;
 
 /**
- * TODO for daisuke
+ * ICU4Jを利用した {@link DurationFormatter} 実装クラス。
+ * 
+ * @since 2.0
+ * @version $Id$
+ * @author daisuke
  */
 @SuppressWarnings("serial")
 public class Icu4jDurationFormatter extends AbstractDurationFormatter implements Serializable {

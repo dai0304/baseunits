@@ -340,7 +340,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#asTimeOfDay(TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
