@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
+ * Copyright 2011-2012 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2009 TRICREO, Inc. (http://tricreo.jp/)
  * Created on 2009/12/08
  *

@@ -106,7 +106,7 @@ TBD
 License
 -------
 
-Copyright (C) 2011 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
+Copyright (C) 2011-2012 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
 
 Copyright (C) 2010-2011 [TRICREO, Inc.](http://tricreo.jp/).
 
