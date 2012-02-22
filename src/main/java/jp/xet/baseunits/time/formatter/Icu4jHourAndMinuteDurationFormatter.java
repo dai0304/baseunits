@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO for daisuke
+ * ICU4Jを利用した、時・分レベルの {@link DurationFormatter} 実装クラス。
  * 
  * @author daisuke
  * @since 2.0

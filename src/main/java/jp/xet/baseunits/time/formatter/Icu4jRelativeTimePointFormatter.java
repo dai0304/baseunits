@@ -59,8 +59,11 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param config
+	 * <p>フォールバック設定及びタイムゾーンは必須ではないが、フォールバック設定を有効にした場合はタイムゾーンも必要である。</p>
+	 * 
+	 * @param config フォールバック設定
 	 * @param timeZone タイムゾーン
+	 * @throws IllegalArgumentException 引数{@code config}を指定したにも関わらず{@code timeZone}を与えなかった場合
 	 */
 	public Icu4jRelativeTimePointFormatter(FallbackConfig config, TimeZone timeZone) {
 		Validate.isTrue((config == null && timeZone == null) || (config != null && timeZone != null));

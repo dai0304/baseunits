@@ -54,11 +54,17 @@ public interface RelativeTimePointFormatter {
 	
 	
 	/**
-	 * TODO for daisuke
+	 * フォールバック設定オブジェクト。
 	 * 
-	 * @since 2.0
-	 * @version $Id$
+	 * <p>{@link RelativeTimePointFormatter}は、主に「大まかな時刻」を表す役割があるが、
+	 * 相対時間差があまりにも小さい、または大きい場合は正確な表記をすると、かえって違和感を感じる。
+	 * 例えば「34ミリ秒前」や「105年4ヶ月22日9時間2分23秒後」など…。</p>
+	 * 
+	 * <p>このように時間差が一定より大きい、または小さい場合にフォーマッタの挙動を変える設定を、
+	 * フォールバック設定と呼ぶ。</p>
+	 * 
 	 * @author daisuke
+	 * @since 2.0
 	 */
 	@SuppressWarnings("serial")
 	public class FallbackConfig implements Serializable {
@@ -75,10 +81,10 @@ public interface RelativeTimePointFormatter {
 		/**
 		 * インスタンスを生成する。
 		 * 
-		 * @param lowerFallbackLimit
-		 * @param lowerFallbackFormatter
-		 * @param upperFallbackLimit
-		 * @param upperFallbackFormatter
+		 * @param lowerFallbackLimit フォールバック下限値
+		 * @param lowerFallbackFormatter 下限を下回った場合のフォーマッタ
+		 * @param upperFallbackLimit フォールバック上限値
+		 * @param upperFallbackFormatter 上限を上回った場合のフォーマッタ
 		 */
 		public FallbackConfig(Duration lowerFallbackLimit, TimePointFormatter lowerFallbackFormatter,
 				Duration upperFallbackLimit, TimePointFormatter upperFallbackFormatter) {
@@ -88,34 +94,74 @@ public interface RelativeTimePointFormatter {
 			this.upperFallbackFormatter = upperFallbackFormatter;
 		}
 		
+		/**
+		 * 下限を下回った場合のフォーマッタを取得する。
+		 * 
+		 * @return 下限を下回った場合のフォーマッタ
+		 */
 		public TimePointFormatter getLowerFallbackFormatter() {
 			return lowerFallbackFormatter;
 		}
 		
+		/**
+		 * フォールバック下限値を返す。
+		 * 
+		 * @return フォールバック下限値
+		 */
 		public Duration getLowerFallbackLimit() {
 			return lowerFallbackLimit;
 		}
 		
+		/**
+		 * 上限を上回った場合のフォーマッタを返す。
+		 * 
+		 * @return 上限を上回った場合のフォーマッタ
+		 */
 		public TimePointFormatter getUpperFallbackFormatter() {
 			return upperFallbackFormatter;
 		}
 		
+		/**
+		 * フォールバック上限値を返す。
+		 * 
+		 * @return フォールバック上限値
+		 */
 		public Duration getUpperFallbackLimit() {
 			return upperFallbackLimit;
 		}
 		
+		/**
+		 * フォールバック下限値を設定する。
+		 * 
+		 * @param lowerFallbackLimit フォールバック下限値
+		 */
 		public void setLowerFallbackLimit(Duration lowerFallbackLimit) {
 			this.lowerFallbackLimit = lowerFallbackLimit;
 		}
 		
+		/**
+		 * 下限を下回った場合のフォーマッタを設定する。
+		 * 
+		 * @param lowerFallbackFormatter 下限を下回った場合のフォーマッタ
+		 */
 		public void setLowerFallbackString(TimePointFormatter lowerFallbackFormatter) {
 			this.lowerFallbackFormatter = lowerFallbackFormatter;
 		}
 		
+		/**
+		 * フォールバック上限値を設定する。
+		 * 
+		 * @param upperFallbackLimit フォールバック上限値
+		 */
 		public void setUpperFallbackLimit(Duration upperFallbackLimit) {
 			this.upperFallbackLimit = upperFallbackLimit;
 		}
 		
+		/**
+		 * 上限を上回った場合のフォーマッタを設定する。
+		 * 
+		 * @param upperFallbackFormatter 上限を上回った場合のフォーマッタ
+		 */
 		public void setUpperFallbackString(TimePointFormatter upperFallbackFormatter) {
 			this.upperFallbackFormatter = upperFallbackFormatter;
 		}
