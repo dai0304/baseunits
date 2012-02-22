@@ -29,7 +29,6 @@ import org.hibernate.type.StandardBasicTypes;
 /**
  * {@link HourOfDay}を0〜23の整数としてDBにデータを保存するHibernateユーザ型。
  * 
- * @version $Id$
  * @author daisuke
  * @since 1.2
  */

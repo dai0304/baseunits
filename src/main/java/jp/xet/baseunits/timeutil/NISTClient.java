@@ -35,6 +35,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>National Institute of Standards and Technology provides an Internet time server.</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 public class NISTClient {

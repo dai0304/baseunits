@@ -29,6 +29,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>{@link java.util.Date}と異なり、日付や時、分、秒の概念を持っていない。またタイムゾーンの概念もない。</p>
  * 
+ * @author daisuke
  * @since 2.0
  */
 @SuppressWarnings("serial")

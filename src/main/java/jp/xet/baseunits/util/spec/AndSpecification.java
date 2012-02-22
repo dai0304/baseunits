@@ -24,6 +24,7 @@ import org.apache.commons.lang.Validate;
  * <p>2つの {@link Specification} の論理積をとる {@link Specification} 実装クラス。</p>
  * 
  * @param <T> {@link AndSpecification}の型
+ * @author daisuke
  * @since 1.0
  */
 public class AndSpecification<T> extends AbstractSpecification<T> {

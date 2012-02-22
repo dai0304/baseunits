@@ -31,9 +31,8 @@ import org.apache.commons.lang.Validate;
 /**
  * ICU4Jを利用した {@link DurationFormatter} 実装クラス。
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class Icu4jDurationFormatter extends AbstractDurationFormatter implements Serializable {

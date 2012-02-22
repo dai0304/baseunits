@@ -26,7 +26,6 @@ import jp.xet.baseunits.time.TimeUnit;
 /**
  * {@link Duration}を文字列としてDBにデータを保存するHibernateユーザ型。
  * 
- * @version $Id$
  * @author daisuke
  * @since 1.2
  */

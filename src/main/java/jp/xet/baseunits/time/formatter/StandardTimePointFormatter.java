@@ -28,6 +28,9 @@ import org.apache.commons.lang.Validate;
 
 /**
  * A DateFormatter that formats the requested date fields.
+ * 
+ * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class StandardTimePointFormatter extends AbstractTimePointFormatter implements Serializable {

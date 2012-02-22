@@ -23,9 +23,8 @@ import jp.xet.baseunits.time.Duration;
 /**
  * {@link DurationFormatter}の骨格実装クラス。
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 public abstract class AbstractDurationFormatter implements DurationFormatter {
 	

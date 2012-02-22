@@ -33,6 +33,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>例えば時給、人月単価など。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 public class MoneyTimeRate {

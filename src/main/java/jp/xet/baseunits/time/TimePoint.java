@@ -38,6 +38,7 @@ import org.apache.commons.lang.Validate;
  * <p>タイムゾーン情報を含んでいる。つまり、時差のある複数の場所で、同時に「現在」を取得した場合、相互を{@link #equals(Object)}で
  * 評価した時、結果は{@code true}となる。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

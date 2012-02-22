@@ -32,6 +32,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 1年間に1度だけ仕様を満たす日付仕様。
  * 
+ * @author daisuke
  * @since 1.0
  */
 public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecification implements

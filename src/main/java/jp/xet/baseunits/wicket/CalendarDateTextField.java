@@ -34,9 +34,8 @@ import org.apache.wicket.util.convert.IConverter;
  * If no Date pattern is explicitly specified, the default <code>DateFormat.SHORT</code> pattern for
  * the current locale will be used.
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class CalendarDateTextField extends TextField<CalendarDate> implements ITextFormatProvider

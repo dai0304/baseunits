@@ -23,13 +23,12 @@ import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimePoint;
 
 /**
- * 指定した時刻からの相対時間を表示するフォーマッタ。
+ * 基準時刻からの相対時間を表示するフォーマッタ。
  * 
  * <p>「5分前」「3日後」など。</p>
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 public interface RelativeTimePointFormatter {
 	

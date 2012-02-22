@@ -33,7 +33,6 @@ import org.hibernate.type.StandardBasicTypes;
 /**
  * {@link TimeOfDay}を午前0時からの経過分数としてDBにデータを保存するHibernateユーザ型。
  * 
- * @version $Id$
  * @author daisuke
  * @since 1.2
  */

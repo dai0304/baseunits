@@ -25,9 +25,8 @@ import org.apache.wicket.util.convert.IConverter;
 /**
  * {@link Duration}を表示するWicketのLabelコンポーネント実装クラス。
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class DurationLabel extends GenericLabel<Duration> {

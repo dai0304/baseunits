@@ -23,6 +23,7 @@ package jp.xet.baseunits.time;
 /**
  * 現在時刻を返す責務を表すインターフェイス。
  * 
+ * @author daisuke
  * @since 1.0
  */
 public interface TimeSource {

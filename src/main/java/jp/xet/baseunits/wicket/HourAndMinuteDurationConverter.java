@@ -27,9 +27,8 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
 /**
  * Converts from Object to {@link Duration}.
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class HourAndMinuteDurationConverter extends AbstractConverter<Duration> {

@@ -23,6 +23,7 @@ import org.apache.commons.lang.Validate;
 /**
  * {@link DateSpecification}の論理積をとるクラス。
  * 
+ * @author daisuke
  * @since 2.0
  */
 public final class AndDateSpecification extends AbstractDateSpecification {

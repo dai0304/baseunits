@@ -28,6 +28,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 日付仕様の骨格実装クラス。
  * 
+ * @author daisuke
  * @since 2.0
  */
 public abstract class AbstractDateSpecification extends AbstractSpecification<CalendarDate> implements

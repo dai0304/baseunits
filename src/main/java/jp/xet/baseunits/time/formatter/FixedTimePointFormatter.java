@@ -27,9 +27,8 @@ import jp.xet.baseunits.time.TimePoint;
  * 
  * <p>主に「たった今」や「ずっと昔」等のフォールバック値を表示することを想定する。</p>
  * 
- * @since 2.0
- * @version $Id$
  * @author daisuke
+ * @since 2.0
  */
 @SuppressWarnings("serial")
 public class FixedTimePointFormatter extends AbstractTimePointFormatter implements Serializable {

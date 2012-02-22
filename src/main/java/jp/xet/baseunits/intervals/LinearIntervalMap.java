@@ -34,6 +34,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @param <K> キーとなる区間が表現する型
  * @param <V> 値の型
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

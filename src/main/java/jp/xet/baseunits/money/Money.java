@@ -38,6 +38,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>ある一定の「量」と「通貨単位」から成るクラスである。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

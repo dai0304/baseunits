@@ -24,6 +24,7 @@ package jp.xet.baseunits.util.spec;
  * その場合、 {@link #isSatisfiedBy(Object)} を実装する必要しかない。</p>
  * 
  * @param <T> {@link Specification}の型
+ * @author daisuke
  * @since 1.0
  */
 public interface Specification<T> {

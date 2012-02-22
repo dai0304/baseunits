@@ -27,6 +27,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 時間の単位を表す列挙型。
  * 
+ * @author daisuke
  * @since 1.0
  */
 public enum TimeUnit {

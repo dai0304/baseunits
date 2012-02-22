@@ -28,7 +28,6 @@ import org.hibernate.type.StandardBasicTypes;
  * 文字列型としてDBにデータを保存するHibernateユーザ型。
  * 
  * @param <T> User defined type
- * @version $Id$
  * @author daisuke
  * @since 1.2
  */

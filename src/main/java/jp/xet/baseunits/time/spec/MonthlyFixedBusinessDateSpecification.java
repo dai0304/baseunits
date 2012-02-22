@@ -30,6 +30,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 毎月Y日（ただし、非営業日の場合は、前営業日/翌営業日）、を表す日付仕様。
  * 
+ * @author daisuke
  * @since 1.0
  */
 // TODO serializability検討

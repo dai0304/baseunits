@@ -31,7 +31,6 @@ import org.hibernate.type.StandardBasicTypes;
 /**
  * {@link Duration}をミリ秒単位の整数としてDBにデータを保存するHibernateユーザ型。
  * 
- * @version $Id$
  * @author daisuke
  * @since 1.2
  */

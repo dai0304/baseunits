@@ -24,6 +24,7 @@ import org.apache.commons.lang.Validate;
 /**
  * {@link DateSpecification}の論理和をとるクラス。
  * 
+ * @author daisuke
  * @since 2.0
  */
 public final class OrDateSpecification extends AbstractDateSpecification {

@@ -27,6 +27,7 @@ import java.io.Serializable;
  * 
  * @param <K> キーとなる区間の型
  * @param <V> 値の型
+ * @author daisuke
  * @since 1.0
  */
 public interface IntervalMap<K extends Comparable<K> & Serializable, V> {

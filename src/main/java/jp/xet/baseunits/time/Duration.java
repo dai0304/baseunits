@@ -34,6 +34,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>負の時間量は表現しない。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

@@ -34,6 +34,7 @@ import org.apache.commons.lang.Validate;
  * 割り当ての集合。
  * 
  * @param <T> 割り当て対象
+ * @author daisuke
  * @since 1.0
  */
 public class MoneyFan<T> implements Iterable<Allotment<T>> {

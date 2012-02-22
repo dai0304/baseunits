@@ -33,6 +33,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>このクラスはステートを持つstaticなユーティリティクラスである。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 public final class Clock {

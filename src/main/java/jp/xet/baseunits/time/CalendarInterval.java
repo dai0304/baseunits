@@ -35,6 +35,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>限界の表現には {@link CalendarDate}を利用する。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

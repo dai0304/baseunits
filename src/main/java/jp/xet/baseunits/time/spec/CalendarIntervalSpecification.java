@@ -34,6 +34,7 @@ import org.apache.commons.lang.Validate;
 /**
  * ある特定の期間中にマッチする日付仕様。
  * 
+ * @author daisuke
  * @since 2.0
  */
 @SuppressWarnings("serial")

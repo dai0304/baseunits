@@ -22,6 +22,7 @@ import jp.sf.amateras.mirage.type.ValueType;
  * Baseunits内の型を扱う {@link ValueType}の骨格実装クラス。
  * 
  * @param <T> baseunitsの値オブジェクト型
+ * @author daisuke
  * @since 2.0
  */
 public abstract class AbstractBaseunitsValueType<T> implements ValueType<T> {

@@ -30,6 +30,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>例えば、時給・時速など。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 public class TimeRate {

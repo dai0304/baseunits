@@ -30,6 +30,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 同じ通貨単位の金額の集合をあらわすクラス。
  * 
+ * @author daisuke
  * @since 1.0
  */
 public class Tally implements Iterable<Money> {

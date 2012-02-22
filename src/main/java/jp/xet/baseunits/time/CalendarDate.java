@@ -36,6 +36,7 @@ import org.apache.commons.lang.Validate;
  * <p>{@link Date}と異なり、時間の概念を持っておらず、タイムゾーンの概念もない。
  * また、{@link TimePoint}と異なり、その日1日間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
  * 
+ * @author daisuke
  * @since 1.0
  */
 @SuppressWarnings("serial")

@@ -27,6 +27,7 @@ import org.apache.commons.lang.Validate;
 /**
  * {@link DateSpecification}用のNOT（否定）ラッパークラス。
  * 
+ * @author daisuke
  * @since 2.0
  */
 public final class NotDateSpecification extends AbstractDateSpecification {
