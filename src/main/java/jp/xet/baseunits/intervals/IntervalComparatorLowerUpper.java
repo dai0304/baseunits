@@ -77,5 +77,4 @@ public class IntervalComparatorLowerUpper<T extends Comparable<T> & Serializable
 		int lowerComparance = e1.lowerLimitObject.compareTo(e2.lowerLimitObject);
 		return lowerComparance != 0 ? (lowerComparance + lowerFactor) : (upperComparance * upperFactor);
 	}
-	
 }

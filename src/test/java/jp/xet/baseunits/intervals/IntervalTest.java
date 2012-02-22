@@ -794,7 +794,11 @@ public class IntervalTest {
 		assertThat(c1_10c.toString(), is("[1, 10]"));
 		assertThat(o10_12c.toString(), is("(10, 12]"));
 		assertThat(empty.toString(), is("{}"));
-		assertThat(Interval.closed(10, 10).toString(), is("{10}"));
+		assertThat(Interval.singleElement(10).toString(), is("{10}"));
+		assertThat(Interval.andMore(10).toString(), is("[10, Infinity)"));
+		assertThat(Interval.moreThan(10).toString(), is("(10, Infinity)"));
+		assertThat(Interval.upTo(10).toString(), is("(Infinity, 10]"));
+		assertThat(Interval.under(10).toString(), is("(Infinity, 10)"));
 	}
 	
 	/**

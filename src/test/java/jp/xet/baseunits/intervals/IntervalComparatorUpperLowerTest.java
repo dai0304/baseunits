@@ -17,11 +17,11 @@
  */
 package jp.xet.baseunits.intervals;
 
-import java.util.Collections;
-import java.util.List;
+import static org.junit.Assert.fail;
 
-import jp.xet.baseunits.intervals.Interval;
-import jp.xet.baseunits.intervals.IntervalComparatorUpperLower;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -39,18 +39,18 @@ public class IntervalComparatorUpperLowerTest {
 	public void test01_compare() throws Exception {
 		List<Interval<Integer>> list = IntervalTest.newIntegerIntervalList2();
 		Collections.sort(list, new IntervalComparatorUpperLower<Integer>(true, false));
-		
-//		StringBuilder sb = new StringBuilder();
-//		for (Interval<Integer> interval : list) {
-//			sb.append(interval.toStringGraphically()).append(SystemUtils.LINE_SEPARATOR);
-//		}
-//		
-//		System.out.println("{upper -> lower * -1}");
-//		System.out.println("           1         2         3");
-//		System.out.println(" 0123456789012345678901234567890");
-//		System.out.println(sb);
-		
 		// TODO assertion
 	}
 	
+	@Test
+	@SuppressWarnings("javadoc")
+	public void test02_NPE() {
+		Comparator<Interval<Integer>> c = new IntervalComparatorUpperLower<Integer>(false, true);
+		try {
+			c.compare(null, Interval.singleElement(10));
+			fail();
+		} catch (NullPointerException e) {
+			// success
+		}
+	}
 }

@@ -81,6 +81,15 @@ public class IntervalSequence<T extends Comparable<T> & Serializable> implements
 	}
 	
 	/**
+	 * この区間列が含む全ての要素を削除する。
+	 * 
+	 * @since 2.0
+	 */
+	public void clear() {
+		intervals.clear();
+	}
+	
+	/**
 	 * 全ての要素区間を内包する、最小の区間を返す。
 	 * 
 	 * @return 全ての要素区間を内包する、最小の区間

@@ -21,7 +21,10 @@
 package jp.xet.baseunits.time;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -144,6 +147,8 @@ public class CalendarDateTest {
 	public void test08_Equals() throws Exception {
 		assertThat(feb17.equals(feb17), is(true));
 		assertThat(feb17.equals(mar13), is(false));
+		assertThat(feb17.equals(null), is(false));
+		assertThat(feb17.equals(new Object()), is(false));
 	}
 	
 	/**
@@ -256,4 +261,85 @@ public class CalendarDateTest {
 		assertThat(may1.plusDays(19), is(may20));
 	}
 	
+	/**
+	 * {@link CalendarDate#from(java.util.Date, TimeZone)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test16_from() throws Exception {
+		assertThat(CalendarDate.from(new java.util.Date(0L), UTC), is(CalendarDate.EPOCH_DATE));
+	}
+	
+	/**
+	 * {@link CalendarDate#asCalendarWeek()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test17_asCalendarWeek() throws Exception {
+		assertThat(CalendarDate.EPOCH_DATE.asCalendarWeek(), is(CalendarWeek.from(1970, 1)));
+		assertThat(CalendarDate.from(1978, 3, 4).asCalendarWeek(), is(CalendarWeek.from(1978, 9)));
+	}
+	
+	/**
+	 * {@link CalendarDate#asJavaUtilDate(TimeZone)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test18_asJavaUtilDate() throws Exception {
+		assertThat(CalendarDate.EPOCH_DATE.asJavaUtilDate(UTC), is(new java.util.Date(0L)));
+	}
+	
+	/**
+	 * {@link CalendarDate#asYearInterval()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test19_asYearInterval() throws Exception {
+		assertThat(CalendarDate.EPOCH_DATE.asYearInterval(), is(CalendarInterval.year(1970)));
+		assertThat(CalendarDate.from(1978, 3, 4).asYearInterval(), is(CalendarInterval.year(1978)));
+	}
+	
+	/**
+	 * {@link CalendarDate#compareTo(CalendarDate)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test20_compareTo() throws Exception {
+		CalendarDate daisukeBirth = CalendarDate.from(1978, 3, 4);
+		CalendarDate yukariBirth = CalendarDate.from(1980, 2, 26);
+		
+		assertThat(daisukeBirth.compareTo(yukariBirth), is(lessThan(0)));
+		assertThat(yukariBirth.compareTo(daisukeBirth), is(greaterThan(0)));
+		assertThat(daisukeBirth.compareTo(daisukeBirth), is(0));
+		
+		try {
+			daisukeBirth.compareTo(null);
+			fail();
+		} catch (NullPointerException e) {
+			// success
+		}
+	}
+	
+	/**
+	 * {@link CalendarDate#plus(Duration)}, {@link CalendarDate#minus(Duration)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test21_plus_minus() throws Exception {
+		CalendarDate daisukeBirth = CalendarDate.from(1978, 3, 4);
+		CalendarDate daisukeBirthEve = CalendarDate.from(1978, 3, 3);
+		CalendarDate daisukeBirthNext = CalendarDate.from(1978, 3, 5);
+		assertThat(daisukeBirth.plus(Duration.hours(15)), is(daisukeBirth));
+		assertThat(daisukeBirth.plus(Duration.hours(29)), is(daisukeBirth));
+		assertThat(daisukeBirthEve.plus(Duration.days(2)), is(daisukeBirthNext));
+		assertThat(daisukeBirth.minus(Duration.hours(15)), is(daisukeBirth));
+		assertThat(daisukeBirth.minus(Duration.hours(29)), is(daisukeBirth));
+		assertThat(daisukeBirthNext.minus(Duration.days(2)), is(daisukeBirthEve));
+	}
 }

@@ -28,11 +28,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import jp.xet.baseunits.intervals.Interval;
-import jp.xet.baseunits.intervals.IntervalComparatorLowerUpper;
-import jp.xet.baseunits.intervals.IntervalComparatorUpperLower;
-import jp.xet.baseunits.intervals.IntervalSequence;
-
 import org.junit.Test;
 
 /**
@@ -71,7 +66,7 @@ public class IntervalSequenceTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test01_Iterate() throws Exception {
+	public void test01_iterate() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		assertThat(intervalSequence.isEmpty(), is(true));
 		intervalSequence.add(empty);
@@ -99,7 +94,7 @@ public class IntervalSequenceTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test02_InsertedOutOfOrder() throws Exception {
+	public void test02_insertedOutOfOrder() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		intervalSequence.add(o10_12c);
 		intervalSequence.add(c5_10c);
@@ -124,7 +119,7 @@ public class IntervalSequenceTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test03_Overlapping() throws Exception {
+	public void test03_overlapping() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		intervalSequence.add(o10_12c);
 		intervalSequence.add(o11_20c);
@@ -148,9 +143,12 @@ public class IntervalSequenceTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test04_Intersections() throws Exception {
+	public void test04_intersections() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		intervalSequence.add(o10_12c);
+		
+		assertThat(intervalSequence.intersections().isEmpty(), is(true));
+		
 		intervalSequence.add(o11_20c);
 		intervalSequence.add(c20_25c);
 		
@@ -174,7 +172,7 @@ public class IntervalSequenceTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test05_Gaps() throws Exception {
+	public void test05_gaps() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		intervalSequence.add(c5_10c);
 		intervalSequence.add(o10_12c);
@@ -201,9 +199,12 @@ public class IntervalSequenceTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test06_Extent() throws Exception {
+	public void test06_extent() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		intervalSequence.add(c5_10c);
+		
+		assertThat(intervalSequence.extent(), is(c5_10c));
+		
 		intervalSequence.add(o10_12c);
 		intervalSequence.add(c20_25c);
 		assertThat(intervalSequence.extent(), is(Interval.closed(5, 25)));
@@ -225,6 +226,14 @@ public class IntervalSequenceTest {
 			
 			seq.add(all);
 			assertThat(seq.extent(), is(all));
+		}
+		
+		intervalSequence.clear();
+		try {
+			intervalSequence.extent();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
 		}
 	}
 	

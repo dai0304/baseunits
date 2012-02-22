@@ -21,16 +21,18 @@
 package jp.xet.baseunits.intervals;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-
-import jp.xet.baseunits.intervals.IntervalLimit;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -240,5 +242,49 @@ public class IntervalLimitTest {
 		
 		assertThat(list.get(10), is(IntervalLimit.<Integer> upper(false, null)));
 		assertThat(list.get(11), is(IntervalLimit.<Integer> upper(false, null))); // 閉じた無限限界は開いた無限限界に変換される
+	}
+	
+	/**
+	 * パラメータ型が異なる場合の {@link #equals(Object)} は{@code false}と評価される。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_CCE() throws Exception {
+		IntervalLimit<Integer> foo = IntervalLimit.<Integer> lower(true, 1);
+		IntervalLimit<Character> bar = IntervalLimit.<Character> lower(true, 'c');
+		assertThat(foo.equals(bar), is(false));
+	}
+	
+	/**
+	 * {@link IntervalLimit#hashCode()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_hashCode() throws Exception {
+		IntervalLimit<Integer> lowerClosedOne = IntervalLimit.lower(true, 1);
+		IntervalLimit<Integer> upperClosedOne = IntervalLimit.upper(true, 1);
+		IntervalLimit<Integer> lowerOpenOne = IntervalLimit.lower(false, 1);
+		IntervalLimit<Integer> upperOpenOne = IntervalLimit.upper(false, 1);
+		IntervalLimit<Integer> lowerClosedTwo = IntervalLimit.lower(true, 2);
+		IntervalLimit<Integer> upperClosedTwo = IntervalLimit.upper(true, 2);
+		IntervalLimit<Integer> lowerOpenTwo = IntervalLimit.lower(false, 2);
+		IntervalLimit<Integer> upperOpenTwo = IntervalLimit.upper(false, 2);
+		IntervalLimit<Integer> nullLimit = IntervalLimit.<Integer> upper(false, null);
+		assertThat(lowerClosedOne.hashCode(), is(not(equalTo(upperClosedOne.hashCode()))));
+		// ...
+		
+		Set<IntervalLimit<Integer>> set = new HashSet<IntervalLimit<Integer>>();
+		set.add(lowerClosedOne);
+		set.add(upperClosedOne);
+		set.add(lowerOpenOne);
+		set.add(upperOpenOne);
+		set.add(lowerClosedTwo);
+		set.add(upperClosedTwo);
+		set.add(lowerOpenTwo);
+		set.add(upperOpenTwo);
+		set.add(nullLimit);
+		assertThat(set.size(), is(9));
 	}
 }

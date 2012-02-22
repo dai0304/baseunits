@@ -22,10 +22,12 @@ package jp.xet.baseunits.time;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import jp.xet.baseunits.time.spec.DateSpecifications;
@@ -243,6 +245,13 @@ public class BusinessCalendarTest {
 		assertThat(it.hasNext(), is(true));
 		assertThat(it.next(), is(CalendarDate.from(2004, 2, 6)));
 		assertThat(it.hasNext(), is(false));
+		
+		try {
+			it.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
 	}
 	
 	/**
@@ -282,7 +291,16 @@ public class BusinessCalendarTest {
 	@Test
 	public void test09_PlusBusinessDayZero() throws Exception {
 		CalendarDate monday = CalendarDate.from(2006, 06, 19);
+		CalendarDate tuesday = CalendarDate.from(2006, 06, 20);
 		assertThat(cal.plusBusinessDays(monday, 0), is(monday));
+		assertThat(cal.plusBusinessDays(monday, 1), is(tuesday));
+		
+		try {
+			cal.plusBusinessDays(monday, -1);
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
 	}
 	
 	/**
@@ -310,6 +328,12 @@ public class BusinessCalendarTest {
 		CalendarDate actual = cal.minusBusinessDays(saturday, 0);
 		assertThat(actual, is(friday));
 		
+		try {
+			cal.minusBusinessDays(friday, -1);
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
 	}
 	
 	/**
@@ -381,14 +405,8 @@ public class BusinessCalendarTest {
 			"2004/07/05", /* United States of America's Independence Day, July 4 *///revisit:defered
 			"2004/09/06", /* Labor Day */
 			"2004/11/25", /* Thanksgiving Day */
-			"2004/12/24", /*
-							 * Christmas Day, December 25 - Friday - deferred from
-							 * Saturday
-							 */
-			"2004/12/31", /*
-							 * New Year's Day for January 1, 2005 - Friday -
-							 * deferred from Saturday
-							 */
+			"2004/12/24", /* Christmas Day, December 25 - Friday - deferred from Saturday */
+			"2004/12/31", /* New Year's Day for January 1, 2005 - Friday - deferred from Saturday */
 			
 			// 2005
 			"2005/01/17", /* Birthday of Martin Luther King */
@@ -397,10 +415,7 @@ public class BusinessCalendarTest {
 			"2005/07/04", /* United States of America's Independence Day, July 4 */
 			"2005/09/05", /* Labor Day */
 			"2005/11/24", /* Thanksgiving Day */
-			"2005/12/26", /*
-							 * Christmas Day, December 25 - Monday - deferred from
-							 * Sunday
-							 */
+			"2005/12/26", /* Christmas Day, December 25 - Monday - deferred from Sunday */
 			
 			// 2006
 			"2006/01/02", /* New Year's Day, January 1 */
@@ -426,7 +441,5 @@ public class BusinessCalendarTest {
 			}
 			return dates;
 		}
-		
 	}
-	
 }
