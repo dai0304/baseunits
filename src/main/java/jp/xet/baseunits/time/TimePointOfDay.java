@@ -108,23 +108,6 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
-	 * 
-	 * @param hour 時
-	 * @param meridian 午前/午後
-	 * @param minute 分
-	 * @param second 秒
-	 * @param millisecond ミリ秒
-	 * @return {@link TimePointOfDay}
-	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code meridian}の値が {@code "AM"} または {@code "PM"} ではない場合
-	 * @since 2.0
-	 */
-	public static TimePointOfDay at12hr(int hour, Meridian meridian, int minute, int second, int millisecond) {
-		return at(HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, UTC);
-	}
-	
-	/**
 	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
 	 * 
 	 * @param hour 時
@@ -142,6 +125,22 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 			TimeZone zone) {
 		Validate.notNull(zone);
 		return at(HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, zone);
+	}
+	
+	/**
+	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
+	 * 
+	 * @param hour 時
+	 * @param meridian 午前/午後
+	 * @param minute 分
+	 * @param second 秒
+	 * @param millisecond ミリ秒
+	 * @return {@link TimePointOfDay}
+	 * @throws IllegalArgumentException 引数{@code hour}の値が0〜11の範囲ではない場合
+	 * @since 2.0
+	 */
+	public static TimePointOfDay at12hrUTC(int hour, Meridian meridian, int minute, int second, int millisecond) {
+		return at(HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, UTC);
 	}
 	
 	/**
