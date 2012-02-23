@@ -144,12 +144,17 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param length 期間の長さ
 	 * @return 期間
+	 * @throws IllegalArgumentException 減算の結果が0時を超えた場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval preceding(TimeOfDay end, Duration length) {
 		Validate.notNull(end);
 		Validate.notNull(length);
+		if (length.isGreaterThan(end.toDuration())) {
+			throw new IllegalArgumentException();
+		}
+		
 		// Uses the common default for time intervals, [start, end).
 		return preceding(end, true, length, false);
 	}

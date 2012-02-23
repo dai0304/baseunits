@@ -145,6 +145,8 @@ public class TimePointInterval extends Interval<TimePoint> {
 	/**
 	 * 終了日時と期間の長さより、期間を返す。
 	 * 
+	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
+	 * 
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param length 期間の長さ
 	 * @return 期間

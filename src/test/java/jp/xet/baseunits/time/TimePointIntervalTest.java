@@ -268,6 +268,20 @@ public class TimePointIntervalTest {
 		interval = TimePointInterval.closed(first, second);
 		Duration expectedLength = Duration.daysHoursMinutesSecondsMilliseconds(5, 4, 3, 2, 1);
 		assertThat(interval.length(), is(expectedLength));
+		
+		try {
+			TimePointInterval.everFrom(TimePoint.EPOCH).length();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+		
+		try {
+			TimePointInterval.everPreceding(TimePoint.EPOCH).length();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
 	}
 	
 	/**
@@ -317,6 +331,13 @@ public class TimePointIntervalTest {
 	 */
 	@Test
 	public void test17_SubintervalIterator() throws Exception {
+		try {
+			TimePointInterval.everPreceding(dec19_2003).subintervalIterator(Duration.days(1));
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+		
 		TimePoint d4_h10 = TimePoint.atUTC(2004, 2, 4, 10, 0);
 		TimePoint d6_h10 = TimePoint.atUTC(2004, 2, 6, 10, 0);
 		TimePoint d8_h10 = TimePoint.atUTC(2004, 2, 8, 10, 0);
@@ -384,4 +405,14 @@ public class TimePointIntervalTest {
 		assertThat("intersects false", i19_21.intersects(i22_23), is(false));
 	}
 	
+	/**
+	 * {@link TimePointInterval#preceding(TimePoint, Duration)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test19_preceding() throws Exception {
+		assertThat(TimePointInterval.preceding(dec23_2003, Duration.days(3)),
+				is(TimePointInterval.over(dec20_2003, true, dec23_2003, false)));
+	}
 }

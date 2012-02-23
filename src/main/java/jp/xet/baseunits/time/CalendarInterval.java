@@ -150,6 +150,25 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
+	 * 終了日と期間の長さより、期間を生成する。
+	 * 
+	 * @param end 終了日（上側限界値）
+	 * @param length 期間の長さ
+	 * @return 期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	public static CalendarInterval preceding(CalendarDate end, Duration length) {
+		Validate.notNull(end);
+		Validate.notNull(length);
+		// Uses the common default for calendar intervals, [start, end].
+		if (length.unit.compareTo(TimeUnit.day) < 0) {
+			return inclusive(end, end);
+		}
+		return inclusive(end.minus(length).plusDays(1), end);
+	}
+	
+	/**
 	 * 開始日と期間の長さより、期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
@@ -243,8 +262,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 */
 	public TimePointInterval asTimeInterval(TimeZone zone) {
 		Validate.notNull(zone);
-		TimePoint startPoint = lowerLimit().asTimePointInterval(zone).start();
-		TimePoint endPoint = upperLimit().asTimePointInterval(zone).end();
+		TimePoint startPoint = hasLowerLimit() ? lowerLimit().asTimePointInterval(zone).start() : null;
+		TimePoint endPoint = hasUpperLimit() ? upperLimit().asTimePointInterval(zone).end() : null;
 		return TimePointInterval.over(startPoint, endPoint);
 	}
 	

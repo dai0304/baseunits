@@ -44,6 +44,9 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
+	/** エポック */
+	public static final TimePoint EPOCH = TimePoint.from(0);
+	
 	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
 	

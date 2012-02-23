@@ -342,4 +342,15 @@ public class CalendarDateTest {
 		assertThat(daisukeBirth.minus(Duration.hours(29)), is(daisukeBirth));
 		assertThat(daisukeBirthNext.minus(Duration.days(2)), is(daisukeBirthEve));
 	}
+	
+	/**
+	 * {@link CalendarDate#getYear()}, {@link CalendarDate#getMonthOfYear()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test22_() throws Exception {
+		assertThat(CalendarDate.from(1978, 3, 4).getYear(), is(1978));
+		assertThat(CalendarDate.from(1978, 3, 4).getMonthOfYear(), is(MonthOfYear.MAR));
+	}
 }

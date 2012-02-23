@@ -385,6 +385,17 @@ public class BusinessCalendarTest {
 				"2010-11-29 2010-11-30 "));
 	}
 	
+	/**
+	 * {@link BusinessCalendar#prevBusinessDay(CalendarDate)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test14_prevBusinessDay() throws Exception {
+		assertThat(cal.prevBusinessDay(CalendarDate.from(2012, 2, 23)), is(CalendarDate.from(2012, 2, 22)));
+		assertThat(cal.prevBusinessDay(CalendarDate.from(2012, 2, 20)), is(CalendarDate.from(2012, 2, 17)));
+	}
+	
 	
 	/**
 	 * dates are taken from: http://www.opm.gov/fedhol/index.htm note: when a

@@ -366,8 +366,6 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
 	@Override
 	public int hashCode() {
-		assert day != null;
-		assert yearMonth != null;
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + day.hashCode();

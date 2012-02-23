@@ -43,6 +43,8 @@ public class IntervalSequenceTest {
 	
 	private Interval<Integer> o12_20o = Interval.open(12, 20);
 	
+	private Interval<Integer> c18_25c = Interval.closed(18, 25);
+	
 	private Interval<Integer> c20_25c = Interval.closed(20, 25);
 	
 	private Interval<Integer> o25_30c = Interval.over(25, false, 30, true);
@@ -175,6 +177,9 @@ public class IntervalSequenceTest {
 	public void test05_gaps() throws Exception {
 		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
 		intervalSequence.add(c5_10c);
+		
+		assertThat(intervalSequence.gaps().isEmpty(), is(true));
+		
 		intervalSequence.add(o10_12c);
 		intervalSequence.add(c20_25c);
 		intervalSequence.add(o30_35o);
@@ -235,6 +240,20 @@ public class IntervalSequenceTest {
 		} catch (IllegalStateException e) {
 			// success
 		}
+	}
+	
+	/**
+	 * {@link IntervalSequence#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_toString() throws Exception {
+		IntervalSequence<Integer> intervalSequence = new IntervalSequence<Integer>();
+		intervalSequence.add(o10_12c);
+		intervalSequence.add(c5_10c);
+		
+		assertThat(intervalSequence.toString(), is("[[5, 10], (10, 12]]"));
 	}
 	
 	@SuppressWarnings("unchecked")

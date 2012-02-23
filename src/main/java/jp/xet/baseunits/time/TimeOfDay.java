@@ -312,8 +312,6 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		assert hour != null;
-		assert minute != null;
 		if (this == obj) {
 			return true;
 		}
@@ -401,11 +399,10 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	public TimeOfDay minus(Duration duration) {
 		Validate.notNull(duration);
 		Duration d = toDuration();
-		if (d.isGreaterThan(duration)) {
-			d = d.minus(duration);
-		} else {
-			d = duration.minus(d);
+		while (d.isGreaterThan(duration) == false) {
+			d = d.plus(Duration.days(1));
 		}
+		d = d.minus(duration);
 		return TimeOfDay.MIN.plus(d);
 	}
 	
@@ -420,8 +417,8 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	public TimeOfDay plus(Duration duration) {
 		Validate.notNull(duration);
 		Duration total = toDuration().plus(duration);
-		if (total.isGreaterThanOrEqual(Duration.days(1))) {
-			total.minus(Duration.days(1));
+		while (total.isGreaterThanOrEqual(Duration.days(1))) {
+			total = total.minus(Duration.days(1));
 		}
 		return from(total.to(TimeUnit.millisecond));
 	}

@@ -473,7 +473,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 				return aUnit;
 			}
 		}
-		return null;
+		throw new AssertionError("must not to be occured");
 	}
 	
 	/**
@@ -493,7 +493,41 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 終了日時とこのオブジェクトが表現する時間量より、期間を生成する。
+	 * 指定した日付を終了日とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 
+	 * @param end 終了日（上側限界値）
+	 * @return 期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	public CalendarInterval preceding(CalendarDate end) {
+		Validate.notNull(end);
+		return CalendarInterval.preceding(end, this);
+	}
+	
+	/**
+	 * 指定した時刻を終了時刻とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
+	 * 
+	 * @param end 終了日時（上側限界値）
+	 * @return 期間
+	 * @throws IllegalArgumentException 減算の結果が0時を超えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
+	 */
+	public TimeOfDayInterval preceding(TimeOfDay end) {
+		Validate.notNull(end);
+		if (isGreaterThan(end.toDuration())) {
+			throw new IllegalArgumentException();
+		}
+		return TimeOfDayInterval.preceding(end, this);
+	}
+	
+	/**
+	 * 指定した日時を終了日時とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 
+	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
 	 * 
 	 * @param end 終了日時（上側限界値）
 	 * @return 期間
@@ -512,7 +546,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * <p>この時間量の単位が "日" 未満である場合は、開始日と終了日は同日となる。<p>
 	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param start 開始日（下側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -529,8 +563,8 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 加算の結果が24時を超えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimeOfDayInterval startingFrom(TimeOfDay start) {
@@ -543,7 +577,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
 	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param start 開始日時（下側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0

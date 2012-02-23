@@ -77,8 +77,19 @@ public class CalendarIntervalTest {
 	 */
 	@Test
 	public void test02_TranslationToTimeInterval() throws Exception {
-		TimePointInterval day = may20.asTimePointInterval(ct);
-		assertThat("May20Ct", day.start(), is(TimePoint.atMidnight(2004, 5, 20, ct)));
+		TimePointInterval tpi = may.asTimeInterval(ct);
+		assertThat(tpi.start(), is(TimePoint.atMidnight(2004, 5, 1, ct)));
+		assertThat(tpi.includesLowerLimit(), is(true));
+		assertThat(tpi.end(), is(TimePoint.atMidnight(2004, 6, 1, ct)));
+		assertThat(tpi.includesUpperLimit(), is(false));
+		
+		TimePointInterval tpi2 = CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).asTimeInterval(ct);
+		assertThat(tpi2.hasLowerLimit(), is(true));
+		assertThat(tpi2.hasUpperLimit(), is(false));
+		
+		TimePointInterval tpi3 = CalendarInterval.everPreceding(CalendarDate.EPOCH_DATE).asTimeInterval(ct);
+		assertThat(tpi3.hasLowerLimit(), is(false));
+		assertThat(tpi3.hasUpperLimit(), is(true));
 	}
 	
 	/**
@@ -284,5 +295,108 @@ public class CalendarIntervalTest {
 			std = std.nextMonth();
 		}
 		assertThat(std, is(CalendarMonth.from(2011, 8)));
+	}
+	
+	/**
+	 * {@link CalendarInterval#month(int, int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test14_month() throws Exception {
+		CalendarInterval month = CalendarInterval.month(2012, 2);
+		assertThat(month.start(), is(CalendarDate.from(2012, 2, 1)));
+		assertThat(month.end(), is(CalendarDate.from(2012, 2, 29)));
+	}
+	
+	/**
+	 * {@link CalendarInterval#preceding(CalendarDate, Duration)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test15_preceding() throws Exception {
+		CalendarInterval week = CalendarInterval.preceding(CalendarDate.from(2012, 2, 23), Duration.weeks(1));
+		assertThat(week.start(), is(CalendarDate.from(2012, 2, 17)));
+		assertThat(week.end(), is(CalendarDate.from(2012, 2, 23)));
+		assertThat(week.toString(), is("[2012-02-17, 2012-02-23]"));
+		
+		CalendarInterval p = CalendarInterval.preceding(CalendarDate.from(2012, 2, 23), Duration.minutes(1));
+		assertThat(p.start(), is(CalendarDate.from(2012, 2, 23)));
+		assertThat(p.end(), is(CalendarDate.from(2012, 2, 23)));
+	}
+	
+	/**
+	 * {@link CalendarInterval#daysInReverseIterator()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test16_daysInReverseIterator() throws Exception {
+		CalendarInterval week = CalendarInterval.preceding(CalendarDate.from(2012, 2, 23), Duration.weeks(1));
+		Iterator<CalendarDate> itr = week.daysInReverseIterator();
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarDate.from(2012, 2, 23)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarDate.from(2012, 2, 22)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarDate.from(2012, 2, 21)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarDate.from(2012, 2, 20)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarDate.from(2012, 2, 19)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarDate.from(2012, 2, 18)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarDate.from(2012, 2, 17)));
+		assertThat(itr.hasNext(), is(false));
+		try {
+			itr.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
+		
+		try {
+			CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).daysInReverseIterator();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+	}
+	
+	/**
+	 * {@link CalendarInterval#lengthInDaysInt()}, {@link CalendarInterval#lengthInMonths()},
+	 * {@link CalendarInterval#lengthInMonthsInt()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test17_lengthIn() throws Exception {
+		CalendarInterval week = CalendarInterval.preceding(CalendarDate.from(2012, 2, 23), Duration.quarters(3));
+		assertThat(week.lengthInDaysInt(), is(276));
+		assertThat(week.lengthInMonthsInt(), is(9));
+		assertThat(week.lengthInMonths(), is(Duration.months(9)));
+		
+		try {
+			CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).lengthInDaysInt();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+		
+		try {
+			CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).lengthInMonthsInt();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+		
+		try {
+			CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).lengthInMonths();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
 	}
 }

@@ -23,11 +23,6 @@ import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import jp.xet.baseunits.tests.SerializationTester;
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarInterval;
-import jp.xet.baseunits.time.CalendarMonth;
-import jp.xet.baseunits.time.DayOfMonth;
-import jp.xet.baseunits.time.MonthOfYear;
 
 import org.junit.Test;
 
@@ -170,5 +165,15 @@ public class CalendarMonthTest {
 		assertThat(feb2009.equals(new CalendarMonth(2009, MonthOfYear.FEB)), is(true));
 		assertThat(feb2009.equals(new CalendarMonth(2009, MonthOfYear.FEB) {
 		}), is(false));
+	}
+	
+	/**
+	 * {@link CalendarMonth#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test11_toString() throws Exception {
+		assertThat(nov2010.toString(), is("2010-11"));
 	}
 }

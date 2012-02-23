@@ -157,6 +157,15 @@ public class DurationTest {
 		// 単位が日未満の時は日付を変えない。
 		Duration threeHours = Duration.milliseconds(30);
 		assertThat(threeHours.addedTo(CalendarDate.from(2010, 11, 27)), is(CalendarDate.from(2010, 11, 27)));
+		
+		try {
+			Duration.months(Long.MAX_VALUE).addedTo(TimePoint.EPOCH);
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
+		
+		assertThat(Duration.weeks(3).addedTo(dec20_2001), is(CalendarDate.from(2002, 1, 10)));
 	}
 	
 	/**
@@ -228,7 +237,14 @@ public class DurationTest {
 		assertThat(Duration.quarters(1).minus(Duration.months(1)), is(Duration.months(2)));
 		
 		try {
-			Duration.months(2).plus(Duration.days(3));
+			Duration.months(2).minus(Duration.days(3));
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
+		
+		try {
+			Duration.days(3).minus(Duration.days(10));
 			fail();
 		} catch (IllegalArgumentException e) {
 			// success
@@ -459,5 +475,36 @@ public class DurationTest {
 		durations.add(Duration.seconds(61));
 		
 		assertThat(Duration.sum(durations), is(Duration.days(1).plus(Duration.seconds(1))));
+	}
+	
+	/**
+	 * {@link Duration#daysHoursMinutesSecondsMilliseconds(long, long, long, long, long)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test24_daysHoursMinutesSecondsMilliseconds() throws Exception {
+		assertThat(Duration.daysHoursMinutesSecondsMilliseconds(0, 0, 0, 0, 0), is(Duration.NONE));
+		assertThat(Duration.daysHoursMinutesSecondsMilliseconds(1, 0, 0, 0, 0), is(Duration.days(1)));
+		assertThat(Duration.daysHoursMinutesSecondsMilliseconds(0, 2, 0, 0, 0), is(Duration.hours(2)));
+		assertThat(Duration.daysHoursMinutesSecondsMilliseconds(0, 0, 3, 0, 0), is(Duration.minutes(3)));
+		assertThat(Duration.daysHoursMinutesSecondsMilliseconds(0, 0, 0, 4, 0), is(Duration.seconds(4)));
+		assertThat(Duration.daysHoursMinutesSecondsMilliseconds(0, 0, 0, 0, 5), is(Duration.milliseconds(5)));
+	}
+	
+	/**
+	 * {@link Duration#isLessThan(Duration)}, {@link Duration#isLessThanOrEqual(Duration)} のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test25_isLessThan() throws Exception {
+		assertThat(Duration.NONE.isLessThan(Duration.milliseconds(1)), is(true));
+		assertThat(Duration.NONE.isLessThan(Duration.NONE), is(false));
+		assertThat(Duration.milliseconds(1).isLessThan(Duration.NONE), is(false));
+		
+		assertThat(Duration.NONE.isLessThanOrEqual(Duration.milliseconds(1)), is(true));
+		assertThat(Duration.NONE.isLessThanOrEqual(Duration.NONE), is(true));
+		assertThat(Duration.milliseconds(1).isLessThanOrEqual(Duration.NONE), is(false));
 	}
 }

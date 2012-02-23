@@ -130,6 +130,12 @@ public class TimeOfDayTest {
 				twoMinutesBeforeMidnight.isAfter(midnight), is(true));
 		assertThat("expected afternoon to be after morning", afternoon.isAfter(morning), is(true));
 		assertThat("expected noon to be after midnight", noon.isAfter(midnight), is(true));
+		
+		assertThat(TimeOfDay.from(1, 2, 3, 4).isAfter(TimeOfDay.from(1, 2, 3, 4)), is(false));
+		assertThat(TimeOfDay.from(1, 2, 3, 4).isAfter(TimeOfDay.from(1, 2, 3, 5)), is(false));
+		assertThat(TimeOfDay.from(1, 2, 3, 4).isAfter(TimeOfDay.from(1, 2, 3, 3)), is(true));
+		assertThat(TimeOfDay.from(1, 2, 3, 4).isAfter(TimeOfDay.from(1, 2, 2, 4)), is(true));
+		assertThat(TimeOfDay.from(1, 2, 3, 4).isAfter(TimeOfDay.from(1, 1, 3, 4)), is(true));
 	}
 	
 	/**
@@ -267,9 +273,11 @@ public class TimeOfDayTest {
 	public void test16_plus_minus() throws Exception {
 		assertThat(TimeOfDay.NOON.plus(Duration.hours(1)), is(TimeOfDay.from(13, 0)));
 		assertThat(TimeOfDay.from(4, 52, 3, 55).plus(Duration.minutes(12)), is(TimeOfDay.from(5, 4, 3, 55)));
+		assertThat(TimeOfDay.NOON.plus(Duration.hours(13)), is(TimeOfDay.from(1, 0)));
 		
 		assertThat(TimeOfDay.from(13, 0).minus(Duration.hours(2)), is(TimeOfDay.from(11, 0)));
 		assertThat(TimeOfDay.from(5, 4, 3, 55).minus(Duration.minutes(12)), is(TimeOfDay.from(4, 52, 3, 55)));
+		assertThat(TimeOfDay.NOON.minus(Duration.hours(13)), is(TimeOfDay.from(23, 0)));
 	}
 	
 	/**

@@ -355,7 +355,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	/**
 	 * この日付の文字列表現を取得する。
 	 * 
-	 * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
+	 * <p>{@link SimpleDateFormat}の仕様に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
 	 * 
 	 * @see java.lang.Object#toString()
 	 * @since 1.0
