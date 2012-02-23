@@ -29,12 +29,17 @@ import jp.xet.baseunits.time.spec.DateSpecification;
 import jp.xet.baseunits.time.spec.DateSpecifications;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Example.
  */
 @SuppressWarnings("javadoc")
 public class RepeatScheduleExample {
+	
+	private static Logger logger = LoggerFactory.getLogger(RepeatScheduleExample.class);
+	
 	
 	@Test
 	public void example() {
@@ -48,7 +53,7 @@ public class RepeatScheduleExample {
 		Iterator<CalendarDate> itr = spec.iterateOver(CalendarMonth.from(2011, 10).asCalendarInterval());
 		while (itr.hasNext()) {
 			CalendarDate calendarDate = itr.next();
-			System.out.println(calendarDate + " " + calendarDate.dayOfWeek());
+			logger.info("{} {}", calendarDate, calendarDate.dayOfWeek());
 		}
 	}
 }

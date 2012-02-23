@@ -55,7 +55,7 @@ public class Icu4jDurationFormatter extends AbstractDurationFormatter implements
 		switch (target.breachEncapsulationOfUnit()) {
 			case millisecond:
 				unit = TimeUnit.SECOND;
-				number *= 1000; // CHECKSTYLE IGNORE THIS LINE
+				number /= 1000; // CHECKSTYLE IGNORE THIS LINE
 				break;
 			
 			case second:

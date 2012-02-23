@@ -67,6 +67,19 @@
       <scope>test</scope>
     </dependency>
     
+    <!-- LOGGER DEPENDENCIES -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j-version}</version>
+      <scope>test</scope>
+    </dependency>
+    
     <!-- Commons DEPS -->
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -137,6 +150,7 @@
     </site>
   </distributionManagement>
   <properties>
+    <slf4j-version>[1.6.2,1.7.0)</slf4j-version>
     <guava-version>[10.0.1,10.2)</guava-version>
     <commons-lang-version>[2.6,3.0)</commons-lang-version>
     <wicket-version>[1.5.0,1.6.0)</wicket-version>

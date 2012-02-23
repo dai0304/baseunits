@@ -58,7 +58,7 @@ public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatt
 		
 		StringBuilder sb = new StringBuilder();
 		if (h != 0) {
-			sb.append(format.format(new TimeUnitAmount(h, com.ibm.icu.util.TimeUnit.HOUR)));
+			sb.append(format.format(new TimeUnitAmount(h, com.ibm.icu.util.TimeUnit.HOUR))).append(' ');
 		}
 		sb.append(format.format(new TimeUnitAmount(m, com.ibm.icu.util.TimeUnit.MINUTE)));
 		return sb.toString();
