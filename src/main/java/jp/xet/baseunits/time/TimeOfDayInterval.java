@@ -27,7 +27,7 @@ import org.apache.commons.lang.Validate;
 /**
  * 日内期間（時間の区間）を表すクラス。
  * 
- * <p>限界の表現には {@link TimeOfDay}を利用する。</p>
+ * <p>限界の表現には {@link TimeOfDay}を利用する。また、無限限界は設定できない。</p>
  * 
  * @author daisuke
  * @since 2.0
@@ -38,52 +38,32 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	/**
 	 * 開始日時と終了日時より、閉期間を返す。
 	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param start 開始日時（下側限界値）
+	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval closed(TimeOfDay start, TimeOfDay end) {
+		Validate.notNull(start);
+		Validate.notNull(end);
 		return over(start, true, end, true);
-	}
-	
-	/**
-	 * 開始日時より、下側限界のみを持つ期間を返す。
-	 * 
-	 * <p>開始日時は期間に含む（閉じている）区間である。</p>
-	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @return 期間
-	 * @since 2.0
-	 */
-	public static TimeOfDayInterval everFrom(TimeOfDay start) {
-		return over(start, null);
-	}
-	
-	/**
-	 * 終了日時より、上側限界のみを持つ期間を返す。
-	 * 
-	 * <p>終了日時は期間に含まない（開いている）区間である。</p>
-	 * 
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @return 期間
-	 * @since 2.0
-	 */
-	public static TimeOfDayInterval everPreceding(TimeOfDay end) {
-		return over(null, end);
 	}
 	
 	/**
 	 * 開始日時と終了日時より、開期間を返す。
 	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param start 開始日時（下側限界値）
+	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval open(TimeOfDay start, TimeOfDay end) {
+		Validate.notNull(start);
+		Validate.notNull(end);
 		return over(start, false, end, false);
 	}
 	
@@ -92,15 +72,18 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * <p>主に、半開区間（上限下限のどちらか一方だけが開いている区間）の生成に用いる。</p>
 	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param start 開始日時（下側限界値）
 	 * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param end 終了日時（上側限界値）
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval over(TimeOfDay start, boolean startClosed, TimeOfDay end, boolean endClosed) {
+		Validate.notNull(start);
+		Validate.notNull(end);
 		return new TimeOfDayInterval(start, startClosed, end, endClosed);
 	}
 	
@@ -109,13 +92,16 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を返す。</p>
 	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param start 開始日時（下側限界値）
+	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 開始日時が終了日時より大きい（未来である）場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval over(TimeOfDay start, TimeOfDay end) {
+		Validate.notNull(start);
+		Validate.notNull(end);
 		// Uses the common default for time intervals, [start, end).
 		return over(start, true, end, false);
 	}
@@ -123,7 +109,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	/**
 	 * 終了日時と期間の長さより、期間を返す。
 	 * 
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param end 終了日時（上側限界値）
 	 * @param startClosed 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
 	 * @param length 期間の長さ
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
@@ -141,7 +127,7 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	/**
 	 * 終了日時と期間の長さより、期間を返す。
 	 * 
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param end 終了日時（上側限界値）
 	 * @param length 期間の長さ
 	 * @return 期間
 	 * @throws IllegalArgumentException 減算の結果が0時を超えた場合
@@ -199,21 +185,24 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	/**
 	 * インスタンスを返す。
 	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param start 開始日時（下側限界値）
 	 * @param startIncluded 開始日時を期間に含む（閉じた下側限界）場合は{@code true}を指定する
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param end 終了日時（上側限界値）
 	 * @param endIncluded 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimeOfDayInterval(TimeOfDay start, boolean startIncluded, TimeOfDay end, boolean endIncluded) {
 		super(start, startIncluded, end, endIncluded);
+		Validate.notNull(start);
+		Validate.notNull(end);
 	}
 	
 	/**
 	 * この期間の終了日時を取得する。
 	 * 
-	 * @return この期間の終了日時. 上側限界がない場合は {@code null}
+	 * @return この期間の終了日時
 	 * @since 2.0
 	 */
 	public TimeOfDay end() {
@@ -266,14 +255,10 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	/**
 	 * この期間の長さを取得する。
 	 * 
-	 * @return 長さ. もし開始日時または終了日時が存在しない（無限）場合は{@code null}を返す。
-	 * @throws IllegalStateException この期間が開始日時（下側限界）または終了日時（下側限界）を持たない場合
+	 * @return 長さ
 	 * @since 2.0
 	 */
 	public Duration length() {
-		if (hasLowerLimit() == false || hasUpperLimit() == false) {
-			throw new IllegalStateException();
-		}
 		long e = end().toDuration().to(TimeUnit.millisecond);
 		long s = start().toDuration().to(TimeUnit.millisecond);
 		
@@ -327,15 +312,11 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * @param subintervalLength 反復子が返す期間の長さ
 	 * @return 期間の反復子
-	 * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public Iterator<TimeOfDayInterval> subintervalIterator(Duration subintervalLength) {
 		Validate.notNull(subintervalLength);
-		if (hasLowerLimit() == false) {
-			throw new IllegalStateException();
-		}
 		final Duration segmentLength = subintervalLength;
 		return new ImmutableIterator<TimeOfDayInterval>() {
 			

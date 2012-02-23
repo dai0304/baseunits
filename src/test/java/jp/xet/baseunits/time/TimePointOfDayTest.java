@@ -80,7 +80,7 @@ public class TimePointOfDayTest {
 		assertThat(TimePointOfDay.atUTC(0, 0).equals(TimePointOfDay.UTC_MIDNIGHT), is(true));
 		assertThat(TimePointOfDay.UTC_NOON.equals(JST_9PM), is(true));
 		assertThat(UTC_3PM.equals(UTC_3AM), is(false));
-		assertThat(UTC_3PM.equals(UTC_3PM), is(false));
+		assertThat(UTC_3PM.equals(UTC_3PM), is(true));
 		assertThat(UTC_3PM.equals(null), is(false));
 		assertThat(UTC_3PM.equals(new Object()), is(false));
 	}

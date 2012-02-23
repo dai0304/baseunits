@@ -24,11 +24,32 @@ import org.junit.Test;
 /**
  * {@link CalendarWeek}のテストクラス。
  */
-@SuppressWarnings("javadoc")
 public class CalendarWeekTest {
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
 	@Test
-	public void testToString() {
+	public void test01_equals() throws Exception {
+		CalendarWeek thisWeek = CalendarWeek.from(CalendarDate.from(2012, 2, 24));
+		assertThat(thisWeek.equals(thisWeek), is(true));
+		assertThat(CalendarWeek.from(2012, 1).equals(CalendarWeek.from(2012, 1)), is(true));
+		assertThat(CalendarWeek.from(2012, 1).equals(CalendarWeek.from(2012, 2)), is(false));
+		
+		assertThat(CalendarWeek.from(2011, 53).equals(CalendarWeek.from(2012, 1)), is(false));
+		assertThat(CalendarWeek.from(2012, 1).equals(null), is(false));
+		assertThat(CalendarWeek.from(2012, 1).equals(new Object()), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_toString() {
 		assertThat(CalendarWeek.from(2011, 52).toString(), is("2011-52th"));
 		assertThat(CalendarWeek.from(2011, 53).toString(), is("2012-1th"));
 		assertThat(CalendarWeek.from(2012, 1).toString(), is("2012-1th"));

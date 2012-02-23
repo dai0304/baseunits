@@ -226,7 +226,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * 月末の日付を取得する。
+	 * 週末（日曜日）の日付を取得する。
 	 * 
 	 * @return {@link DayOfMonth}
 	 * @since 2.0
