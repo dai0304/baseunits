@@ -23,8 +23,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Calendar;
 
-import jp.xet.baseunits.time.DayOfWeek;
-
 import org.junit.Test;
 
 /**
@@ -53,5 +51,42 @@ public class DayOfWeekTest {
 	public void test02_breachEncapsulationOfValue() throws Exception {
 		assertThat(DayOfWeek.TUESDAY.breachEncapsulationOfValue(), is(Calendar.TUESDAY));
 		assertThat(DayOfWeek.WEDNESDAY.breachEncapsulationOfValue(), is(Calendar.WEDNESDAY));
+	}
+	
+	/**
+	 * {@link DayOfWeek#nextDay()}, {@link DayOfWeek#prevDay()}, {@link DayOfWeek#plusDays(int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_nextDay() throws Exception {
+		assertThat(DayOfWeek.FRIDAY.nextDay(), is(DayOfWeek.SATURDAY));
+		assertThat(DayOfWeek.FRIDAY.prevDay(), is(DayOfWeek.THURSDAY));
+		
+		assertThat(DayOfWeek.THURSDAY.plusDays(2), is(DayOfWeek.SATURDAY));
+		assertThat(DayOfWeek.THURSDAY.plusDays(-2), is(DayOfWeek.TUESDAY));
+		assertThat(DayOfWeek.THURSDAY.plusDays(5), is(DayOfWeek.TUESDAY));
+		assertThat(DayOfWeek.THURSDAY.plusDays(-5), is(DayOfWeek.SATURDAY));
+		
+		assertThat(DayOfWeek.WEDNESDAY.plusDays(7), is(DayOfWeek.WEDNESDAY));
+		assertThat(DayOfWeek.WEDNESDAY.plusDays(-7), is(DayOfWeek.WEDNESDAY));
+		assertThat(DayOfWeek.WEDNESDAY.plusDays(70), is(DayOfWeek.WEDNESDAY));
+		assertThat(DayOfWeek.WEDNESDAY.plusDays(-70), is(DayOfWeek.WEDNESDAY));
+	}
+	
+	/**
+	 * {@link DayOfWeek#shortName()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_shortName() throws Exception {
+		assertThat(DayOfWeek.MONDAY.shortName(), is("MON"));
+		assertThat(DayOfWeek.TUESDAY.shortName(), is("TUE"));
+		assertThat(DayOfWeek.WEDNESDAY.shortName(), is("WED"));
+		assertThat(DayOfWeek.THURSDAY.shortName(), is("THU"));
+		assertThat(DayOfWeek.FRIDAY.shortName(), is("FRI"));
+		assertThat(DayOfWeek.SATURDAY.shortName(), is("SAT"));
+		assertThat(DayOfWeek.SUNDAY.shortName(), is("SUN"));
 	}
 }

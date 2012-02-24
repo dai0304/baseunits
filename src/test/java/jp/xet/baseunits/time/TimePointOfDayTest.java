@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.fail;
 
 import java.util.TimeZone;
@@ -41,6 +42,8 @@ public class TimePointOfDayTest {
 			TimeZone.getTimeZone("Japan"));
 	
 	private static final TimePointOfDay UTC_3AM = TimePointOfDay.at12hrUTC(3, Meridian.AM, 0, 0, 0);
+	
+	private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 	
 	
 	@Test
@@ -83,5 +86,10 @@ public class TimePointOfDayTest {
 		assertThat(UTC_3PM.equals(UTC_3PM), is(true));
 		assertThat(UTC_3PM.equals(null), is(false));
 		assertThat(UTC_3PM.equals(new Object()), is(false));
+		
+		assertThat(TimePointOfDay.at(1, 2, UTC), is(not(TimePointOfDay.at(1, 2, 3, UTC))));
+		assertThat(TimePointOfDay.at(1, 2, UTC), is(TimePointOfDay.atUTC(1, 2)));
+		
+		assertThat(UTC_3PM.asTimeOfDay(UTC).asTimePointOfDay(UTC), is(UTC_3PM));
 	}
 }

@@ -295,6 +295,23 @@ public class CalendarIntervalTest {
 			std = std.nextMonth();
 		}
 		assertThat(std, is(CalendarMonth.from(2011, 8)));
+		
+		try {
+			itr.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
+		
+		CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).monthsIterator();
+		// assert no exception
+		
+		try {
+			CalendarInterval.everPreceding(CalendarDate.EPOCH_DATE).monthsIterator();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
 	}
 	
 	/**
@@ -398,5 +415,159 @@ public class CalendarIntervalTest {
 		} catch (IllegalStateException e) {
 			// success
 		}
+	}
+	
+	/**
+	 * {@link CalendarInterval#monthsInReverseIterator()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test18_monthsInReverseIterator() throws Exception {
+		CalendarInterval interval = CalendarInterval.year(2012);
+		Iterator<CalendarMonth> itr = interval.monthsInReverseIterator();
+		
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 12)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 11)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 10)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 9)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 8)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 7)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 6)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 5)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 4)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 3)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 2)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarMonth.from(2012, 1)));
+		assertThat(itr.hasNext(), is(false));
+		
+		try {
+			itr.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
+		
+		try {
+			CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).monthsInReverseIterator();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+		
+		CalendarInterval.everPreceding(CalendarDate.EPOCH_DATE).monthsInReverseIterator();
+		// assert no exception
+	}
+	
+	/**
+	 * {@link CalendarInterval#weeksIterator()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test19_weeksIterator() throws Exception {
+		CalendarInterval interval = CalendarInterval.preceding(CalendarDate.from(2012, 2, 24), Duration.months(2));
+		Iterator<CalendarWeek> itr = interval.weeksIterator();
+		
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2011, 51)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2011, 52)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 1)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 2)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 3)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 4)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 5)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 6)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 7)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 8)));
+		assertThat(itr.hasNext(), is(false));
+		
+		try {
+			itr.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
+		
+		CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).weeksIterator();
+		// assert no exception
+		
+		try {
+			CalendarInterval.everPreceding(CalendarDate.EPOCH_DATE).weeksIterator();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+	}
+	
+	/**
+	 * {@link CalendarInterval#weeksInReverseIterator()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test20_weeksInReverseIterator() throws Exception {
+		CalendarInterval interval = CalendarInterval.preceding(CalendarDate.from(2012, 2, 24), Duration.months(2));
+		Iterator<CalendarWeek> itr = interval.weeksInReverseIterator();
+		
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 8)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 7)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 6)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 5)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 4)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 3)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 2)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2012, 1)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2011, 52)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(CalendarWeek.from(2011, 51)));
+		assertThat(itr.hasNext(), is(false));
+		
+		try {
+			itr.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
+		
+		try {
+			CalendarInterval.everFrom(CalendarDate.EPOCH_DATE).weeksInReverseIterator();
+			fail();
+		} catch (IllegalStateException e) {
+			// success
+		}
+		
+		CalendarInterval.everPreceding(CalendarDate.EPOCH_DATE).weeksInReverseIterator();
+		// assert no exception
 	}
 }

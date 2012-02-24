@@ -115,8 +115,11 @@ public enum DayOfWeek {
 	 * @since 2.0
 	 */
 	public DayOfWeek plusDays(int increment) {
-		int o = (ordinal() + increment) / values().length;
-		return values()[o];
+		int o = ordinal() + increment;
+		while (o < 0) {
+			o += values().length;
+		}
+		return values()[o % values().length];
 	}
 	
 	/**

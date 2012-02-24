@@ -29,6 +29,7 @@ import static org.junit.Assert.fail;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.TimeZone;
 
 import jp.xet.baseunits.tests.SerializationTester;
 
@@ -506,5 +507,22 @@ public class DurationTest {
 		assertThat(Duration.NONE.isLessThanOrEqual(Duration.milliseconds(1)), is(true));
 		assertThat(Duration.NONE.isLessThanOrEqual(Duration.NONE), is(true));
 		assertThat(Duration.milliseconds(1).isLessThanOrEqual(Duration.NONE), is(false));
+	}
+	
+	/**
+	 * {@link Duration#preceding(CalendarDate)}, {@link Duration#preceding(TimeOfDay)},
+	 * {@link Duration#preceding(TimePoint)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test26_precedingCalendarDate() throws Exception {
+		assertThat(Duration.days(2).preceding(CalendarDate.from(2012, 2, 24)),
+				is(CalendarInterval.inclusive(CalendarDate.from(2012, 2, 23), CalendarDate.from(2012, 2, 24))));
+		assertThat(Duration.hours(3).preceding(TimeOfDay.NOON),
+				is(TimeOfDayInterval.over(TimeOfDay.from(9, 0), TimeOfDay.NOON)));
+		assertThat(Duration.weeks(3).preceding(TimePoint.at(2012, 2, 24, 3, 53, TimeZone.getTimeZone("Japan"))),
+				is(TimePointInterval.over(TimePoint.at(2012, 2, 3, 3, 53, TimeZone.getTimeZone("Japan")),
+						TimePoint.at(2012, 2, 24, 3, 53, TimeZone.getTimeZone("Japan")))));
 	}
 }
