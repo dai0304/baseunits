@@ -292,7 +292,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * @since 1.0
 	 */
 	public Interval<T> emptyOfSameType() {
-		return newOfSameType(lowerLimit(), false, lowerLimit(), false);
+		return empty(lowerLimit());
 	}
 	
 	/**

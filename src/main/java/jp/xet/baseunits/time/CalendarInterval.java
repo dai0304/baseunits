@@ -557,6 +557,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	@Override
 	public Interval<CalendarDate> newOfSameType(CalendarDate lower, boolean isLowerClosed, CalendarDate upper,
 			boolean isUpperClosed) {
+		// TODO 怪しげ。要バグチェック
 		CalendarDate includedLower = isLowerClosed ? (CalendarDate) lower : lower.plusDays(1);
 		CalendarDate includedUpper = isUpperClosed ? (CalendarDate) upper : upper.plusDays(-1);
 		return inclusive(includedLower, includedUpper);

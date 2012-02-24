@@ -83,10 +83,10 @@ public final class CalendarIntervalSpecification extends AbstractDateSpecificati
 	
 	@Override
 	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
-		if (firstOccurrenceIn(interval) == null) {
+		Interval<CalendarDate> i = this.interval.intersect(interval);
+		if (i.isEmpty()) {
 			return Iterators.emptyIterator();
 		}
-		Interval<CalendarDate> i = this.interval.intersect(interval);
 		CalendarInterval intersect = CalendarInterval.inclusive(i.lowerLimit(), i.upperLimit());
 		return intersect.daysIterator();
 	}

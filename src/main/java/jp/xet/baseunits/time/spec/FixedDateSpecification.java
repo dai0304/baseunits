@@ -22,11 +22,9 @@ package jp.xet.baseunits.time.spec;
 
 import java.io.Serializable;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
-import jp.xet.baseunits.util.ImmutableIterator;
 
 import com.google.common.collect.Iterators;
 
@@ -82,28 +80,11 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 	
 	@Override
 	public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
-		if (firstOccurrenceIn(interval) == null) {
+		if (interval.includes(date)) {
+			return Iterators.singletonIterator(date);
+		} else {
 			return Iterators.emptyIterator();
 		}
-		return new ImmutableIterator<CalendarDate>() {
-			
-			boolean end;
-			
-			
-			@Override
-			public boolean hasNext() {
-				return end;
-			}
-			
-			@Override
-			public CalendarDate next() {
-				if (hasNext() == false) {
-					throw new NoSuchElementException();
-				}
-				end = true;
-				return date;
-			}
-		};
 	}
 	
 	@Override

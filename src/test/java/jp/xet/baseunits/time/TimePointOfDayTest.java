@@ -89,7 +89,20 @@ public class TimePointOfDayTest {
 		
 		assertThat(TimePointOfDay.at(1, 2, UTC), is(not(TimePointOfDay.at(1, 2, 3, UTC))));
 		assertThat(TimePointOfDay.at(1, 2, UTC), is(TimePointOfDay.atUTC(1, 2)));
+		assertThat(TimePointOfDay.atUTC(1, 2), is(TimePointOfDay.atUTC(1, 2, 0)));
 		
 		assertThat(UTC_3PM.asTimeOfDay(UTC).asTimePointOfDay(UTC), is(UTC_3PM));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_parse() throws Exception {
+		assertThat(TimePointOfDay.parse("12:34:33", "HH:mm:ss", UTC), is(TimePointOfDay.at(12, 34, 33, UTC)));
+		assertThat(TimePointOfDay.parse("123433", "HHmmss", UTC), is(TimePointOfDay.at(12, 34, 33, UTC)));
+		assertThat(TimePointOfDay.parseUTCFrom("14:42:01", "HH:mm:ss"), is(TimePointOfDay.atUTC(14, 42, 1)));
 	}
 }

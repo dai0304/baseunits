@@ -17,8 +17,14 @@
 package jp.xet.baseunits.time.spec;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.fail;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 
@@ -78,5 +84,38 @@ public class CalendarIntervalSpecificationTest {
 		assertThat(Y2011.isSatisfiedBy(CalendarDate.from(2012, 4, 1)), is(false));
 		assertThat(Y2011.isSatisfiedBy(CalendarDate.from(2010, 5, 1)), is(false));
 		assertThat(Y2011.isSatisfiedBy(CalendarDate.from(2012, 12, 31)), is(false));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_() throws Exception {
+		assertThat(Y2011.getInterval(), is(CalendarInterval.year(2011)));
+		assertThat(Y2011, hasToString(CalendarInterval.year(2011).toString()));
+		
+		Iterator<CalendarDate> itr =
+				Y2011.iterateOver(CalendarInterval.inclusive(CalendarDate.from(2010, 1, 1),
+						CalendarDate.from(2013, 4, 5)));
+		
+		CalendarDate expected = CalendarDate.from(2011, 1, 1);
+		while (itr.hasNext()) {
+			CalendarDate d = itr.next();
+			assertThat(d, is(expected));
+			expected = expected.nextDay();
+		}
+		
+		assertThat(expected, is(CalendarDate.from(2012, 1, 1)));
+		try {
+			itr.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
+		
+		Iterator<CalendarDate> itr2 = Y2011.iterateOver(CalendarInterval.year(2013));
+		assertThat(itr2.hasNext(), is(false));
 	}
 }
