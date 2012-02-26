@@ -26,11 +26,6 @@ import static org.junit.Assert.assertThat;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import jp.xet.baseunits.money.Allotment;
-import jp.xet.baseunits.money.FanTally;
-import jp.xet.baseunits.money.Money;
-import jp.xet.baseunits.money.MoneyFan;
-
 import org.junit.Test;
 
 /**
@@ -141,6 +136,9 @@ public class MoneyFanTest {
 		MoneyFan<String> yetAnotherFan = new MoneyFan<String>(c);
 		
 		assertThat(aFan.equals(yetAnotherFan), is(false));
+		assertThat(aFan.equals(null), is(false));
+		assertThat(aFan.equals(new Object()), is(false));
+		assertThat(aFan.equals(aFan), is(true));
 	}
 	
 	/**

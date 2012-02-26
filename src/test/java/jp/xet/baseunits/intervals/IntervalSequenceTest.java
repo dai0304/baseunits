@@ -151,8 +151,11 @@ public class IntervalSequenceTest {
 		
 		assertThat(intervalSequence.intersections().isEmpty(), is(true));
 		
-		intervalSequence.add(o11_20c);
 		intervalSequence.add(c20_25c);
+		
+		assertThat(intervalSequence.intersections().isEmpty(), is(true));
+		
+		intervalSequence.add(o11_20c);
 		
 		Iterator<Interval<Integer>> it = intervalSequence.intersections().iterator();
 		assertThat(it.hasNext(), is(true));

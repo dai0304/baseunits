@@ -91,4 +91,22 @@ public class TimeOfDayIntervalTest {
 			// success
 		}
 	}
+	
+	/**
+	 * {@link TimeOfDayInterval#isBefore(TimeOfDay)}, {@link TimeOfDayInterval#isAfter(TimeOfDay)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_isBefore_isAfter() throws Exception {
+		TimeOfDayInterval work = TimeOfDayInterval.closed(TimeOfDay.from(10, 0), TimeOfDay.from(19, 30, 40));
+		
+		assertThat(work.isBefore(TimeOfDay.from(2, 59)), is(false));
+		assertThat(work.isBefore(TimeOfDay.NOON), is(false));
+		assertThat(work.isBefore(TimeOfDay.from(22, 3)), is(true));
+		
+		assertThat(work.isAfter(TimeOfDay.from(2, 59)), is(true));
+		assertThat(work.isAfter(TimeOfDay.NOON), is(false));
+		assertThat(work.isAfter(TimeOfDay.from(22, 3)), is(false));
+	}
 }

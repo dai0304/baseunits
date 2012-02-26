@@ -254,7 +254,6 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	
 	@Override
 	public int hashCode() {
-		assert month != null;
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + month.hashCode();

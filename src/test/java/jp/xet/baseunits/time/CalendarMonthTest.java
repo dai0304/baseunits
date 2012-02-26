@@ -176,4 +176,15 @@ public class CalendarMonthTest {
 	public void test11_toString() throws Exception {
 		assertThat(nov2010.toString(), is("2010-11"));
 	}
+	
+	/**
+	 * {@link CalendarMonth#plus(Duration)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test21_plus() throws Exception {
+		assertThat(CalendarMonth.from(2012, 2).plus(Duration.quarters(2)), is(CalendarMonth.from(2012, 8)));
+		assertThat(CalendarMonth.from(2012, 2).plus(Duration.milliseconds(2)), is(CalendarMonth.from(2012, 2)));
+	}
 }

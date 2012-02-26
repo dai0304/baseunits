@@ -205,7 +205,6 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		assert week != null;
 		if (this == obj) {
 			return true;
 		}
@@ -237,7 +236,6 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	
 	@Override
 	public int hashCode() {
-		assert week != null;
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + week.hashCode();

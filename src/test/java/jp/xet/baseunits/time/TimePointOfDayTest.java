@@ -95,7 +95,7 @@ public class TimePointOfDayTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePointOfDay#parse(String, String, TimeZone)}, {@link TimePointOfDay#parseUTCFrom(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -104,5 +104,16 @@ public class TimePointOfDayTest {
 		assertThat(TimePointOfDay.parse("12:34:33", "HH:mm:ss", UTC), is(TimePointOfDay.at(12, 34, 33, UTC)));
 		assertThat(TimePointOfDay.parse("123433", "HHmmss", UTC), is(TimePointOfDay.at(12, 34, 33, UTC)));
 		assertThat(TimePointOfDay.parseUTCFrom("14:42:01", "HH:mm:ss"), is(TimePointOfDay.atUTC(14, 42, 1)));
+	}
+	
+	/**
+	 * {@link TimePointOfDay#plus(Duration)}, {@link TimePointOfDay#minus(Duration)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_() throws Exception {
+		assertThat(TimePointOfDay.UTC_NOON.plus(Duration.hours(3)), is(TimePointOfDay.atUTC(15, 0)));
+		assertThat(TimePointOfDay.UTC_NOON.minus(Duration.hours(3)), is(TimePointOfDay.atUTC(9, 0)));
 	}
 }

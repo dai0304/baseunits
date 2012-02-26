@@ -429,8 +429,6 @@ public class Money implements Comparable<Money>, Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		assert amount != null;
-		assert currency != null;
 		if (this == obj) {
 			return true;
 		}

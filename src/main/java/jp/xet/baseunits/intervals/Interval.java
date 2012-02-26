@@ -376,8 +376,8 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((lowerLimitObject == null) ? 0 : lowerLimitObject.hashCode());
-		result = prime * result + ((upperLimitObject == null) ? 0 : upperLimitObject.hashCode());
+		result = prime * result + lowerLimitObject.hashCode();
+		result = prime * result + upperLimitObject.hashCode();
 		return result;
 	}
 	

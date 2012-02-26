@@ -21,9 +21,8 @@
 package jp.xet.baseunits.money;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
-import jp.xet.baseunits.money.Allotment;
-import jp.xet.baseunits.money.Money;
 
 import org.junit.Test;
 
@@ -44,6 +43,20 @@ public class AllotmentTest {
 		assertThat(abc123dollars.equals(new Allotment<String>("ABC", Money.euros(1.23))), is(false));
 		assertThat(abc123dollars.equals(new Allotment<String>("XYZ", Money.dollars(1.23))), is(false));
 		assertThat(abc123dollars.equals(new Allotment<String>("ABC", Money.dollars(1.24))), is(false));
+		assertThat(abc123dollars.equals(new Object()), is(false));
+		assertThat(abc123dollars.equals(null), is(false));
+		assertThat(abc123dollars.equals(abc123dollars), is(true));
+	}
+	
+	/**
+	 * {@link Allotment#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_toString() throws Exception {
+		Allotment<String> abc123dollars = new Allotment<String>("ABC", Money.dollars(1.23));
+		assertThat(abc123dollars, hasToString("ABC --> USD 1.23"));
 	}
 	
 	/**
@@ -52,8 +65,20 @@ public class AllotmentTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test02_Negated() throws Exception {
+	public void test03_Negated() throws Exception {
 		Allotment<String> abc123dollars = new Allotment<String>("ABC", Money.dollars(1.23));
 		assertThat(abc123dollars.negated(), is(new Allotment<String>("ABC", Money.dollars(-1.23))));
+	}
+	
+	/**
+	 * {@link Allotment#breachEncapsulationOfAmount()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_toString() throws Exception {
+		Allotment<String> abc123dollars = new Allotment<String>("ABC", Money.dollars(1.23));
+		assertThat(abc123dollars.breachEncapsulationOfAmount(), is(Money.dollars(1.23)));
+		assertThat(abc123dollars.breachEncapsulationOfEntity(), is("ABC"));
 	}
 }

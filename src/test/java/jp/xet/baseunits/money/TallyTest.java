@@ -21,9 +21,12 @@
 package jp.xet.baseunits.money;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
-import jp.xet.baseunits.money.Money;
-import jp.xet.baseunits.money.Tally;
+import static org.junit.Assert.fail;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
@@ -41,5 +44,37 @@ public class TallyTest {
 	public void test01_Net() throws Exception {
 		Tally tally = new Tally(Money.dollars(55.34), Money.dollars(12.22), Money.dollars(-3.07));
 		assertThat(tally.net(), is(Money.dollars(64.49)));
+		assertThat(tally, hasToString("[USD 55.34, USD 12.22, USD -3.07]"));
+		
+		Iterator<Money> itr = tally.iterator();
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(Money.dollars(55.34)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(Money.dollars(12.22)));
+		assertThat(itr.hasNext(), is(true));
+		assertThat(itr.next(), is(Money.dollars(-3.07)));
+		assertThat(itr.hasNext(), is(false));
+		
+		try {
+			itr.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_() throws Exception {
+		try {
+			new Tally(Money.dollars(55.34), Money.yens(123));
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
 	}
 }

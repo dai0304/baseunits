@@ -24,6 +24,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -287,12 +288,15 @@ public class TimePointTest {
 		assertThat(DEC19_2003.compareTo(DEC20_2003), is(lessThan(0)));
 		assertThat(DEC20_2003.compareTo(DEC19_2003), is(greaterThan(0)));
 		assertThat(DEC20_2003.compareTo(DEC20_2003), is(0));
+		
+		try {
+			DEC20_2003.compareTo(null);
+			fail();
+		} catch (NullPointerException e) {
+			// success
+		}
 	}
 	
-	// 
-	// 
-	// 
-	// 
 	/**
 	 * This test verifies bug #1336072 fix
 	 * The problem is Duration.days(25) overflowed and became negative
@@ -357,6 +361,31 @@ public class TimePointTest {
 		assertThat(pmTod, is(TimeOfDay.from(16, 45, 33)));
 	}
 	
+	/**
+	 * {@link TimePoint#asTimePointOfDay()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test20_asTimePointOfDay() throws Exception {
+		assertThat(TimePoint.at(2012, 2, 26, 14, 18, TimeZone.getTimeZone("Japan")).asTimePointOfDay(),
+				is(TimePointOfDay.at(14, 18, TimeZone.getTimeZone("Japan"))));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test21_epoch() throws Exception {
+		assertThat(TimePoint.EPOCH.toEpochSec(), is(0L));
+		assertThat(TimePoint.EPOCH.toEpochMillisec(), is(0L));
+		assertThat(TimePoint.at(1978, 3, 4, 6, 55, 22, 123, TimeZone.getTimeZone("Japan")).toEpochSec(), is(257810122L));
+		assertThat(TimePoint.at(1978, 3, 4, 6, 55, 22, 123, TimeZone.getTimeZone("Japan")).toEpochMillisec(),
+				is(257810122123L));
+	}
+	
 	private Date javaUtilDateDec20_2003() {
 		Calendar calendar = Calendar.getInstance(UTC);
 		calendar.clear(); // non-deterministic without this!!!
@@ -365,5 +394,4 @@ public class TimePointTest {
 		calendar.set(Calendar.DATE, 20);
 		return calendar.getTime();
 	}
-	
 }

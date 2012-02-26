@@ -86,8 +86,6 @@ public class MoneyTimeRate {
 	
 	@Override
 	public boolean equals(Object obj) {
-		assert rate != null;
-		assert currency != null;
 		if (this == obj) {
 			return true;
 		}
@@ -109,8 +107,6 @@ public class MoneyTimeRate {
 	
 	@Override
 	public int hashCode() {
-		assert rate != null;
-		assert currency != null;
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + currency.hashCode();

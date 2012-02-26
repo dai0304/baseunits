@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -83,6 +84,13 @@ public class CalendarWeekTest {
 		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 8)), is(CalendarWeek.from(2012, 1)));
 		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 9)), is(CalendarWeek.from(2012, 2)));
 		assertThat(CalendarWeek.from(CalendarDate.from(2012, 2, 24)), is(CalendarWeek.from(2012, 8)));
+		
+		assertThat(CalendarWeek.from(CalendarDate.from(2008, 12, 28)), is(CalendarWeek.from(2008, 52)));
+		assertThat(CalendarWeek.from(CalendarDate.from(2008, 12, 29)), is(CalendarWeek.from(2009, 1)));
+		assertThat(CalendarWeek.from(CalendarDate.from(2008, 12, 30)), is(CalendarWeek.from(2009, 1)));
+		assertThat(CalendarWeek.from(CalendarDate.from(2008, 12, 31)), is(CalendarWeek.from(2009, 1)));
+		assertThat(CalendarWeek.from(CalendarDate.from(2009, 1, 1)), is(CalendarWeek.from(2009, 1)));
+		
 	}
 	
 	/**
@@ -134,5 +142,45 @@ public class CalendarWeekTest {
 		} catch (NullPointerException e) {
 			// success
 		}
+	}
+	
+	/**
+	 * {@link CalendarWeek#getLastDay()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_getLastDay() throws Exception {
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 2, 23)).getLastDay(), is(CalendarDate.from(2012, 2, 26)));
+	}
+	
+	/**
+	 * {@link CalendarWeek#hashCode()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test09_hashCode() throws Exception {
+		assertThat(CalendarWeek.from(2012, 2).hashCode(), is(CalendarWeek.from(2012, 2).hashCode()));
+		assertThat(CalendarWeek.from(2012, 3).hashCode(), is(not(CalendarWeek.from(2012, 2).hashCode())));
+		assertThat(CalendarWeek.from(3, 2).hashCode(), is(not(CalendarWeek.from(2, 3).hashCode())));
+	}
+	
+	/**
+	 * {@link CalendarWeek#isAfter(CalendarWeek)}, {@link CalendarWeek#isBefore(CalendarWeek)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test10_isAfter_isBefore() throws Exception {
+		assertThat(CalendarWeek.from(2012, 23).isAfter(CalendarWeek.from(2012, 22)), is(true));
+		assertThat(CalendarWeek.from(2012, 23).isAfter(CalendarWeek.from(2012, 23)), is(false));
+		assertThat(CalendarWeek.from(2012, 23).isAfter(CalendarWeek.from(2012, 24)), is(false));
+		assertThat(CalendarWeek.from(2012, 23).isAfter(null), is(false));
+		
+		assertThat(CalendarWeek.from(2012, 23).isBefore(CalendarWeek.from(2012, 22)), is(false));
+		assertThat(CalendarWeek.from(2012, 23).isBefore(CalendarWeek.from(2012, 23)), is(false));
+		assertThat(CalendarWeek.from(2012, 23).isBefore(CalendarWeek.from(2012, 24)), is(true));
+		assertThat(CalendarWeek.from(2012, 23).isBefore(null), is(false));
 	}
 }

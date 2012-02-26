@@ -22,17 +22,16 @@ package jp.xet.baseunits.intervals;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
-import jp.xet.baseunits.intervals.Interval;
-import jp.xet.baseunits.intervals.IntervalMap;
-import jp.xet.baseunits.intervals.LinearIntervalMap;
 
 import org.junit.Test;
 
 /**
- * {@link IntervalMap}のテストクラス。
+ * {@link LinearIntervalMapTest}のテストクラス。
  */
-public class IntervalMapTest {
+public class LinearIntervalMapTest {
 	
 	/**
 	 * {@link IntervalMap}に対する参照メソッドのテスト。
@@ -50,6 +49,8 @@ public class IntervalMapTest {
 		map.put(Interval.closed(1, 3), "one-three");
 		map.put(Interval.closed(5, 9), "five-nine");
 		map.put(Interval.open(9, 12), "ten-eleven");
+		map.put(Interval.under(0), "minus");
+		map.put(Interval.moreThan(1000), "over-thousand");
 		
 		assertThat(map.containsKey(0), is(false));
 		assertThat(map.containsKey(1), is(true));
@@ -61,7 +62,12 @@ public class IntervalMapTest {
 		assertThat(map.containsKey(11), is(true));
 		assertThat(map.containsKey(12), is(false));
 		assertThat(map.containsKey(13), is(false));
+		assertThat(map.containsKey(999), is(false));
+		assertThat(map.containsKey(1000), is(false));
+		assertThat(map.containsKey(1001), is(true));
+		assertThat(map.containsKey(1200), is(true));
 		assertThat(map.containsKey(null), is(false));
+		assertThat(map.containsKey(-10), is(true));
 		
 		assertThat(map.get(0), is(nullValue()));
 		assertThat(map.get(1), is("one-three"));
@@ -75,6 +81,12 @@ public class IntervalMapTest {
 		assertThat(map.get(12), is(nullValue()));
 		assertThat(map.get(13), is(nullValue()));
 		assertThat(map.get(null), is(nullValue()));
+		assertThat(map.get(-8), is("minus"));
+		assertThat(map.get(-1000), is("minus"));
+		assertThat(map.get(999), is(nullValue()));
+		assertThat(map.get(1000), is(nullValue()));
+		assertThat(map.get(1001), is("over-thousand"));
+		assertThat(map.get(1200), is("over-thousand"));
 	}
 	
 	/**
@@ -165,4 +177,18 @@ public class IntervalMapTest {
 		assertThat(map.get(9), is("eight-nine"));
 	}
 	
+	/**
+	 * {@link LinearIntervalMap#toString()}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_toString() throws Exception {
+		IntervalMap<Integer, String> map = new LinearIntervalMap<Integer, String>();
+		map.put(Interval.closed(1, 2), "one-two");
+		map.put(Interval.closed(3, 4), "three-four");
+		assertThat(map, anyOf(
+				hasToString("{[1, 2]=one-two, [3, 4]=three-four}"),
+				hasToString("{[3, 4]=three-four, [1, 2]=one-two}")));
+	}
 }

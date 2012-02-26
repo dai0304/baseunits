@@ -79,8 +79,6 @@ public class Allotment<T> {
 	
 	@Override
 	public boolean equals(Object obj) {
-		assert amount != null;
-		assert entity != null;
 		if (this == obj) {
 			return true;
 		}
@@ -102,8 +100,6 @@ public class Allotment<T> {
 	
 	@Override
 	public int hashCode() {
-		assert amount != null;
-		assert entity != null;
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + amount.hashCode();
