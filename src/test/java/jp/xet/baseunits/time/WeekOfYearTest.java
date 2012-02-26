@@ -28,7 +28,7 @@ import org.junit.Test;
 public class WeekOfYearTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link WeekOfYear#equals(Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -42,7 +42,7 @@ public class WeekOfYearTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link WeekOfYear#toString()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -52,7 +52,7 @@ public class WeekOfYearTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link WeekOfYear#isBefore(WeekOfYear)}, {@link WeekOfYear#isAfter(WeekOfYear)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

@@ -87,18 +87,17 @@ public class CalendarIntervalSpecificationTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 細かいメソッドいろいろテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test01_() throws Exception {
+	public void test01_misc() throws Exception {
 		assertThat(Y2011.getInterval(), is(CalendarInterval.year(2011)));
 		assertThat(Y2011, hasToString(CalendarInterval.year(2011).toString()));
 		
-		Iterator<CalendarDate> itr =
-				Y2011.iterateOver(CalendarInterval.inclusive(CalendarDate.from(2010, 1, 1),
-						CalendarDate.from(2013, 4, 5)));
+		Iterator<CalendarDate> itr = Y2011.iterateOver(CalendarInterval.inclusive(
+				CalendarDate.from(2010, 1, 1), CalendarDate.from(2013, 4, 5)));
 		
 		CalendarDate expected = CalendarDate.from(2011, 1, 1);
 		while (itr.hasNext()) {
@@ -106,8 +105,8 @@ public class CalendarIntervalSpecificationTest {
 			assertThat(d, is(expected));
 			expected = expected.nextDay();
 		}
-		
 		assertThat(expected, is(CalendarDate.from(2012, 1, 1)));
+		
 		try {
 			itr.next();
 			fail();

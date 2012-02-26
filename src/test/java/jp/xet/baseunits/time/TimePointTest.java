@@ -373,7 +373,7 @@ public class TimePointTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePoint#toEpochMillisec()}, {@link TimePoint#toEpochSec()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

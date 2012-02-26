@@ -64,7 +64,7 @@ public class TallyTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 異なった通貨単位の {@link Tally} は作れない。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
