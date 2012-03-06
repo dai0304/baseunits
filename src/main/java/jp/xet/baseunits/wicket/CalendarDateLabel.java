@@ -17,8 +17,10 @@
 package jp.xet.baseunits.wicket;
 
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.TimePoint;
 
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.model.IModel;
@@ -81,6 +83,28 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 		super(id, model);
 		Validate.notNull(datePattern);
 		this.datePattern = datePattern;
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timePoint 表示する日付
+	 * @param timeZone 
+	 */
+	public CalendarDateLabel(String id, IModel<TimePoint> timePointModel, IModel<TimeZone> timeZoneModel) {
+		this(id, new CalendarDateModel(timePointModel, timeZoneModel));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timePoint 表示する日付
+	 * @param timeZone 
+	 */
+	public CalendarDateLabel(String id, TimePoint timePoint, TimeZone timeZone) {
+		this(id, new CalendarDateModel(timePoint, timeZone));
 	}
 	
 	@Override
