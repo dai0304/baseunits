@@ -42,6 +42,16 @@ import org.apache.commons.lang.Validate;
 public class CalendarInterval extends Interval<CalendarDate> {
 	
 	/**
+	 * 空期間を生成する。
+	 * 
+	 * @return 空期間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static CalendarInterval empty() {
+		return new CalendarInterval(CalendarDate.EPOCH_DATE, false, CalendarDate.EPOCH_DATE, false);
+	}
+	
+	/**
 	 * 開始日より、下側限界のみを持つ期間を生成する。
 	 * 
 	 * <p>開始日は期間に含む（閉じている）区間である。</p>
@@ -250,6 +260,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 		super(start, true, end, true);
 	}
 	
+	// for empty interval
+	private CalendarInterval(CalendarDate lower, boolean isLowerClosed, CalendarDate upper, boolean isUpperClosed) {
+		super(lower, isLowerClosed, upper, isUpperClosed);
+	}
+	
 	/**
 	 * この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
 	 * 
@@ -369,6 +384,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 		};
 	}
 	
+	@Override
+	public CalendarInterval emptyOfSameType() {
+		return empty();
+	}
+	
 	/**
 	 * 終了日を取得する。
 	 * 
@@ -378,6 +398,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 */
 	public CalendarDate end() {
 		return upperLimit();
+	}
+	
+	@Override
+	public CalendarInterval intersect(Interval<CalendarDate> other) {
+		return (CalendarInterval) super.intersect(other);
 	}
 	
 	/**
@@ -555,7 +580,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	@Override
-	public Interval<CalendarDate> newOfSameType(CalendarDate lower, boolean isLowerClosed, CalendarDate upper,
+	public CalendarInterval newOfSameType(CalendarDate lower, boolean isLowerClosed, CalendarDate upper,
 			boolean isUpperClosed) {
 		// TODO 怪しげ。要バグチェック
 		CalendarDate includedLower = isLowerClosed ? (CalendarDate) lower : lower.plusDays(1);

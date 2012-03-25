@@ -570,4 +570,20 @@ public class CalendarIntervalTest {
 		CalendarInterval.everPreceding(CalendarDate.EPOCH_DATE).weeksInReverseIterator();
 		// assert no exception
 	}
+	
+	/**
+	 * @throws Exception 例外が発生した場合
+	 * @see <a href="http://dragon.xet.jp/jira/browse/BU-4">BU-4</a>
+	 */
+	@Test
+	public void test21_intersect() throws Exception {
+		CalendarInterval calint1 = CalendarInterval.inclusive(2012, 2, 26, 2012, 3, 23);
+		CalendarInterval calint2 = CalendarInterval.inclusive(2012, 3, 4, 2012, 3, 31);
+		
+		CalendarInterval intersect = calint1.intersect(calint2);
+		assertThat(intersect.hasLowerLimit(), is(true));
+		assertThat(intersect.hasUpperLimit(), is(true));
+		assertThat(intersect.lowerLimit(), is(CalendarDate.from(2012, 3, 4)));
+		assertThat(intersect.upperLimit(), is(CalendarDate.from(2012, 3, 23)));
+	}
 }
