@@ -28,6 +28,7 @@ import org.junit.Test;
 /**
  * {@link Icu4jHourAndMinuteDurationFormatter}のテストクラス。
  */
+@SuppressWarnings("javadoc")
 public class Icu4jHourAndMinuteDurationFormatterTest {
 	
 	Icu4jHourAndMinuteDurationFormatter formatter = new Icu4jHourAndMinuteDurationFormatter();

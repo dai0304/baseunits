@@ -26,6 +26,7 @@ import org.junit.Test;
 /**
  * {@link OrDateSpecification}のテストクラス。
  */
+@SuppressWarnings("javadoc")
 public class OrDateSpecificationTest {
 	
 	@Test

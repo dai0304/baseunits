@@ -43,6 +43,7 @@ public class IntervalSequenceTest {
 	
 	private Interval<Integer> o12_20o = Interval.open(12, 20);
 	
+	@SuppressWarnings("unused")
 	private Interval<Integer> c18_25c = Interval.closed(18, 25);
 	
 	private Interval<Integer> c20_25c = Interval.closed(20, 25);

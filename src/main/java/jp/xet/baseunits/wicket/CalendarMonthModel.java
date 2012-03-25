@@ -18,7 +18,7 @@ package jp.xet.baseunits.wicket;
 
 import java.util.TimeZone;
 
-import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.time.TimePoint;
 
 import org.apache.commons.lang.Validate;
@@ -29,10 +29,10 @@ import org.apache.wicket.model.Model;
 /**
  * TODO for daisuke
  * 
- * @since 2.0
+ * @since 2.1
  */
 @SuppressWarnings("serial")
-public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
+public class CalendarMonthModel extends AbstractReadOnlyModel<CalendarMonth> {
 	
 	private final IModel<TimePoint> timePointModel;
 	
@@ -45,9 +45,9 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	 * @param timePointModel 基準時刻モデル
 	 * @param timeZoneModel タイムゾーンモデル
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 2.0
+	 * @since 2.1
 	 */
-	public CalendarDateModel(IModel<TimePoint> timePointModel, IModel<TimeZone> timeZoneModel) {
+	public CalendarMonthModel(IModel<TimePoint> timePointModel, IModel<TimeZone> timeZoneModel) {
 		Validate.notNull(timePointModel);
 		Validate.notNull(timeZoneModel);
 		this.timePointModel = timePointModel;
@@ -60,9 +60,9 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	 * @param timePointModel 基準時刻モデル
 	 * @param timeZone タイムゾーン
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 2.0
+	 * @since 2.1
 	 */
-	public CalendarDateModel(IModel<TimePoint> timePointModel, TimeZone timeZone) {
+	public CalendarMonthModel(IModel<TimePoint> timePointModel, TimeZone timeZone) {
 		this(timePointModel, Model.of(timeZone));
 	}
 	
@@ -72,9 +72,9 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	 * @param timePoint 基準時刻
 	 * @param timeZoneModel タイムゾーンモデル
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 2.0
+	 * @since 2.1
 	 */
-	public CalendarDateModel(TimePoint timePoint, IModel<TimeZone> timeZoneModel) {
+	public CalendarMonthModel(TimePoint timePoint, IModel<TimeZone> timeZoneModel) {
 		this(Model.of(timePoint), timeZoneModel);
 	}
 	
@@ -84,9 +84,9 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	 * @param timePoint 基準時刻
 	 * @param timeZone タイムゾーン
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 2.0
+	 * @since 2.1
 	 */
-	public CalendarDateModel(TimePoint timePoint, TimeZone timeZone) {
+	public CalendarMonthModel(TimePoint timePoint, TimeZone timeZone) {
 		this(Model.of(timePoint), Model.of(timeZone));
 	}
 	
@@ -98,7 +98,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	}
 	
 	@Override
-	public CalendarDate getObject() {
+	public CalendarMonth getObject() {
 		TimePoint timePoint = timePointModel.getObject();
 		if (timePoint == null) {
 			return null;
@@ -107,6 +107,6 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 		if (timeZone == null) {
 			timeZone = TimeZone.getTimeZone("Universal");
 		}
-		return timePoint.calendarDate(timeZone);
+		return timePoint.calendarDate(timeZone).asCalendarMonth();
 	}
 }

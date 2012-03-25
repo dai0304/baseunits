@@ -33,7 +33,7 @@ import org.junit.Test;
 public class StandardTimePointFormatterTest {
 	
 	@Test
-	public void test01_basic() throws Exception {
+	public void test01_basic() {
 		StandardTimePointFormatter formatter = new StandardTimePointFormatter();
 		String formatted = formatter.format(TimePoint.EPOCH, Locale.JAPAN, TimeZone.getTimeZone("Japan"));
 		assertThat(formatted, is("1970/01/01"));
