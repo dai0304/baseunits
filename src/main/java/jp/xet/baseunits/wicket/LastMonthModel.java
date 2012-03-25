@@ -22,16 +22,29 @@ import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.timeutil.Clock;
 
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 
 /**
  * TODO for daisuke
  */
 @SuppressWarnings("serial")
-public class LastMonthModel extends AbstractReadOnlyModel<CalendarMonth> {
+public class LastMonthModel extends LoadableDetachableModel<CalendarMonth> {
 	
-	private final TimeZone timeZone;
+	private final IModel<TimeZone> timeZoneModel;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param timeZoneModel タイムゾーン
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public LastMonthModel(IModel<TimeZone> timeZoneModel) {
+		Validate.notNull(timeZoneModel);
+		this.timeZoneModel = timeZoneModel;
+	}
 	
 	/**
 	 * インスタンスを生成する。
@@ -40,12 +53,18 @@ public class LastMonthModel extends AbstractReadOnlyModel<CalendarMonth> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public LastMonthModel(TimeZone timeZone) {
+		this(Model.of(timeZone));
 		Validate.notNull(timeZone);
-		this.timeZone = timeZone;
 	}
 	
 	@Override
-	public CalendarMonth getObject() {
-		return Clock.today(timeZone).asCalendarMonth().previousMonth();
+	public void detach() {
+		timeZoneModel.detach();
+		super.detach();
+	}
+	
+	@Override
+	protected CalendarMonth load() {
+		return Clock.today(timeZoneModel.getObject()).asCalendarMonth().previousMonth();
 	}
 }

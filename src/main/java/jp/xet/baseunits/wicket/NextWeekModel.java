@@ -22,16 +22,29 @@ import jp.xet.baseunits.time.CalendarWeek;
 import jp.xet.baseunits.timeutil.Clock;
 
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 
 /**
  * TODO for daisuke
  */
 @SuppressWarnings("serial")
-public class NextWeekModel extends AbstractReadOnlyModel<CalendarWeek> {
+public class NextWeekModel extends LoadableDetachableModel<CalendarWeek> {
 	
-	private final TimeZone timeZone;
+	private final IModel<TimeZone> timeZoneModel;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param timeZoneModel タイムゾーン
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public NextWeekModel(IModel<TimeZone> timeZoneModel) {
+		Validate.notNull(timeZoneModel);
+		this.timeZoneModel = timeZoneModel;
+	}
 	
 	/**
 	 * インスタンスを生成する。
@@ -40,12 +53,19 @@ public class NextWeekModel extends AbstractReadOnlyModel<CalendarWeek> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public NextWeekModel(TimeZone timeZone) {
+		this(Model.of(timeZone));
 		Validate.notNull(timeZone);
-		this.timeZone = timeZone;
+		
 	}
 	
 	@Override
-	public CalendarWeek getObject() {
-		return Clock.today(timeZone).asCalendarWeek().nextWeek();
+	public void detach() {
+		timeZoneModel.detach();
+		super.detach();
+	}
+	
+	@Override
+	protected CalendarWeek load() {
+		return Clock.today(timeZoneModel.getObject()).asCalendarWeek().nextWeek();
 	}
 }
