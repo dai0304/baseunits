@@ -154,7 +154,7 @@
     <guava-version>[10.0.1,10.2)</guava-version>
     <commons-lang-version>[2.6,3.0)</commons-lang-version>
     <wicket-version>[1.5.0,1.6.0)</wicket-version>
-    <mirage-version>1.1.4</mirage-version>
+    <mirage-version>[1.1.4,1.2.0)</mirage-version>
     <spring-data-core-version>1.1.0.RELEASE</spring-data-core-version>
     <icu4j-version>[4.8.1.1,4.9)</icu4j-version>
   </properties>
