@@ -27,4 +27,8 @@ import jp.sf.amateras.mirage.type.ValueType;
  */
 public abstract class AbstractBaseunitsValueType<T> implements ValueType<T> {
 	
+	@Override
+	public T getDefaultValue() {
+		return null;
+	}
 }
