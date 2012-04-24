@@ -27,7 +27,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 
 /**
- * TODO for daisuke
+ * {@link TimeZone}のモデルより、「来月」を表現するモデル。
  */
 @SuppressWarnings("serial")
 public class NextMonthModel extends LoadableDetachableModel<CalendarMonth> {
@@ -60,7 +60,9 @@ public class NextMonthModel extends LoadableDetachableModel<CalendarMonth> {
 	
 	@Override
 	public void detach() {
-		timeZoneModel.detach();
+		if (timeZoneModel != null) {
+			timeZoneModel.detach();
+		}
 		super.detach();
 	}
 	

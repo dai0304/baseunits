@@ -27,7 +27,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 
 /**
- * TODO for daisuke
+ * {@link TimeZone}のモデルより、「先週」を表現するモデル。
  */
 @SuppressWarnings("serial")
 public class LastWeekModel extends LoadableDetachableModel<CalendarWeek> {
@@ -60,7 +60,9 @@ public class LastWeekModel extends LoadableDetachableModel<CalendarWeek> {
 	
 	@Override
 	public void detach() {
-		timeZoneModel.detach();
+		if (timeZoneModel != null) {
+			timeZoneModel.detach();
+		}
 		super.detach();
 	}
 	

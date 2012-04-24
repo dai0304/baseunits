@@ -27,7 +27,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 
 /**
- * TODO for daisuke
+ * {@link TimeZone}のモデルより、「昨日」を表現するモデル。
  */
 @SuppressWarnings("serial")
 public class YesterdayModel extends LoadableDetachableModel<CalendarDate> {

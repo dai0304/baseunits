@@ -27,7 +27,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 /**
- * TODO for daisuke
+ * {@link TimePoint}及び{@link TimeZone}のモデルより、{@link CalendarDate}を表現するモデル。
  * 
  * @since 2.0
  */
@@ -93,8 +93,12 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	@Override
 	public void detach() {
 		super.detach();
-		timePointModel.detach();
-		timeZoneModel.detach();
+		if (timePointModel != null) {
+			timePointModel.detach();
+		}
+		if (timeZoneModel != null) {
+			timeZoneModel.detach();
+		}
 	}
 	
 	@Override

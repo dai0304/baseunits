@@ -36,10 +36,10 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 * @param id The non-null id of this component
 	 * @param config {@link FallbackConfig}
 	 * @param timeZone {@link TimeZone}
+	 * @since 2.2
 	 */
 	public RelativeTimeLabel(String id, FallbackConfig config, TimeZone timeZone) {
-		super(id);
-		formatter = new Icu4jRelativeTimePointFormatter(config, timeZone);
+		this(id, new Icu4jRelativeTimePointFormatter(config, timeZone));
 	}
 	
 	/**
@@ -49,10 +49,35 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 * @param model The component's model
 	 * @param config {@link FallbackConfig}
 	 * @param timeZone {@link TimeZone}
+	 * @since 2.2
 	 */
 	public RelativeTimeLabel(String id, IModel<TimePoint> model, FallbackConfig config, TimeZone timeZone) {
+		this(id, model, new Icu4jRelativeTimePointFormatter(config, timeZone));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 * @param formatter {@link RelativeTimePointFormatter}
+	 * @since 2.2
+	 */
+	public RelativeTimeLabel(String id, IModel<TimePoint> model, RelativeTimePointFormatter formatter) {
 		super(id, model);
-		formatter = new Icu4jRelativeTimePointFormatter(config, timeZone);
+		this.formatter = formatter;
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param formatter {@link RelativeTimePointFormatter}
+	 * @since 2.2
+	 */
+	public RelativeTimeLabel(String id, RelativeTimePointFormatter formatter) {
+		super(id);
+		this.formatter = formatter;
 	}
 	
 	@Override

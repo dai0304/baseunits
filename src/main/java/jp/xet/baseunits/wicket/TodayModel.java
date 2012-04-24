@@ -27,7 +27,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 
 /**
- * TODO for daisuke
+ * {@link TimeZone}のモデルより、「今日」を表現するモデル。
  */
 @SuppressWarnings("serial")
 public class TodayModel extends LoadableDetachableModel<CalendarDate> {
@@ -60,7 +60,9 @@ public class TodayModel extends LoadableDetachableModel<CalendarDate> {
 	
 	@Override
 	public void detach() {
-		timeZoneModel.detach();
+		if (timeZoneModel != null) {
+			timeZoneModel.detach();
+		}
 		super.detach();
 	}
 	
