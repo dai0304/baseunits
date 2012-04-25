@@ -269,6 +269,29 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
+	 * このインスタンスが表す日付の、指定したタイムゾーンにおける深夜0時の日時を返す。
+	 * 
+	 * @param timeZone タイムゾーン
+	 * @return 日時
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.3
+	 */
+	public TimePoint atMidnight(TimeZone timeZone) {
+		return TimePoint.atMidnight(this, timeZone);
+	}
+	
+	/**
+	 * このインスタンスが表す日付の、UTCにおける深夜0時の日時を返す。
+	 * 
+	 * @return 日時
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.3
+	 */
+	public TimePoint atMidnightUTC() {
+		return atMidnight(TimePoint.UTC);
+	}
+	
+	/**
 	 * 年月日同士の比較を行う。
 	 * 
 	 * <p>相対的に過去である方を「小さい」と判断する。</p>
