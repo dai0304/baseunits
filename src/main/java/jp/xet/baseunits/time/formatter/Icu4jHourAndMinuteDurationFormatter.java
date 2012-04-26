@@ -41,6 +41,27 @@ public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatt
 	
 	private static Logger logger = LoggerFactory.getLogger(Icu4jHourAndMinuteDurationFormatter.class);
 	
+	private final boolean displayZeroMinute;
+	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @since 2.0
+	 */
+	public Icu4jHourAndMinuteDurationFormatter() {
+		this(true);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param displayZeroMinute 
+	 * @since 2.3
+	 */
+	public Icu4jHourAndMinuteDurationFormatter(boolean displayZeroMinute) {
+		this.displayZeroMinute = displayZeroMinute;
+	}
 	
 	@Override
 	public String format(Duration target, Locale locale) {
@@ -60,7 +81,9 @@ public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatt
 		if (h != 0) {
 			sb.append(format.format(new TimeUnitAmount(h, com.ibm.icu.util.TimeUnit.HOUR))).append(' ');
 		}
-		sb.append(format.format(new TimeUnitAmount(m, com.ibm.icu.util.TimeUnit.MINUTE)));
-		return sb.toString();
+		if (displayZeroMinute || (h == 0 || m != 0)) {
+			sb.append(format.format(new TimeUnitAmount(m, com.ibm.icu.util.TimeUnit.MINUTE)));
+		}
+		return sb.toString().trim();
 	}
 }

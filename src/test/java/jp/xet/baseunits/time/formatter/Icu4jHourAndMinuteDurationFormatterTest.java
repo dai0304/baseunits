@@ -31,17 +31,35 @@ import org.junit.Test;
 @SuppressWarnings("javadoc")
 public class Icu4jHourAndMinuteDurationFormatterTest {
 	
-	Icu4jHourAndMinuteDurationFormatter formatter = new Icu4jHourAndMinuteDurationFormatter();
-	
-	
 	@Test
 	public void test01_basic() {
-		assertThat(formatter.format(Duration.seconds(4), Locale.ENGLISH), is("0 minutes"));
-		assertThat(formatter.format(Duration.seconds(4), Locale.JAPAN), is("0分"));
-		assertThat(formatter.format(Duration.minutes(1), Locale.ENGLISH), is("1 minute"));
-		assertThat(formatter.format(Duration.hours(2), Locale.ENGLISH), is("2 hours 0 minutes"));
-		assertThat(formatter.format(Duration.days(3), Locale.ENGLISH), is("72 hours 0 minutes"));
+		Icu4jHourAndMinuteDurationFormatter f = new Icu4jHourAndMinuteDurationFormatter(true);
+		assertThat(f.format(Duration.seconds(4), Locale.ENGLISH), is("0 minutes"));
+		assertThat(f.format(Duration.seconds(4), Locale.JAPAN), is("0分"));
+		assertThat(f.format(Duration.minutes(1), Locale.ENGLISH), is("1 minute"));
+		assertThat(f.format(Duration.minutes(61), Locale.ENGLISH), is("1 hour 1 minute"));
+		assertThat(f.format(Duration.minutes(63), Locale.ENGLISH), is("1 hour 3 minutes"));
+		assertThat(f.format(Duration.minutes(121), Locale.ENGLISH), is("2 hours 1 minute"));
+		assertThat(f.format(Duration.minutes(123), Locale.ENGLISH), is("2 hours 3 minutes"));
+		assertThat(f.format(Duration.hours(2), Locale.ENGLISH), is("2 hours 0 minutes"));
+		assertThat(f.format(Duration.days(3), Locale.ENGLISH), is("72 hours 0 minutes"));
 		
-		assertThat(formatter.format(Duration.minutes(4).plus(Duration.hours(5)), Locale.JAPAN), is("5時間 4分"));
+		assertThat(f.format(Duration.minutes(4).plus(Duration.hours(5)), Locale.JAPAN), is("5時間 4分"));
+	}
+	
+	@Test
+	public void test02_basic() {
+		Icu4jHourAndMinuteDurationFormatter f = new Icu4jHourAndMinuteDurationFormatter(false);
+		assertThat(f.format(Duration.seconds(4), Locale.ENGLISH), is("0 minutes"));
+		assertThat(f.format(Duration.seconds(4), Locale.JAPAN), is("0分"));
+		assertThat(f.format(Duration.minutes(1), Locale.ENGLISH), is("1 minute"));
+		assertThat(f.format(Duration.minutes(61), Locale.ENGLISH), is("1 hour 1 minute"));
+		assertThat(f.format(Duration.minutes(63), Locale.ENGLISH), is("1 hour 3 minutes"));
+		assertThat(f.format(Duration.minutes(121), Locale.ENGLISH), is("2 hours 1 minute"));
+		assertThat(f.format(Duration.minutes(123), Locale.ENGLISH), is("2 hours 3 minutes"));
+		assertThat(f.format(Duration.hours(2), Locale.ENGLISH), is("2 hours"));
+		assertThat(f.format(Duration.days(3), Locale.ENGLISH), is("72 hours"));
+		
+		assertThat(f.format(Duration.minutes(4).plus(Duration.hours(5)), Locale.JAPAN), is("5時間 4分"));
 	}
 }
