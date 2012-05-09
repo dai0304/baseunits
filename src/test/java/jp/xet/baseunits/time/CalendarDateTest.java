@@ -124,6 +124,7 @@ public class CalendarDateTest {
 		assertThat(CalendarDate.parse("2/17/2003", "M/d/yyyy"), is(feb17));
 		//Now a nonsense pattern, to make sure it isn't succeeding by accident.
 		assertThat(CalendarDate.parse("#17-03/02 2003", "#d-yy/MM yyyy"), is(feb17));
+		assertThat(CalendarDate.parse("foo-bar_2003-02-17_16.log", "'foo-bar_'yyyy-MM-dd"), is(feb17));
 	}
 	
 	/**
