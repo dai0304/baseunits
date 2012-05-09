@@ -38,6 +38,7 @@ public final class FixedTimeSource implements TimeSource {
 	 * インスタンスを生成する。
 	 * 
 	 * @param fixed 固定する時間
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public FixedTimeSource(TimePoint fixed) {
 		Validate.notNull(fixed);

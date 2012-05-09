@@ -28,7 +28,7 @@ import java.util.TimeZone;
 import org.apache.commons.lang.Validate;
 
 /**
- * カレンダー上の特定の「年第x週」を表すクラス。
+ * カレンダー上の特定の「年第x週」（デフォルトでは月曜日〜日曜日）を表すクラス。
  * 
  * <p>{@link java.util.Date}と異なり、週未満（日以下）の概念を持っていない。また、{@link TimePoint}と異なり、
  * その週全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
