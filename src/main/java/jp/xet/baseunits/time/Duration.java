@@ -91,9 +91,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param tp1 時刻
 	 * @param tp2 時刻
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static Duration diff(TimePoint tp1, TimePoint tp2) {
+		Validate.notNull(tp1);
+		Validate.notNull(tp2);
 		return Duration.milliseconds(Math.abs(tp1.toEpochMillisec() - tp2.toEpochMillisec()));
 	}
 	
