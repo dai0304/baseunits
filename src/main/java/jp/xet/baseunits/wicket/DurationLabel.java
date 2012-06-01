@@ -35,7 +35,18 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
+	 * @since 2.3
+	 */
+	public DurationLabel(String id) {
+		super(id);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
 	 * @param duration 表示する時間量
+	 * @since 2.0
 	 */
 	public DurationLabel(String id, Duration duration) {
 		this(id, Model.of(duration));
@@ -46,6 +57,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
+	 * @since 2.0
 	 */
 	public DurationLabel(String id, IModel<Duration> model) {
 		super(id, model);
