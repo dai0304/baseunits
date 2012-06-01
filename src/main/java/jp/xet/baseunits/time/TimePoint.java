@@ -666,6 +666,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param duration 時間の長さ
 	 * @return 過去の日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @see #plus(Duration)
 	 * @since 1.0
 	 */
 	public TimePoint minus(Duration duration) {
@@ -679,6 +680,8 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * <p>日内の時間は変化しない。</p>
 	 * 
 	 * @return 1日後
+	 * @see #prevDay()
+	 * @see #plus(Duration)
 	 * @since 1.0
 	 */
 	public TimePoint nextDay() {
@@ -691,11 +694,26 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @param duration 時間の長さ
 	 * @return 未来の日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @see #minus(Duration)
 	 * @since 1.0
 	 */
 	public TimePoint plus(Duration duration) {
 		Validate.notNull(duration);
 		return duration.addedTo(this);
+	}
+	
+	/**
+	 * このオブジェクトが表現する瞬間の、ちょうど1日前を取得する。
+	 * 
+	 * <p>日内の時間は変化しない。</p>
+	 * 
+	 * @return 1日前
+	 * @see #nextDay()
+	 * @see #minus(Duration)
+	 * @since 2.3
+	 */
+	public TimePoint prevDay() {
+		return minus(Duration.days(1));
 	}
 	
 	/**
