@@ -403,6 +403,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
+	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
+	 * 
+	 * @param zone タイムゾーン
+	 * @return 日付
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.3
+	 */
+	public CalendarDate asCalendarDate(TimeZone zone) {
+		Validate.notNull(zone);
+		return CalendarDate.from(this, zone);
+	}
+	
+	/**
 	 * このオブジェクトが表現する瞬間をUTCとして扱い、{@link Calendar}型として取得する。
 	 * 
 	 * @return {@link Calendar}
@@ -473,7 +486,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public TimePoint backToMidnight(TimeZone zone) {
 		Validate.notNull(zone);
-		return calendarDate(zone).asTimePointInterval(zone).start();
+		return asCalendarDate(zone).asTimePointInterval(zone).start();
 	}
 	
 	/**
@@ -483,10 +496,11 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @return 日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
+	 * @deprecated Use {@link #asCalendarDate(TimeZone)} instead
 	 */
+	@Deprecated
 	public CalendarDate calendarDate(TimeZone zone) {
-		Validate.notNull(zone);
-		return CalendarDate.from(this, zone);
+		return asCalendarDate(zone);
 	}
 	
 	/**
@@ -561,6 +575,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
+	 * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
+	 * 
+	 * @param interval 基準期間
+	 * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
+	 */
+	public boolean isAfter(TimePointInterval interval) {
+		Validate.notNull(interval);
+		return interval.isBefore(this);
+	}
+	
+	/**
 	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>同一日時である場合は {@code false} を返す。</p>
@@ -573,19 +600,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public boolean isAfterOrEquals(TimePoint other) {
 		Validate.notNull(other);
 		return millisecondsFromEpoch >= other.millisecondsFromEpoch;
-	}
-	
-	/**
-	 * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
-	 * 
-	 * @param interval 基準期間
-	 * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 */
-	public boolean isAfter(TimePointInterval interval) {
-		Validate.notNull(interval);
-		return interval.isBefore(this);
 	}
 	
 	/**
@@ -604,6 +618,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
+	 * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
+	 * 
+	 * @param interval 基準期間
+	 * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.0
+	 */
+	public boolean isBefore(TimePointInterval interval) {
+		Validate.notNull(interval);
+		return interval.isAfter(this);
+	}
+	
+	/**
 	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>同一日時である場合は {@code true} を返す。</p>
@@ -619,19 +646,6 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
-	 * 
-	 * @param interval 基準期間
-	 * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 1.0
-	 */
-	public boolean isBefore(TimePointInterval interval) {
-		Validate.notNull(interval);
-		return interval.isAfter(this);
-	}
-	
-	/**
 	 * 指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間{@code other}の年月日が等価であるかを調べる。
 	 * 
 	 * @param other 対象瞬間
@@ -643,7 +657,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public boolean isSameDayAs(TimePoint other, TimeZone zone) {
 		Validate.notNull(other);
 		Validate.notNull(zone);
-		return calendarDate(zone).equals(other.calendarDate(zone));
+		return asCalendarDate(zone).equals(other.asCalendarDate(zone));
 	}
 	
 	/**

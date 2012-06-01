@@ -451,7 +451,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	public String toString(String pattern) {
 		// Any timezone works, as long as the same one is used throughout.
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
-		TimePoint point = asTimePointGiven(TimePoint.from(0).calendarDate(arbitraryZone), arbitraryZone);
+		TimePoint point = asTimePointGiven(TimePoint.from(0).asCalendarDate(arbitraryZone), arbitraryZone);
 		return point.toString(pattern, arbitraryZone);
 	}
 }

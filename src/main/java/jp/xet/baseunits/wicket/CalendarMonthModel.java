@@ -111,6 +111,6 @@ public class CalendarMonthModel extends AbstractReadOnlyModel<CalendarMonth> {
 		if (timeZone == null) {
 			timeZone = TimeZone.getTimeZone("Universal");
 		}
-		return timePoint.calendarDate(timeZone).asCalendarMonth();
+		return timePoint.asCalendarDate(timeZone).asCalendarMonth();
 	}
 }

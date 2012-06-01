@@ -96,7 +96,7 @@ public final class Clock {
 	 */
 	public static CalendarDate today(TimeZone timeZone) {
 		Validate.notNull(timeZone);
-		return now().calendarDate(timeZone);
+		return now().asCalendarDate(timeZone);
 	}
 	
 	private Clock() {
