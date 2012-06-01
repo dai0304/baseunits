@@ -240,6 +240,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param day 元となる日付
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @see #subtractedFrom(CalendarDate)
 	 * @since 1.0
 	 */
 	public CalendarDate addedTo(CalendarDate day) {
@@ -289,6 +290,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
+	 * @see #subtractedFrom(TimePoint)
 	 * @since 1.0
 	 */
 	public TimePoint addedTo(TimePoint point) {
@@ -598,6 +600,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param day 元となる日付
 	 * @return このオブジェクトが表現する長さのを引いた、過去の日付
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @see #addedTo(CalendarDate)
 	 * @since 1.0
 	 */
 	public CalendarDate subtractedFrom(CalendarDate day) {
@@ -622,6 +625,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return このオブジェクトが表現する長さのを引いた、過去の日時
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
+	 * @see #addedTo(TimePoint)
 	 * @since 1.0
 	 */
 	public TimePoint subtractedFrom(TimePoint point) {

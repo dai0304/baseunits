@@ -453,6 +453,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表現する日の翌日を返す。
 	 * 
 	 * @return 翌日
+	 * @see #previousDay()
+	 * @see #plus(Duration)
 	 * @since 1.0
 	 */
 	public CalendarDate nextDay() {
@@ -512,6 +514,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表現する日の前日を返す。
 	 * 
 	 * @return 前日
+	 * @see #nextDay()
+	 * @see #minus(Duration)
 	 * @since 1.0
 	 */
 	public CalendarDate previousDay() {

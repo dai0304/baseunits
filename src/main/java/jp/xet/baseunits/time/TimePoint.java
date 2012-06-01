@@ -680,7 +680,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * <p>日内の時間は変化しない。</p>
 	 * 
 	 * @return 1日後
-	 * @see #prevDay()
+	 * @see #previousDay()
 	 * @see #plus(Duration)
 	 * @since 1.0
 	 */
@@ -712,7 +712,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @see #minus(Duration)
 	 * @since 2.3
 	 */
-	public TimePoint prevDay() {
+	public TimePoint previousDay() {
 		return minus(Duration.days(1));
 	}
 	
