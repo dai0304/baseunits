@@ -84,19 +84,29 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	@SuppressWarnings("unchecked")
 	public <C>IConverter<C> getConverter(Class<C> type) {
 		if (type == TimePoint.class) {
-			return (IConverter<C>) new IConverter<TimePoint>() {
-				
-				@Override
-				public TimePoint convertToObject(String value, Locale locale) {
-					throw new UnsupportedOperationException();
-				}
-				
-				@Override
-				public String convertToString(TimePoint value, Locale locale) {
-					return formatter.format(value, locale);
-				}
-			};
+			return (IConverter<C>) new TimePointConverter(formatter);
 		}
 		return super.getConverter(type);
+	}
+	
+	
+	private static class TimePointConverter implements IConverter<TimePoint> {
+		
+		private final RelativeTimePointFormatter formatter;
+		
+		
+		private TimePointConverter(RelativeTimePointFormatter formatter) {
+			this.formatter = formatter;
+		}
+		
+		@Override
+		public TimePoint convertToObject(String value, Locale locale) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public String convertToString(TimePoint value, Locale locale) {
+			return formatter.format(value, locale);
+		}
 	}
 }
