@@ -561,6 +561,21 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
+	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
+	 * 
+	 * <p>同一日時である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 対象日時
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.3
+	 */
+	public boolean isAfterOrEquals(TimePoint other) {
+		Validate.notNull(other);
+		return millisecondsFromEpoch >= other.millisecondsFromEpoch;
+	}
+	
+	/**
 	 * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
 	 * 
 	 * @param interval 基準期間
@@ -586,6 +601,21 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public boolean isBefore(TimePoint other) {
 		Validate.notNull(other);
 		return millisecondsFromEpoch < other.millisecondsFromEpoch;
+	}
+	
+	/**
+	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>同一日時である場合は {@code true} を返す。</p>
+	 * 
+	 * @param other 対象日時
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.3
+	 */
+	public boolean isBeforeOrEquals(TimePoint other) {
+		Validate.notNull(other);
+		return millisecondsFromEpoch <= other.millisecondsFromEpoch;
 	}
 	
 	/**
@@ -665,7 +695,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * この瞬間をエポック秒に変換して返す。
+	 * この瞬間をエポック秒に変換して返す。ミリ秒以下は切り捨てる。
 	 * 
 	 * @return エポック秒
 	 * @since 1.3
