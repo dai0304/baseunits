@@ -398,8 +398,8 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	final long millisecondsFromEpoch;
 	
 	
-	private TimePoint(long millisecondsFromEpoc) {
-		millisecondsFromEpoch = millisecondsFromEpoc;
+	private TimePoint(long millisecondsFromEpoch) {
+		this.millisecondsFromEpoch = millisecondsFromEpoch;
 	}
 	
 	/**
