@@ -214,13 +214,25 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
+	 * 月初の日付を取得する。
+	 * 
+	 * @return {@link DayOfMonth}
+	 * @since 2.4
+	 * @see #getLastDay()
+	 */
+	public CalendarDate getFirstDay() {
+		return at(DayOfMonth.MIN);
+	}
+	
+	/**
 	 * 月末の日付を取得する。
 	 * 
 	 * @return {@link DayOfMonth}
 	 * @since 1.0
+	 * @see #getFirstDay()
 	 */
 	public CalendarDate getLastDay() {
-		return CalendarDate.from(year, month, getLastDayOfMonth());
+		return at(getLastDayOfMonth());
 	}
 	
 	/**
