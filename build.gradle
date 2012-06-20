@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'jp.xet'
+version = '2.4-SNAPSHOT'
+
+description = """Base Units Library"""
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+def defaultEncoding = 'UTF-8'
+compileJava {
+    options.encoding = defaultEncoding
+}
+compileTestJava {
+    options.encoding = defaultEncoding
+}
+
+repositories {
+    mavenRepo url: "http://amateras.sourceforge.jp/mvn/"
+    mavenRepo url: "http://amateras.sourceforge.jp/mvn-snapshot/"
+    mavenRepo url: "http://maven.jiemamy.org/release"
+    mavenRepo url: "http://repo1.maven.org/maven2"
+}
+
+dependencies {
+    compile "org.slf4j:slf4j-api:[1.6.2,1.7.0)"
+    compile "com.google.guava:guava:[10.0.1,10.2)"
+    compile "commons-lang:commons-lang:[2.6,3.0)"
+    compile "org.hibernate:hibernate-core:3.6.7.Final"
+    compile "jp.sf.amateras.mirage:mirage:[1.1.4,1.2.0)"
+    compile "org.apache.wicket:wicket-core:[1.5.0,1.6.0)"
+    compile "com.ibm.icu:icu4j:[4.8.1.1,4.9)"
+    testCompile("junit:junit-dep:4.10") {
+        exclude(module: 'hamcrest-core')
+    }
+    testCompile "org.hamcrest:hamcrest-library:1.2"
+    testCompile "org.mockito:mockito-core:1.8.5"
+    testCompile "commons-io:commons-io:2.0"
+    testCompile "org.slf4j:slf4j-simple:[1.6.2,1.7.0)"
+}
