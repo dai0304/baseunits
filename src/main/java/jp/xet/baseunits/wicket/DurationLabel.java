@@ -17,6 +17,8 @@
 package jp.xet.baseunits.wicket;
 
 import jp.xet.baseunits.time.Duration;
+import jp.xet.baseunits.time.formatter.DurationFormatter;
+import jp.xet.baseunits.time.formatter.Icu4jHourAndMinuteDurationFormatter;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -31,6 +33,9 @@ import org.apache.wicket.util.convert.IConverter;
 @SuppressWarnings("serial")
 public class DurationLabel extends GenericLabel<Duration> {
 	
+	private final IConverter<Duration> converter;
+	
+	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -38,7 +43,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * @since 2.3
 	 */
 	public DurationLabel(String id) {
-		super(id);
+		this(id, new Icu4jHourAndMinuteDurationFormatter());
 	}
 	
 	/**
@@ -49,7 +54,19 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * @since 2.0
 	 */
 	public DurationLabel(String id, Duration duration) {
-		this(id, Model.of(duration));
+		this(id, Model.of(duration), new Icu4jHourAndMinuteDurationFormatter());
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param durationFormatter {@link DurationFormatter}
+	 * @since 2.4
+	 */
+	public DurationLabel(String id, DurationFormatter durationFormatter) {
+		super(id);
+		converter = new DurationConverter(durationFormatter);
 	}
 	
 	/**
@@ -60,14 +77,27 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * @since 2.0
 	 */
 	public DurationLabel(String id, IModel<Duration> model) {
+		this(id, model, new Icu4jHourAndMinuteDurationFormatter());
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 * @param durationFormatter {@link DurationFormatter}
+	 * @since 2.4
+	 */
+	public DurationLabel(String id, IModel<Duration> model, DurationFormatter durationFormatter) {
 		super(id, model);
+		converter = new DurationConverter(durationFormatter);
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C>IConverter<C> getConverter(Class<C> type) {
 		if (type == Duration.class) {
-			return (IConverter<C>) new HourAndMinuteDurationConverter();
+			return (IConverter<C>) converter;
 		}
 		return super.getConverter(type);
 	}

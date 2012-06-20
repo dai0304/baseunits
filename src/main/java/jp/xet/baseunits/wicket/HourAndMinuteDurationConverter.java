@@ -29,12 +29,33 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
  * 
  * @author daisuke
  * @since 2.0
+ * @deprecated use {@link DurationConverter}
  */
+@Deprecated
 @SuppressWarnings("serial")
 public class HourAndMinuteDurationConverter extends AbstractConverter<Duration> {
 	
-	DurationFormatter durationFormatter = new Icu4jHourAndMinuteDurationFormatter();
+	private final DurationFormatter durationFormatter;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @since 2.0
+	 */
+	public HourAndMinuteDurationConverter() {
+		this(true);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param displayZeroMinute 末尾の値0部を表示する場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.4
+	 */
+	public HourAndMinuteDurationConverter(boolean displayZeroMinute) {
+		durationFormatter = new Icu4jHourAndMinuteDurationFormatter(displayZeroMinute);
+	}
 	
 	@Override
 	public Duration convertToObject(String value, Locale locale) {

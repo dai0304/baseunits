@@ -22,6 +22,7 @@ import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.formatter.DurationFormatter;
 import jp.xet.baseunits.time.formatter.Icu4jDurationFormatter;
 
+import org.apache.commons.lang.Validate;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 
 /**
@@ -33,8 +34,29 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
 @SuppressWarnings("serial")
 public class DurationConverter extends AbstractConverter<Duration> {
 	
-	DurationFormatter durationFormatter = new Icu4jDurationFormatter();
+	private final DurationFormatter durationFormatter;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @since 2.0
+	 */
+	public DurationConverter() {
+		this(new Icu4jDurationFormatter());
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param durationFormatter {@link DurationFormatter}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.4
+	 */
+	public DurationConverter(DurationFormatter durationFormatter) {
+		Validate.notNull(durationFormatter);
+		this.durationFormatter = durationFormatter;
+	}
 	
 	@Override
 	public Duration convertToObject(String value, Locale locale) {

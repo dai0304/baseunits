@@ -1,6 +1,6 @@
 /*
  * Copyright 2011-2012 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
- * Created on 2011/11/22
+ * Created on 2012/06/20
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,39 +31,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ICU4Jを利用した、時・分レベルの {@link DurationFormatter} 実装クラス。
+ * ICU4Jを利用した、時レベルの {@link DurationFormatter} 実装クラス。
  * 
  * <p>序算で発生した余りは切り捨てる。</p>
  * 
  * @author daisuke
- * @since 2.0
+ * @since 2.4
  */
 @SuppressWarnings("serial")
-public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatter implements Serializable {
+public class Icu4jHourDurationFormatter extends AbstractDurationFormatter implements Serializable {
 	
-	private static Logger logger = LoggerFactory.getLogger(Icu4jHourAndMinuteDurationFormatter.class);
+	private static Logger logger = LoggerFactory.getLogger(Icu4jHourDurationFormatter.class);
 	
-	private final boolean displayZeroMinute;
-	
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @since 2.0
-	 */
-	public Icu4jHourAndMinuteDurationFormatter() {
-		this(true);
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param displayZeroMinute 末尾の値0部を表示する場合は{@code true}、そうでない場合は{@code false}
-	 * @since 2.3
-	 */
-	public Icu4jHourAndMinuteDurationFormatter(boolean displayZeroMinute) {
-		this.displayZeroMinute = displayZeroMinute;
-	}
 	
 	@Override
 	public String format(Duration target, Locale locale) {
@@ -77,15 +56,6 @@ public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatt
 		TimeUnitFormat format = new TimeUnitFormat(uLocale);
 		
 		long h = target.to(TimeUnit.hour);
-		long m = target.minus(Duration.hours(h)).to(TimeUnit.minute);
-		
-		StringBuilder sb = new StringBuilder();
-		if (h != 0) {
-			sb.append(format.format(new TimeUnitAmount(h, com.ibm.icu.util.TimeUnit.HOUR))).append(' ');
-		}
-		if (displayZeroMinute || (h == 0 || m != 0)) {
-			sb.append(format.format(new TimeUnitAmount(m, com.ibm.icu.util.TimeUnit.MINUTE)));
-		}
-		return sb.toString().trim();
+		return format.format(new TimeUnitAmount(h, com.ibm.icu.util.TimeUnit.HOUR)).trim();
 	}
 }
