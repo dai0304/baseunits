@@ -750,6 +750,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/**
 	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
+	 * @param locale ロケール
+	 * @param zone タイムゾーン
+	 * @return 整形済み時間文字列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.5
+	 */
+	public String toString(Locale locale, TimeZone zone) {
+		return toString("yyyy-MM-dd'T'HH:mm:ssZZ", locale, zone);
+	}
+	
+	/**
+	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
 	 * @param pattern {@link SimpleDateFormat}に基づくパターン
 	 * @param locale ロケール
 	 * @param zone タイムゾーン
@@ -778,6 +791,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		Validate.notNull(pattern);
 		Validate.notNull(zone);
 		return toString(pattern, Locale.getDefault(), zone);
+	}
+	
+	/**
+	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
+	 * @param zone タイムゾーン
+	 * @return 整形済み時間文字列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.5
+	 */
+	public String toString(TimeZone zone) {
+		String formatted = toString("yyyy-MM-dd'T'HH:mm:ssZZ", Locale.getDefault(), zone);
+		formatted = formatted.substring(0, 22) + ":" + formatted.substring(22); // CHECKSTYLE IGNORE THIS LINE
+		if (formatted.endsWith("+00:00")) {
+			formatted = formatted.substring(0, 19) + "Z";
+		}
+		return formatted;
 	}
 	
 	/**

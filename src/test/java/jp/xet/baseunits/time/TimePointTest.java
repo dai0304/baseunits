@@ -127,6 +127,10 @@ public class TimePointTest {
 		// Try stupid date/time format, so that it couldn't work by accident.
 		assertThat(point.toString("M-yy-d m:h:s", PT), is("3-04-12 3:5:14"));
 		assertThat(point.toString("M-yy-d", PT), is("3-04-12"));
+		
+		assertThat(point.toString(PT), is("2004-03-12T05:03:14-08:00"));
+		assertThat(point.toString(TimeZone.getTimeZone("Japan")), is("2004-03-12T22:03:14+09:00"));
+		assertThat(point.toString(TimeZone.getTimeZone("UTC")), is("2004-03-12T13:03:14Z"));
 	}
 	
 	/**
