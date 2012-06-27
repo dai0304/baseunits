@@ -58,7 +58,7 @@ public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatt
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param displayZeroMinute 末尾の値0部を表示する場合は{@code true}、そうでない場合は{@code false}
+	 * @param displayZeroMinute "0分"を表示する場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.3
 	 */
 	public Icu4jHourAndMinuteDurationFormatter(boolean displayZeroMinute) {
