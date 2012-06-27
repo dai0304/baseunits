@@ -37,7 +37,9 @@ import org.slf4j.LoggerFactory;
  * 
  * @author daisuke
  * @since 2.0
+ * @deprecated use {@link DetailedDurationFormatter}
  */
+@Deprecated
 @SuppressWarnings("serial")
 public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatter implements Serializable {
 	
