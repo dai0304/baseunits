@@ -28,7 +28,10 @@ import org.junit.Test;
 /**
  * {@link Icu4jHourAndMinuteDurationFormatter}のテストクラス。
  */
-@SuppressWarnings("javadoc")
+@SuppressWarnings({
+	"javadoc",
+	"deprecation"
+})
 public class Icu4jHourAndMinuteDurationFormatterTest {
 	
 	@Test

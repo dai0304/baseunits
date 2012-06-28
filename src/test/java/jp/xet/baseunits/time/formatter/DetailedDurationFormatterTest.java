@@ -25,15 +25,12 @@ import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimeUnit;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * TODO for daisuke
  */
+@SuppressWarnings("javadoc")
 public class DetailedDurationFormatterTest {
-	
-	private static Logger logger = LoggerFactory.getLogger(DetailedDurationFormatterTest.class);
 	
 	static Duration H10_M10 = Duration.hours(10).plus(Duration.minutes(10));
 	
@@ -70,5 +67,13 @@ public class DetailedDurationFormatterTest {
 		assertThat(f4.format(H10_S10, Locale.JAPAN), is("10時間"));
 		assertThat(f5.format(H10_S10, Locale.JAPAN), is("10時間 0分 10秒"));
 		assertThat(f6.format(H10_S10, Locale.JAPAN), is("10時間 10秒"));
+	}
+	
+	@Test
+	public void test3() throws Exception {
+		DurationFormatter f1 = new DetailedDurationFormatter(true, TimeUnit.hour, TimeUnit.minute);
+		DurationFormatter f2 = new DetailedDurationFormatter(false, TimeUnit.hour, TimeUnit.minute);
+		assertThat(f1.format(Duration.NONE), is("0時間 0分"));
+		assertThat(f2.format(Duration.NONE), is("0分"));
 	}
 }

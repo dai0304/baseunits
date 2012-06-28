@@ -65,14 +65,22 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 	 * インスタンスを生成する。
 	 * 
 	 * @param allowZero 
+	 * @param timeUnit 
 	 * @param timeUnits 
 	 * @since 2.5
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public DetailedDurationFormatter(boolean allowZero, TimeUnit... timeUnits) {
+	public DetailedDurationFormatter(boolean allowZero, TimeUnit timeUnit, TimeUnit... timeUnits) {
+		Validate.notNull(timeUnit);
 		Validate.noNullElements(timeUnits);
 		this.allowZero = allowZero;
-		this.timeUnits = timeUnits.clone();
+		this.timeUnits = new TimeUnit[timeUnits.length + 1];
+		this.timeUnits[0] = timeUnit;
+		System.arraycopy(timeUnits, 0, this.timeUnits, 1, timeUnits.length);
+		
+		for (TimeUnit u : this.timeUnits) {
+			Validate.isTrue(TIME_UNIT_MAP.containsKey(u));
+		}
 	}
 	
 	@Override
@@ -83,6 +91,10 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 		TimeUnitFormat format = new TimeUnitFormat(locale);
 		
 		List<TimeUnitAmount> amounts = divide(target);
+		if (amounts.isEmpty()) {
+			TimeUnit lastUnit = timeUnits[timeUnits.length - 1];
+			return format.format(new TimeUnitAmount(0, TIME_UNIT_MAP.get(lastUnit)));
+		}
 		List<String> sections = Lists.newArrayListWithCapacity(amounts.size());
 		for (TimeUnitAmount amount : amounts) {
 			sections.add(format.format(amount));
@@ -98,10 +110,8 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 		for (TimeUnit timeUnit : timeUnits) {
 			long value = target.to(timeUnit);
 			if (value != 0 || allowZero) {
-				if (TIME_UNIT_MAP.containsKey(timeUnit)) {
-					target = target.minus(new Duration(value, timeUnit));
-					result.add(new TimeUnitAmount(value, TIME_UNIT_MAP.get(timeUnit)));
-				}
+				target = target.minus(new Duration(value, timeUnit));
+				result.add(new TimeUnitAmount(value, TIME_UNIT_MAP.get(timeUnit)));
 			}
 		}
 		

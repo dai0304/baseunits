@@ -17,8 +17,9 @@
 package jp.xet.baseunits.wicket;
 
 import jp.xet.baseunits.time.Duration;
+import jp.xet.baseunits.time.TimeUnit;
+import jp.xet.baseunits.time.formatter.DetailedDurationFormatter;
 import jp.xet.baseunits.time.formatter.DurationFormatter;
-import jp.xet.baseunits.time.formatter.Icu4jHourAndMinuteDurationFormatter;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -33,6 +34,9 @@ import org.apache.wicket.util.convert.IConverter;
 @SuppressWarnings("serial")
 public class DurationLabel extends GenericLabel<Duration> {
 	
+	private static final DurationFormatter DEFAULT_FORMATTER = new DetailedDurationFormatter(false, TimeUnit.hour,
+			TimeUnit.minute);
+	
 	private final IConverter<Duration> converter;
 	
 	
@@ -43,7 +47,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * @since 2.3
 	 */
 	public DurationLabel(String id) {
-		this(id, new Icu4jHourAndMinuteDurationFormatter());
+		this(id, DEFAULT_FORMATTER);
 	}
 	
 	/**
@@ -54,7 +58,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * @since 2.0
 	 */
 	public DurationLabel(String id, Duration duration) {
-		this(id, Model.of(duration), new Icu4jHourAndMinuteDurationFormatter());
+		this(id, Model.of(duration), DEFAULT_FORMATTER);
 	}
 	
 	/**
@@ -77,7 +81,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * @since 2.0
 	 */
 	public DurationLabel(String id, IModel<Duration> model) {
-		this(id, model, new Icu4jHourAndMinuteDurationFormatter());
+		this(id, model, DEFAULT_FORMATTER);
 	}
 	
 	/**
