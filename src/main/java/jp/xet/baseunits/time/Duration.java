@@ -49,6 +49,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（日）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration days(long howMany) {
@@ -65,6 +66,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param seconds 時間の長さ（秒）
 	 * @param milliseconds  時間の長さ（ミリ秒）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration daysHoursMinutesSecondsMilliseconds(long days, long hours, long minutes, long seconds,
@@ -105,6 +107,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（時間）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration hours(long howMany) {
@@ -116,6 +119,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（ミリ秒）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration milliseconds(long howMany) {
@@ -127,6 +131,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（分）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration minutes(long howMany) {
@@ -138,6 +143,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（月）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration months(long howMany) {
@@ -149,6 +155,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（四半期）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration quarters(long howMany) {
@@ -160,6 +167,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（ミリ）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration seconds(long howMany) {
@@ -171,6 +179,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param values 複数{@link Duration}
 	 * @return 総和
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static Duration sum(Iterable<Duration> values) {
@@ -189,6 +198,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（週）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration weeks(int howMany) {
@@ -200,6 +210,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param howMany 時間の長さ（年）
 	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
 	 * @since 1.0
 	 */
 	public static Duration years(int howMany) {
@@ -221,8 +232,8 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param quantity 量を表す数値
 	 * @param unit 量の単位
-	 * @throws IllegalArgumentException 引数quantityが0未満の場合
-	 * @throws IllegalArgumentException 引数unitに{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code quantity}に負数を与えた場合
+	 * @throws IllegalArgumentException 引数{@code unit}に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Duration(long quantity, TimeUnit unit) {
