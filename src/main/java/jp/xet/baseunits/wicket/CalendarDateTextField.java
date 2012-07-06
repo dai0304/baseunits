@@ -23,6 +23,7 @@ import java.util.Locale;
 import jp.xet.baseunits.time.CalendarDate;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvider;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -79,6 +80,7 @@ public class CalendarDateTextField extends TextField<CalendarDate> implements IT
 	 * <code>new TextField(id, CalendarDate.class)</code>
 	 * 
 	 * @param id The id of the text field
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @see org.apache.wicket.markup.html.form.TextField
 	 */
 	public CalendarDateTextField(final String id) {
@@ -91,6 +93,7 @@ public class CalendarDateTextField extends TextField<CalendarDate> implements IT
 	 * 
 	 * @param id The id of the text field
 	 * @param model The model
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @see org.apache.wicket.markup.html.form.TextField
 	 */
 	public CalendarDateTextField(final String id, final IModel<CalendarDate> model) {
@@ -103,6 +106,7 @@ public class CalendarDateTextField extends TextField<CalendarDate> implements IT
 	 * @param id The id of the text field
 	 * @param model The model
 	 * @param datePattern A <code>SimpleDateFormat</code> pattern
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @see org.apache.wicket.markup.html.form.TextField
 	 */
 	public CalendarDateTextField(final String id, final IModel<CalendarDate> model, final String datePattern) {
@@ -116,7 +120,7 @@ public class CalendarDateTextField extends TextField<CalendarDate> implements IT
 	 * 
 	 * @param id The id of the text field
 	 * @param datePattern A <code>SimpleDateFormat</code> pattern
-	 * 
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @see org.apache.wicket.markup.html.form.TextField
 	 */
 	public CalendarDateTextField(final String id, final String datePattern) {

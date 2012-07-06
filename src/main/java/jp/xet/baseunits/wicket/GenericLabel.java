@@ -16,6 +16,7 @@
  */
 package jp.xet.baseunits.wicket;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
@@ -33,6 +34,7 @@ public class GenericLabel<T> extends Label {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public GenericLabel(String id) {
 		super(id);
@@ -43,6 +45,7 @@ public class GenericLabel<T> extends Label {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public GenericLabel(String id, IModel<T> model) {
 		super(id, model);

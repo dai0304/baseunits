@@ -23,6 +23,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
@@ -46,6 +47,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param calendarDate 表示する日付
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public CalendarDateLabel(String id, CalendarDate calendarDate) {
 		this(id, Model.of(calendarDate), DEFAULT_PATTERN);
@@ -57,6 +59,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * @param id The non-null id of this component
 	 * @param calendarDate 表示する日付
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public CalendarDateLabel(String id, CalendarDate calendarDate, String datePattern) {
 		this(id, Model.of(calendarDate), datePattern);
@@ -67,6 +70,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public CalendarDateLabel(String id, IModel<CalendarDate> model) {
 		this(id, model, DEFAULT_PATTERN);
@@ -78,6 +82,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * @param id The non-null id of this component
 	 * @param model The component's model
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public CalendarDateLabel(String id, IModel<CalendarDate> model, String datePattern) {
 		super(id, model);
@@ -91,6 +96,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * @param id The non-null id of this component
 	 * @param timePointModel 基準時刻モデル
 	 * @param timeZoneModel タイムゾーンモデル
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public CalendarDateLabel(String id, IModel<TimePoint> timePointModel, IModel<TimeZone> timeZoneModel) {
 		this(id, new CalendarDateModel(timePointModel, timeZoneModel));
@@ -102,6 +108,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * @param id The non-null id of this component
 	 * @param timePoint 表示する日付
 	 * @param timeZone タイムゾーン
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public CalendarDateLabel(String id, TimePoint timePoint, TimeZone timeZone) {
 		this(id, new CalendarDateModel(timePoint, timeZone));

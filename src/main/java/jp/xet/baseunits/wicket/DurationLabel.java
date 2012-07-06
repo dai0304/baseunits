@@ -21,6 +21,7 @@ import jp.xet.baseunits.time.TimeUnit;
 import jp.xet.baseunits.time.formatter.DetailedDurationFormatter;
 import jp.xet.baseunits.time.formatter.DurationFormatter;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
@@ -44,6 +45,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.3
 	 */
 	public DurationLabel(String id) {
@@ -55,6 +57,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param duration 表示する時間量
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.0
 	 */
 	public DurationLabel(String id, Duration duration) {
@@ -66,6 +69,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param durationFormatter {@link DurationFormatter}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.4
 	 */
 	public DurationLabel(String id, DurationFormatter durationFormatter) {
@@ -78,6 +82,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.0
 	 */
 	public DurationLabel(String id, IModel<Duration> model) {
@@ -90,6 +95,7 @@ public class DurationLabel extends GenericLabel<Duration> {
 	 * @param id The non-null id of this component
 	 * @param model The component's model
 	 * @param durationFormatter {@link DurationFormatter}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.4
 	 */
 	public DurationLabel(String id, IModel<Duration> model, DurationFormatter durationFormatter) {

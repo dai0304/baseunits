@@ -14,6 +14,7 @@ import jp.xet.baseunits.time.formatter.Icu4jRelativeTimePointFormatter;
 import jp.xet.baseunits.time.formatter.RelativeTimePointFormatter;
 import jp.xet.baseunits.time.formatter.RelativeTimePointFormatter.FallbackConfig;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
@@ -36,6 +37,7 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 * @param id The non-null id of this component
 	 * @param config {@link FallbackConfig}
 	 * @param timeZone {@link TimeZone}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.2
 	 */
 	public RelativeTimeLabel(String id, FallbackConfig config, TimeZone timeZone) {
@@ -49,6 +51,7 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 * @param model The component's model
 	 * @param config {@link FallbackConfig}
 	 * @param timeZone {@link TimeZone}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.2
 	 */
 	public RelativeTimeLabel(String id, IModel<TimePoint> model, FallbackConfig config, TimeZone timeZone) {
@@ -61,6 +64,7 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 * @param id The non-null id of this component
 	 * @param model The component's model
 	 * @param formatter {@link RelativeTimePointFormatter}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.2
 	 */
 	public RelativeTimeLabel(String id, IModel<TimePoint> model, RelativeTimePointFormatter formatter) {
@@ -73,6 +77,7 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param formatter {@link RelativeTimePointFormatter}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.2
 	 */
 	public RelativeTimeLabel(String id, RelativeTimePointFormatter formatter) {

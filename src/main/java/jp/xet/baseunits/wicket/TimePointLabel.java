@@ -22,6 +22,7 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.TimePoint;
 
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
@@ -49,6 +50,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param model The component's model
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone タイムゾーン
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, String datePattern, TimeZone timeZone) {
 		super(id, model);
@@ -64,6 +66,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param id The non-null id of this component
 	 * @param model The component's model
 	 * @param timeZone time zone
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, TimeZone timeZone) {
 		this(id, model, DEFAULT_PATTERN, timeZone);
@@ -76,6 +79,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param timePoint 表示する日付
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone time zone
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointLabel(String id, TimePoint timePoint, String datePattern, TimeZone timeZone) {
 		this(id, Model.of(timePoint), datePattern, timeZone);
@@ -87,6 +91,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param id The non-null id of this component
 	 * @param timePoint 表示する日付
 	 * @param timeZone time zone
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointLabel(String id, TimePoint timePoint, TimeZone timeZone) {
 		this(id, Model.of(timePoint), DEFAULT_PATTERN, timeZone);

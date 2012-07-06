@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import jp.xet.baseunits.time.TimeOfDay;
 
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
@@ -44,6 +45,7 @@ public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimeOfDayLabel(String id, IModel<TimeOfDay> model) {
 		this(id, model, DEFAULT_PATTERN);
@@ -55,6 +57,7 @@ public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 	 * @param id The non-null id of this component
 	 * @param model The component's model
 	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimeOfDayLabel(String id, IModel<TimeOfDay> model, String timePattern) {
 		super(id, model);
@@ -67,6 +70,7 @@ public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param timeOfDay 表示する時刻
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimeOfDayLabel(String id, TimeOfDay timeOfDay) {
 		this(id, Model.of(timeOfDay), DEFAULT_PATTERN);
@@ -78,6 +82,7 @@ public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 	 * @param id The non-null id of this component
 	 * @param timeOfDay 表示する時刻
 	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimeOfDayLabel(String id, TimeOfDay timeOfDay, String timePattern) {
 		this(id, Model.of(timeOfDay), timePattern);

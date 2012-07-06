@@ -22,6 +22,7 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.TimePointOfDay;
 
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
@@ -49,6 +50,7 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 * @param model The component's model
 	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointOfDayLabel(String id, IModel<TimePointOfDay> model, String timePattern, TimeZone timeZone) {
 		super(id, model);
@@ -64,6 +66,7 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 * @param id The non-null id of this component
 	 * @param model The component's model
 	 * @param timeZone {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointOfDayLabel(String id, IModel<TimePointOfDay> model, TimeZone timeZone) {
 		this(id, model, DEFAULT_PATTERN, timeZone);
@@ -76,6 +79,7 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 * @param timeOfDay 表示する時刻
 	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointOfDayLabel(String id, TimePointOfDay timeOfDay, String timePattern, TimeZone timeZone) {
 		this(id, Model.of(timeOfDay), timePattern, timeZone);
@@ -87,6 +91,7 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 * @param id The non-null id of this component
 	 * @param timePointOfDay 表示する時刻
 	 * @param timeZone {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointOfDayLabel(String id, TimePointOfDay timePointOfDay, TimeZone timeZone) {
 		this(id, Model.of(timePointOfDay), DEFAULT_PATTERN, timeZone);
