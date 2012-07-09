@@ -412,6 +412,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param other 比較対照
 	 * @return {@code other}よりも大きい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #compareTo(Duration)
 	 */
 	public boolean isGreaterThan(Duration other) {
@@ -424,6 +425,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param other 比較対照
 	 * @return {@code other}よりも大きいまたは等しい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #compareTo(Duration)
 	 */
 	public boolean isGreaterThanOrEqual(Duration other) {
@@ -436,6 +438,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param other 比較対照
 	 * @return {@code other}よりも小さい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #compareTo(Duration)
 	 */
 	public boolean isLessThan(Duration other) {
@@ -448,6 +451,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param other 比較対照
 	 * @return {@code other}よりも小さいまたは等しい場合は{@code true}、そうでない場合は{@code false}
 	 * @throws ClassCastException 引数{@code other}の単位を、このオブジェクトの単位に変換できない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #compareTo(Duration)
 	 */
 	public boolean isLessThanOrEqual(Duration other) {
