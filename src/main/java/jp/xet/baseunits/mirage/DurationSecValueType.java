@@ -37,24 +37,36 @@ public class DurationSecValueType extends AbstractBaseunitsValueType<Duration> {
 	@Override
 	public Duration get(Class<? extends Duration> type, CallableStatement cs, int index) throws SQLException {
 		long duration = cs.getLong(index);
+		if (duration < 0) {
+			return Duration.NONE;
+		}
 		return Duration.seconds(duration);
 	}
 	
 	@Override
 	public Duration get(Class<? extends Duration> type, CallableStatement cs, String parameterName) throws SQLException {
 		long duration = cs.getLong(parameterName);
+		if (duration < 0) {
+			return Duration.NONE;
+		}
 		return Duration.seconds(duration);
 	}
 	
 	@Override
 	public Duration get(Class<? extends Duration> type, ResultSet rs, int index) throws SQLException {
 		long duration = rs.getLong(index);
+		if (duration < 0) {
+			return Duration.NONE;
+		}
 		return Duration.seconds(duration);
 	}
 	
 	@Override
 	public Duration get(Class<? extends Duration> type, ResultSet rs, String columnName) throws SQLException {
 		long duration = rs.getLong(columnName);
+		if (duration < 0) {
+			return Duration.NONE;
+		}
 		return Duration.seconds(duration);
 	}
 	
