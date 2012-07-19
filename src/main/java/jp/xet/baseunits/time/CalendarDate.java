@@ -128,6 +128,44 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
+	 * Returns the greater of two {@link CalendarDate} values.
+	 * If the arguments have the same value, the result is that same value.
+	 *
+	 * @param a an argument.
+	 * @param b another argument.
+	 * @return the larger of {@code a} and {@code b}.
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.6
+	 */
+	public static CalendarDate max(CalendarDate a, CalendarDate b) {
+		Validate.notNull(a);
+		Validate.notNull(b);
+		if (a.isAfter(b)) {
+			return a;
+		}
+		return b;
+	}
+	
+	/**
+	 * Returns the smaller of two {@link CalendarDate} values.
+	 * If the arguments have the same value, the result is that same value.
+	 *
+	 * @param a an argument.
+	 * @param b another argument.
+	 * @return the smaller of {@code a} and {@code b}.
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.6
+	 */
+	public static CalendarDate min(CalendarDate a, CalendarDate b) {
+		Validate.notNull(a);
+		Validate.notNull(b);
+		if (a.isBefore(b)) {
+			return a;
+		}
+		return b;
+	}
+	
+	/**
 	 * 指定した年月日を表す、{@link CalendarDate}のインスタンスを生成する。
 	 * 
 	 * @param dateString 年月日を表す文字列 
@@ -348,6 +386,26 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
+	 * {@code this}と引数{@code d}をそれぞれ誕生日と基準日とし、満年齢を返す。
+	 * 
+	 * @param d 基準日または誕生日
+	 * @return 満年齢
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.6
+	 */
+	public long getAge(CalendarDate d) {
+		Validate.notNull(d);
+		CalendarDate date = max(this, d);
+		CalendarDate birth = min(this, d);
+		long age = date.getYear() - birth.getYear();
+		if (date.getMonthOfYear().isBefore(birth.getMonthOfYear())
+				|| date.getDayOfMonth().isBefore(birth.getDayOfMonth())) {
+			age--;
+		}
+		return age;
+	}
+	
+	/**
 	 * この日付が属する日を返す。
 	 * 
 	 * @return 日
@@ -414,6 +472,23 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
+	 * 指定した日付 {@code other} が、このオブジェクトが表現する日付よりも未来であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一日付である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 対象日時
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.6
+	 */
+	public boolean isAfterOrEquals(CalendarDate other) {
+		if (other == null) {
+			return false;
+		}
+		return isBefore(other) == false;
+	}
+	
+	/**
 	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
@@ -434,6 +509,29 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 			return false;
 		}
 		return day.isBefore(other.day);
+	}
+	
+	/**
+	 * 指定した日付 {@code other} が、このオブジェクトが表現する日付よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一日付である場合は {@code true} を返す。</p>
+	 * 
+	 * @param other 対象日付
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.6
+	 */
+	public boolean isBeforeOrEquals(CalendarDate other) {
+		if (other == null) {
+			return false;
+		}
+		if (yearMonth.isBefore(other.yearMonth)) {
+			return true;
+		}
+		if (yearMonth.isAfter(other.yearMonth)) {
+			return false;
+		}
+		return day.isBeforeOrEquals(other.day);
 	}
 	
 	/**

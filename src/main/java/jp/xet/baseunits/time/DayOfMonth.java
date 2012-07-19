@@ -138,6 +138,23 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	}
 	
 	/**
+	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一日である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 対象日
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.6
+	 */
+	public boolean isAfterOrEquals(DayOfMonth other) {
+		if (other == null) {
+			return false;
+		}
+		return isBefore(other) == false;
+	}
+	
+	/**
 	 * この日を、指定した年月に適用可能かどうか調べる。
 	 * 
 	 * <p>例えば、31日は6月に適用不可能であるが、7月には適用可能である。
@@ -184,6 +201,23 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 			return false;
 		}
 		return value < other.value;
+	}
+	
+	/**
+	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一日である場合は {@code true} を返す。</p>
+	 * 
+	 * @param other 対象日
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.6
+	 */
+	public boolean isBeforeOrEquals(DayOfMonth other) {
+		if (other == null) {
+			return false;
+		}
+		return value <= other.value;
 	}
 	
 	/**

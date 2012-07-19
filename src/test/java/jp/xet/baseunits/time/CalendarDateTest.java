@@ -354,4 +354,24 @@ public class CalendarDateTest {
 		assertThat(CalendarDate.from(1978, 3, 4).getYear(), is(1978));
 		assertThat(CalendarDate.from(1978, 3, 4).getMonthOfYear(), is(MonthOfYear.MAR));
 	}
+	
+	/**
+	 * {@link CalendarDate#getAge(CalendarDate)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test23_getAge() throws Exception {
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2011, 12, 31)), is(33L));
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2012, 1, 1)), is(33L));
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2012, 2, 28)), is(33L));
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2012, 3, 1)), is(33L));
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2012, 3, 2)), is(33L));
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2012, 3, 3)), is(33L));
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2012, 3, 4)), is(34L));
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2012, 3, 5)), is(34L));
+		assertThat(CalendarDate.from(1978, 3, 4).getAge(CalendarDate.from(2012, 7, 19)), is(34L));
+		
+		assertThat(CalendarDate.from(2012, 7, 19).getAge(CalendarDate.from(1978, 3, 4)), is(34L));
+	}
 }

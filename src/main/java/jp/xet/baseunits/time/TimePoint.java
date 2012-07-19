@@ -345,6 +345,44 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
+	 * Returns the greater of two {@link TimePoint} values.
+	 * If the arguments have the same value, the result is that same value.
+	 *
+	 * @param a an argument.
+	 * @param b another argument.
+	 * @return the larger of {@code a} and {@code b}.
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.6
+	 */
+	public static TimePoint max(TimePoint a, TimePoint b) {
+		Validate.notNull(a);
+		Validate.notNull(b);
+		if (a.isAfter(b)) {
+			return a;
+		}
+		return b;
+	}
+	
+	/**
+	 * Returns the smaller of two {@link TimePoint} values.
+	 * If the arguments have the same value, the result is that same value.
+	 *
+	 * @param a an argument.
+	 * @param b another argument.
+	 * @return the smaller of {@code a} and {@code b}.
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.6
+	 */
+	public static TimePoint min(TimePoint a, TimePoint b) {
+		Validate.notNull(a);
+		Validate.notNull(b);
+		if (a.isBefore(b)) {
+			return a;
+		}
+		return b;
+	}
+	
+	/**
 	 * 日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す {@link TimePoint}を返す。
 	 * 
 	 * @param dateTimeString 日時を表す文字列
@@ -562,20 +600,24 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/**
 	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
 	 * 
 	 * @param other 対象日時
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isAfter(TimePoint other) {
-		Validate.notNull(other);
+		if (other == null) {
+			return false;
+		}
 		return millisecondsFromEpoch > other.millisecondsFromEpoch;
 	}
 	
 	/**
 	 * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
+	 * 
+	 * <p>{@code interval} が {@code null} である場合は {@code false} を返す。</p>
 	 * 
 	 * @param interval 基準期間
 	 * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
@@ -583,65 +625,76 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @since 1.0
 	 */
 	public boolean isAfter(TimePointInterval interval) {
-		Validate.notNull(interval);
+		if (interval == null) {
+			return false;
+		}
 		return interval.isBefore(this);
 	}
 	
 	/**
 	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一日時である場合は {@code false} を返す。</p>
 	 * 
 	 * @param other 対象日時
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.3
 	 */
 	public boolean isAfterOrEquals(TimePoint other) {
-		Validate.notNull(other);
+		if (other == null) {
+			return false;
+		}
 		return millisecondsFromEpoch >= other.millisecondsFromEpoch;
 	}
 	
 	/**
 	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
 	 * 
-	 * <p>同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一日時である場合は {@code false} を返す。</p>
 	 * 
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isBefore(TimePoint other) {
-		Validate.notNull(other);
+		if (other == null) {
+			return false;
+		}
 		return millisecondsFromEpoch < other.millisecondsFromEpoch;
 	}
 	
 	/**
 	 * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
 	 * 
+	 * <p>{@code interval} が {@code null} である場合は {@code false} を返す。</p>
+	 * 
 	 * @param interval 基準期間
 	 * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isBefore(TimePointInterval interval) {
-		Validate.notNull(interval);
+		if (interval == null) {
+			return false;
+		}
 		return interval.isAfter(this);
 	}
 	
 	/**
 	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
 	 * 
-	 * <p>同一日時である場合は {@code true} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一日時である場合は {@code true} を返す。</p>
 	 * 
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.3
 	 */
 	public boolean isBeforeOrEquals(TimePoint other) {
-		Validate.notNull(other);
+		if (other == null) {
+			return false;
+		}
 		return millisecondsFromEpoch <= other.millisecondsFromEpoch;
 	}
 	
