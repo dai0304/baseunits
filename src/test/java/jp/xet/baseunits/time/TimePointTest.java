@@ -385,9 +385,10 @@ public class TimePointTest {
 	public void test21_epoch() throws Exception {
 		assertThat(TimePoint.EPOCH.toEpochSec(), is(0L));
 		assertThat(TimePoint.EPOCH.toEpochMillisec(), is(0L));
-		assertThat(TimePoint.at(1978, 3, 4, 6, 55, 22, 123, TimeZone.getTimeZone("Japan")).toEpochSec(), is(257810122L));
-		assertThat(TimePoint.at(1978, 3, 4, 6, 55, 22, 123, TimeZone.getTimeZone("Japan")).toEpochMillisec(),
-				is(257810122123L));
+		
+		TimePoint tp = TimePoint.at(1978, 3, 4, 6, 55, 22, 123, TimeZone.getTimeZone("Japan"));
+		assertThat(tp.toEpochSec(), is(257810122L));
+		assertThat(tp.toEpochMillisec(), is(257810122123L));
 	}
 	
 	private Date javaUtilDateDec20_2003() {

@@ -40,8 +40,38 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	
 	private final String timePattern;
 	
-	private TimeZone timeZone;
+	private IModel<TimeZone> timeZoneModel;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 * @param timeZoneModel {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
+	public TimePointOfDayLabel(String id, IModel<TimePointOfDay> model, IModel<TimeZone> timeZoneModel) {
+		this(id, model, DEFAULT_PATTERN, timeZoneModel);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
+	 * @param timeZoneModel {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
+	public TimePointOfDayLabel(String id, IModel<TimePointOfDay> model, String timePattern,
+			IModel<TimeZone> timeZoneModel) {
+		super(id, model);
+		Validate.notNull(timePattern);
+		Validate.notNull(timeZoneModel);
+		this.timePattern = timePattern;
+		this.timeZoneModel = timeZoneModel;
+	}
 	
 	/**
 	 * インスタンスを生成する。
@@ -53,11 +83,7 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointOfDayLabel(String id, IModel<TimePointOfDay> model, String timePattern, TimeZone timeZone) {
-		super(id, model);
-		Validate.notNull(timePattern);
-		Validate.notNull(timeZone);
-		this.timePattern = timePattern;
-		this.timeZone = timeZone;
+		this(id, model, timePattern, Model.of(timeZone));
 	}
 	
 	/**
@@ -69,7 +95,71 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointOfDayLabel(String id, IModel<TimePointOfDay> model, TimeZone timeZone) {
-		this(id, model, DEFAULT_PATTERN, timeZone);
+		this(id, model, DEFAULT_PATTERN, Model.of(timeZone));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timeZoneModel {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
+	public TimePointOfDayLabel(String id, IModel<TimeZone> timeZoneModel) {
+		this(id, DEFAULT_PATTERN, timeZoneModel);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
+	 * @param timeZoneModel {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
+	public TimePointOfDayLabel(String id, String timePattern, IModel<TimeZone> timeZoneModel) {
+		super(id);
+		Validate.notNull(timePattern);
+		Validate.notNull(timeZoneModel);
+		this.timePattern = timePattern;
+		this.timeZoneModel = timeZoneModel;
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
+	 * @param timeZone {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
+	public TimePointOfDayLabel(String id, String timePattern, TimeZone timeZone) {
+		this(id, timePattern, Model.of(timeZone));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timePointOfDay 表示する時刻
+	 * @param timeZoneModel {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
+	public TimePointOfDayLabel(String id, TimePointOfDay timePointOfDay, IModel<TimeZone> timeZoneModel) {
+		this(id, Model.of(timePointOfDay), DEFAULT_PATTERN, timeZoneModel);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timeOfDay 表示する時刻
+	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
+	 * @param timeZoneModel {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
+	public TimePointOfDayLabel(String id, TimePointOfDay timeOfDay, String timePattern, IModel<TimeZone> timeZoneModel) {
+		this(id, Model.of(timeOfDay), timePattern, timeZoneModel);
 	}
 	
 	/**
@@ -82,7 +172,7 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointOfDayLabel(String id, TimePointOfDay timeOfDay, String timePattern, TimeZone timeZone) {
-		this(id, Model.of(timeOfDay), timePattern, timeZone);
+		this(id, Model.of(timeOfDay), timePattern, Model.of(timeZone));
 	}
 	
 	/**
@@ -94,15 +184,34 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public TimePointOfDayLabel(String id, TimePointOfDay timePointOfDay, TimeZone timeZone) {
-		this(id, Model.of(timePointOfDay), DEFAULT_PATTERN, timeZone);
+		this(id, Model.of(timePointOfDay), DEFAULT_PATTERN, Model.of(timeZone));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timeZone {@link TimeZone} to interpret calendar of {@link TimePointOfDay}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
+	public TimePointOfDayLabel(String id, TimeZone timeZone) {
+		this(id, DEFAULT_PATTERN, Model.of(timeZone));
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C>IConverter<C> getConverter(Class<C> type) {
 		if (type == TimePointOfDay.class) {
-			return (IConverter<C>) new TimePointOfDayConverter(timePattern, timeZone);
+			return (IConverter<C>) new TimePointOfDayConverter(timePattern, timeZoneModel.getObject());
 		}
 		return super.getConverter(type);
+	}
+	
+	@Override
+	protected void onDetach() {
+		if (timeZoneModel != null) {
+			timeZoneModel.detach();
+		}
+		super.onDetach();
 	}
 }

@@ -273,7 +273,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @since 2.0
 	 */
 	public TimePointOfDay asTimePointOfDay(TimeZone timeZone) {
-		Validate.notNull(timeZone, "timeZone");
+		Validate.notNull(timeZone);
 		return TimePointOfDay.from(this, timeZone);
 	}
 	
@@ -429,10 +429,10 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @return 時間量
 	 */
 	public Duration toDuration() {
-		Duration d = Duration.hours(hour.breachEncapsulationOfValue());
-		d = d.plus(Duration.minutes(minute.breachEncapsulationOfValue()));
-		d = d.plus(Duration.seconds(second.breachEncapsulationOfValue()));
-		d = d.plus(Duration.milliseconds(millisec.breachEncapsulationOfValue()));
+		Duration d = Duration.hours(hour.value);
+		d = d.plus(Duration.minutes(minute.value));
+		d = d.plus(Duration.seconds(second.value));
+		d = d.plus(Duration.milliseconds(millisec.value));
 		return d;
 	}
 	
