@@ -29,7 +29,9 @@ import org.apache.commons.lang.Validate;
 /**
  * ミリ秒精度で、ある1日の特定の瞬間をあらわすクラス。
  * 
- * <p>{@link TimeOfDay}と異なり、タイムゾーン情報を含んでいる。</p>
+ * <p>{@link TimeOfDay}と異なり、タイムゾーン情報を含んでいる。
+ * 例えば、{@link TimeOfDay}は単純に「20:00」を表現するが、{@link TimePointOfDay}は「JSTの20:00」を表現する。
+ * つまり、{@code TimeOfDay.at(12, 0, UTC)}と{@code TimeOfDay.at(21, 0, JST)}は等値である。</p>
  * 
  * @author daisuke
  * @since 2.0

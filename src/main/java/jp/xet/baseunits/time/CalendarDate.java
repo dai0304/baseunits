@@ -455,12 +455,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * 指定した日付 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * また、お互いが同一日付である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 対象日付
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
@@ -477,7 +477,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
 	 * また、同一日付である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 対象日付
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.6
 	 */
@@ -489,12 +489,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+	 * 指定した日付 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * また、お互いが同一日付である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 対象日付
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
