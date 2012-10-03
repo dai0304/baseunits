@@ -6,7 +6,6 @@
  */
 package jp.xet.baseunits.wicket;
 
-import java.util.Locale;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePoint;
@@ -28,7 +27,7 @@ import org.apache.wicket.util.convert.IConverter;
 @SuppressWarnings("serial")
 public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	
-	private final RelativeTimePointFormatter formatter;
+	private final IConverter<TimePoint> converter;
 	
 	
 	/**
@@ -69,7 +68,7 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 */
 	public RelativeTimeLabel(String id, IModel<TimePoint> model, RelativeTimePointFormatter formatter) {
 		super(id, model);
-		this.formatter = formatter;
+		converter = new RelativeTimePointConverter(formatter);
 	}
 	
 	/**
@@ -82,36 +81,15 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 */
 	public RelativeTimeLabel(String id, RelativeTimePointFormatter formatter) {
 		super(id);
-		this.formatter = formatter;
+		converter = new RelativeTimePointConverter(formatter);
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C>IConverter<C> getConverter(Class<C> type) {
 		if (type == TimePoint.class) {
-			return (IConverter<C>) new TimePointConverter(formatter);
+			return (IConverter<C>) converter;
 		}
 		return super.getConverter(type);
-	}
-	
-	
-	private static class TimePointConverter implements IConverter<TimePoint> {
-		
-		private final RelativeTimePointFormatter formatter;
-		
-		
-		private TimePointConverter(RelativeTimePointFormatter formatter) {
-			this.formatter = formatter;
-		}
-		
-		@Override
-		public TimePoint convertToObject(String value, Locale locale) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public String convertToString(TimePoint value, Locale locale) {
-			return formatter.format(value, locale);
-		}
 	}
 }
