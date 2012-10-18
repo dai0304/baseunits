@@ -27,7 +27,7 @@ import java.util.Calendar;
 
 import jp.xet.baseunits.util.Ratio;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 時間量（時間の長さ・期間の長さなど）を表すクラス。
@@ -93,12 +93,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param tp1 時刻
 	 * @param tp2 時刻
 	 * @return 時間量
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static Duration diff(TimePoint tp1, TimePoint tp2) {
-		Validate.notNull(tp1);
-		Validate.notNull(tp2);
+		Preconditions.checkNotNull(tp1);
+		Preconditions.checkNotNull(tp2);
 		return Duration.milliseconds(Math.abs(tp1.toEpochMillisec() - tp2.toEpochMillisec()));
 	}
 	
@@ -179,11 +179,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param values 複数{@link Duration}
 	 * @return 総和
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static Duration sum(Iterable<Duration> values) {
-		Validate.notNull(values);
+		Preconditions.checkNotNull(values);
 		Duration result = Duration.NONE;
 		for (Duration v : values) {
 			if (v != null) {
@@ -233,12 +233,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param quantity 量を表す数値
 	 * @param unit 量の単位
 	 * @throws IllegalArgumentException 引数{@code quantity}に負数を与えた場合
-	 * @throws IllegalArgumentException 引数{@code unit}に{@code null}を与えた場合
+	 * @throws NullPointerException 引数{@code unit}に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Duration(long quantity, TimeUnit unit) {
-		Validate.notNull(unit);
-		Validate.isTrue(quantity >= 0, "Quantity: " + quantity + " must be zero or positive");
+		Preconditions.checkNotNull(unit);
+		Preconditions.checkArgument(quantity >= 0, "Quantity: " + quantity + " must be zero or positive");
 		this.quantity = quantity;
 		this.unit = unit;
 	}
@@ -250,12 +250,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param day 元となる日付
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の日付
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #subtractedFrom(CalendarDate)
 	 * @since 1.0
 	 */
 	public CalendarDate addedTo(CalendarDate day) {
-		Validate.notNull(day);
+		Preconditions.checkNotNull(day);
 //		only valid for days and larger units
 		if (unit.compareTo(TimeUnit.day) < 0) {
 			return day;
@@ -276,11 +276,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param month 元となる年月
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の年月
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarMonth addedTo(CalendarMonth month) {
-		Validate.notNull(month);
+		Preconditions.checkNotNull(month);
 //		only valid for days and larger units
 		if (unit.compareTo(TimeUnit.month) < 0) {
 			return month;
@@ -299,13 +299,13 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param point 元となる日時
 	 * @return このオブジェクトが表現する長さの時間が経過した未来の日時
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
 	 * @see #subtractedFrom(TimePoint)
 	 * @since 1.0
 	 */
 	public TimePoint addedTo(TimePoint point) {
-		Validate.notNull(point);
+		Preconditions.checkNotNull(point);
 		return addAmountToTimePoint(inBaseUnits(), point);
 	}
 	
@@ -366,12 +366,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param divisor 割る数
 	 * @return 割合
 	 * @throws IllegalArgumentException 引数divisorの単位を、このオブジェクトの単位に変換できない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ArithmeticException 引数{@code divisor}が0だった場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Ratio dividedBy(Duration divisor) {
-		Validate.notNull(divisor);
+		Preconditions.checkNotNull(divisor);
 		checkConvertible(divisor);
 		return Ratio.of(inBaseUnits(), divisor.inBaseUnits());
 	}
@@ -465,11 +465,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @return 時間量の差
 	 * @throws IllegalArgumentException 引数{@code other}の単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
 	 * @throws IllegalArgumentException 引数{@code other}の長さが、このオブジェクトよりも長い場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Duration minus(Duration other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		checkConvertible(other);
 		checkGreaterThanOrEqualTo(other);
 		long newQuantity = inBaseUnits() - other.inBaseUnits();
@@ -502,11 +502,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param other 期間
 	 * @return 時間量の和
 	 * @throws IllegalArgumentException 引数otherの単位を、このオブジェクトの単位に変換できず、かつ、どちらのquantityも0ではない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Duration plus(Duration other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		checkConvertible(other);
 		long newQuantity = inBaseUnits() + other.inBaseUnits();
 		return new Duration(newQuantity, other.quantity == 0 ? unit.baseUnit() : other.unit.baseUnit());
@@ -517,11 +517,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param end 終了日（上側限界値）
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public CalendarInterval preceding(CalendarDate end) {
-		Validate.notNull(end);
+		Preconditions.checkNotNull(end);
 		return CalendarInterval.preceding(end, this);
 	}
 	
@@ -533,11 +533,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 減算の結果が0時を超えた場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimeOfDayInterval preceding(TimeOfDay end) {
-		Validate.notNull(end);
+		Preconditions.checkNotNull(end);
 		if (isGreaterThan(end.toDuration())) {
 			throw new IllegalArgumentException();
 		}
@@ -551,11 +551,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param end 終了日時（上側限界値）
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimePointInterval preceding(TimePoint end) {
-		Validate.notNull(end);
+		Preconditions.checkNotNull(end);
 		return TimePointInterval.preceding(end, this);
 	}
 	
@@ -568,11 +568,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param start 開始日（下側限界値）
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarInterval startingFrom(CalendarDate start) {
-		Validate.notNull(start);
+		Preconditions.checkNotNull(start);
 		return CalendarInterval.startingFrom(start, this);
 	}
 	
@@ -584,11 +584,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @throws IllegalArgumentException 加算の結果が24時を超えた場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimeOfDayInterval startingFrom(TimeOfDay start) {
-		Validate.notNull(start);
+		Preconditions.checkNotNull(start);
 		return TimeOfDayInterval.startingFrom(start, this);
 	}
 	
@@ -599,11 +599,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param start 開始日時（下側限界値）
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimePointInterval startingFrom(TimePoint start) {
-		Validate.notNull(start);
+		Preconditions.checkNotNull(start);
 		return TimePointInterval.startingFrom(start, this);
 	}
 	
@@ -614,12 +614,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param day 元となる日付
 	 * @return このオブジェクトが表現する長さのを引いた、過去の日付
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #addedTo(CalendarDate)
 	 * @since 1.0
 	 */
 	public CalendarDate subtractedFrom(CalendarDate day) {
-		Validate.notNull(day);
+		Preconditions.checkNotNull(day);
 //		only valid for days and larger units
 		if (unit.compareTo(TimeUnit.day) < 0) {
 			return day;
@@ -638,13 +638,13 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * @param point 元となる日時
 	 * @return このオブジェクトが表現する長さのを引いた、過去の日時
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
 	 * @see #addedTo(TimePoint)
 	 * @since 1.0
 	 */
 	public TimePoint subtractedFrom(TimePoint point) {
-		Validate.notNull(point);
+		Preconditions.checkNotNull(point);
 		return addAmountToTimePoint(-1 * inBaseUnits(), point);
 	}
 	
@@ -665,10 +665,10 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * @param unit 単位
 	 * @return 値
 	 * @throws IllegalArgumentException この時間量を引数に指定した単位に変換できない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public long to(TimeUnit unit) {
-		Validate.notNull(unit);
+		Preconditions.checkNotNull(unit);
 		if (this.unit == unit) {
 			return quantity;
 		}

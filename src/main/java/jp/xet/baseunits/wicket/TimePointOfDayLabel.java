@@ -21,7 +21,7 @@ import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePointOfDay;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -67,8 +67,8 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	public TimePointOfDayLabel(String id, IModel<TimePointOfDay> model, String timePattern,
 			IModel<TimeZone> timeZoneModel) {
 		super(id, model);
-		Validate.notNull(timePattern);
-		Validate.notNull(timeZoneModel);
+		Preconditions.checkNotNull(timePattern);
+		Preconditions.checkNotNull(timeZoneModel);
 		this.timePattern = timePattern;
 		this.timeZoneModel = timeZoneModel;
 	}
@@ -119,8 +119,8 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	 */
 	public TimePointOfDayLabel(String id, String timePattern, IModel<TimeZone> timeZoneModel) {
 		super(id);
-		Validate.notNull(timePattern);
-		Validate.notNull(timeZoneModel);
+		Preconditions.checkNotNull(timePattern);
+		Preconditions.checkNotNull(timeZoneModel);
 		this.timePattern = timePattern;
 		this.timeZoneModel = timeZoneModel;
 	}

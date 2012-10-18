@@ -25,7 +25,7 @@ import java.math.RoundingMode;
 
 import jp.xet.baseunits.util.Ratio;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 比例配分の為のユーティリティ。
@@ -45,11 +45,11 @@ public final class Proration {
 	 * @param total 合計金額
 	 * @param n 分割数
 	 * @return 分割結果
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static Money[] dividedEvenlyIntoParts(Money total, int n) {
-		Validate.notNull(total);
+		Preconditions.checkNotNull(total);
 		Money lowResult = total.dividedBy(BigDecimal.valueOf(n), RoundingMode.DOWN);
 		Money[] lowResults = new Money[n];
 		for (int i = 0; i < n; i++) {
@@ -66,12 +66,12 @@ public final class Proration {
 	 * @param portion 部分量をあらわす値
 	 * @param whole 全体量をあらわす値
 	 * @return 部分の金額
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws ArithmeticException 引数{@code whole}が0だった場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static Money partOfWhole(Money total, long portion, long whole) {
-		Validate.notNull(total);
+		Preconditions.checkNotNull(total);
 		return partOfWhole(total, Ratio.of(portion, whole));
 	}
 	
@@ -81,12 +81,12 @@ public final class Proration {
 	 * @param total 合計額
 	 * @param ratio 割合
 	 * @return 指定した割合の金額
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static Money partOfWhole(Money total, Ratio ratio) {
-		Validate.notNull(total);
-		Validate.notNull(ratio);
+		Preconditions.checkNotNull(total);
+		Preconditions.checkNotNull(ratio);
 		int scale = defaultScaleForIntermediateCalculations(total);
 		BigDecimal multiplier = ratio.decimalValue(scale, RoundingMode.DOWN);
 		return total.times(multiplier, RoundingMode.DOWN);
@@ -102,13 +102,17 @@ public final class Proration {
 	 * @param total 合計金額
 	 * @param proportions 比数の配列
 	 * @return 分割結果
-	 * @throws IllegalArgumentException 引数{@code total}に{@code null}を与えた場合
-	 * @throws IllegalArgumentException 引数{@code proportions}またはその要素に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数{@code proportions}の要素に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static Money[] proratedOver(Money total, BigDecimal[] proportions) {
-		Validate.notNull(total);
-		Validate.noNullElements(proportions);
+		Preconditions.checkNotNull(total);
+		Preconditions.checkNotNull(proportions);
+		for (BigDecimal proportion : proportions) {
+			Preconditions.checkNotNull(proportion);
+		}
+		
 		Money[] simpleResult = new Money[proportions.length];
 		int scale = defaultScaleForIntermediateCalculations(total);
 		Ratio[] ratios = ratios(proportions);
@@ -130,12 +134,12 @@ public final class Proration {
 	 * @param total 合計金額
 	 * @param longProportions 比数の配列
 	 * @return 分割結果
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static Money[] proratedOver(Money total, long[] longProportions) {
-		Validate.notNull(total);
-		Validate.notNull(longProportions);
+		Preconditions.checkNotNull(total);
+		Preconditions.checkNotNull(longProportions);
 		BigDecimal[] proportions = new BigDecimal[longProportions.length];
 		for (int i = 0; i < longProportions.length; i++) {
 			proportions[i] = BigDecimal.valueOf(longProportions[i]);
@@ -163,10 +167,13 @@ public final class Proration {
 	 * 
 	 * @param proportions 比の配列
 	 * @return 割合の配列
-	 * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
+	 * @throws NullPointerException 引数{@code elements}またはその要素に{@code null}を与えた場合
 	 */
 	static Ratio[] ratios(BigDecimal[] proportions) {
-		Validate.noNullElements(proportions);
+		Preconditions.checkNotNull(proportions);
+		for (BigDecimal proportion : proportions) {
+			Preconditions.checkNotNull(proportion);
+		}
 		BigDecimal total = sum(proportions);
 		Ratio[] ratios = new Ratio[proportions.length];
 		for (int i = 0; i < ratios.length; i++) {
@@ -180,12 +187,13 @@ public final class Proration {
 	 * 
 	 * @param elements 配列
 	 * @return 和
-	 * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
+	 * @throws NullPointerException 引数{@code elements}またはその要素に{@code null}を与えた場合
 	 */
 	static BigDecimal sum(BigDecimal[] elements) {
-		Validate.noNullElements(elements);
+		Preconditions.checkNotNull(elements);
 		BigDecimal sum = BigDecimal.ZERO;
 		for (BigDecimal element : elements) {
+			Preconditions.checkNotNull(element);
 			sum = sum.add(element);
 		}
 		return sum;
@@ -196,14 +204,15 @@ public final class Proration {
 	 * 
 	 * @param elements 配列
 	 * @return 和
-	 * @throws IllegalArgumentException 引数{@code elements}またはその要素に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code elements}の要素数が0の場合
+	 * @throws NullPointerException 引数{@code elements}またはその要素に{@code null}を与えた場合
 	 */
 	static Money sum(Money[] elements) {
-		Validate.noNullElements(elements);
-		Validate.isTrue(elements.length > 0);
+		Preconditions.checkNotNull(elements);
+		Preconditions.checkArgument(elements.length > 0);
 		Money sum = Money.valueOf(0, elements[0].breachEncapsulationOfCurrency());
 		for (Money element : elements) {
+			Preconditions.checkNotNull(element);
 			sum = sum.plus(element);
 		}
 		return sum;

@@ -25,7 +25,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.time.DayOfMonth;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 毎月Y日（ただし、非営業日の場合は、前営業日/翌営業日）、を表す日付仕様。
@@ -48,13 +48,13 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 	 * @param day 日
 	 * @param shifter シフト戦略
 	 * @param cal 営業日カレンダー
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	MonthlyFixedBusinessDateSpecification(DayOfMonth day, Shifter shifter, BusinessCalendar cal) {
-		Validate.notNull(day);
-		Validate.notNull(shifter);
-		Validate.notNull(cal);
+		Preconditions.checkNotNull(day);
+		Preconditions.checkNotNull(shifter);
+		Preconditions.checkNotNull(cal);
 		this.day = day;
 		this.shifter = shifter;
 		this.cal = cal;
@@ -89,7 +89,7 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
-		Validate.notNull(date);
+		Preconditions.checkNotNull(date);
 		if (cal.isBusinessDay(date)) {
 			CalendarDate thisMonth = ofYearMonth(date.getYearMonth());
 			return thisMonth.equals(date);
@@ -99,7 +99,7 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 	
 	@Override
 	public CalendarDate ofYearMonth(CalendarMonth month) {
-		Validate.notNull(month);
+		Preconditions.checkNotNull(month);
 		return shifter.shift(
 				CalendarDate.from(month.getYear(), month.getMonthOfYear(), day), cal);
 	}

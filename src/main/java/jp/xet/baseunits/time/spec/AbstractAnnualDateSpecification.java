@@ -27,7 +27,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.util.ImmutableIterator;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 1年間に1度だけ仕様を満たす日付仕様。
@@ -40,8 +40,8 @@ public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecif
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
-		Validate.isTrue(interval.hasLowerLimit());
+		Preconditions.checkNotNull(interval);
+		Preconditions.checkArgument(interval.hasLowerLimit());
 		CalendarDate firstTry = ofYear(interval.start().asCalendarMonth().getYear());
 		if (interval.includes(firstTry)) {
 			return firstTry;
@@ -55,7 +55,7 @@ public abstract class AbstractAnnualDateSpecification extends AbstractDateSpecif
 	
 	@Override
 	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
-		Validate.notNull(interval);
+		Preconditions.checkNotNull(interval);
 		return new ImmutableIterator<CalendarDate>() {
 			
 			CalendarDate next = firstOccurrenceIn(interval);

@@ -27,7 +27,7 @@ import jp.xet.baseunits.time.DayOfMonth;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.MonthOfYear;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 毎年X月の第Y◎曜日、を表す日付仕様。
@@ -52,12 +52,12 @@ public final class AnnualFloatingDateSpecification extends AbstractAnnualDateSpe
 	 * @param dayOfWeek 曜日
 	 * @param occurrence 周回数（1〜5）
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code dayOfWeek}に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code occurrence}が1〜5の範囲ではない場合
+	 * @throws NullPointerException 引数{@code dayOfWeek}に{@code null}を与えた場合
 	 */
 	AnnualFloatingDateSpecification(MonthOfYear month, DayOfWeek dayOfWeek, int occurrence) {
-		Validate.notNull(dayOfWeek);
-		Validate.isTrue(1 <= occurrence && occurrence <= 5);
+		Preconditions.checkNotNull(dayOfWeek);
+		Preconditions.checkArgument(1 <= occurrence && occurrence <= 5);
 		this.month = month;
 		this.dayOfWeek = dayOfWeek;
 		this.occurrence = occurrence;
@@ -92,7 +92,7 @@ public final class AnnualFloatingDateSpecification extends AbstractAnnualDateSpe
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
-		Validate.notNull(date);
+		Preconditions.checkNotNull(date);
 		return ofYear(date.asCalendarMonth().getYear()).equals(date);
 	}
 	

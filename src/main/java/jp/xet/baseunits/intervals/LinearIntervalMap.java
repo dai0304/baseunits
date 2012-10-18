@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 線形{@link IntervalMap}実装クラス。
@@ -54,7 +54,7 @@ public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implem
 	
 	@Override
 	public boolean containsIntersectingKey(Interval<K> otherInterval) {
-		Validate.notNull(otherInterval);
+		Preconditions.checkNotNull(otherInterval);
 		return intersectingKeys(otherInterval).isEmpty() == false;
 	}
 	
@@ -72,14 +72,14 @@ public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implem
 	
 	@Override
 	public void put(Interval<K> keyInterval, V value) {
-		Validate.notNull(keyInterval);
+		Preconditions.checkNotNull(keyInterval);
 		remove(keyInterval);
 		keyValues.put(keyInterval, value);
 	}
 	
 	@Override
 	public void remove(Interval<K> keyInterval) {
-		Validate.notNull(keyInterval);
+		Preconditions.checkNotNull(keyInterval);
 		List<Interval<K>> intervalSequence = intersectingKeys(keyInterval);
 		for (Interval<K> oldInterval : intervalSequence) {
 			V oldValue = keyValues.get(oldInterval);
@@ -95,7 +95,10 @@ public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implem
 	}
 	
 	private void directPut(List<Interval<K>> intervalSequence, V value) {
-		Validate.noNullElements(intervalSequence);
+		Preconditions.checkNotNull(intervalSequence);
+		for (Interval<K> interval : intervalSequence) {
+			Preconditions.checkNotNull(interval);
+		}
 		for (Interval<K> interval : intervalSequence) {
 			keyValues.put(interval, value);
 		}
@@ -122,11 +125,11 @@ public class LinearIntervalMap<K extends Comparable<K> & Serializable, V> implem
 	 * 
 	 * @param otherInterval 対象区間
 	 * @return 指定した区間と共通部分を持つ区間の列
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	private List<Interval<K>> intersectingKeys(Interval<K> otherInterval) {
-		Validate.notNull(otherInterval);
+		Preconditions.checkNotNull(otherInterval);
 		List<Interval<K>> intervalSequence = new ArrayList<Interval<K>>();
 		for (Interval<K> keyInterval : keyValues.keySet()) {
 			if (keyInterval.intersects(otherInterval)) {

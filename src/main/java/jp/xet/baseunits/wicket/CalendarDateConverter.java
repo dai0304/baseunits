@@ -24,7 +24,7 @@ import jp.xet.baseunits.time.CalendarDate;
 
 import com.google.common.base.Strings;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 
 /**
@@ -58,11 +58,11 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDateConverter(String datePattern) {
-		Validate.notNull(datePattern);
+		Preconditions.checkNotNull(datePattern);
 		this.datePattern = datePattern;
 	}
 	

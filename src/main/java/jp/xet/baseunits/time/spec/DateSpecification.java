@@ -35,7 +35,7 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * 
 	 * @param specification Specification to AND.
 	 * @return A new specification.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	DateSpecification and(DateSpecification specification);
@@ -45,8 +45,8 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * 
 	 * @param interval 期間
 	 * @return 年月日。但し、仕様を満たす日がなかった場合は{@code null}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code interval}に下側限界（開始日）が必要なロジックで、かつ下側限界を持たない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	CalendarDate firstOccurrenceIn(CalendarInterval interval);
@@ -56,7 +56,7 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * 
 	 * @param date 検証対象の日付
 	 * @return 仕様を満たす場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	@Override
@@ -67,7 +67,7 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * 
 	 * @param interval 期間
 	 * @return 反復子
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	Iterator<CalendarDate> iterateOver(CalendarInterval interval);
@@ -77,8 +77,8 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * 
 	 * @param interval 期間
 	 * @return 最後。但し、仕様を満たす日がなかった場合は{@code null}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code interval}に上側限界（終了日）が必要なロジックで、かつ上側限界を持たない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	CalendarDate lastOccurrenceIn(CalendarInterval interval);
@@ -91,7 +91,7 @@ public interface DateSpecification extends Specification<CalendarDate> {
 	 * 
 	 * @param specification Specification to OR.
 	 * @return A new specification.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	DateSpecification or(DateSpecification specification);

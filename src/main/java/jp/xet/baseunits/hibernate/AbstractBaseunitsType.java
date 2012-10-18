@@ -25,7 +25,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
+
 import org.hibernate.HibernateException;
 import org.hibernate.type.SingleColumnType;
 import org.hibernate.usertype.UserType;
@@ -48,11 +49,11 @@ public abstract class AbstractBaseunitsType<E, I> implements UserType, Serializa
 	 * インスタンスを生成する。
 	 * 
 	 * @param sct {@link SingleColumnType}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.2
 	 */
 	public AbstractBaseunitsType(SingleColumnType<I> sct) {
-		Validate.notNull(sct);
+		Preconditions.checkNotNull(sct);
 		this.sct = sct;
 	}
 	

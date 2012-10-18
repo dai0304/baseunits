@@ -19,7 +19,7 @@ package jp.xet.baseunits.timeutil;
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.TimeSource;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 常に指定した時間を返す {@link TimeSource} 実装クラス。
@@ -38,10 +38,10 @@ public final class FixedTimeSource implements TimeSource {
 	 * インスタンスを生成する。
 	 * 
 	 * @param fixed 固定する時間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public FixedTimeSource(TimePoint fixed) {
-		Validate.notNull(fixed);
+		Preconditions.checkNotNull(fixed);
 		this.fixed = fixed;
 	}
 	

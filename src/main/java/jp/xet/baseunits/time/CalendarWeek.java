@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * カレンダー上の特定の「年第x週」（デフォルトでは月曜日〜日曜日）を表すクラス。
@@ -46,11 +46,11 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	 * 
 	 * @param date 日付
 	 * @return 週
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static CalendarWeek from(CalendarDate date) {
-		Validate.notNull(date);
+		Preconditions.checkNotNull(date);
 		Calendar cal = date.asJavaCalendarUniversalZoneMidnight();
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
@@ -88,7 +88,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	 * @param year 年
 	 * @param month 月
 	 * @return {@link CalendarWeek}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static CalendarWeek from(int year, WeekOfYear month) {
@@ -102,7 +102,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	
 	
 	CalendarWeek(int year, WeekOfYear week) {
-		Validate.notNull(week);
+		Preconditions.checkNotNull(week);
 		this.year = year;
 		this.week = week;
 	}
@@ -124,11 +124,11 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	 * 
 	 * @param timeZone タイムゾーン
 	 * @return {@link TimePoint}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimePoint asTimePoint(TimeZone timeZone) {
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(timeZone);
 		CalendarDate date = asCalendarInterval().start();
 		return TimePoint.from(date, TimeOfDay.MIDNIGHT, timeZone);
 	}

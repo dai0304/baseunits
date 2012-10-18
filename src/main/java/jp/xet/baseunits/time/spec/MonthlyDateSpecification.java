@@ -32,7 +32,7 @@ public interface MonthlyDateSpecification extends DateSpecification {
 	 * 
 	 * @param month 年月
 	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	CalendarDate ofYearMonth(CalendarMonth month);

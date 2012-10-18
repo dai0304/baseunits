@@ -31,9 +31,8 @@ import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.util.ImmutableIterator;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
-
-import org.apache.commons.lang.Validate;
 
 /**
  * ある特定の曜日を表す日付仕様。
@@ -51,9 +50,13 @@ public final class DayOfWeeksSpecification extends AbstractDateSpecification imp
 	 * インスタンスを生成する。
 	 * 
 	 * @param dayOfWeeks 曜日の集合
+	 * @throws NullPointerException 引数またはその要素に{@code null}を与えた場合
 	 */
 	public DayOfWeeksSpecification(Collection<DayOfWeek> dayOfWeeks) {
-		Validate.noNullElements(dayOfWeeks);
+		Preconditions.checkNotNull(dayOfWeeks);
+		for (DayOfWeek dayOfWeek : dayOfWeeks) {
+			Preconditions.checkNotNull(dayOfWeek);
+		}
 		this.dayOfWeeks = Sets.newHashSet(dayOfWeeks);
 	}
 	
@@ -62,19 +65,22 @@ public final class DayOfWeeksSpecification extends AbstractDateSpecification imp
 	 * 
 	 * @param dayOfWeek 曜日
 	 * @param dayOfWeeks 曜日(optional)
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	DayOfWeeksSpecification(DayOfWeek dayOfWeek, DayOfWeek... dayOfWeeks) {
-		Validate.notNull(dayOfWeek);
-		Validate.noNullElements(dayOfWeeks);
+		Preconditions.checkNotNull(dayOfWeek);
+		Preconditions.checkNotNull(dayOfWeeks);
+		for (DayOfWeek d : dayOfWeeks) {
+			Preconditions.checkNotNull(d);
+		}
 		this.dayOfWeeks = Sets.newHashSet(dayOfWeeks);
 		this.dayOfWeeks.add(dayOfWeek);
 	}
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
-		Validate.isTrue(interval.hasLowerLimit());
+		Preconditions.checkNotNull(interval);
+		Preconditions.checkArgument(interval.hasLowerLimit());
 		Iterator<CalendarDate> itr = interval.daysIterator();
 		int counter = 0;
 		while (itr.hasNext()) {
@@ -99,7 +105,7 @@ public final class DayOfWeeksSpecification extends AbstractDateSpecification imp
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
-		Validate.notNull(date);
+		Preconditions.checkNotNull(date);
 		return dayOfWeeks.contains(date.dayOfWeek());
 	}
 	

@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * {@link MoneyFan}の集合。
@@ -42,11 +42,14 @@ public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	* インスタンスを生成する。
 	* 
 	* @param fans {@link MoneyFan}の集合
-	* @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
+	* @throws NullPointerException 引数またはその要素に{@code null}を与えた場合
 	 * @since 1.0
 	*/
 	public FanTally(Collection<MoneyFan<T>> fans) {
-		Validate.noNullElements(fans);
+		Preconditions.checkNotNull(fans);
+		for (MoneyFan<T> fan : fans) {
+			Preconditions.checkNotNull(fan);
+		}
 		this.fans = fans;
 	}
 	
@@ -54,7 +57,7 @@ public class FanTally<T> implements Iterable<MoneyFan<T>> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param fan {@link MoneyFan}の要素（単一）
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")

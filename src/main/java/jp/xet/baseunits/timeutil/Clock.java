@@ -26,7 +26,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.TimeSource;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 時計を表すクラス。
@@ -91,11 +91,11 @@ public final class Clock {
 	 * 
 	 * @param timeZone タイムゾーン
 	 * @return 今日の日付
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarDate today(TimeZone timeZone) {
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(timeZone);
 		return now().asCalendarDate(timeZone);
 	}
 	

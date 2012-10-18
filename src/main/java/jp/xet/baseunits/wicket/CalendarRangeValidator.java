@@ -18,7 +18,7 @@ package jp.xet.baseunits.wicket;
 
 import jp.xet.baseunits.time.CalendarDate;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
@@ -44,8 +44,8 @@ public class CalendarRangeValidator extends AbstractFormValidator {
 	 * @param to 至
 	 */
 	public CalendarRangeValidator(FormComponent<CalendarDate> from, FormComponent<CalendarDate> to) {
-		Validate.notNull(from);
-		Validate.notNull(to);
+		Preconditions.checkNotNull(from);
+		Preconditions.checkNotNull(to);
 		this.from = from;
 		this.to = to;
 	}

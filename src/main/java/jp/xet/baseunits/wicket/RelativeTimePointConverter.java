@@ -18,10 +18,11 @@ package jp.xet.baseunits.wicket;
 
 import java.util.Locale;
 
-import jp.sf.amateras.mirage.util.Validate;
 import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.formatter.RelativeTimePointFormatter;
+
+import com.google.common.base.Preconditions;
 
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 
@@ -41,11 +42,11 @@ public class RelativeTimePointConverter extends AbstractConverter<TimePoint> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param formatter
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.7
 	 */
 	public RelativeTimePointConverter(RelativeTimePointFormatter formatter) {
-		Validate.notNull(formatter);
+		Preconditions.checkNotNull(formatter);
 		this.formatter = formatter;
 	}
 	

@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 
 import jp.xet.baseunits.time.TimeOfDay;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -61,7 +61,7 @@ public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 	 */
 	public TimeOfDayLabel(String id, IModel<TimeOfDay> model, String timePattern) {
 		super(id, model);
-		Validate.notNull(timePattern);
+		Preconditions.checkNotNull(timePattern);
 		this.timePattern = timePattern;
 	}
 	

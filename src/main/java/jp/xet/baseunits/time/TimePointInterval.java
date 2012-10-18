@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
 import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.util.ImmutableIterator;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 期間（時間の区間）を表すクラス。
@@ -132,12 +132,12 @@ public class TimePointInterval extends Interval<TimePoint> {
 	 * @param length 期間の長さ
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static TimePointInterval preceding(TimePoint end, boolean startClosed, Duration length, boolean endClosed) {
-		Validate.notNull(end);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(end);
+		Preconditions.checkNotNull(length);
 		TimePoint start = end.minus(length);
 		return over(start, startClosed, end, endClosed);
 	}
@@ -150,12 +150,12 @@ public class TimePointInterval extends Interval<TimePoint> {
 	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @param length 期間の長さ
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static TimePointInterval preceding(TimePoint end, Duration length) {
-		Validate.notNull(end);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(end);
+		Preconditions.checkNotNull(length);
 		// Uses the common default for time intervals, [start, end).
 		return preceding(end, true, length, false);
 	}
@@ -168,13 +168,13 @@ public class TimePointInterval extends Interval<TimePoint> {
 	 * @param length 期間の長さ
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static TimePointInterval startingFrom(TimePoint start, boolean startClosed, Duration length,
 			boolean endClosed) {
-		Validate.notNull(start);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(length);
 		TimePoint end = start.plus(length);
 		return over(start, startClosed, end, endClosed);
 	}
@@ -187,12 +187,12 @@ public class TimePointInterval extends Interval<TimePoint> {
 	 * @param start 開始日時（下側限界値）
 	 * @param length 期間の長さ
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static TimePointInterval startingFrom(TimePoint start, Duration length) {
-		Validate.notNull(start);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(length);
 		// Uses the common default for time intervals, [start, end).
 		return startingFrom(start, true, length, false);
 	}
@@ -279,11 +279,11 @@ public class TimePointInterval extends Interval<TimePoint> {
 	 * 
 	 * @param interval 比較対象の期間
 	 * @return 積集合（共通部分）
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimePointInterval intersect(TimePointInterval interval) {
-		Validate.notNull(interval);
+		Preconditions.checkNotNull(interval);
 		return (TimePointInterval) super.intersect(interval);
 	}
 	
@@ -292,12 +292,12 @@ public class TimePointInterval extends Interval<TimePoint> {
 	 * 
 	 * @param point 日時
 	 * @return 開始日時以前でない場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see Interval#isAbove(Comparable)
 	 * @since 1.0
 	 */
 	public boolean isAfter(TimePoint point) {
-		Validate.notNull(point);
+		Preconditions.checkNotNull(point);
 		return isAbove(point);
 	}
 	
@@ -306,12 +306,12 @@ public class TimePointInterval extends Interval<TimePoint> {
 	 * 
 	 * @param point 日時
 	 * @return 終了日時以後でない場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see Interval#isBelow(Comparable)
 	 * @since 1.0
 	 */
 	public boolean isBefore(TimePoint point) {
-		Validate.notNull(point);
+		Preconditions.checkNotNull(point);
 		return isBelow(point);
 	}
 	
@@ -378,11 +378,11 @@ public class TimePointInterval extends Interval<TimePoint> {
 	 * @param subintervalLength 反復子が返す期間の長さ
 	 * @return 期間の反復子
 	 * @throws IllegalStateException この期間が開始日時（下側限界）を持たない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Iterator<TimePointInterval> subintervalIterator(Duration subintervalLength) {
-		Validate.notNull(subintervalLength);
+		Preconditions.checkNotNull(subintervalLength);
 		if (hasLowerLimit() == false) {
 			throw new IllegalStateException();
 		}

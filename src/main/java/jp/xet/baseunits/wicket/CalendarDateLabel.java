@@ -22,7 +22,7 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -86,7 +86,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 */
 	public CalendarDateLabel(String id, IModel<CalendarDate> model, String datePattern) {
 		super(id, model);
-		Validate.notNull(datePattern);
+		Preconditions.checkNotNull(datePattern);
 		this.datePattern = datePattern;
 	}
 	
@@ -136,10 +136,10 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * {@link SimpleDateFormat}に基づくパターンを設定する。
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	protected void setDatePattern(String datePattern) {
-		Validate.notNull(datePattern);
+		Preconditions.checkNotNull(datePattern);
 		this.datePattern = datePattern;
 	}
 }

@@ -26,7 +26,7 @@ import com.ibm.icu.util.TimeUnit;
 import com.ibm.icu.util.TimeUnitAmount;
 import com.ibm.icu.util.ULocale;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * ICU4Jを利用した {@link DurationFormatter} 実装クラス。
@@ -39,8 +39,8 @@ public class Icu4jDurationFormatter extends AbstractDurationFormatter implements
 	
 	@Override
 	public String format(Duration target, Locale locale) {
-		Validate.notNull(target);
-		Validate.notNull(locale);
+		Preconditions.checkNotNull(target);
+		Preconditions.checkNotNull(locale);
 		
 		TimeUnitAmount source = convert(target);
 		TimeUnitFormat format = new TimeUnitFormat(ULocale.forLocale(locale));

@@ -22,7 +22,7 @@ package jp.xet.baseunits.time;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 1分間の中の特定の「秒」を表すクラス。
@@ -137,11 +137,11 @@ public class SecondOfMinute implements Comparable<SecondOfMinute>, Serializable 
 	 * 
 	 * @param another 基準分
 	 * @return 同日同時同分において、このインスタンスが表す秒が、引数{@code another}で表される秒よりも未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isAfter(SecondOfMinute another) {
-		Validate.notNull(another);
+		Preconditions.checkNotNull(another);
 		return value > another.value;
 	}
 	
@@ -152,11 +152,11 @@ public class SecondOfMinute implements Comparable<SecondOfMinute>, Serializable 
 	 * 
 	 * @param another 基準分
 	 * @return 同日同時同分において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public boolean isBefore(SecondOfMinute another) {
-		Validate.notNull(another);
+		Preconditions.checkNotNull(another);
 		return value < another.value;
 	}
 	

@@ -23,11 +23,11 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.TimeUnit;
 
+import com.google.common.base.Preconditions;
 import com.ibm.icu.impl.duration.BasicPeriodFormatterService;
 import com.ibm.icu.impl.duration.DurationFormatter;
 import com.ibm.icu.impl.duration.DurationFormatterFactory;
 
-import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,16 +66,16 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 	 * @throws IllegalArgumentException 引数{@code config}を指定したにも関わらず{@code timeZone}を与えなかった場合
 	 */
 	public Icu4jRelativeTimePointFormatter(FallbackConfig config, TimeZone timeZone) {
-		Validate.isTrue((config == null && timeZone == null) || (config != null && timeZone != null));
+		Preconditions.checkArgument((config == null && timeZone == null) || (config != null && timeZone != null));
 		this.config = config;
 		this.timeZone = timeZone;
 	}
 	
 	@Override
 	public String format(TimePoint target, TimePoint standard, Locale locale) {
-		Validate.notNull(target);
-		Validate.notNull(standard);
-		Validate.notNull(locale);
+		Preconditions.checkNotNull(target);
+		Preconditions.checkNotNull(standard);
+		Preconditions.checkNotNull(locale);
 		
 		long t = target.toEpochMillisec();
 		long s = standard.toEpochMillisec();

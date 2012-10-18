@@ -44,7 +44,7 @@ public interface DurationFormatter {
 	 * 
 	 * @param target the instance to format
 	 * @param locale the current user locale
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @return the formatted text string
 	 * @since 2.0
 	 */

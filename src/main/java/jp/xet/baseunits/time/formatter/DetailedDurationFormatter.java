@@ -26,12 +26,11 @@ import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimeUnit;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.ibm.icu.text.TimeUnitFormat;
 import com.ibm.icu.util.TimeUnitAmount;
-
-import org.apache.commons.lang.Validate;
 
 /**
  * TODO for daisuke
@@ -68,25 +67,28 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 	 * @param timeUnit 
 	 * @param timeUnits 
 	 * @since 2.5
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public DetailedDurationFormatter(boolean allowZero, TimeUnit timeUnit, TimeUnit... timeUnits) {
-		Validate.notNull(timeUnit);
-		Validate.noNullElements(timeUnits);
+		Preconditions.checkNotNull(timeUnit);
+		Preconditions.checkNotNull(timeUnits);
+		for (TimeUnit u : timeUnits) {
+			Preconditions.checkNotNull(u);
+		}
 		this.allowZero = allowZero;
 		this.timeUnits = new TimeUnit[timeUnits.length + 1];
 		this.timeUnits[0] = timeUnit;
 		System.arraycopy(timeUnits, 0, this.timeUnits, 1, timeUnits.length);
 		
 		for (TimeUnit u : this.timeUnits) {
-			Validate.isTrue(TIME_UNIT_MAP.containsKey(u));
+			Preconditions.checkArgument(TIME_UNIT_MAP.containsKey(u));
 		}
 	}
 	
 	@Override
 	public String format(Duration target, Locale locale) {
-		Validate.notNull(target);
-		Validate.notNull(locale);
+		Preconditions.checkNotNull(target);
+		Preconditions.checkNotNull(locale);
 		
 		TimeUnitFormat format = new TimeUnitFormat(locale);
 		
@@ -104,7 +106,7 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 	}
 	
 	private List<TimeUnitAmount> divide(Duration target) {
-		Validate.notNull(target);
+		Preconditions.checkNotNull(target);
 		
 		List<TimeUnitAmount> result = Lists.newArrayListWithCapacity(timeUnits.length);
 		for (TimeUnit timeUnit : timeUnits) {

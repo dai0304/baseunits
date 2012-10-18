@@ -26,7 +26,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.DayOfMonth;
 import jp.xet.baseunits.time.MonthOfYear;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 毎年X月Y日、を表す日付仕様。
@@ -47,11 +47,11 @@ public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecif
 	 * 
 	 * @param month 月
 	 * @param day 日
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	AnnualFixedDateSpecification(MonthOfYear month, DayOfMonth day) {
-		Validate.notNull(month);
-		Validate.notNull(day);
+		Preconditions.checkNotNull(month);
+		Preconditions.checkNotNull(day);
 		this.month = month;
 		this.day = day;
 	}
@@ -78,7 +78,7 @@ public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecif
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
-		Validate.notNull(date);
+		Preconditions.checkNotNull(date);
 		return day.equals(date.getDayOfMonth())
 				&& month == date.asCalendarMonth().getMonthOfYear();
 	}

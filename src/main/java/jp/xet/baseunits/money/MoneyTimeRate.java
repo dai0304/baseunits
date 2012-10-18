@@ -26,7 +26,7 @@ import java.util.Currency;
 import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimeRate;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 単位時間あたりの金額（時間量に対する金額の割合）をあらわすクラス。
@@ -50,12 +50,12 @@ public class MoneyTimeRate {
 	 * 
 	 * @param money 金額
 	 * @param duration 時間量
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public MoneyTimeRate(Money money, Duration duration) {
-		Validate.notNull(money);
-		Validate.notNull(duration);
+		Preconditions.checkNotNull(money);
+		Preconditions.checkNotNull(duration);
 		rate = new TimeRate(money.breachEncapsulationOfAmount(), duration);
 		currency = money.breachEncapsulationOfCurrency();
 	}
@@ -119,11 +119,11 @@ public class MoneyTimeRate {
 	 * 
 	 * @param duration 時間量
 	 * @return 金額
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Money over(Duration duration) {
-		Validate.notNull(duration);
+		Preconditions.checkNotNull(duration);
 		return over(duration, RoundingMode.UNNECESSARY);
 	}
 	
@@ -134,12 +134,12 @@ public class MoneyTimeRate {
 	 * @param scale スケール
 	 * @param roundMode 丸めモード
 	 * @return 金額
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.1
 	 */
 	public Money over(Duration duration, int scale, RoundingMode roundMode) {
-		Validate.notNull(duration);
-		Validate.notNull(roundMode);
+		Preconditions.checkNotNull(duration);
+		Preconditions.checkNotNull(roundMode);
 		return Money.valueOf(rate.over(duration, scale, roundMode), currency);
 	}
 	
@@ -149,12 +149,12 @@ public class MoneyTimeRate {
 	 * @param duration 時間量
 	 * @param roundMode 丸めモード
 	 * @return 金額
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.1
 	 */
 	public Money over(Duration duration, RoundingMode roundMode) {
-		Validate.notNull(duration);
-		Validate.notNull(roundMode);
+		Preconditions.checkNotNull(duration);
+		Preconditions.checkNotNull(roundMode);
 		return over(duration, rate.scale(), roundMode);
 	}
 	

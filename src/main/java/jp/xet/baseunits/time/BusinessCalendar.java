@@ -28,7 +28,7 @@ import jp.xet.baseunits.time.spec.DateSpecifications;
 import jp.xet.baseunits.util.ImmutableIterator;
 import jp.xet.baseunits.util.spec.Specification;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 営業日カレンダー。
@@ -94,11 +94,11 @@ public class BusinessCalendar {
 	 * 
 	 * @param calendarDays 元となる反復子
 	 * @return 営業日のみを返す反復子
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Iterator<CalendarDate> businessDaysOnly(final Iterator<CalendarDate> calendarDays) {
-		Validate.notNull(calendarDays);
+		Preconditions.checkNotNull(calendarDays);
 		return new ImmutableIterator<CalendarDate>() {
 			
 			CalendarDate lookAhead = null;
@@ -158,7 +158,7 @@ public class BusinessCalendar {
 	 * 
 	 * @param day 日
 	 * @return 営業日に当たる場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isBusinessDay(CalendarDate day) {
@@ -185,11 +185,11 @@ public class BusinessCalendar {
 	 * 
 	 * @param day 日
 	 * @return 週末に当たる場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isWeekend(CalendarDate day) {
-		Validate.notNull(day);
+		Preconditions.checkNotNull(day);
 		DayOfWeek dow = day.dayOfWeek();
 		return dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY;
 	}
@@ -201,11 +201,11 @@ public class BusinessCalendar {
 	 * @param numberOfDays 営業日数（現在は正数しかサポートしない）
 	 * @return 日付
 	 * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
-	 * @throws IllegalArgumentException 引数{@code startDate}に{@code null}を与えた場合
+	 * @throws NullPointerException 引数{@code startDate}に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDate minusBusinessDays(CalendarDate startDate, int numberOfDays) {
-		Validate.notNull(startDate);
+		Preconditions.checkNotNull(startDate);
 		if (numberOfDays < 0) {
 			throw new IllegalArgumentException("Negative numberOfDays not supported");
 		}
@@ -220,7 +220,7 @@ public class BusinessCalendar {
 	 * 
 	 * @param day 基準日
 	 * @return 営業日
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDate nearestNextBusinessDay(CalendarDate day) {
@@ -238,7 +238,7 @@ public class BusinessCalendar {
 	 * 
 	 * @param day 基準日
 	 * @return 営業日
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDate nearestPrevBusinessDay(CalendarDate day) {
@@ -254,7 +254,7 @@ public class BusinessCalendar {
 	 * 
 	 * @param startDate 基準日
 	 * @return 翌営業日
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDate nextBusinessDay(CalendarDate startDate) {
@@ -272,11 +272,11 @@ public class BusinessCalendar {
 	 * @param numberOfDays 営業日数（現在は正数しかサポートしない）. {@code 0}の場合、開始日を含む翌営業日を返す
 	 * @return 日付
 	 * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
-	 * @throws IllegalArgumentException 引数{@code startDate}に{@code null}を与えた場合
+	 * @throws NullPointerException 引数{@code startDate}に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDate plusBusinessDays(CalendarDate startDate, int numberOfDays) {
-		Validate.notNull(startDate);
+		Preconditions.checkNotNull(startDate);
 		if (numberOfDays < 0) {
 			throw new IllegalArgumentException("Negative numberOfDays not supported");
 		}
@@ -289,7 +289,7 @@ public class BusinessCalendar {
 	 * 
 	 * @param startDate 基準日
 	 * @return 前営業日
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDate prevBusinessDay(CalendarDate startDate) {
@@ -316,7 +316,7 @@ public class BusinessCalendar {
 	 * @param numberOfDays 営業日数. {@code 0}の場合、イテレータの先頭
 	 * @param calendarDays 日付イテレータ
 	 * @return 営業日
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	private CalendarDate nextNumberOfBusinessDays(int numberOfDays, Iterator<CalendarDate> calendarDays) {

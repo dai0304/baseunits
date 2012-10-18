@@ -26,9 +26,8 @@ import java.util.Iterator;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
-
-import org.apache.commons.lang.Validate;
 
 /**
  * ある特定の年月日を表す日付仕様。
@@ -46,17 +45,17 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 	 * インスタンスを生成する。
 	 * 
 	 * @param date 日付
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	FixedDateSpecification(CalendarDate date) {
-		Validate.notNull(date);
+		Preconditions.checkNotNull(date);
 		this.date = date;
 	}
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
-		Validate.isTrue(interval.hasLowerLimit());
+		Preconditions.checkNotNull(interval);
+		Preconditions.checkArgument(interval.hasLowerLimit());
 		if (interval.includes(date)) {
 			return date;
 		}
@@ -74,7 +73,7 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
-		Validate.notNull(date);
+		Preconditions.checkNotNull(date);
 		return date.equals(this.date);
 	}
 	

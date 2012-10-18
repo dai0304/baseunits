@@ -28,7 +28,7 @@ import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.TimeSource;
 import jp.xet.baseunits.time.TimeSourceException;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * NISTのdaytimeプロトコルクライアント。
@@ -78,7 +78,7 @@ public class NISTClient {
 	 * @since 1.0
 	 */
 	public NISTClient(String serverName, int port) {
-		Validate.notNull(serverName);
+		Preconditions.checkNotNull(serverName);
 		this.serverName = serverName;
 		this.port = port;
 	}
@@ -87,7 +87,7 @@ public class NISTClient {
 	 * ネットワーク時間に基づき現在の時刻を返す {@link TimeSource} を返す。
 	 * 
 	 * @return ネットワーク時間に基づき現在の時刻を返す {@link TimeSource}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimeSource timeSource() {
@@ -115,12 +115,12 @@ public class NISTClient {
 	 * 
 	 * @param nistRawFormattedString {@code time.nist.gov}が返す時間文字列
 	 * @return 入力に基づく{@link TimePoint}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @throws ParseException 引数nistRawFormattedStringの解析に失敗した場合
 	 * @since 1.0
 	 */
 	protected TimePoint asTimePoint(String nistRawFormattedString) throws ParseException {
-		Validate.notNull(nistRawFormattedString);
+		Preconditions.checkNotNull(nistRawFormattedString);
 		String nistGist = nistRawFormattedString.substring(7, 24); // CHECKSTYLE IGNORE THIS LINE
 		return TimePoint.parseUTCFrom(nistGist, PATTERN);
 	}

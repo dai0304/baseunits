@@ -21,7 +21,7 @@ import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePoint;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -66,8 +66,8 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, String datePattern, IModel<TimeZone> timeZoneModel) {
 		super(id, model);
-		Validate.notNull(datePattern);
-		Validate.notNull(timeZoneModel);
+		Preconditions.checkNotNull(datePattern);
+		Preconditions.checkNotNull(timeZoneModel);
 		this.datePattern = datePattern;
 		this.timeZoneModel = timeZoneModel;
 	}
@@ -178,10 +178,10 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * {@link SimpleDateFormat}に基づくパターンを設定する。
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	protected void setDatePattern(String datePattern) {
-		Validate.notNull(datePattern);
+		Preconditions.checkNotNull(datePattern);
 		this.datePattern = datePattern;
 	}
 }

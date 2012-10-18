@@ -33,7 +33,7 @@ import jp.xet.baseunits.time.DayOfWeek;
 import jp.xet.baseunits.time.MonthOfYear;
 import jp.xet.baseunits.time.spec.MonthlyFixedBusinessDateSpecification.Shifter;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 日付の仕様を表現するオブジェクト。
@@ -57,7 +57,7 @@ public final class DateSpecifications {
 	 * 指定した期間にマッチする日付仕様を返す。
 	 * 
 	 * @param interval 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @return 日付仕様
 	 * @since 2.0
 	 */
@@ -69,7 +69,7 @@ public final class DateSpecifications {
 	 * 指定した曜日にマッチする日付仕様を返す。
 	 * 
 	 * @param dayOfWeeks 曜日
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @return 日付仕様
 	 * @since 2.0
 	 */
@@ -82,7 +82,7 @@ public final class DateSpecifications {
 	 * 
 	 * @param dayOfWeek 曜日
 	 * @param dayOfWeeks 曜日(optional)
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @return 日付仕様
 	 * @since 2.0
 	 */
@@ -97,7 +97,7 @@ public final class DateSpecifications {
 	 * 
 	 * @param date マッチする日
 	 * @return 日付仕様
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static DateSpecification fixed(CalendarDate date) {
@@ -166,7 +166,7 @@ public final class DateSpecifications {
 	 * @param day 日
 	 * @param shifter シフト戦略
 	 * @param cal 営業日カレンダー
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @return 日付仕様
 	 */
 	public static MonthlyDateSpecification fixedBusiness(DayOfMonth day, Shifter shifter, BusinessCalendar cal) {
@@ -189,7 +189,7 @@ public final class DateSpecifications {
 	 * @param dayOfWeek 曜日◎
 	 * @param n 周回数（1〜5）
 	 * @return 日付仕様
-	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static MonthlyDateSpecification nthOccuranceOfWeekdayInEveryMonth(DayOfWeek dayOfWeek, int n) {
@@ -203,7 +203,7 @@ public final class DateSpecifications {
 	 * @param dayOfWeek 曜日◎
 	 * @param n 周回数（1〜5）
 	 * @return 日付仕様
-	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(int month, DayOfWeek dayOfWeek, int n) {
@@ -217,7 +217,7 @@ public final class DateSpecifications {
 	 * @param dayOfWeek 曜日◎
 	 * @param n 周回数（1〜5）
 	 * @return 日付仕様
-	 * @throws IllegalArgumentException 引数dayOfWeekに{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(MonthOfYear month, DayOfWeek dayOfWeek, int n) {
@@ -249,8 +249,8 @@ public final class DateSpecifications {
 		
 		@Override
 		public Iterator<CalendarDate> iterateOver(CalendarInterval interval) {
-			Validate.notNull(interval);
-			Validate.isTrue(interval.hasLowerLimit());
+			Preconditions.checkNotNull(interval);
+			Preconditions.checkArgument(interval.hasLowerLimit());
 			return interval.daysIterator();
 		}
 	}
@@ -266,13 +266,13 @@ public final class DateSpecifications {
 		
 		@Override
 		public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-			Validate.notNull(interval);
+			Preconditions.checkNotNull(interval);
 			return null;
 		}
 		
 		@Override
 		public boolean isSatisfiedBy(CalendarDate date) {
-			Validate.notNull(date);
+			Preconditions.checkNotNull(date);
 			return false;
 		}
 		

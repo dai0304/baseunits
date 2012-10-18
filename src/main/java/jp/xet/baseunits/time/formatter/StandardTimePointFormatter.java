@@ -24,7 +24,7 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.CalendarUtil;
 import jp.xet.baseunits.time.TimePoint;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * A DateFormatter that formats the requested date fields.
@@ -56,9 +56,9 @@ public class StandardTimePointFormatter extends AbstractTimePointFormatter imple
 	
 	@Override
 	public String format(TimePoint target, Locale locale, TimeZone timeZone) {
-		Validate.notNull(target);
-		Validate.notNull(locale);
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(target);
+		Preconditions.checkNotNull(locale);
+		Preconditions.checkNotNull(timeZone);
 		
 		SimpleDateFormat df = CalendarUtil.newSimpleDateFormat(format, locale, timeZone);
 		return df.format(target.asJavaUtilDate());

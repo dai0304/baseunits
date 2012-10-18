@@ -22,7 +22,7 @@ package jp.xet.baseunits.time;
 
 import java.util.Calendar;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 時間の単位を表す列挙型。
@@ -107,11 +107,11 @@ public enum TimeUnit {
 	 * 
 	 * @param other 変換先単位
 	 * @return 変換できる場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isConvertibleTo(TimeUnit other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		return baseType.equals(other.baseType);
 	}
 	

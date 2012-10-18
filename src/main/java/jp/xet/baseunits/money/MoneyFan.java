@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 割り当ての集合。
@@ -56,11 +56,11 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param allotment 割り当ての要素（単一）
-	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
+	 * @throws NullPointerException 引数またはその要素に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public MoneyFan(Allotment<T> allotment) {
-		Validate.notNull(allotment);
+		Preconditions.checkNotNull(allotment);
 		this.allotments = new HashSet<Allotment<T>>();
 		this.allotments.add(allotment);
 	}
@@ -69,11 +69,14 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param allotments 割り当ての集合。 {@link Set}の仕様と同様、重複は排除される。
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public MoneyFan(Collection<Allotment<T>> allotments) {
-		Validate.noNullElements(allotments);
+		Preconditions.checkNotNull(allotments);
+		for (Allotment<T> allotment : allotments) {
+			Preconditions.checkNotNull(allotment);
+		}
 		Set<Allotment<T>> setOfAllotments = new HashSet<Allotment<T>>();
 		for (Allotment<T> allotment : allotments) {
 			setOfAllotments.add(allotment);
@@ -130,11 +133,11 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * 
 	 * @param subtracted {@link MoneyFan}
 	 * @return {@link MoneyFan}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public MoneyFan<T> minus(MoneyFan<T> subtracted) {
-		Validate.notNull(subtracted);
+		Preconditions.checkNotNull(subtracted);
 		return plus(subtracted.negated());
 	}
 	
@@ -160,11 +163,11 @@ public class MoneyFan<T> implements Iterable<Allotment<T>> {
 	 * 
 	 * @param added {@link MoneyFan}
 	 * @return {@link MoneyFan}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public MoneyFan<T> plus(MoneyFan<T> added) {
-		Validate.notNull(added);
+		Preconditions.checkNotNull(added);
 		Set<T> allEntities = new HashSet<T>();
 		for (Allotment<T> allotment : allotments) {
 			allEntities.add(allotment.entity);

@@ -21,7 +21,7 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.timeutil.Clock;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
@@ -39,10 +39,10 @@ public class ThisMonthModel extends LoadableDetachableModel<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timeZoneModel タイムゾーン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public ThisMonthModel(IModel<TimeZone> timeZoneModel) {
-		Validate.notNull(timeZoneModel);
+		Preconditions.checkNotNull(timeZoneModel);
 		this.timeZoneModel = timeZoneModel;
 	}
 	
@@ -50,11 +50,11 @@ public class ThisMonthModel extends LoadableDetachableModel<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timeZone タイムゾーン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public ThisMonthModel(TimeZone timeZone) {
 		this(Model.of(timeZone));
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(timeZone);
 		
 	}
 	

@@ -19,7 +19,7 @@ package jp.xet.baseunits.time;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 1ヶ月間の中の特定の「日」を表すクラス。
@@ -127,7 +127,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * 
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isAfter(DayOfMonth other) {
@@ -162,11 +162,11 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * 
 	 * @param month 年月
 	 * @return 適用可能な場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isApplyable(CalendarMonth month) {
-		Validate.notNull(month);
+		Preconditions.checkNotNull(month);
 		return month.getLastDayOfMonth().isBefore(this) == false;
 	}
 	
@@ -179,10 +179,11 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * @param year 年
 	 * @param month 月
 	 * @return 適用可能な場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isApplyable(int year, MonthOfYear month) {
+		Preconditions.checkNotNull(month);
 		return month.getLastDayOfThisMonth(year).isBefore(this) == false;
 	}
 	
@@ -193,7 +194,7 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * 
 	 * @param other 対象日
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isBefore(DayOfMonth other) {
@@ -225,8 +226,8 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	 * 
 	 * @param month 年月
 	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code month}の月にこの日が存在しない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDate on(CalendarMonth month) {

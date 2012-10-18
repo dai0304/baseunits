@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * カレンダー上の特定の「年月」を表すクラス。
@@ -60,7 +60,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param year 年
 	 * @param month 月
 	 * @return {@link CalendarMonth}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarMonth from(int year, MonthOfYear month) {
@@ -73,12 +73,12 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param timePoint 瞬間
 	 * @param zone タイムゾーン
 	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarMonth from(TimePoint timePoint, TimeZone zone) {
-		Validate.notNull(timePoint);
-		Validate.notNull(zone);
+		Preconditions.checkNotNull(timePoint);
+		Preconditions.checkNotNull(zone);
 		Calendar calendar = timePoint.asJavaCalendar();
 		calendar.setTimeZone(zone);
 		return CalendarMonth.from(calendar);
@@ -114,7 +114,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	
 	
 	CalendarMonth(int year, MonthOfYear month) {
-		Validate.notNull(month);
+		Preconditions.checkNotNull(month);
 		this.year = year;
 		this.month = month;
 	}
@@ -136,11 +136,11 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * 
 	 * @param timeZone タイムゾーン
 	 * @return {@link TimePoint}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimePoint asTimePoint(TimeZone timeZone) {
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(timeZone);
 		return TimePoint.at(year, month, DayOfMonth.valueOf(1), 0, 0, 0, 0, timeZone);
 	}
 	

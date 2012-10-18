@@ -48,7 +48,7 @@ public interface RelativeTimePointFormatter {
 	 * @param standard 基準となる時刻
 	 * @param locale ロケール
 	 * @return 相対時間表現文字列
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	String format(TimePoint target, TimePoint standard, Locale locale);
 	

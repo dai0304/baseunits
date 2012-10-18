@@ -161,7 +161,7 @@ public enum MonthOfYear {
 	 * 
 	 * @param other 対象日時
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isAfter(MonthOfYear other) {
@@ -182,7 +182,7 @@ public enum MonthOfYear {
 	 * 
 	 * @param other 対象日
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isBefore(MonthOfYear other) {

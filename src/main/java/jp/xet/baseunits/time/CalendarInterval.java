@@ -28,7 +28,7 @@ import java.util.TimeZone;
 import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.util.ImmutableIterator;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 期間（日付の区間）を表すクラス。
@@ -45,7 +45,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 空期間を生成する。
 	 * 
 	 * @return 空期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public static CalendarInterval empty() {
 		return new CalendarInterval(CalendarDate.EPOCH_DATE, false, CalendarDate.EPOCH_DATE, false);
@@ -165,12 +165,12 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @param end 終了日（上側限界値）
 	 * @param length 期間の長さ
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static CalendarInterval preceding(CalendarDate end, Duration length) {
-		Validate.notNull(end);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(end);
+		Preconditions.checkNotNull(length);
 		// Uses the common default for calendar intervals, [start, end].
 		if (length.unit.compareTo(TimeUnit.day) < 0) {
 			return inclusive(end, end);
@@ -188,12 +188,12 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * @param start 開始日（下側限界値）
 	 * @param length 期間の長さ
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarInterval startingFrom(CalendarDate start, Duration length) {
-		Validate.notNull(start);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(length);
 		// Uses the common default for calendar intervals, [start, end].
 		if (length.unit.compareTo(TimeUnit.day) < 0) {
 			return inclusive(start, start);
@@ -272,11 +272,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * @param zone タイムゾーン
 	 * @return 時間の期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimePointInterval asTimeInterval(TimeZone zone) {
-		Validate.notNull(zone);
+		Preconditions.checkNotNull(zone);
 		TimePoint startPoint = hasLowerLimit() ? lowerLimit().asTimePointInterval(zone).start() : null;
 		TimePoint endPoint = hasUpperLimit() ? upperLimit().asTimePointInterval(zone).end() : null;
 		return TimePointInterval.over(startPoint, endPoint);

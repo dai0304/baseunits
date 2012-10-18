@@ -26,7 +26,7 @@ import com.ibm.icu.text.TimeUnitFormat;
 import com.ibm.icu.util.TimeUnitAmount;
 import com.ibm.icu.util.ULocale;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,8 +48,8 @@ public class Icu4jHourDurationFormatter extends AbstractDurationFormatter implem
 	
 	@Override
 	public String format(Duration target, Locale locale) {
-		Validate.notNull(target);
-		Validate.notNull(locale);
+		Preconditions.checkNotNull(target);
+		Preconditions.checkNotNull(locale);
 		
 		ULocale uLocale = ULocale.forLocale(locale);
 		if (logger.isTraceEnabled()) {

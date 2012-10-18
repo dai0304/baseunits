@@ -28,7 +28,7 @@ import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.util.ImmutableIterator;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 毎月1度だけ仕様を満たす日付仕様。
@@ -41,8 +41,8 @@ public abstract class AbstractMonthlyDateSpecification extends AbstractDateSpeci
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
-		Validate.isTrue(interval.hasLowerLimit());
+		Preconditions.checkNotNull(interval);
+		Preconditions.checkArgument(interval.hasLowerLimit());
 		CalendarMonth month = interval.start().asCalendarMonth();
 		
 		CalendarDate firstTry = ofYearMonth(month);
@@ -59,7 +59,7 @@ public abstract class AbstractMonthlyDateSpecification extends AbstractDateSpeci
 	
 	@Override
 	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
-		Validate.notNull(interval);
+		Preconditions.checkNotNull(interval);
 		return new ImmutableIterator<CalendarDate>() {
 			
 			CalendarDate next = firstOccurrenceIn(interval);

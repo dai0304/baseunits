@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.Iterator;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 同じ通貨単位の金額の集合をあらわすクラス。
@@ -42,14 +42,18 @@ public class Tally implements Iterable<Money> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param monies 金額の集合
-	 * @throws IllegalArgumentException 引数またはその要素に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数の要素数が{@code 0}の場合
 	 * @throws IllegalArgumentException 引数の要素に通貨単位が異なる金額を含む場合
+	 * @throws NullPointerException 引数またはその要素に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Tally(Collection<Money> monies) {
-		Validate.noNullElements(monies);
-		Validate.isTrue(monies.size() > 0);
+		Preconditions.checkNotNull(monies);
+		Preconditions.checkArgument(monies.size() > 0);
+		for (Money money : monies) {
+			Preconditions.checkNotNull(money);
+		}
+		
 		this.monies = monies;
 		Currency currency = currency();
 		for (Money money : monies) {
@@ -63,8 +67,8 @@ public class Tally implements Iterable<Money> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param moneies 金額
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数の要素に通貨単位が異なる金額を含む場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Tally(Money... moneies) {

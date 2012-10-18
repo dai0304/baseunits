@@ -24,7 +24,7 @@ import jp.xet.baseunits.time.CalendarMonth;
 
 import com.google.common.base.Strings;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 
 /**
@@ -58,11 +58,11 @@ public class CalendarMonthConverter extends AbstractConverter<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.1
 	 */
 	public CalendarMonthConverter(String datePattern) {
-		Validate.notNull(datePattern);
+		Preconditions.checkNotNull(datePattern);
 		this.datePattern = datePattern;
 	}
 	

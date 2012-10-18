@@ -23,7 +23,7 @@ package jp.xet.baseunits.time;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 単位時間あたりの何らかの量（時間に対する割合）をあらわすクラス。
@@ -47,12 +47,12 @@ public class TimeRate {
 	 * 
 	 * @param quantity 単位時間あたりの量
 	 * @param unit 単位時間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimeRate(BigDecimal quantity, Duration unit) {
-		Validate.notNull(quantity);
-		Validate.notNull(unit);
+		Preconditions.checkNotNull(quantity);
+		Preconditions.checkNotNull(unit);
 		this.quantity = quantity;
 		this.unit = unit;
 	}
@@ -62,8 +62,8 @@ public class TimeRate {
 	 * 
 	 * @param quantity 単位時間あたりの量
 	 * @param unit 単位時間
-	 * @throws IllegalArgumentException 引数unitに{@code null}を与えた場合
 	 * @throws NumberFormatException see {@link BigDecimal#BigDecimal(double)}
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimeRate(double quantity, Duration unit) {
@@ -75,8 +75,7 @@ public class TimeRate {
 	 * 
 	 * @param quantity 単位時間あたりの量をあらわす文字列
 	 * @param unit 単位時間
-	 * @throws NullPointerException 引数quantityに{@code null}を与えた場合
-	 * @throws IllegalArgumentException 引数unitに{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @throws NumberFormatException see {@link BigDecimal#BigDecimal(String)}
 	 * @since 1.0
 	 */
@@ -149,11 +148,11 @@ public class TimeRate {
 	 * @return 絶対量
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
 	 * @throws ArithmeticException 引数{@code duration}の時間量が単位時間で割り切れない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public BigDecimal over(Duration duration) {
-		Validate.notNull(duration);
+		Preconditions.checkNotNull(duration);
 		return over(duration, RoundingMode.UNNECESSARY);
 	}
 	
@@ -167,12 +166,12 @@ public class TimeRate {
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
 	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link RoundingMode#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.1
 	 */
 	public BigDecimal over(Duration duration, int scale, RoundingMode roundingMode) {
-		Validate.notNull(duration);
-		Validate.notNull(roundingMode);
+		Preconditions.checkNotNull(duration);
+		Preconditions.checkNotNull(roundingMode);
 		return duration.dividedBy(unit).times(quantity).decimalValue(scale, roundingMode);
 	}
 	
@@ -185,12 +184,12 @@ public class TimeRate {
 	 * @throws IllegalArgumentException 引数durationの単位を、このオブジェクトの単位時間の単位に変換できない場合
 	 * @throws ArithmeticException 引数 {@code roundingMode} に {@link RoundingMode#UNNECESSARY} を指定したにもかかわらず、
 	 * 			引数{@code duration}の時間量が単位時間で割り切れない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.1
 	 */
 	public BigDecimal over(Duration duration, RoundingMode roundingMode) {
-		Validate.notNull(duration);
-		Validate.notNull(roundingMode);
+		Preconditions.checkNotNull(duration);
+		Preconditions.checkNotNull(roundingMode);
 		return over(duration, scale(), roundingMode);
 	}
 	

@@ -27,9 +27,8 @@ import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
-
-import org.apache.commons.lang.Validate;
 
 /**
  * ある特定の期間中にマッチする日付仕様。
@@ -47,17 +46,17 @@ public final class CalendarIntervalSpecification extends AbstractDateSpecificati
 	 * インスタンスを生成する。
 	 * 
 	 * @param interval 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	CalendarIntervalSpecification(CalendarInterval interval) {
-		Validate.notNull(interval);
+		Preconditions.checkNotNull(interval);
 		this.interval = interval;
 	}
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
-		Validate.isTrue(interval.hasLowerLimit() || this.interval.hasLowerLimit());
+		Preconditions.checkNotNull(interval);
+		Preconditions.checkArgument(interval.hasLowerLimit() || this.interval.hasLowerLimit());
 		if (this.interval.intersects(interval) == false) {
 			return null;
 		}
@@ -77,7 +76,7 @@ public final class CalendarIntervalSpecification extends AbstractDateSpecificati
 	
 	@Override
 	public boolean isSatisfiedBy(CalendarDate date) {
-		Validate.notNull(date);
+		Preconditions.checkNotNull(date);
 		return interval.includes(date);
 	}
 	

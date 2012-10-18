@@ -16,7 +16,7 @@
  */
 package jp.xet.baseunits.util.spec;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 論理積の仕様を表すモデル。
@@ -39,12 +39,12 @@ public class AndSpecification<T> extends AbstractSpecification<T> {
 	 *
 	 * @param left left side Specification.
 	 * @param right right side Specification.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public AndSpecification(Specification<T> left, Specification<T> right) {
-		Validate.notNull(left);
-		Validate.notNull(right);
+		Preconditions.checkNotNull(left);
+		Preconditions.checkNotNull(right);
 		this.left = left;
 		this.right = right;
 	}

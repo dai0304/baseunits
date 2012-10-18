@@ -20,7 +20,7 @@
  */
 package jp.xet.baseunits.money;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 何かに対するお金の割り当てをあらわす。
@@ -43,12 +43,12 @@ public class Allotment<T> {
 	* 
 	* @param entity 割り当て対象
 	* @param amount 割り当て量
-	* @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	* @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	*/
 	public Allotment(T entity, Money amount) {
-		Validate.notNull(entity);
-		Validate.notNull(amount);
+		Preconditions.checkNotNull(entity);
+		Preconditions.checkNotNull(amount);
 		this.entity = entity;
 		this.amount = amount;
 	}

@@ -21,8 +21,7 @@ import java.util.Iterator;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 
-import org.apache.commons.lang.NotImplementedException;
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * {@link DateSpecification}用のNOT（否定）ラッパークラス。
@@ -42,13 +41,13 @@ public final class NotDateSpecification extends AbstractDateSpecification {
 	 * @since 2.0
 	 */
 	public NotDateSpecification(DateSpecification spec) {
-		Validate.notNull(spec);
+		Preconditions.checkNotNull(spec);
 		this.spec = spec;
 	}
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
+		Preconditions.checkNotNull(interval);
 		
 		if (interval.hasLowerLimit()) {
 			Iterator<CalendarDate> itr = interval.daysIterator();
@@ -60,7 +59,7 @@ public final class NotDateSpecification extends AbstractDateSpecification {
 			}
 		} else {
 			// TODO ここ、算出できるか…？
-			throw new NotImplementedException(NotDateSpecification.class);
+			throw new RuntimeException("not implemented");
 		}
 		return null;
 	}

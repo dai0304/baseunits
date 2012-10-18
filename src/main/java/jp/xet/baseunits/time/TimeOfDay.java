@@ -25,7 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 1日の中の特定の瞬間を表すクラス。
@@ -75,7 +75,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param hour 時
 	 * @param minute 分
 	 * @return {@link TimeOfDay}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute) {
@@ -91,7 +91,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param minute 分
 	 * @param second 秒
 	 * @return {@link TimeOfDay}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute, SecondOfMinute second) {
@@ -106,7 +106,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param second 秒
 	 * @param millisec ミリ秒
 	 * @return {@link TimeOfDay}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute, SecondOfMinute second, MillisecOfSecond millisec) {
@@ -189,11 +189,11 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param tpod {@link TimePointOfDay}
 	 * @param zone タイムゾーン
 	 * @return {@link TimeOfDay}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public static TimeOfDay from(TimePointOfDay tpod, TimeZone zone) {
-		Validate.notNull(tpod);
-		Validate.notNull(zone);
+		Preconditions.checkNotNull(tpod);
+		Preconditions.checkNotNull(zone);
 		return tpod.asTimeOfDay(zone);
 	}
 	
@@ -207,8 +207,8 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @since 2.0
 	 */
 	public static TimeOfDay parse(String timeString, String pattern) throws ParseException {
-		Validate.notNull(timeString);
-		Validate.notNull(pattern);
+		Preconditions.checkNotNull(timeString);
+		Preconditions.checkNotNull(pattern);
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		// Any timezone works, as long as the same one is used throughout.
 		TimePoint point = TimePoint.parse(timeString, pattern, arbitraryZone);
@@ -236,13 +236,13 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param minute 分
 	 * @param second 秒
 	 * @param millisec ミリ秒
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	TimeOfDay(HourOfDay hour, MinuteOfHour minute, SecondOfMinute second, MillisecOfSecond millisec) {
-		Validate.notNull(hour);
-		Validate.notNull(minute);
-		Validate.notNull(second);
-		Validate.notNull(millisec);
+		Preconditions.checkNotNull(hour);
+		Preconditions.checkNotNull(minute);
+		Preconditions.checkNotNull(second);
+		Preconditions.checkNotNull(millisec);
 		this.hour = hour;
 		this.minute = minute;
 		this.second = second;
@@ -255,12 +255,12 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @param date 年月日
 	 * @param timeZone タイムゾーン
 	 * @return 瞬間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimePoint asTimePointGiven(CalendarDate date, TimeZone timeZone) {
-		Validate.notNull(date);
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(date);
+		Preconditions.checkNotNull(timeZone);
 		return TimePoint.from(date, this, timeZone);
 	}
 	
@@ -269,11 +269,11 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * 
 	 * @param timeZone タイムゾーン
 	 * @return {@link TimePointOfDay}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimePointOfDay asTimePointOfDay(TimeZone timeZone) {
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(timeZone);
 		return TimePointOfDay.from(this, timeZone);
 	}
 	
@@ -347,11 +347,11 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * 
 	 * @param another 基準瞬間
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isAfter(TimeOfDay another) {
-		Validate.notNull(another);
+		Preconditions.checkNotNull(another);
 		if (hour.isAfter(another.hour)) {
 			return true;
 		}
@@ -380,11 +380,11 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * 
 	 * @param another 基準瞬間
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isBefore(TimeOfDay another) {
-		Validate.notNull(another);
+		Preconditions.checkNotNull(another);
 		return hour.isBefore(another.hour) || (hour.equals(another.hour) && minute.isBefore(another.minute));
 	}
 	
@@ -393,11 +393,11 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * 
 	 * @param duration 時間の長さ
 	 * @return 過去の時刻
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimeOfDay minus(Duration duration) {
-		Validate.notNull(duration);
+		Preconditions.checkNotNull(duration);
 		Duration d = toDuration();
 		while (d.isGreaterThan(duration) == false) {
 			d = d.plus(Duration.days(1));
@@ -411,11 +411,11 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * 
 	 * @param duration 時間の長さ
 	 * @return 未来の時刻
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimeOfDay plus(Duration duration) {
-		Validate.notNull(duration);
+		Preconditions.checkNotNull(duration);
 		Duration total = toDuration().plus(duration);
 		while (total.isGreaterThanOrEqual(Duration.days(1))) {
 			total = total.minus(Duration.days(1));

@@ -41,7 +41,7 @@ public interface TimePointFormatter {
 	 * @param target the instance to format
 	 * @param locale the current user locale
 	 * @param timeZone  the current user timezone
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @return the formatted text string
 	 */
 	String format(TimePoint target, Locale locale, TimeZone timeZone);

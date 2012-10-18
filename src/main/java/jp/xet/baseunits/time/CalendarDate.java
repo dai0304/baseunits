@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * カレンダー上の特定の「年月日」を表すクラス。
@@ -56,8 +56,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param yearMonth 年月
 	 * @param day 日
 	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarDate from(CalendarMonth yearMonth, DayOfMonth day) {
@@ -69,13 +69,13 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param date {@link Date}
 	 * @param zone タイムゾーン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @return {@link CalendarDate}
 	 * @since 1.0
 	 */
 	public static CalendarDate from(Date date, TimeZone zone) {
-		Validate.notNull(date);
-		Validate.notNull(zone);
+		Preconditions.checkNotNull(date);
+		Preconditions.checkNotNull(zone);
 		Calendar calendar = TimePoint.from(date).asJavaCalendar(zone);
 		return from(calendar);
 	}
@@ -116,12 +116,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param timePoint 瞬間
 	 * @param zone タイムゾーン
 	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarDate from(TimePoint timePoint, TimeZone zone) {
-		Validate.notNull(timePoint);
-		Validate.notNull(zone);
+		Preconditions.checkNotNull(timePoint);
+		Preconditions.checkNotNull(zone);
 		Calendar calendar = timePoint.asJavaCalendar();
 		calendar.setTimeZone(zone);
 		return from(calendar);
@@ -134,12 +134,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param a an argument.
 	 * @param b another argument.
 	 * @return the larger of {@code a} and {@code b}.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.6
 	 */
 	public static CalendarDate max(CalendarDate a, CalendarDate b) {
-		Validate.notNull(a);
-		Validate.notNull(b);
+		Preconditions.checkNotNull(a);
+		Preconditions.checkNotNull(b);
 		if (a.isAfter(b)) {
 			return a;
 		}
@@ -153,12 +153,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param a an argument.
 	 * @param b another argument.
 	 * @return the smaller of {@code a} and {@code b}.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.6
 	 */
 	public static CalendarDate min(CalendarDate a, CalendarDate b) {
-		Validate.notNull(a);
-		Validate.notNull(b);
+		Preconditions.checkNotNull(a);
+		Preconditions.checkNotNull(b);
 		if (a.isBefore(b)) {
 			return a;
 		}
@@ -172,12 +172,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param pattern 解析パターン文字列
 	 * @return {@link CalendarDate}
 	 * @throws ParseException 文字列の解析に失敗した場合 
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarDate parse(String dateString, String pattern) throws ParseException {
-		Validate.notNull(dateString);
-		Validate.notNull(pattern);
+		Preconditions.checkNotNull(dateString);
+		Preconditions.checkNotNull(pattern);
 		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		// Any timezone works, as long as the same one is used throughout.
 		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
@@ -203,13 +203,13 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param yearMonth 年月
 	 * @param day 日
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @throws IllegalArgumentException 引数{@code day}が{@code yearMonth}の月に存在しない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	CalendarDate(CalendarMonth yearMonth, DayOfMonth day) {
-		Validate.notNull(yearMonth);
-		Validate.notNull(day);
-		Validate.isTrue(day.isApplyable(yearMonth));
+		Preconditions.checkNotNull(yearMonth);
+		Preconditions.checkNotNull(day);
+		Preconditions.checkArgument(day.isApplyable(yearMonth));
 		this.yearMonth = yearMonth;
 		this.day = day;
 	}
@@ -247,11 +247,11 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * この日付の午前0時を {@link Date} 型として返す。
 	 * 
 	 * @param timeZone タイムゾーン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @return この日付の午前0時を表す {@link Date}
 	 */
 	public Date asJavaUtilDate(TimeZone timeZone) {
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(timeZone);
 		TimePoint tp = at(TimeOfDay.MIDNIGHT, timeZone);
 		return tp.asJavaUtilDate();
 	}
@@ -273,11 +273,11 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param zone タイムゾーン
 	 * @return このインスタンスが表現する日の午前0時から丸一日を表現する期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimePointInterval asTimePointInterval(TimeZone zone) {
-		Validate.notNull(zone);
+		Preconditions.checkNotNull(zone);
 		return TimePointInterval.startingFrom(startAsTimePoint(zone), true, Duration.days(1), false);
 	}
 	
@@ -297,12 +297,12 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @param timeOfDay 時
 	 * @param timeZone タイムゾーン
 	 * @return 日時
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimePoint at(TimeOfDay timeOfDay, TimeZone timeZone) {
-		Validate.notNull(timeOfDay);
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(timeOfDay);
+		Preconditions.checkNotNull(timeZone);
 		return TimePoint.from(this, timeOfDay, timeZone);
 	}
 	
@@ -311,7 +311,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param timeZone タイムゾーン
 	 * @return 日時
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.3
 	 */
 	public TimePoint atMidnight(TimeZone timeZone) {
@@ -322,7 +322,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * このインスタンスが表す日付の、UTCにおける深夜0時の日時を返す。
 	 * 
 	 * @return 日時
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.3
 	 */
 	public TimePoint atMidnightUTC() {
@@ -390,11 +390,11 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param d 基準日または誕生日
 	 * @return 満年齢
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.6
 	 */
 	public long getAge(CalendarDate d) {
-		Validate.notNull(d);
+		Preconditions.checkNotNull(d);
 		CalendarDate date = max(this, d);
 		CalendarDate birth = min(this, d);
 		long age = date.getYear() - birth.getYear();
@@ -625,11 +625,11 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 
 	 * @param zone タイムゾーン
 	 * @return このインスタンスが表現する日の午前0時を表現する日時
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public TimePoint startAsTimePoint(TimeZone zone) {
-		Validate.notNull(zone);
+		Preconditions.checkNotNull(zone);
 		return TimePoint.atMidnight(this, zone);
 	}
 	

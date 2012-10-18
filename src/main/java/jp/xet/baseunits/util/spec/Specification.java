@@ -34,7 +34,7 @@ public interface Specification<T> {
 	 * 
 	 * @param specification Specification to AND.
 	 * @return A new specification.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	Specification<T> and(Specification<T> specification);
@@ -44,7 +44,7 @@ public interface Specification<T> {
 	 *
 	 * @param t Object to test.
 	 * @return {@code true} if {@code t} satisfies the specification.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	boolean isSatisfiedBy(T t);
@@ -62,7 +62,7 @@ public interface Specification<T> {
 	 * 
 	 * @param specification Specification to OR.
 	 * @return A new specification.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	Specification<T> or(Specification<T> specification);

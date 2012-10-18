@@ -22,7 +22,7 @@ package jp.xet.baseunits.time;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 1年の中の特定の週を表すクラス。
@@ -86,8 +86,8 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	 * @param value 週数
 	 */
 	WeekOfYear(int value) {
-		Validate.isTrue(value >= MIN_VALUE);
-		Validate.isTrue(value <= MAX_VALUE);
+		Preconditions.checkArgument(value >= MIN_VALUE);
+		Preconditions.checkArgument(value <= MAX_VALUE);
 		this.value = value;
 	}
 	

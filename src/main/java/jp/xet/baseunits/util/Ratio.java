@@ -23,7 +23,7 @@ package jp.xet.baseunits.util;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * {@link Ratio}は、2つ同じ単位を持つの量の商（比率）であり、単位のない値である。
@@ -50,7 +50,7 @@ public class Ratio {
 	 * 
 	 * @param fractional 分数
 	 * @return 与えた分数であらわされる比率
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static Ratio of(BigDecimal fractional) {
@@ -63,7 +63,7 @@ public class Ratio {
 	 * @param numerator 分子
 	 * @param denominator 分母
 	 * @return 引数に与えた分子、分母からなる比
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
 	 * @since 1.0
 	 */
@@ -97,13 +97,13 @@ public class Ratio {
 	 * 
 	 * @param numerator 分子
 	 * @param denominator 分母
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @throws ArithmeticException 引数{@code denominator}が0だった場合
 	 * @since 1.0
 	 */
 	public Ratio(BigDecimal numerator, BigDecimal denominator) {
-		Validate.notNull(numerator);
-		Validate.notNull(denominator);
+		Preconditions.checkNotNull(numerator);
+		Preconditions.checkNotNull(denominator);
 		if (denominator.equals(BigDecimal.ZERO)) {
 			throw new ArithmeticException("denominator is zero");
 		}
@@ -141,11 +141,11 @@ public class Ratio {
 	 * @param scale 小数点以下の有効数字
 	 * @param roundingMode 丸めモード
 	 * @return この比率の {@link BigDecimal} 型の表現
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.1
 	 */
 	public BigDecimal decimalValue(int scale, RoundingMode roundingMode) {
-		Validate.notNull(roundingMode);
+		Preconditions.checkNotNull(roundingMode);
 		return numerator.divide(denominator, scale, roundingMode);
 	}
 	
@@ -201,11 +201,11 @@ public class Ratio {
 	 * 
 	 * @param multiplier 乗数
 	 * @return 積
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Ratio times(BigDecimal multiplier) {
-		Validate.notNull(multiplier);
+		Preconditions.checkNotNull(multiplier);
 		return Ratio.of(numerator.multiply(multiplier), denominator);
 	}
 	
@@ -216,11 +216,11 @@ public class Ratio {
 	 * 
 	 * @param multiplier 乗数比率
 	 * @return 積
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Ratio times(Ratio multiplier) {
-		Validate.notNull(multiplier);
+		Preconditions.checkNotNull(multiplier);
 		return Ratio.of(numerator.multiply(multiplier.numerator), denominator.multiply(multiplier.denominator));
 	}
 	

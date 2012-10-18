@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.util.ImmutableIterator;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 日内期間（時間の区間）を表すクラス。
@@ -42,12 +42,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval closed(TimeOfDay start, TimeOfDay end) {
-		Validate.notNull(start);
-		Validate.notNull(end);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(end);
 		return over(start, true, end, true);
 	}
 	
@@ -58,12 +58,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval open(TimeOfDay start, TimeOfDay end) {
-		Validate.notNull(start);
-		Validate.notNull(end);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(end);
 		return over(start, false, end, false);
 	}
 	
@@ -78,12 +78,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval over(TimeOfDay start, boolean startClosed, TimeOfDay end, boolean endClosed) {
-		Validate.notNull(start);
-		Validate.notNull(end);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(end);
 		return new TimeOfDayInterval(start, startClosed, end, endClosed);
 	}
 	
@@ -96,12 +96,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 開始日時が終了日時より大きい（未来である）場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval over(TimeOfDay start, TimeOfDay end) {
-		Validate.notNull(start);
-		Validate.notNull(end);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(end);
 		// Uses the common default for time intervals, [start, end).
 		return over(start, true, end, false);
 	}
@@ -114,12 +114,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param length 期間の長さ
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval preceding(TimeOfDay end, boolean startClosed, Duration length, boolean endClosed) {
-		Validate.notNull(end);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(end);
+		Preconditions.checkNotNull(length);
 		TimeOfDay start = end.minus(length);
 		return over(start, startClosed, end, endClosed);
 	}
@@ -131,12 +131,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param length 期間の長さ
 	 * @return 期間
 	 * @throws IllegalArgumentException 減算の結果が0時を超えた場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval preceding(TimeOfDay end, Duration length) {
-		Validate.notNull(end);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(end);
+		Preconditions.checkNotNull(length);
 		if (length.isGreaterThan(end.toDuration())) {
 			throw new IllegalArgumentException();
 		}
@@ -153,13 +153,13 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param length 期間の長さ
 	 * @param endClosed 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval startingFrom(TimeOfDay start, boolean startClosed, Duration length,
 			boolean endClosed) {
-		Validate.notNull(start);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(length);
 		TimeOfDay end = start.plus(length);
 		return over(start, startClosed, end, endClosed);
 	}
@@ -172,12 +172,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param start 開始日時（下側限界値）
 	 * @param length 期間の長さ
 	 * @return 期間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static TimeOfDayInterval startingFrom(TimeOfDay start, Duration length) {
-		Validate.notNull(start);
-		Validate.notNull(length);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(length);
 		// Uses the common default for time intervals, [start, end).
 		return startingFrom(start, true, length, false);
 	}
@@ -190,13 +190,13 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * @param end 終了日時（上側限界値）
 	 * @param endIncluded 終了日時を期間に含む（閉じた上側限界）場合は{@code true}を指定する
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimeOfDayInterval(TimeOfDay start, boolean startIncluded, TimeOfDay end, boolean endIncluded) {
 		super(start, startIncluded, end, endIncluded);
-		Validate.notNull(start);
-		Validate.notNull(end);
+		Preconditions.checkNotNull(start);
+		Preconditions.checkNotNull(end);
 	}
 	
 	/**
@@ -216,11 +216,11 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * @param interval 比較対象の期間
 	 * @return 積集合（共通部分）
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public TimeOfDayInterval intersect(TimeOfDayInterval interval) {
-		Validate.notNull(interval);
+		Preconditions.checkNotNull(interval);
 		return (TimeOfDayInterval) super.intersect(interval);
 	}
 	
@@ -229,12 +229,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * @param point 日時
 	 * @return 開始日時以前でない場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see Interval#isAbove(Comparable)
 	 * @since 2.0
 	 */
 	public boolean isAfter(TimeOfDay point) {
-		Validate.notNull(point);
+		Preconditions.checkNotNull(point);
 		return isAbove(point);
 	}
 	
@@ -243,12 +243,12 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * @param point 日時
 	 * @return 終了日時以後でない場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see Interval#isBelow(Comparable)
 	 * @since 2.0
 	 */
 	public boolean isBefore(TimeOfDay point) {
-		Validate.notNull(point);
+		Preconditions.checkNotNull(point);
 		return isBelow(point);
 	}
 	
@@ -312,11 +312,11 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * @param subintervalLength 反復子が返す期間の長さ
 	 * @return 期間の反復子
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public Iterator<TimeOfDayInterval> subintervalIterator(Duration subintervalLength) {
-		Validate.notNull(subintervalLength);
+		Preconditions.checkNotNull(subintervalLength);
 		final Duration segmentLength = subintervalLength;
 		return new ImmutableIterator<TimeOfDayInterval>() {
 			

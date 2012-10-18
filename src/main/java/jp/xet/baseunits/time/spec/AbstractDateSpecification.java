@@ -23,7 +23,7 @@ import jp.xet.baseunits.time.CalendarInterval;
 import jp.xet.baseunits.util.ImmutableIterator;
 import jp.xet.baseunits.util.spec.AbstractSpecification;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 日付仕様の骨格実装クラス。
@@ -41,8 +41,8 @@ public abstract class AbstractDateSpecification extends AbstractSpecification<Ca
 	
 	@Override
 	public CalendarDate firstOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
-		Validate.isTrue(interval.hasLowerLimit());
+		Preconditions.checkNotNull(interval);
+		Preconditions.checkArgument(interval.hasLowerLimit());
 		Iterator<CalendarDate> itr = interval.daysIterator();
 		while (itr.hasNext()) {
 			CalendarDate date = itr.next();
@@ -55,7 +55,7 @@ public abstract class AbstractDateSpecification extends AbstractSpecification<Ca
 	
 	@Override
 	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
-		Validate.notNull(interval);
+		Preconditions.checkNotNull(interval);
 		return new ImmutableIterator<CalendarDate>() {
 			
 			CalendarDate next = firstOccurrenceIn(interval);
@@ -85,8 +85,8 @@ public abstract class AbstractDateSpecification extends AbstractSpecification<Ca
 	
 	@Override
 	public CalendarDate lastOccurrenceIn(CalendarInterval interval) {
-		Validate.notNull(interval);
-		Validate.isTrue(interval.hasUpperLimit());
+		Preconditions.checkNotNull(interval);
+		Preconditions.checkArgument(interval.hasUpperLimit());
 		Iterator<CalendarDate> itr = interval.daysInReverseIterator();
 		while (itr.hasNext()) {
 			CalendarDate date = itr.next();

@@ -26,7 +26,7 @@ import jp.xet.baseunits.time.TimePoint;
 
 import com.google.common.base.Strings;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 
 /**
@@ -54,11 +54,11 @@ public class TimePointConverter extends AbstractConverter<TimePoint> {
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone タイムゾーン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public TimePointConverter(String datePattern, TimeZone timeZone) {
-		Validate.notNull(datePattern);
-		Validate.notNull(timeZone);
+		Preconditions.checkNotNull(datePattern);
+		Preconditions.checkNotNull(timeZone);
 		this.datePattern = datePattern;
 		this.timeZone = timeZone;
 	}

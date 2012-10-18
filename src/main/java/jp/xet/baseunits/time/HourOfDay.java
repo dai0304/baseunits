@@ -22,7 +22,7 @@ package jp.xet.baseunits.time;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 1日の中の特定の「時」を表すクラス。
@@ -98,11 +98,11 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * @param meridian 午前午後
 	 * @return 24時間制における時
 	 * @throws IllegalArgumentException 引数{@code initial}の値が0〜11の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code meridian}に{@code null}を与えた場合
+	 * @throws NullPointerException 引数{@code meridian}に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	static int convertTo24hour(int hour, Meridian meridian) {
-		Validate.notNull(meridian);
+		Preconditions.checkNotNull(meridian);
 		if (hour < MIN_VALUE || hour > 12) {
 			throw new IllegalArgumentException("Illegal value for 12 hour: " + hour
 					+ ", please use a value between 0 and 11");
@@ -170,11 +170,11 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * 
 	 * @param another 基準時
 	 * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isAfter(HourOfDay another) {
-		Validate.notNull(another);
+		Preconditions.checkNotNull(another);
 		return value > another.value;
 	}
 	
@@ -183,11 +183,11 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	 * 
 	 * @param another 基準時
 	 * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isBefore(HourOfDay another) {
-		Validate.notNull(another);
+		Preconditions.checkNotNull(another);
 		return value < another.value;
 	}
 	

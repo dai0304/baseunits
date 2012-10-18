@@ -18,7 +18,7 @@ package jp.xet.baseunits.time.spec;
 
 import jp.xet.baseunits.time.CalendarDate;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * {@link DateSpecification}の論理積をとるクラス。
@@ -38,12 +38,12 @@ public final class AndDateSpecification extends AbstractDateSpecification {
 	 * 
 	 * @param left left side Specification.
 	 * @param right right side Specification.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public AndDateSpecification(DateSpecification left, DateSpecification right) {
-		Validate.notNull(left);
-		Validate.notNull(right);
+		Preconditions.checkNotNull(left);
+		Preconditions.checkNotNull(right);
 		this.left = left;
 		this.right = right;
 	}

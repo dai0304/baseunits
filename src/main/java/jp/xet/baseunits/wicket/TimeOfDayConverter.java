@@ -24,7 +24,7 @@ import jp.xet.baseunits.time.TimeOfDay;
 
 import com.google.common.base.Strings;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 
 /**
@@ -53,10 +53,10 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public TimeOfDayConverter(String timePattern) {
-		Validate.notNull(timePattern);
+		Preconditions.checkNotNull(timePattern);
 		this.timePattern = timePattern;
 	}
 	

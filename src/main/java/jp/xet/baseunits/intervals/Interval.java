@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 「区間」を表すクラス。
@@ -83,10 +83,10 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param someValue {@code null}ではない何らかの値。なんでもよい。
 	 * @return 空区間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public static <T extends Comparable<T> & Serializable>Interval<T> empty(T someValue) {
-		Validate.notNull(someValue);
+		Preconditions.checkNotNull(someValue);
 		return new Interval<T>(someValue, false, someValue, false);
 	}
 	
@@ -143,11 +143,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * @param element 単一要素となる値
 	 * @param <T> 限界値の型
 	 * @return 区間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static <T extends Comparable<T> & Serializable>Interval<T> singleElement(T element) {
-		Validate.notNull(element);
+		Preconditions.checkNotNull(element);
 		return closed(element, element);
 	}
 	
@@ -208,11 +208,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * @param upper 上側限界
 	 * @throws IllegalArgumentException {@code lower.isLower() == false}または {@code uppser.isUpper() == false} の場合
 	 * @throws IllegalArgumentException 下限値が上限値より大きい場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	Interval(IntervalLimit<T> lower, IntervalLimit<T> upper) {
-		Validate.notNull(lower);
-		Validate.notNull(upper);
+		Preconditions.checkNotNull(lower);
+		Preconditions.checkNotNull(upper);
 		checkLowerIsLessThanOrEqualUpper(lower, upper);
 		
 		// 単一要素区間であり、かつ、どちらか片方が開いている場合、両者を開く。
@@ -242,11 +242,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * @param other 対照となる区間
 	 * @return 補区間と対照区間の共通部分のリスト
 	 * @see <a href="http://en.wikipedia.org/wiki/Set_theoretic_complement">complement (wikipedia)</a>
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public List<Interval<T>> complementRelativeTo(Interval<T> other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		List<Interval<T>> intervalSequence = new ArrayList<Interval<T>>();
 		if (this.intersects(other) == false) {
 			intervalSequence.add(other);
@@ -268,11 +268,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param other 区間
 	 * @return 完全に内包する場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean covers(Interval<T> other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		
 		int lowerComparison = lowerLimit().compareTo(other.lowerLimit());
 		boolean lowerPass = this.includes(other.lowerLimit())
@@ -359,11 +359,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param other 比較対象の区間
 	 * @return ギャップ区間
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Interval<T> gap(Interval<T> other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		if (this.intersects(other)) {
 			return this.emptyOfSameType();
 		}
@@ -424,11 +424,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param value 値
 	 * @return 含まれる場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean includes(T value) {
-		Validate.notNull(value);
+		Preconditions.checkNotNull(value);
 		return isBelow(value) == false && isAbove(value) == false;
 	}
 	
@@ -477,11 +477,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param other 比較対象の区間
 	 * @return 積集合（共通部分）
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public Interval<T> intersect(Interval<T> other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		T intersectLowerBound = greaterOfLowerLimits(other);
 		T intersectUpperBound = lesserOfUpperLimits(other);
 		if (intersectLowerBound.compareTo(intersectUpperBound) > 0) {
@@ -496,11 +496,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param other 対象区間
 	 * @return 共通部分が存在する場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean intersects(Interval<T> other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		if (upperLimit() == null && other.upperLimit() == null) {
 			return true;
 		}
@@ -522,11 +522,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param value 値
 	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isAbove(T value) {
-		Validate.notNull(value);
+		Preconditions.checkNotNull(value);
 		if (hasLowerLimit() == false) {
 			return false;
 		}
@@ -539,11 +539,11 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param value 値
 	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public boolean isBelow(T value) {
-		Validate.notNull(value);
+		Preconditions.checkNotNull(value);
 		if (hasUpperLimit() == false) {
 			return false;
 		}
@@ -688,10 +688,10 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param other 比較対象の限界値
 	 * @return より大きい限界値
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	T greaterOfLowerLimits(Interval<T> other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		if (lowerLimit() == null) {
 			return other.lowerLimit();
 		}
@@ -710,10 +710,10 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	 * 
 	 * @param other 比較対象の限界値
 	 * @return より小さい限界値
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	T lesserOfUpperLimits(Interval<T> other) {
-		Validate.notNull(other);
+		Preconditions.checkNotNull(other);
 		if (upperLimit() == null) {
 			return other.upperLimit();
 		}

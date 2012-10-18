@@ -16,7 +16,7 @@
  */
 package jp.xet.baseunits.util.spec;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
 
 /**
  * 否定の仕様を表すモデル。
@@ -37,11 +37,11 @@ public class NotSpecification<T> extends AbstractSpecification<T> {
 	 * Create a new NOT specification based on another spec.
 	 *
 	 * @param spec Specification instance to not.
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public NotSpecification(final Specification<T> spec) {
-		Validate.notNull(spec);
+		Preconditions.checkNotNull(spec);
 		this.spec = spec;
 	}
 	
