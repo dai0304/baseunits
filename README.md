@@ -7,9 +7,9 @@ BaseUnits Library
 Basic information
 -----------------
 
-- [Project web site](http://maven.tricreo.jp/site/baseunits/latest/)
-- [Maven release repository](http://maven.tricreo.jp/release/)
-- [Maven snapshot repository](http://maven.tricreo.jp/snapshot/)
+- [Project web site](http://maven.xet.jp/site/baseunits/)
+- [Maven release repository](http://maven.xet.jp/release/)
+- [Maven snapshot repository](http://maven.xet.jp/snapshot/)
 
 
 How to use?
@@ -108,7 +108,7 @@ License
 
 Copyright (C) 2011-2012 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
 
-Copyright (C) 2010-2011 [TRICREO, Inc.](http://tricreo.jp/).
+Copyright (C) 2010-2011 TRICREO, Inc.
 
 Copyright (c) 2004 [Domain Language, Inc.](http://domainlanguage.com)
 
