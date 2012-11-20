@@ -22,6 +22,7 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.TimePoint;
 
 import com.google.common.base.Preconditions;
+
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -95,6 +96,18 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, TimeZone timeZone) {
 		this(id, model, DEFAULT_PATTERN, Model.of(timeZone));
+	}
+	
+	public TimePointLabel(String id, IModel<TimeZone> timeZoneModel) {
+		this(id, DEFAULT_PATTERN, timeZoneModel);
+	}
+	
+	public TimePointLabel(String id, String datePattern, IModel<TimeZone> timeZoneModel) {
+		super(id);
+		Preconditions.checkNotNull(datePattern);
+		Preconditions.checkNotNull(timeZoneModel);
+		this.datePattern = datePattern;
+		this.timeZoneModel = timeZoneModel;
 	}
 	
 	/**
