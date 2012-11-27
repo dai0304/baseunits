@@ -24,7 +24,7 @@ import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.TimeSource;
 
 /**
- * システム時計に基づき、現在の時刻を返すクラス。
+ * システム時計に基づき、現在の{@link TimePoint}を返すクラス。
  * 
  * @author daisuke
  * @since 1.0
@@ -35,9 +35,9 @@ public final class SystemClock implements TimeSource {
 	
 	
 	/**
-	 * システム時間に基づき現在の時刻を返す {@link TimeSource} を返す。
+	 * システム時間に基づき現在の{@link TimePoint}を返す {@link TimeSource} を返す。
 	 * 
-	 * @return システム時間に基づき現在の時刻を返す {@link TimeSource}
+	 * @return システム時間に基づき現在の{@link TimePoint}を返す {@link TimeSource}
 	 * @since 1.0
 	 */
 	public static TimeSource timeSource() {

@@ -33,8 +33,11 @@ import com.google.common.base.Preconditions;
 /**
  * 営業日カレンダー。
  * 
- * <p>営業日と非営業日を判定する責務を持つ。非営業日とは休日（祝日）及び週末（土日）を表し、営業日とは非営業日でない日を表す。
- * 週末は休日ではないが、週末かつ休日は休日である。</p>
+ * <p>営業日と非営業日を判定する責務を持つ。
+ * 非営業日とは基本的に休日（主に祝日）及び週末（土日）にあたる暦日を表し、営業日とは非営業日でない暦日を表す。
+ * ただし、オーバーライドによって営業日・非営業日の定義が変更される可能性があることに留意すること。</p>
+ * 
+ * <p>休日と週末は区別する。すなわち、週末は休日ではないが、週末かつ休日は休日である。</p>
  * 
  * @author daisuke
  * @since 1.0
@@ -54,9 +57,10 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * 休日として取り扱う「日」を追加する。
+	 * 休日として判定する暦日を追加する。
 	 * 
-	 * @param date 休日として取り扱う「日」 
+	 * @param date 休日として取り扱う暦日 
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public void addHoliday(CalendarDate date) {
@@ -64,35 +68,43 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * 休日として取り扱う「日」を追加する。
+	 * 休日として判定する暦日を追加する。
 	 * 
-	 * @param days 休日として取り扱う「日」 
+	 * @param days 休日として取り扱う暦日の集合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public void addHolidays(Set<CalendarDate> days) {
+		Preconditions.checkNotNull(days);
+		for (CalendarDate date : days) {
+			Preconditions.checkNotNull(date);
+		}
 		for (CalendarDate date : days) {
 			addHolidaySpec(DateSpecifications.fixed(date));
 		}
 	}
 	
 	/**
-	 * 休日として取り扱う「日付仕様」を追加する。
+	 * 休日として判定する暦日仕様を追加する。
 	 * 
-	 * @param specs 休日として取り扱う「日付仕様」 
+	 * @param specs 休日として取り扱う暦日仕様
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public void addHolidaySpec(Specification<CalendarDate> specs) {
+		Preconditions.checkNotNull(specs);
 		holidaySpecs = holidaySpecs.or(specs);
 	}
 	
 	/**
-	 * {@link CalendarDate}の反復子を受け取り、その反復子が返す{@link CalendarDate}のうち、
-	 * 営業日に当たる{@link CalendarDate}のみを返す反復子を返す。
+	 * 暦日の反復子を受け取り、その反復子が返す暦日のうち、営業日に当たる暦日のみを返す反復子を返す。
 	 * 
 	 * <p>このメソッドは引数に与えた反復子の状態を変更する。また、このメソッドの戻り値の反復子を利用中は、
 	 * 引数に与えた反復子の {@link Iterator#next()} を呼び出してはならない。</p>
 	 * 
-	 * @param calendarDays 元となる反復子
+	 * <p>戻り値の反復子は{@link Iterator#remove()}をサポートしない。</p>
+	 * 
+	 * @param calendarDays 元となる暦日反復子
 	 * @return 営業日のみを返す反復子
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -151,10 +163,10 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * {@link CalendarDate}が営業日に当たるかどうか調べる。
+	 * 指定した暦日が営業日に当たるかどうか調べる。
 	 * 
 	 * <p>デフォルトの実装として、週末でなく休日でない日を営業日とするが、
-	 * 業態によってはオーバーライドの可能性があるので注意すること。</p>
+	 * 業態によってはこのメソッドをオーバーライドする可能性があるので注意すること。</p>
 	 * 
 	 * @param day 日
 	 * @return 営業日に当たる場合は{@code true}、そうでない場合は{@code false}
@@ -166,7 +178,7 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * {@link CalendarDate}が休日に当たるかどうか調べる。
+	 * 指定した暦日が休日に当たるかどうか調べる。
 	 * 
 	 * <p>休日とは、非営業日のうち週末以外のものである。週末を含まないことに注意すること。</p>
 	 * 
@@ -179,46 +191,46 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * {@link CalendarDate}が週末に当たるかどうか調べる。
+	 * 指定した暦日が週末に当たるかどうか調べる。
 	 * 
 	 * <p>週末とは、土曜日と日曜日のことである。</p>
 	 * 
-	 * @param day 日
+	 * @param day 暦日
 	 * @return 週末に当たる場合は{@code true}、そうでない場合は{@code false}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public boolean isWeekend(CalendarDate day) {
+	public final boolean isWeekend(CalendarDate day) {
 		Preconditions.checkNotNull(day);
 		DayOfWeek dow = day.dayOfWeek();
 		return dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY;
 	}
 	
 	/**
-	 * 開始日から数えて{@code numberOfDays}営業日前の日付を返す。
+	 * 基準暦日から数えて{@code numberOfDays}営業日前の暦日を返す。
 	 * 
-	 * @param startDate 開始日
+	 * @param day 基準暦日
 	 * @param numberOfDays 営業日数（現在は正数しかサポートしない）
-	 * @return 日付
+	 * @return 暦日
 	 * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
 	 * @throws NullPointerException 引数{@code startDate}に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public CalendarDate minusBusinessDays(CalendarDate startDate, int numberOfDays) {
-		Preconditions.checkNotNull(startDate);
+	public CalendarDate minusBusinessDays(CalendarDate day, int numberOfDays) {
+		Preconditions.checkNotNull(day);
 		if (numberOfDays < 0) {
 			throw new IllegalArgumentException("Negative numberOfDays not supported");
 		}
-		Iterator<CalendarDate> iterator = CalendarInterval.everPreceding(startDate).daysInReverseIterator();
+		Iterator<CalendarDate> iterator = CalendarInterval.everPreceding(day).daysInReverseIterator();
 		return nextNumberOfBusinessDays(numberOfDays, iterator);
 	}
 	
 	/**
-	 * 指定した日の直近営業日を取得する。
+	 * 指定した暦日から最も早く到来する営業日を取得する。
 	 * 
 	 * <p>指定日が営業日であれば当日、そうでなければ翌営業日を返す。</p>
 	 * 
-	 * @param day 基準日
+	 * @param day 基準暦日
 	 * @return 営業日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -232,11 +244,11 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * 指定した日の直近過去営業日を取得する。
+	 * 指定した暦日を含む過去の営業日のうち、最も西院の営業日を取得する。
 	 * 
 	 * <p>指定日が営業日であれば当日、そうでなければ前営業日を返す。</p>
 	 * 
-	 * @param day 基準日
+	 * @param day 基準暦日
 	 * @return 営業日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -250,59 +262,59 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * 指定した日の翌営業日を取得する。
+	 * 指定した暦日の翌営業日を取得する。
 	 * 
-	 * @param startDate 基準日
+	 * @param day 基準暦日
 	 * @return 翌営業日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public CalendarDate nextBusinessDay(CalendarDate startDate) {
-		if (isBusinessDay(startDate)) {
-			return plusBusinessDays(startDate, 1);
+	public CalendarDate nextBusinessDay(CalendarDate day) {
+		if (isBusinessDay(day)) {
+			return plusBusinessDays(day, 1);
 		} else {
-			return plusBusinessDays(startDate, 0);
+			return plusBusinessDays(day, 0);
 		}
 	}
 	
 	/**
-	 * 開始日から数えて{@code numberOfDays}営業日目の日付を返す。
+	 * 指定した暦日から数えて{@code numberOfDays}営業日目の暦日を返す。
 	 * 
-	 * @param startDate 開始日
+	 * @param day 基準暦日
 	 * @param numberOfDays 営業日数（現在は正数しかサポートしない）. {@code 0}の場合、開始日を含む翌営業日を返す
-	 * @return 日付
+	 * @return 暦日
 	 * @throws IllegalArgumentException 引数{@code numberOfDays}が負数の場合
 	 * @throws NullPointerException 引数{@code startDate}に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public CalendarDate plusBusinessDays(CalendarDate startDate, int numberOfDays) {
-		Preconditions.checkNotNull(startDate);
+	public CalendarDate plusBusinessDays(CalendarDate day, int numberOfDays) {
+		Preconditions.checkNotNull(day);
 		if (numberOfDays < 0) {
 			throw new IllegalArgumentException("Negative numberOfDays not supported");
 		}
-		Iterator<CalendarDate> iterator = CalendarInterval.everFrom(startDate).daysIterator();
+		Iterator<CalendarDate> iterator = CalendarInterval.everFrom(day).daysIterator();
 		return nextNumberOfBusinessDays(numberOfDays, iterator);
 	}
 	
 	/**
-	 * 指定した日の前営業日を取得する。
+	 * 指定した暦日の前営業日を取得する。
 	 * 
-	 * @param startDate 基準日
+	 * @param day 基準暦日
 	 * @return 前営業日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public CalendarDate prevBusinessDay(CalendarDate startDate) {
-		if (isBusinessDay(startDate)) {
-			return minusBusinessDays(startDate, 1);
+	public CalendarDate prevBusinessDay(CalendarDate day) {
+		if (isBusinessDay(day)) {
+			return minusBusinessDays(day, 1);
 		} else {
-			return minusBusinessDays(startDate, 0);
+			return minusBusinessDays(day, 0);
 		}
 	}
 	
 	/**
 	 * Should be overriden for each particular organization.
-	 *  
+	 * 
 	 * @return 営業日の{@link Set} 
 	 * @since 1.0
 	 */
@@ -311,10 +323,10 @@ public class BusinessCalendar {
 	}
 	
 	/**
-	 * {@code calendarDays}の先頭から数えて{@code numberOfDays}営業日目の日付を返す。
+	 * 反復子の先頭から数えて{@code numberOfDays}営業日目の暦日を返す。
 	 * 
 	 * @param numberOfDays 営業日数. {@code 0}の場合、イテレータの先頭
-	 * @param calendarDays 日付イテレータ
+	 * @param calendarDays 暦日反復子
 	 * @return 営業日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0

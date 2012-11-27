@@ -18,7 +18,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 
 /**
- * TODO for daisuke
+ * 「5分前」「10時間後」など、現在時刻からの相対時間を表示するラベルコンポーネント実装クラス。
  * 
  * @since 2.2
  * @version $Id$

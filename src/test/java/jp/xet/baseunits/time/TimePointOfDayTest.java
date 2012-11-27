@@ -113,18 +113,18 @@ public class TimePointOfDayTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test05_() throws Exception {
+	public void test05_plus_minus() throws Exception {
 		assertThat(TimePointOfDay.UTC_NOON.plus(Duration.hours(3)), is(TimePointOfDay.atUTC(15, 0)));
 		assertThat(TimePointOfDay.UTC_NOON.minus(Duration.hours(3)), is(TimePointOfDay.atUTC(9, 0)));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link TimePointOfDay#from(TimeOfDay, TimeZone)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void testname() throws Exception {
+	public void test06_from() throws Exception {
 		TimePoint now = Clock.now();
 		TimePointOfDay a = TimePointOfDay.from(now.asTimeOfDay(UTC), UTC);
 		TimePointOfDay b = now.asTimePointOfDay();

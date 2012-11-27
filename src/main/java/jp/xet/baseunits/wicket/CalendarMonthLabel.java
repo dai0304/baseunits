@@ -23,6 +23,7 @@ import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.time.TimePoint;
 
 import com.google.common.base.Preconditions;
+
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -46,7 +47,7 @@ public class CalendarMonthLabel extends GenericLabel<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param calendarMonth 表示する月
+	 * @param calendarMonth 表示する暦月
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.1
 	 */
@@ -58,7 +59,7 @@ public class CalendarMonthLabel extends GenericLabel<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param calendarMonth 表示する日付
+	 * @param calendarMonth 表示する暦月
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.1
@@ -71,7 +72,7 @@ public class CalendarMonthLabel extends GenericLabel<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param model The component's model
+	 * @param model 表示する暦月
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.1
 	 */
@@ -83,7 +84,7 @@ public class CalendarMonthLabel extends GenericLabel<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param model The component's model
+	 * @param model 表示する歴月
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.1
@@ -98,7 +99,7 @@ public class CalendarMonthLabel extends GenericLabel<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param timePointModel 基準時刻モデル
+	 * @param timePointModel 表示する歴月が属する{@link TimePoint}
 	 * @param timeZoneModel タイムゾーンモデル
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.1
@@ -111,7 +112,7 @@ public class CalendarMonthLabel extends GenericLabel<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param timePoint 基準時刻
+	 * @param timePoint 表示する歴月が属する{@link TimePoint}
 	 * @param timeZone タイムゾーン
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.1

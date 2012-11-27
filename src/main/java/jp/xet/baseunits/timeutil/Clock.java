@@ -42,9 +42,9 @@ public final class Clock {
 	
 	
 	/**
-	 * 現在時刻を取得する。
+	 * 現在の{@link TimePoint}を取得する。
 	 * 
-	 * @return 現在時刻
+	 * @return 現在の{@link TimePoint}
 	 * @since 1.0
 	 */
 	public static TimePoint now() {
@@ -62,9 +62,9 @@ public final class Clock {
 	}
 	
 	/**
-	 * このクラスに対する時刻の問い合わせに応答する {@link TimeSource} を設定する。
+	 * このクラスに対する{@link TimePoint}の問い合わせに応答する {@link TimeSource} を設定する。
 	 * 
-	 * @param timeSource このクラスに対する時刻の問い合わせに応答する {@link TimeSource}
+	 * @param timeSource このクラスに対する{@link TimePoint}の問い合わせに応答する {@link TimeSource}
 	 * @since 1.0
 	 */
 	public static void setTimeSource(TimeSource timeSource) {
@@ -87,10 +87,10 @@ public final class Clock {
 	}
 	
 	/**
-	 * 今日の日付を取得する。
+	 * 今日の暦日を取得する。
 	 * 
 	 * @param timeZone タイムゾーン
-	 * @return 今日の日付
+	 * @return 今日の暦日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */

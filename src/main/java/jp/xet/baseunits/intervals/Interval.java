@@ -232,9 +232,9 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * この区間の<b>補</b>区間と与えた区間 {@code other} の共通部分を返す。
+	 * {@code other - this}の差集合（差区間）を返す。
 	 * 
-	 * <p>この区間と与えた区間に共通部分がない場合は、 {@code other} を要素とする要素数1の区間列を返す。
+	 * <p>この区間と与えた区間に共通部分がない場合は、{@code other}を要素とする要素数1の区間列を返す。
 	 * 与えた区間が、この区間を完全に内包する場合は、2つの区間に分かれるため、要素数が2の区間列を返す。
 	 * 逆にこの区間が、与えた区間を完全に内包する場合は、要素数0の区間列を返す。
 	 * 上記以外の場合、この区間の補区間と与えた区間の共通部分を要素とする要素数1の区間列を返す。</p>
@@ -264,7 +264,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * この区間が、指定した区間 {@code other}を完全に内包するかどうかを検証する。
+	 * この区間が、指定した区間{@code other}を完全に内包するかどうかを検証する。
 	 * 
 	 * @param other 区間
 	 * @return 完全に内包する場合は{@code true}、そうでない場合は{@code false}
@@ -286,9 +286,9 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * この区間と同じ限界値を持つ、新しい開区間を生成する。
+	 * この区間と同じ限界値を持つ、新しい空区間を生成する。
 	 * 
-	 * @return 新しい開区間
+	 * @return 新しい空区間
 	 * @since 1.0
 	 */
 	public Interval<T> emptyOfSameType() {
@@ -296,7 +296,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * この区間と、与えた区間 {@code other}の同一性を検証する。
+	 * この区間と{@code other}の同一性を検証する。
 	 * 
 	 * <p>両者が共に空の区間であった場合は{@code true}、どちらか一方のみが空の区間であった場合は{@code false}を返す。
 	 * 両者とも単一要素区間であった場合は、単一要素となる限界値同士を比較し、一致した場合は{@code true}を返す。
@@ -336,7 +336,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
+	 * このオブジェクトと{@code other}の同一性を検証する。
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 * @since 1.0
@@ -352,7 +352,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * この区間と与えた区間 {@code other} の間にある区間を取得する。
+	 * この区間と{@code other}の間(ギャップ)にある区間を取得する。
 	 * 
 	 * <p>例えば、[3, 5) と [10, 20) の gap は、[5, 19) である。
 	 * 2つの区間が共通部分を持つ場合は、空の区間を返す。</p>
@@ -382,7 +382,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 下側限界があるかどうかを取得する。
+	 * 下側限界があるかどうかを返す。
 	 * 
 	 * <p>Warning: This method should generally be used for display
 	 * purposes and interactions with closely coupled classes.
@@ -401,7 +401,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 上側限界があるかどうかを取得する。
+	 * 上側限界があるかどうかを返す。
 	 * 
 	 * <p>Warning: This method should generally be used for display
 	 * purposes and interactions with closely coupled classes.
@@ -420,7 +420,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 指定した値 {@code value} が、この区間に含まれるかどうかを検証する。
+	 * {@code value}が、この区間に含まれるかどうかを検証する。
 	 * 
 	 * @param value 値
 	 * @return 含まれる場合は{@code true}、そうでない場合は{@code false}
@@ -433,7 +433,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 下側限界が閉じているかどうかを取得する。
+	 * 下側限界が閉じているかどうかを返す。
 	 * 
 	 * <p>Warning: This method should generally be used for display
 	 * purposes and interactions with closely coupled classes.
@@ -452,7 +452,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 上側限界が閉じているかどうかを取得する。
+	 * 上側限界が閉じているかどうかを返す。
 	 * 
 	 * <p>Warning: This method should generally be used for display
 	 * purposes and interactions with closely coupled classes.
@@ -471,9 +471,9 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * この区間と与えた区間 {@code other} の積集合（共通部分）を返す。
+	 * この区間と{@code other}の積集合（共通部分）を返す。
 	 * 
-	 * <p>共通部分が存在しない場合は、空の区間を返す。</p>
+	 * <p>共通部分が存在しない場合は、空区間を返す。</p>
 	 * 
 	 * @param other 比較対象の区間
 	 * @return 積集合（共通部分）
@@ -492,7 +492,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * この区間と、与えた区間{@code other}の間に共通部分が存在するかどうか検証する。
+	 * この区間と、{@code other}の間に共通部分が存在するかどうか検証する。
 	 * 
 	 * @param other 対象区間
 	 * @return 共通部分が存在する場合は{@code true}、そうでない場合は{@code false}
@@ -518,7 +518,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 指定した値 {@code value} が、この区間の下側限界を超過していないかどうかを検証する。
+	 * {@code value}が、この区間の下側限界を超過していないかどうかを検証する。
 	 * 
 	 * @param value 値
 	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
@@ -535,7 +535,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 指定した値 {@code value} が、この区間の上側限界を超過していないかどうかを検証する。
+	 * {@code value}が、この区間の上側限界を超過していないかどうかを検証する。
 	 * 
 	 * @param value 値
 	 * @return 超過していない場合は{@code true}、そうでない場合は{@code false}
@@ -610,7 +610,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 下側限界値を取得する。
+	 * 下側限界値を返す。
 	 * 
 	 * <p>Warning: This method should generally be used for display
 	 * purposes and interactions with closely coupled classes.
@@ -629,7 +629,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * この区間と同じ型{@code T}を持つ、新しい区間を生成する。
+	 * この区間と同じ型{@code T}を持つ、新しい区間を返す。
 	 * 
 	 * @param lower 下側限界値. 限界値がない場合は、{@code null}
 	 * @param isLowerClosed 下限値を区間に含む（閉じた下側限界）場合は{@code true}を指定する
@@ -643,7 +643,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 区間の文字列表現を取得する。
+	 * 区間の文字列表現を返す。
 	 * 
 	 * <p>空の区間である場合は "&#123;&#125;", 単一要素区間である場合は "&#123;x&#125;"を返す。
 	 * また、例えば 3〜5 の開区間である場合は "(3, 5)"、閉区間である場合は "[3, 5]"、
@@ -665,7 +665,7 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	}
 	
 	/**
-	 * 上側限界値を取得する。
+	 * 上側限界値を返す。
 	 * 
 	 * <p>Warning: This method should generally be used for display
 	 * purposes and interactions with closely coupled classes.

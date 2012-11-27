@@ -29,7 +29,7 @@ import jp.xet.baseunits.time.MonthOfYear;
 import com.google.common.base.Preconditions;
 
 /**
- * 毎年X月Y日、を表す日付仕様。
+ * 毎年特定の月日にマッチする暦日仕様実装クラス。
  * 
  * @author daisuke
  * @since 1.0
@@ -57,9 +57,9 @@ public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecif
 	}
 	
 	/**
-	 * この仕様を満たす条件としての日（{@link DayOfMonth}）を返す。
+	 * この仕様を満たす条件としての日を返す。
 	 * 
-	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 * @return この仕様を満たす条件としての日
 	 * @since 2.0
 	 */
 	public DayOfMonth getDay() {
@@ -67,9 +67,9 @@ public final class AnnualFixedDateSpecification extends AbstractAnnualDateSpecif
 	}
 	
 	/**
-	 * この仕様を満たす条件としての月（{@link MonthOfYear}）を返す。
+	 * この仕様を満たす条件としての月を返す。
 	 * 
-	 * @return この仕様を満たす条件としての月（{@link MonthOfYear}）
+	 * @return この仕様を満たす条件としての月
 	 * @since 2.0
 	 */
 	public MonthOfYear getMonth() {

@@ -19,12 +19,13 @@ package jp.xet.baseunits.wicket;
 import jp.xet.baseunits.time.CalendarDate;
 
 import com.google.common.base.Preconditions;
+
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 
 /**
- * 日付期間の開始と終了を表す2つの {@link FormComponent} について、開始日が終了日より未来でないことを検証するバリデータ。
+ * 暦日期間の開始と終了を表す2つの {@link FormComponent} について、開始暦日が終了暦日より未来でないことを検証するバリデータ。
  * 
  * @author daisuke
  * @since 2.0

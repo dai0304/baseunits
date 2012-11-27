@@ -30,7 +30,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
 
 /**
- * ある特定の年月日を表す日付仕様。
+ * ある特定の唯一の暦日を表す暦日仕様実装クラス。
  * 
  * @author daisuke
  * @since 1.0
@@ -44,7 +44,7 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param date 日付
+	 * @param date 暦日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	FixedDateSpecification(CalendarDate date) {
@@ -63,9 +63,10 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 	}
 	
 	/**
-	 * 仕様を満たす唯一の日付を返す。
+	 * 仕様を満たす唯一の暦日を返す。
 	 * 
-	 * @return 日付
+	 * @return 暦日
+	 * @since 1.0
 	 */
 	public CalendarDate getDate() {
 		return date;

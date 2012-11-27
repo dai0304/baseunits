@@ -27,7 +27,7 @@ import com.google.common.base.Preconditions;
 /**
  * 1日の中の特定の「時」を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。
+ * <p>{@link java.util.Date}と異なり、暦日や分以下（時未満）の概念を持っていない。またタイムゾーンの概念もない。
  * また、このクラスは特定の瞬間をモデリングしたものではなく、その1時間全ての範囲を表すクラスである。</p>
  * 
  * @author daisuke
@@ -166,29 +166,37 @@ public class HourOfDay implements Comparable<HourOfDay>, Serializable {
 	}
 	
 	/**
-	 * 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来かどうか調べる。
+	 * 同暦日において、この時が、{@code other}よりも未来かどうか調べる。
 	 * 
-	 * @param another 基準時
-	 * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 比較対象時
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
-	public boolean isAfter(HourOfDay another) {
-		Preconditions.checkNotNull(another);
-		return value > another.value;
+	public boolean isAfter(HourOfDay other) {
+		if (other == null) {
+			return false;
+		}
+		return value > other.value;
 	}
 	
 	/**
-	 * 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去かどうか調べる。
+	 * 同暦日において、この時が、{@code other}よりも過去かどうか調べる。
 	 * 
-	 * @param another 基準時
-	 * @return 同日において、このインスタンスが表す時が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 比較対象時
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
-	public boolean isBefore(HourOfDay another) {
-		Preconditions.checkNotNull(another);
-		return value < another.value;
+	public boolean isBefore(HourOfDay other) {
+		if (other == null) {
+			return false;
+		}
+		return value < other.value;
 	}
 	
 	@Override

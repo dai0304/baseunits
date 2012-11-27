@@ -23,7 +23,7 @@ package jp.xet.baseunits.util.spec;
 import java.io.Serializable;
 
 /**
- * 日付の仕様を表現するオブジェクト。
+ * Static utility methods pertaining to {@code Specification} instances.
  * 
  * @author daisuke
  * @since 2.0
@@ -31,9 +31,9 @@ import java.io.Serializable;
 public final class Specifications {
 	
 	/**
-	 * どの日付にもマッチする日付仕様を返す。
+	 * どの値にもマッチする仕様を返す。
 	 * 
-	 * @return 日付仕様
+	 * @return 仕様
 	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
@@ -42,9 +42,9 @@ public final class Specifications {
 	}
 	
 	/**
-	 * どの日付にもマッチしない日付仕様を返す。
+	 * どの値にもマッチしない仕様を返す。
 	 * 
-	 * @return 日付仕様
+	 * @return 仕様
 	 * @since 1.0
 	 */
 	@SuppressWarnings("unchecked")

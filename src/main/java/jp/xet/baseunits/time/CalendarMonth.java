@@ -30,19 +30,23 @@ import java.util.TimeZone;
 import com.google.common.base.Preconditions;
 
 /**
- * カレンダー上の特定の「年月」を表すクラス。
+ * 「暦月」を表すクラス。
+ * 
+ * <p>暦月とは、カレンダー上の特定の「年月」のことで、
+ * 暦年における月によって指定される。例えば「2012年11月」や「1978年3月」等のことである。</p>
  * 
  * <p>{@link java.util.Date}と異なり、月未満（日以下）の概念を持っていない。また、{@link TimePoint}と異なり、
- * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
+ * その月1ヶ月間全ての範囲を表すクラスであり、特定の瞬間のモデルではない。</p>
  * 
  * @author daisuke
  * @since 1.0
+ * @see MonthOfYear
  */
 @SuppressWarnings("serial")
 public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	
 	/**
-	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
+	 * 指定した年月から暦月を返す。
 	 * 
 	 * @param year 西暦年をあらわす数
 	 * @param month 月をあらわす正数（1〜12）
@@ -55,7 +59,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
+	 * 指定した年月の値で表される暦月を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月
@@ -68,7 +72,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーン上で指定した瞬間が属する日付を元に、{@link CalendarDate}のインスタンスを生成する。
+	 * 指定したタイムゾーンにおける、{@link TimePoint}が属する暦月を返す。
 	 * 
 	 * @param timePoint 瞬間
 	 * @param zone タイムゾーン
@@ -85,17 +89,17 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月を表す、{@link CalendarMonth}のインスタンスを生成する。
+	 * 指定した暦月を表す文字列を解析し、暦月を返す。
 	 * 
-	 * @param dateString 年月を表す文字列 
+	 * @param dateString 暦月を表す文字列 
 	 * @param pattern 解析パターン文字列
 	 * @return {@link CalendarMonth}
 	 * @throws ParseException 文字列の解析に失敗した場合 
 	 * @since 1.0
 	 */
 	public static CalendarMonth parse(String dateString, String pattern) throws ParseException {
-		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
 		//Any timezone works, as long as the same one is used throughout.
+		TimeZone arbitraryZone = TimePoint.UTC;
 		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
 		return CalendarMonth.from(point, arbitraryZone);
 	}
@@ -103,7 +107,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	static CalendarMonth from(Calendar calendar) { // CHECKSTYLE IGNORE THIS LINE
 		// Use timezone already set in calendar.
 		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH) + 1; // T&M Lib counts January as 1
+		int month = calendar.get(Calendar.MONTH) + 1; // baseunits counts January as 1
 		return CalendarMonth.from(year, month);
 	}
 	
@@ -120,11 +124,11 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する年月の1日からその月末までの、期間を生成する。
+	 * この暦月の初日から月末日までの、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
+	 * @return この暦月の初日からその月末日までを表現する期間
 	 * @since 1.0
 	 */
 	public CalendarInterval asCalendarInterval() {
@@ -132,7 +136,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、このインスタンスが表す「年月」の1日0時0分0秒0ミリ秒の瞬間について {@link TimePoint} 型のインスタンスを返す。
+	 * 指定したタイムゾーンにおける、この暦月の初日深夜0時の {@link TimePoint} を返す。
 	 * 
 	 * @param timeZone タイムゾーン
 	 * @return {@link TimePoint}
@@ -145,11 +149,11 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する年月を含む年の元旦からその大晦日までの、期間を生成する。
+	 * この暦月を含む暦年の、元旦からその大晦日までの期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
+	 * @return この暦月を含む暦年の、元旦からその大晦日までの期間
 	 * @since 1.0
 	 */
 	public CalendarInterval asYearInterval() {
@@ -157,11 +161,12 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表す年月で、引数{@code day}で表す日を表す年月日を返す。
+	 * この暦月における、引数{@code day}で表す暦日を返す。
 	 * 
 	 * @param day 日（1〜31）
-	 * @return 日時
-	 * @throws IllegalArgumentException 引数{@code day}がこの月に存在しない場合
+	 * @return この暦月における、引数{@code day}で表す暦日
+	 * @throws IllegalArgumentException 引数{@code day}がこの暦月内に存在しない場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDate at(DayOfMonth day) {
@@ -169,7 +174,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 年月日同士の比較を行う。
+	 * 暦月同士の比較を行う。
 	 * 
 	 * <p>相対的に過去である方を「小さい」と判断する。</p>
 	 * 
@@ -214,7 +219,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 月初の日付を取得する。
+	 * 月初日の暦日を取得する。
 	 * 
 	 * @return {@link DayOfMonth}
 	 * @since 2.4
@@ -225,7 +230,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 月末の日付を取得する。
+	 * 月末日の暦日を取得する。
 	 * 
 	 * @return {@link DayOfMonth}
 	 * @since 1.0
@@ -246,7 +251,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * この年月が属する月を取得する。
+	 * この暦月の月を取得する。
 	 * 
 	 * @return 月
 	 * @since 2.0
@@ -256,7 +261,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * この年月が属する年を返す。
+	 * この暦月の西暦年を返す。
 	 * 
 	 * @return 西暦年をあらわす数
 	 * @since 2.0
@@ -275,13 +280,13 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * この暦月が、{@code other} よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
-	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @param other 比較対象暦月
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
 	public boolean isAfter(CalendarMonth other) {
@@ -292,13 +297,13 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月 {@code other} が、このオブジェクトが表現する年月よりも未来であるかどうかを検証する。
+	 * この暦月が、{@code other} よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象年月
-	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @param other 比較対象暦月
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
 	public boolean isBefore(CalendarMonth other) {
@@ -315,9 +320,9 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する年月の翌月を返す。
+	 * この暦月の翌月を返す。
 	 * 
-	 * @return 翌月
+	 * @return 翌月の暦月
 	 * @since 1.0
 	 */
 	public CalendarMonth nextMonth() {
@@ -325,12 +330,12 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する日付に、指定した長さの時間を加えた、未来の日付を取得する。
+	 * この暦月に、指定した長さの時間を加えた、未来の暦月を取得する。
 	 * 
-	 * <p>引数の長さの単位が "月" 未満である場合は、元の年月をそのまま返す。<p>
+	 * <p>引数の長さの単位が "月" 未満である場合は、元の暦月をそのまま返す。<p>
 	 * 
 	 * @param length 時間の長さ
-	 * @return 未来の年月
+	 * @return 未来の暦月
 	 * @since 1.0
 	 */
 	public CalendarMonth plus(Duration length) {
@@ -338,26 +343,26 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する年月の {@code increment} ヶ月後を返す。
+	 * この暦月の{@code increment}ヶ月後に当たる歴月を返す。
 	 * 
 	 * <p> {@code increment}に負数を与えてもよい。</p>
 	 * 
 	 * @param increment 加える月数
-	 * @return 計算結果
+	 * @return {@code increment}ヶ月後に当たる歴月
 	 * @since 1.0
 	 */
 	public CalendarMonth plusMonths(int increment) {
 		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
 		calendar.add(Calendar.MONTH, increment);
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH) + 1;
-		return CalendarMonth.from(year, month);
+		int yearValue = calendar.get(Calendar.YEAR);
+		int monthValue = calendar.get(Calendar.MONTH) + 1;
+		return CalendarMonth.from(yearValue, monthValue);
 	}
 	
 	/**
-	 * このインスタンスが表現する年月の前月を返す。
+	 * この暦月の前月に当たる暦月を返す。
 	 * 
-	 * @return 前月
+	 * @return 前月の暦月
 	 * @since 1.0
 	 */
 	public CalendarMonth previousMonth() {
@@ -365,7 +370,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * この日付の文字列表現を取得する。
+	 * この暦月の文字列表現を取得する。
 	 * 
 	 * <p>{@link SimpleDateFormat}の仕様に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
 	 * 
@@ -378,7 +383,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * この日付を、指定したパターンで整形し、その文字列表現を取得する。
+	 * この暦月を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
 	 * @param pattern パターン
 	 * @return 文字列表現
@@ -389,7 +394,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
-	 * この日付を、指定したパターンで整形し、その文字列表現を取得する。
+	 * この暦月を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
 	 * @param pattern パターン
 	 * @param locale ロケール
@@ -398,7 +403,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 */
 	public String toString(String pattern, Locale locale) {
 		// Any timezone works, as long as the same one is used throughout.
-		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
+		TimeZone arbitraryZone = TimePoint.UTC;
 		TimePoint point = asTimePoint(arbitraryZone);
 		return point.toString(pattern, locale, arbitraryZone);
 	}

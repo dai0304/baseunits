@@ -30,7 +30,7 @@ import jp.xet.baseunits.time.DayOfWeek;
 import com.google.common.base.Preconditions;
 
 /**
- * 毎月の第Y◎曜日、を表す日付仕様。
+ * 毎月の第Y◎曜日にマッチする暦日仕様実装クラス。
  * 
  * @author daisuke
  * @since 1.0
@@ -47,7 +47,7 @@ public final class MonthlyFloatingDateSpecification extends AbstractMonthlyDateS
 	 * インスタンスを生成する。
 	 * 
 	 * @param dayOfWeek 曜日
-	 * @param occurrence 周回数（1〜5）
+	 * @param occurrence 序数（1〜5）
 	 * @throws IllegalArgumentException 引数{@code occurrence}が1〜5の範囲ではない場合
 	 * @throws NullPointerException 引数{@code dayOfWeek}に{@code null}を与えた場合
 	 */
@@ -59,18 +59,18 @@ public final class MonthlyFloatingDateSpecification extends AbstractMonthlyDateS
 	}
 	
 	/**
-	 * この仕様を満たす条件としての曜日（{@link DayOfWeek}）を返す。
+	 * この仕様を満たす条件としての曜日を返す。
 	 * 
-	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 * @return この仕様を満たす条件としての日
 	 */
 	public DayOfWeek getDayOfWeek() {
 		return dayOfWeek;
 	}
 	
 	/**
-	 * この仕様を満たす条件としての曜日回数（第3日曜日であれば{@code 3}）を返す。
+	 * この仕様を満たす条件としての序数（第3日曜日であれば{@code 3}）を返す。
 	 * 
-	 * @return この仕様を満たす条件としての曜日回数
+	 * @return この仕様を満たす条件としての序数
 	 */
 	public int getOccurrence() {
 		return occurrence;

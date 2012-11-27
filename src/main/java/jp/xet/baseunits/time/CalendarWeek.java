@@ -28,24 +28,31 @@ import java.util.TimeZone;
 import com.google.common.base.Preconditions;
 
 /**
- * カレンダー上の特定の「年第x週」（デフォルトでは月曜日〜日曜日）を表すクラス。
+ * 暦週を表すクラス。
+ * 
+ * <p>暦週とは、カレンダー上の特定の「週」（デフォルトでは月曜日〜日曜日）のことで、
+ * 暦年における週数によって指定される。例えば「2012年の第30週」や「1978年の第3週」等のことである。</p>
  * 
  * <p>{@link java.util.Date}と異なり、週未満（日以下）の概念を持っていない。また、{@link TimePoint}と異なり、
- * その週全ての範囲を表すクラスであり、特定の瞬間をモデリングしたものではない。</p>
- * 
- * <p>週とは、月曜日〜日曜日の範囲とする。</p>
+ * その週全ての範囲を表すクラスであり、特定の瞬間のモデルではない。</p>
  * 
  * @author daisuke
  * @since 2.0
+ * @see WeekOfYear
  */
 @SuppressWarnings("serial")
 public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	
+	private static final DayOfWeek START_DAY_OF_WEEK = DayOfWeek.MONDAY;
+	
+	private static final DayOfWeek END_DAY_OF_WEEK = DayOfWeek.SUNDAY;
+	
+	
 	/**
-	 * 指定した日付を含む週を返す。
+	 * 指定した暦日を含む暦週を返す。
 	 * 
-	 * @param date 日付
-	 * @return 週
+	 * @param date 暦日
+	 * @return 暦週
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
@@ -70,12 +77,12 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * 指定した週を表す、{@link CalendarWeek}のインスタンスを生成する。
+	 * 指定した西暦年及び週の序数で表される暦週を返す。
 	 * 
-	 * @param year 西暦年をあらわす数
-	 * @param weekOfYear 週数をあらわす正数（1〜53）
+	 * @param year 西暦年
+	 * @param weekOfYear 週の序数（1〜53）
 	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数{@code month}が1〜53の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code weekOfYear}が1〜53の範囲ではない場合
 	 * @since 2.0
 	 */
 	public static CalendarWeek from(int year, int weekOfYear) {
@@ -83,16 +90,16 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月を表す、{@link CalendarWeek}のインスタンスを生成する。
+	 * 指定した西暦年及び週で表される暦週を返す。
 	 * 
 	 * @param year 年
-	 * @param month 月
+	 * @param week 週
 	 * @return {@link CalendarWeek}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
-	public static CalendarWeek from(int year, WeekOfYear month) {
-		return new CalendarWeek(year, month);
+	public static CalendarWeek from(int year, WeekOfYear week) {
+		return new CalendarWeek(year, week);
 	}
 	
 	
@@ -108,19 +115,19 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する週の月曜日からその週末（日曜日）までの、期間を生成する。
+	 * この暦週の月曜日からその週末（日曜日）までの、期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @return このインスタンスが表現する週の月曜日からその週末（日曜日）までの、期間
+	 * @return この暦週の月曜日からその週末（日曜日）までの、期間
 	 * @since 2.0
 	 */
 	public CalendarInterval asCalendarInterval() {
-		return CalendarInterval.week(year, week);
+		return CalendarInterval.week(this);
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、このインスタンスが表す週の月曜日の深夜0時の瞬間について {@link TimePoint} 型のインスタンスを返す。
+	 * この暦週の、指定したタイムゾーンにおける月曜日の深夜0時の {@link TimePoint} を返す。
 	 * 
 	 * @param timeZone タイムゾーン
 	 * @return {@link TimePoint}
@@ -134,11 +141,11 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する週を含む年の元旦からその大晦日までの、期間を生成する。
+	 * この暦週を含む暦年の、元旦からその大晦日までの暦日期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @return このインスタンスが表現する年月の1日からその月末までを表現する期間
+	 * @return この暦週を含む年の、元旦からその大晦日までの期間
 	 * @since 2.0
 	 */
 	public CalendarInterval asYearInterval() {
@@ -146,19 +153,21 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表す週で、引数{@code dow}で表す曜日を表す年月日を返す。
+	 * この暦週に含まれる暦日の中で指定した曜日を返す。
 	 * 
 	 * @param dow 曜日
-	 * @return 年月日
+	 * @return 暦日
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public CalendarDate at(DayOfWeek dow) {
-		CalendarDate monday = asCalendarInterval().start();
-		return monday.plusDays(dow.ordinal());
+		Preconditions.checkNotNull(dow);
+		CalendarDate start = asCalendarInterval().start();
+		return start.plusDays(dow.ordinal());
 	}
 	
 	/**
-	 * このオブジェクトの{@link #week}フィールド（週）を返す。
+	 * この暦週の{@link #week}フィールド（週）を返す。
 	 * 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
@@ -170,7 +179,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトの{@link #year}フィールド（西暦年をあらわす数）を返す。
+	 * この暦週の{@link #year}フィールド（西暦年をあらわす数）を返す。
 	 * 
 	 * <p>CAUTION: このメソッドは、このオブジェクトがカプセル化する要素を外部に暴露する。取り扱いには充分注意のこと。</p>
 	 * 
@@ -182,7 +191,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * 年月日同士の比較を行う。
+	 * 暦週同士の比較を行う。
 	 * 
 	 * <p>相対的に過去である方を「小さい」と判断する。</p>
 	 * 
@@ -227,13 +236,13 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * 週末（日曜日）の日付を取得する。
+	 * この暦週の週末（日曜日）に当たる暦日を取得する。
 	 * 
 	 * @return {@link DayOfMonth}
 	 * @since 2.0
 	 */
 	public CalendarDate getLastDay() {
-		return at(DayOfWeek.SUNDAY);
+		return at(END_DAY_OF_WEEK);
 	}
 	
 	@Override
@@ -246,13 +255,13 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * この暦週が {@code other} よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
-	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @param other 比較対象暦週
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.0
 	 */
 	public boolean isAfter(CalendarWeek other) {
@@ -263,13 +272,13 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月 {@code other} が、このオブジェクトが表現する年月よりも未来であるかどうかを検証する。
+	 * この暦週が {@code other} よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象年月
-	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @param other 比較対象暦週
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.0
 	 */
 	public boolean isBefore(CalendarWeek other) {
@@ -286,9 +295,9 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する年月の翌月を返す。
+	 * この暦週の翌週に当たる暦週を返す。
 	 * 
-	 * @return 翌月
+	 * @return 翌週
 	 * @since 2.0
 	 */
 	public CalendarWeek nextWeek() {
@@ -296,24 +305,24 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する年月の {@code increment} 週後を返す。
+	 * この暦週の {@code increment}週後に当たる暦週を返す。
 	 * 
 	 * <p> {@code increment}に負数を与えてもよい。</p>
 	 * 
-	 * @param increment 加える月数
-	 * @return 計算結果
+	 * @param increment 加える週数
+	 * @return {@code increment}週後に当たる暦週
 	 * @since 2.0
 	 */
 	public CalendarWeek plusWeeks(int increment) {
 		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
 		calendar.add(Calendar.WEEK_OF_YEAR, increment);
-		int year = calendar.get(Calendar.YEAR);
-		int week = calendar.get(Calendar.WEEK_OF_YEAR);
-		return CalendarWeek.from(year, week);
+		int yearValue = calendar.get(Calendar.YEAR);
+		int weekValue = calendar.get(Calendar.WEEK_OF_YEAR);
+		return CalendarWeek.from(yearValue, weekValue);
 	}
 	
 	/**
-	 * このインスタンスが表現する週の前週を返す。
+	 * この暦週の前週に当たる暦週を返す。
 	 * 
 	 * @return 前週
 	 * @since 2.0
@@ -323,7 +332,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * この日付の文字列表現を取得する。
+	 * この暦週の文字列表現を取得する。
 	 * 
 	 * <p>{@link SimpleDateFormat}の使用に基づく {@code "yyyy-w'th'"}のパターンで整形する。</p>
 	 * 
@@ -336,7 +345,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	}
 	
 	/**
-	 * この週を、指定したパターンで整形し、その文字列表現を取得する。
+	 * この暦週を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
 	 * @param pattern パターン
 	 * @return 文字列表現
@@ -344,7 +353,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	 */
 	public String toString(String pattern) {
 		// Any timezone works, as long as the same one is used throughout.
-		TimeZone arbitraryZone = TimeZone.getTimeZone("Universal");
+		TimeZone arbitraryZone = TimePoint.UTC;
 		TimePoint point = asTimePoint(arbitraryZone);
 		return point.toString(pattern, arbitraryZone);
 	}
@@ -353,7 +362,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 		Calendar calendar = CalendarUtil.newCalendar();
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.WEEK_OF_YEAR, week.value);
-		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		calendar.set(Calendar.DAY_OF_WEEK, START_DAY_OF_WEEK.value);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);

@@ -41,7 +41,7 @@ public class RelativeTimePointConverter extends AbstractConverter<TimePoint> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param formatter
+	 * @param formatter 変換に用いるフォーマッタ
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.7
 	 */

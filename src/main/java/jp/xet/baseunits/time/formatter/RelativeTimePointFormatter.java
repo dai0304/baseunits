@@ -42,10 +42,10 @@ public interface RelativeTimePointFormatter {
 	String format(TimePoint target, TimePoint standard);
 	
 	/**
-	 * 基準時刻からの相対時間を表示するフォーマッタ。
+	 * 基準{@link TimePoint}からの相対時間を表示するフォーマッタ。
 	 * 
-	 * @param target 対象時刻
-	 * @param standard 基準となる時刻
+	 * @param target 対象{@link TimePoint}
+	 * @param standard 基準となる{@link TimePoint}
 	 * @param locale ロケール
 	 * @return 相対時間表現文字列
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
@@ -54,7 +54,7 @@ public interface RelativeTimePointFormatter {
 	
 	
 	/**
-	 * フォールバック設定オブジェクト。
+	 * フォールバック設定クラス。
 	 * 
 	 * <p>{@link RelativeTimePointFormatter}は、主に「大まかな時刻」を表す役割があるが、
 	 * 相対時間差があまりにも小さい、または大きい場合は正確な表記をすると、かえって違和感を感じる。

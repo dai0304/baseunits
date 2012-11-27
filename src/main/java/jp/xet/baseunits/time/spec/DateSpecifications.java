@@ -36,7 +36,7 @@ import jp.xet.baseunits.time.spec.MonthlyFixedBusinessDateSpecification.Shifter;
 import com.google.common.base.Preconditions;
 
 /**
- * 日付の仕様を表現するオブジェクト。
+ * Static utility methods pertaining to {@code DateSpecification} instances.
  * 
  * @author daisuke
  * @since 2.0
@@ -44,9 +44,9 @@ import com.google.common.base.Preconditions;
 public final class DateSpecifications {
 	
 	/**
-	 * どの日付にもマッチする日付仕様を返す。
+	 * どの暦日にもマッチする暦日仕様を返す。
 	 * 
-	 * @return 日付仕様
+	 * @return 暦日仕様
 	 * @since 2.0
 	 */
 	public static DateSpecification always() {
@@ -54,11 +54,11 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 指定した期間にマッチする日付仕様を返す。
+	 * 指定した期間にマッチする暦日仕様を返す。
 	 * 
 	 * @param interval 期間
+	 * @return 暦日仕様
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
-	 * @return 日付仕様
 	 * @since 2.0
 	 */
 	public static DateSpecification calendarInterval(CalendarInterval interval) {
@@ -66,11 +66,11 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 指定した曜日にマッチする日付仕様を返す。
+	 * 指定した曜日にマッチする暦日仕様を返す。
 	 * 
 	 * @param dayOfWeeks 曜日
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
-	 * @return 日付仕様
+	 * @return 暦日仕様
+	 * @throws NullPointerException 引数またはその要素に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static DateSpecification dayOfWeek(Collection<DayOfWeek> dayOfWeeks) {
@@ -78,12 +78,12 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 指定した曜日にマッチする日付仕様を返す。
+	 * 指定した曜日にマッチする暦日仕様を返す。
 	 * 
 	 * @param dayOfWeek 曜日
 	 * @param dayOfWeeks 曜日(optional)
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
-	 * @return 日付仕様
+	 * @return 暦日仕様
+	 * @throws NullPointerException 引数またはその要素に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static DateSpecification dayOfWeek(DayOfWeek dayOfWeek, DayOfWeek... dayOfWeeks) {
@@ -91,12 +91,12 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 特定のある1日だけにマッチする日付仕様のインスタンスを返す。
+	 * 唯一、指定した暦日だけにマッチする暦日仕様を返す。
 	 * 
-	 * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
+	 * <p>ただし、例えば2/29を指定した場合、閏年でない限り、その暦年中にヒットする暦日は無い。</p>
 	 * 
-	 * @param date マッチする日
-	 * @return 日付仕様
+	 * @param date マッチする暦日
+	 * @return 暦日仕様
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -105,13 +105,13 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 日付仕様「毎月{@code day}日」のインスタンスを生成する。
+	 * 毎月{@code day}日にマッチする暦日仕様を返す。
 	 * 
-	 * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
+	 * <p>ただし、例えば31日を指定した場合、該当暦月に31日が存在しなければ、その暦月内の暦日にはヒットしない。</p>
 	 * 
 	 * @param day 日
-	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
-	 * @return 日付仕様
+	 * @return 暦日仕様
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static MonthlyDateSpecification fixed(DayOfMonth day) {
@@ -119,13 +119,13 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 日付仕様「毎月{@code day}日」のインスタンスを生成する。
+	 * 毎月{@code day}日にマッチする暦日仕様を返す。
 	 * 
-	 * <p>毎月31日を指定した場合、該当月に31日が存在しなければ、その月にはヒットしない。</p>
+	 * <p>ただし、例えば31日を指定した場合、該当暦月に31日が存在しなければ、その暦月内の暦日にはヒットしない。</p>
 	 * 
 	 * @param day 日を表す正数（1〜31）
+	 * @return 暦日仕様
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
-	 * @return 日付仕様
 	 * @since 1.0
 	 */
 	public static MonthlyDateSpecification fixed(int day) {
@@ -133,13 +133,13 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 日付仕様「毎年{@code month}月{@code day}日」のインスタンスを生成する。
+	 * 毎年{@code month}月{@code day}日にマッチする暦日仕様を返す。
 	 * 
 	 * @param month 月を表す正数（1〜12）
 	 * @param day 日を表す正数（1〜31）
+	 * @return 暦日仕様
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
-	 * @return 日付仕様
 	 * @since 1.0
 	 */
 	public static AnnualDateSpecification fixed(int month, int day) {
@@ -147,13 +147,12 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 日付仕様「毎年{@code month}月{@code day}日」のインスタンスを生成する。
+	 * 毎年{@code month}月{@code day}日にマッチする暦日仕様を返す。
 	 * 
-	 * @param month 月を表す正数（1〜12）
-	 * @param day 日を表す正数（1〜31）
-	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
-	 * @throws IllegalArgumentException 引数{@code day}が1〜31の範囲ではない場合
-	 * @return 日付仕様
+	 * @param month 月
+	 * @param day 日
+	 * @return 暦日仕様
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
 	public static AnnualDateSpecification fixed(MonthOfYear month, DayOfMonth day) {
@@ -161,22 +160,22 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 日付仕様「毎月{@code day}日（ただし、非営業日の場合は、前営業日/翌営業日）」のインスタンスを生成する。
+	 * 毎月{@code day}日（ただし、非営業日の場合は、前営業日/翌営業日）にマッチする暦日仕様を返す。
 	 * 
 	 * @param day 日
 	 * @param shifter シフト戦略
 	 * @param cal 営業日カレンダー
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
-	 * @return 日付仕様
+	 * @return 暦日仕様
 	 */
 	public static MonthlyDateSpecification fixedBusiness(DayOfMonth day, Shifter shifter, BusinessCalendar cal) {
 		return new MonthlyFixedBusinessDateSpecification(day, shifter, cal);
 	}
 	
 	/**
-	 * どの日付にもマッチしない日付仕様を返す。
+	 * どの暦日にもマッチしない暦日仕様を返す。
 	 * 
-	 * @return 日付仕様
+	 * @return 暦日仕様
 	 * @since 1.0
 	 */
 	public static DateSpecification never() {
@@ -184,44 +183,47 @@ public final class DateSpecifications {
 	}
 	
 	/**
-	 * 日付仕様「毎月第{@code n}◎曜日仕様」のインスタンスを生成する。
+	 * 毎月第{@code n}◎曜日にマッチする暦日仕様を返す。
 	 * 
 	 * @param dayOfWeek 曜日◎
-	 * @param n 周回数（1〜5）
-	 * @return 日付仕様
+	 * @param occurrence 序数（1〜5）
+	 * @return 暦日仕様
+	 * @throws IllegalArgumentException 引数{@code occurrence}が1〜5の範囲ではない場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static MonthlyDateSpecification nthOccuranceOfWeekdayInEveryMonth(DayOfWeek dayOfWeek, int n) {
-		return new MonthlyFloatingDateSpecification(dayOfWeek, n);
+	public static MonthlyDateSpecification nthOccuranceOfWeekdayInEveryMonth(DayOfWeek dayOfWeek, int occurrence) {
+		return new MonthlyFloatingDateSpecification(dayOfWeek, occurrence);
 	}
 	
 	/**
-	 * 日付仕様「{@code month}月の第{@code n}◎曜日仕様のインスタンスを生成する。
+	 * {@code month}月の第{@code n}◎曜日にマッチする暦日仕様を返す。
 	 * 
 	 * @param month 月を表す正数（1〜12）
 	 * @param dayOfWeek 曜日◎
-	 * @param n 周回数（1〜5）
-	 * @return 日付仕様
+	 * @param occurrence 序数（1〜5）
+	 * @return 暦日仕様
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
+	 * @throws IllegalArgumentException 引数{@code occurrence}が1〜5の範囲ではない場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(int month, DayOfWeek dayOfWeek, int n) {
-		return nthOccuranceOfWeekdayInMonth(MonthOfYear.valueOf(month), dayOfWeek, n);
+	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(int month, DayOfWeek dayOfWeek, int occurrence) {
+		return nthOccuranceOfWeekdayInMonth(MonthOfYear.valueOf(month), dayOfWeek, occurrence);
 	}
 	
 	/**
-	 * 日付仕様「{@code month}月の第{@code n}◎曜日仕様のインスタンスを生成する。
+	 * {@code month}月の第{@code n}◎曜日にマッチする暦日仕様を返す。
 	 * 
 	 * @param month 月
 	 * @param dayOfWeek 曜日◎
-	 * @param n 周回数（1〜5）
-	 * @return 日付仕様
+	 * @param occurrence 周回数（1〜5）
+	 * @return 暦日仕様
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
 	 */
-	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(MonthOfYear month, DayOfWeek dayOfWeek, int n) {
-		return new AnnualFloatingDateSpecification(month, dayOfWeek, n);
+	public static AnnualDateSpecification nthOccuranceOfWeekdayInMonth(MonthOfYear month, DayOfWeek dayOfWeek, int occurrence) {
+		return new AnnualFloatingDateSpecification(month, dayOfWeek, occurrence);
 	}
 	
 	private DateSpecifications() {

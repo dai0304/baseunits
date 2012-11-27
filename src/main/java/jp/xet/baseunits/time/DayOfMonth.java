@@ -24,10 +24,14 @@ import com.google.common.base.Preconditions;
 /**
  * 1ヶ月間の中の特定の「日」を表すクラス。
  * 
+ * <p>{@link CalendarDate} が「2012年11月27日」等を表現するのに対して、この型は年や月の概念を持たず、
+ * 単に「27日」等を表現する。</p>
+ * 
  * <p>タイムゾーンの概念はない。また、このクラスは特定の瞬間をモデリングしたものではなく、その日1日間全ての範囲を表すクラスである。</p>
  * 
  * @author daisuke
  * @since 1.0
+ * @see CalendarDate
  */
 @SuppressWarnings("serial")
 public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
@@ -121,11 +125,12 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * この日が、{@code other}よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 比較対象日
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -134,16 +139,16 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 		if (other == null) {
 			return false;
 		}
-		return isBefore(other) == false && equals(other) == false;
+		return value > other.value;
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+	 * この日が、{@code other}よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、同一日である場合は {@code false} を返す。</p>
+	 * また、同一である場合は {@code true} を返す。</p>
 	 * 
-	 * @param other 対象日
+	 * @param other 比較対象日
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.6
 	 */
@@ -151,16 +156,16 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 		if (other == null) {
 			return false;
 		}
-		return isBefore(other) == false;
+		return value >= other.value;
 	}
 	
 	/**
-	 * この日を、指定した年月に適用可能かどうか調べる。
+	 * この日を、指定した暦月に適用可能かどうか調べる。
 	 * 
 	 * <p>例えば、31日は6月に適用不可能であるが、7月には適用可能である。
 	 * また、29日は閏年の2月に適用可能であるが、平年の2月には適用不可能である。</p>
 	 * 
-	 * @param month 年月
+	 * @param month 暦月
 	 * @return 適用可能な場合は{@code true}、そうでない場合は{@code false}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -188,12 +193,13 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+	 * この日が、{@code other}よりも過去であるかどうかを検証する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一日である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日
-	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @param other 比較対象日
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -205,12 +211,12 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * この日が、{@code other}よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
 	 * また、同一日である場合は {@code true} を返す。</p>
 	 * 
-	 * @param other 対象日
+	 * @param other 比較対象日
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.6
 	 */
@@ -222,11 +228,11 @@ public class DayOfMonth implements Comparable<DayOfMonth>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月のこの日を返す。
+	 * 指定した暦月におけるこの日を表す暦日を返す。
 	 * 
-	 * @param month 年月
+	 * @param month 暦月
 	 * @return {@link CalendarDate}
-	 * @throws IllegalArgumentException 引数{@code month}の月にこの日が存在しない場合
+	 * @throws IllegalArgumentException 引数{@code month}の暦日にこの日が存在しない場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */

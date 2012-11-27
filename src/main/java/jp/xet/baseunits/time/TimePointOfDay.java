@@ -27,7 +27,7 @@ import jp.xet.baseunits.time.HourOfDay.Meridian;
 import com.google.common.base.Preconditions;
 
 /**
- * ミリ秒精度で、ある1日の特定の瞬間をあらわすクラス。
+ * ミリ秒精度で、日内の特定の瞬間をあらわすクラス。
  * 
  * <p>{@link TimeOfDay}と異なり、タイムゾーン情報を含んでいる。
  * 例えば、{@link TimeOfDay}は単純に「20:00」を表現するが、{@link TimePointOfDay}は「JSTの20:00」を表現する。
@@ -57,7 +57,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した時刻を返す。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -79,7 +79,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した時刻を返す。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -95,7 +95,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した時刻を返す。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -110,7 +110,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した時刻を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した時刻を返す。
 	 * 
 	 * @param hour 時
 	 * @param meridian 午前/午後
@@ -130,7 +130,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
+	 * 協定世界時における、指定した時刻を返す。
 	 * 
 	 * @param hour 時
 	 * @param meridian 午前/午後
@@ -146,7 +146,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける午前0時（深夜）を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける午前0時（深夜）を返す。
 	 * 
 	 * @param zone タイムゾーン
 	 * @return {@link TimePointOfDay}
@@ -159,7 +159,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 協定世界時における午前0時（深夜）を表すインスタンスを取得する。
+	 * 協定世界時における午前0時（深夜）を返す。
 	 * 
 	 * @return {@link TimePointOfDay}
 	 * @since 2.0
@@ -169,7 +169,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
+	 * 協定世界時における、指定した時刻を返す。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -181,7 +181,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
+	 * 協定世界時における、指定した時刻を返す。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -194,7 +194,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 協定世界時における、指定した時刻を表すインスタンスを取得する。
+	 * 協定世界時における、指定した時刻を返す。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -222,7 +222,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、時刻を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける時刻を返す。
 	 * 
 	 * @param time 時間
 	 * @param zone タイムゾーン
@@ -276,7 +276,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	/**
 	 * {@link Date}を{@link TimePointOfDay}に変換する。
 	 * 
-	 * @param javaDate 元となる時刻情報を表す {@link Date}インスタンス
+	 * @param javaDate 元となる時刻情報を表す{@link Date}
 	 * @return {@link TimePointOfDay}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -289,7 +289,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	/**
 	 * {@link Calendar}を{@link TimePointOfDay}に変換する。
 	 * 
-	 * @param calendar 元となる時刻情報を表す {@link Calendar}インスタンス
+	 * @param calendar 元となる時刻情報を表す{@link Calendar}
 	 * @return {@link TimePointOfDay}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -348,9 +348,9 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
+	 * このオブジェクトと、{@code obj}の同一性を検証する。
 	 * 
-	 * <p>与えたオブジェクトが {@code null} ではなく、かつ {@link TimePointOfDay}型であった場合、
+	 * <p>{@code obj}が {@code null} ではなく、かつ {@link TimePointOfDay}型であった場合、
 	 * 同じ時刻を指している場合は{@code true}、そうでない場合は{@code false}を返す。</p>
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -380,7 +380,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定した時刻 {@code other} が、このオブジェクトが表現する時刻よりも未来であるかどうかを検証する。
+	 * {@code other} が、この時刻よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>同一時刻である場合は {@code false} を返す。</p>
 	 * 
@@ -395,11 +395,11 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する時刻よりも過去であるかどうかを検証する。
+	 * {@code other} が、この時刻よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>同一時刻である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象時刻
+	 * @param other 比較対象時刻
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -496,7 +496,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間をUTCとして扱い、{@link Calendar}型として取得する。
+	 * この時刻をUTCとして扱い、エポックを基準とした{@link Calendar}型として取得する。
 	 * 
 	 * @return {@link Calendar}
 	 */
@@ -505,7 +505,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、{@link Calendar}型として取得する。
+	 * この時刻を指定したタイムゾーンとして扱い、エポックを基準とした{@link Calendar}型として取得する。
 	 * 
 	 * @param zone タイムゾーン
 	 * @return {@link Calendar}
@@ -519,7 +519,7 @@ public class TimePointOfDay implements Comparable<TimePointOfDay>, Serializable 
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間を、{@link Date}型として取得する。
+	 * この時刻を、エポックを基準とした{@link Date}型として取得する。
 	 * 
 	 * @return {@link Date}
 	 */

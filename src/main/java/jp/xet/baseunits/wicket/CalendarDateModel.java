@@ -22,12 +22,13 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 
 import com.google.common.base.Preconditions;
+
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 /**
- * {@link TimePoint}及び{@link TimeZone}のモデルより、{@link CalendarDate}を表現するモデル。
+ * {@link TimePoint}及びタイムゾーンによって、暦日を表現するモデル実装クラス。
  * 
  * @since 2.0
  */
@@ -42,7 +43,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timePointModel 基準時刻モデル
+	 * @param timePointModel {@link TimePoint}
 	 * @param timeZoneModel タイムゾーンモデル
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -57,7 +58,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timePointModel 基準時刻モデル
+	 * @param timePointModel {@link TimePoint}
 	 * @param timeZone タイムゾーン
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -69,7 +70,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timePoint 基準時刻
+	 * @param timePoint {@link TimePoint}
 	 * @param timeZoneModel タイムゾーンモデル
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -81,7 +82,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timePoint 基準時刻
+	 * @param timePoint {@link TimePoint}
 	 * @param timeZone タイムゾーン
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0

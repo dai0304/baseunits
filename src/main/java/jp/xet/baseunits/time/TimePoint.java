@@ -51,9 +51,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
-	 * @param yearMonth 年月
+	 * @param yearMonth 暦月
 	 * @param date 日
 	 * @param hour 時
 	 * @param minute 分
@@ -74,7 +74,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -103,7 +103,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -122,7 +122,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -140,7 +140,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月
@@ -163,7 +163,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 協定世界時における、指定した日時を表すインスタンスを取得する。
+	 * UTCにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -184,7 +184,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -207,9 +207,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時の午前0時（深夜）を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した暦日の午前0時（深夜）を表す{@link TimePoint}を返す。
 	 * 
-	 * @param calendarDate 日付
+	 * @param calendarDate 暦日
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
@@ -222,7 +222,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した暦日の午前0時（深夜）を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -238,7 +238,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 協定世界時における、指定した日付の午前0時（深夜）を表すインスタンスを取得する。
+	 * 協定世界時における、指定した暦日の午前0時（深夜）を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -251,7 +251,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 協定世界時における、指定した日時を表すインスタンスを取得する。
+	 * UTCにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -266,7 +266,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 協定世界時における、指定した日時を表すインスタンスを取得する。
+	 * UTCにおける、指定した瞬間を表す{@link TimePoint}を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -282,7 +282,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 協定世界時における、指定した日時を表すインスタンスを取得する。
+	 * 協定世界時における、指定した瞬間を返す。
 	 * 
 	 * @param year 年
 	 * @param month 月（1〜12）
@@ -299,9 +299,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおける、指定した日時を表すインスタンスを取得する。
+	 * 指定したタイムゾーンにおける、指定した瞬間を返す。
 	 * 
-	 * @param date 日付
+	 * @param date 暦日
 	 * @param time 時間
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
@@ -320,7 +320,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/**
 	 * {@link Date}を{@link TimePoint}に変換する。
 	 * 
-	 * @param javaDate 元となる日時情報を表す {@link Date}インスタンス
+	 * @param javaDate 変換元となる{@link Date}
 	 * @return {@link TimePoint}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -383,9 +383,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 日時を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その日時を表す {@link TimePoint}を返す。
+	 * 時間を表す文字列を、指定したパターンで指定したタイムゾーンとして解析し、その{@link TimePoint}を返す。
 	 * 
-	 * @param dateTimeString 日時を表す文字列
+	 * @param dateTimeString 時間を表す文字列
 	 * @param pattern 解析パターン（{@link SimpleDateFormat}参照）
 	 * @param zone タイムゾーン
 	 * @return {@link TimePoint}
@@ -403,9 +403,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 日時を表す文字列を、指定したパターンで協定世界時として解析し、その日時を表す {@link TimePoint}を返す。
+	 * 時間を表す文字列を、指定したパターンで協定世界時として解析し、その{@link TimePoint}を返す。
 	 * 
-	 * @param dateString 日時を表す文字列
+	 * @param dateString 時間を表す文字列
 	 * @param pattern 解析パターン（{@link SimpleDateFormat}参照）
 	 * @return {@link TimePoint}
 	 * @throws ParseException 文字列の解析に失敗した場合
@@ -421,7 +421,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/**
 	 * {@link Calendar}を{@link TimePoint}に変換する。
 	 * 
-	 * @param calendar 元となる日時情報を表す {@link Calendar}インスタンス
+	 * @param calendar 変換元となる{@link Calendar}
 	 * @return {@link TimePoint}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -441,10 +441,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
+	 * この瞬間の、指定したタイムゾーンにおける暦日を取得する。
 	 * 
 	 * @param zone タイムゾーン
-	 * @return 日付
+	 * @return 暦日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.3
 	 */
@@ -454,7 +454,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間をUTCとして扱い、{@link Calendar}型として取得する。
+	 * この瞬間をUTCとして扱い、{@link Calendar}型として取得する。
 	 * 
 	 * @return {@link Calendar}
 	 * @since 1.0
@@ -464,7 +464,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間を指定したタイムゾーンとして扱い、{@link Calendar}型として取得する。
+	 * この瞬間を指定したタイムゾーンとして扱い、{@link Calendar}型として取得する。
 	 * 
 	 * @param zone タイムゾーン
 	 * @return {@link Calendar}
@@ -479,7 +479,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間を、{@link Date}型として取得する。
+	 * この瞬間を、{@link Date}型として取得する。
 	 * 
 	 * @return {@link Date}
 	 * @since 1.0
@@ -515,7 +515,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付における午前0時（深夜）の瞬間を表す {@link TimePoint}を取得する。
+	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける暦日における午前0時（深夜）の瞬間を表す {@link TimePoint}を取得する。
 	 * 
 	 * @param zone タイムゾーン
 	 * @return 午前0時（深夜）の瞬間を表す {@link TimePoint}
@@ -528,10 +528,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける日付を取得する。
+	 * このインスタンスが表現する瞬間の、指定したタイムゾーンにおける暦日を取得する。
 	 * 
 	 * @param zone タイムゾーン
-	 * @return 日付
+	 * @return 暦日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 * @deprecated Use {@link #asCalendarDate(TimeZone)} instead
@@ -566,10 +566,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトと、与えたオブジェクト {@code other}の同一性を検証する。
+	 * このオブジェクトと、{@code obj}の同一性を検証する。
 	 * 
-	 * <p>与えたオブジェクトが {@code null} ではなく、かつ {@link TimePoint}型であった場合、
-	 * 同じ日時を指している場合は{@code true}、そうでない場合は{@code false}を返す。</p>
+	 * <p>{@code obj}が {@code null} ではなく、かつ {@link TimePoint}型であった場合、
+	 * 同じ瞬間を指している場合は{@code true}、そうでない場合は{@code false}を返す。</p>
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 * @since 1.0
@@ -598,12 +598,12 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
+	 * この瞬間が、{@code other}よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 比較対象{@link TimePoint}
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
@@ -615,12 +615,13 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスがあらわす瞬間が、指定した期間の終了後に位置するかどうか調べる。
+	 * この瞬間が、{@code interval}の終了よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>{@code interval} が {@code null} である場合は {@code false} を返す。</p>
+	 * <p>{@code interval} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param interval 基準期間
-	 * @return 期間の終了後に位置する場合は{@code true}、そうでない場合は{@code false}
+	 * @param interval 比較対象期間
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -632,12 +633,12 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも未来であるかどうかを検証する。
+	 * この瞬間が、{@code other}よりも未来であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、同一日時である場合は {@code false} を返す。</p>
+	 * また、同一である場合は {@code true} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 比較対象{@link TimePoint}
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.3
 	 */
@@ -649,12 +650,12 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
+	 * この瞬間が、{@code other}よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、同一日時である場合は {@code false} を返す。</p>
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 比較対象{@link TimePoint}
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
@@ -666,11 +667,11 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスがあらわす瞬間が、指定した期間の開始前に位置するかどうか調べる。
+	 * この瞬間が、{@code interval}の開始よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code interval} が {@code null} である場合は {@code false} を返す。</p>
 	 * 
-	 * @param interval 基準期間
+	 * @param interval 比較対象期間
 	 * @return 期間の開始前に位置する場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
@@ -682,12 +683,12 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定した瞬間 {@code other} が、このオブジェクトが表現する日時よりも過去であるかどうかを検証する。
+	 * この瞬間が、{@code other}よりも過去であるかどうかを検証する。
 	 * 
 	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
-	 * また、同一日時である場合は {@code true} を返す。</p>
+	 * また、同一である場合は {@code true} を返す。</p>
 	 * 
-	 * @param other 対象日時
+	 * @param other 比較対象{@link TimePoint}
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.3
 	 */
@@ -699,7 +700,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * 指定したタイムゾーンにおいて、このインスタンスが表現する瞬間と指定した瞬間{@code other}の年月日が等価であるかを調べる。
+	 * 指定したタイムゾーンにおいて、この瞬間と{@code other}が等価であるかを調べる。
 	 * 
 	 * @param other 対象瞬間
 	 * @param zone タイムゾーン
@@ -714,10 +715,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * この日時の、指定した時間の長さ分過去の日時を取得する。
+	 * この{@link TimePoint}の、指定した時間の長さ分過去の{@link TimePoint}を取得する。
 	 * 
 	 * @param duration 時間の長さ
-	 * @return 過去の日時
+	 * @return 過去の{@link TimePoint}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #plus(Duration)
 	 * @since 1.0
@@ -728,7 +729,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間の、ちょうど1日後を取得する。
+	 * この{@link TimePoint}の、1日後に当たる{@link TimePoint}を返す。
 	 * 
 	 * <p>日内の時間は変化しない。</p>
 	 * 
@@ -742,10 +743,10 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * この瞬間から、指定した時間の長さ分未来の瞬間を取得する。
+	 * この{@link TimePoint}の、指定した時間の長さ分未来の{@link TimePoint}を取得する。
 	 * 
 	 * @param duration 時間の長さ
-	 * @return 未来の日時
+	 * @return 未来の{@link TimePoint}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #minus(Duration)
 	 * @since 1.0
@@ -756,7 +757,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する瞬間の、ちょうど1日前を取得する。
+	 * この{@link TimePoint}の、1日前に当たる{@link TimePoint}を返す。
 	 * 
 	 * <p>日内の時間は変化しない。</p>
 	 * 
@@ -866,9 +867,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/**
 	 * このインスタンスがあらわす瞬間を開始瞬間、{@code end}を終了瞬間とする、期間を返す。
 	 * 
-	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
+	 * <p>生成する期間の開始{@link TimePoint}は期間に含み（閉じている）、終了{@link TimePoint}は期間に含まない（開いている）半開区間を生成する。</p>
 	 * 
-	 * @param end 終了日時（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param end 終了{@link TimePoint}（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return {@link TimePointInterval}
 	 * @since 1.0
 	 */

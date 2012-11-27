@@ -21,7 +21,7 @@
 package jp.xet.baseunits.time;
 
 /**
- * 現在時刻を返す責務を表すインターフェイス。
+ * 現在の{@link TimePoint}を返す責務を表すインターフェイス。
  * 
  * @author daisuke
  * @since 1.0
@@ -29,10 +29,10 @@ package jp.xet.baseunits.time;
 public interface TimeSource {
 	
 	/**
-	 * 現在時刻を返す。
+	 * 現在の{@link TimePoint}を返す。
 	 * 
-	 * @return 現在時刻
-	 * @throws TimeSourceException 現在時刻の取得に失敗した場合
+	 * @return 現在の{@link TimePoint}
+	 * @throws TimeSourceException 現在の{@link TimePoint}の取得に失敗した場合
 	 * @since 1.0
 	 */
 	TimePoint now();

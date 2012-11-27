@@ -33,13 +33,15 @@ import com.ibm.icu.text.TimeUnitFormat;
 import com.ibm.icu.util.TimeUnitAmount;
 
 /**
- * TODO for daisuke
+ * 時間量を文字列に整形するフォーマッタ実装クラス。
  * 
  * @author daisuke
  * @since 2.5
  */
 @SuppressWarnings("serial")
 public class DetailedDurationFormatter extends AbstractDurationFormatter implements Serializable {
+	
+	private static final String DEFAULT_SEPARATOR = " ";
 	
 	private static final Map<TimeUnit, com.ibm.icu.util.TimeUnit> TIME_UNIT_MAP;
 	
@@ -57,25 +59,30 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 	
 	private final boolean allowZero;
 	
+	private final String separator;
+	
 	private final TimeUnit[] timeUnits;
 	
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param allowZero 
-	 * @param timeUnit 
-	 * @param timeUnits 
-	 * @since 2.5
+	 * @param allowZero 値が{@code 0}となるセクションを表示する場合は{@code true}、そうでない場合は{@code false}
+	 * @param separator セクション区切り文字列
+	 * @param timeUnit 1番目のセクションの単位
+	 * @param timeUnits 2番目以降のセクションの単位
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 2.9
 	 */
-	public DetailedDurationFormatter(boolean allowZero, TimeUnit timeUnit, TimeUnit... timeUnits) {
+	public DetailedDurationFormatter(boolean allowZero, String separator, TimeUnit timeUnit, TimeUnit... timeUnits) {
+		Preconditions.checkNotNull(separator);
 		Preconditions.checkNotNull(timeUnit);
 		Preconditions.checkNotNull(timeUnits);
 		for (TimeUnit u : timeUnits) {
 			Preconditions.checkNotNull(u);
 		}
 		this.allowZero = allowZero;
+		this.separator = separator;
 		this.timeUnits = new TimeUnit[timeUnits.length + 1];
 		this.timeUnits[0] = timeUnit;
 		System.arraycopy(timeUnits, 0, this.timeUnits, 1, timeUnits.length);
@@ -83,6 +90,19 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 		for (TimeUnit u : this.timeUnits) {
 			Preconditions.checkArgument(TIME_UNIT_MAP.containsKey(u));
 		}
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param allowZero 値が{@code 0}となるセクションを表示する場合は{@code true}、そうでない場合は{@code false}
+	 * @param timeUnit 1番目のセクションの単位
+	 * @param timeUnits 2番目以降のセクションの単位
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 2.5
+	 */
+	public DetailedDurationFormatter(boolean allowZero, TimeUnit timeUnit, TimeUnit... timeUnits) {
+		this(allowZero, DEFAULT_SEPARATOR, timeUnit, timeUnits);
 	}
 	
 	@Override
@@ -102,7 +122,7 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 			sections.add(format.format(amount));
 		}
 		
-		return Joiner.on(' ').join(sections);
+		return Joiner.on(separator).join(sections);
 	}
 	
 	private List<TimeUnitAmount> divide(Duration target) {
