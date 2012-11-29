@@ -6,6 +6,7 @@
  */
 package jp.xet.baseunits.wicket;
 
+import java.io.Serializable;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePoint;
@@ -15,7 +16,9 @@ import jp.xet.baseunits.time.formatter.RelativeTimePointFormatter.FallbackConfig
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * TODO for daisuke
@@ -27,7 +30,11 @@ import org.apache.wicket.util.convert.IConverter;
 @SuppressWarnings("serial")
 public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	
-	private final IConverter<TimePoint> converter;
+	private final RelativeTimePointFormatter formatter;
+	
+	private final IModel<FallbackConfig> configModel;
+	
+	private final IModel<TimeZone> timeZoneModel;
 	
 	
 	/**
@@ -38,9 +45,27 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 * @param timeZone {@link TimeZone}
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.2
+	 * @deprecated on 2.9 use {@link #RelativeTimeLabel(String, IModel, IModel)}
 	 */
+	@Deprecated
 	public RelativeTimeLabel(String id, FallbackConfig config, TimeZone timeZone) {
-		this(id, new Icu4jRelativeTimePointFormatter(config, timeZone));
+		this(id, Model.of(config), Model.of(timeZone));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param configModel {@link FallbackConfig}
+	 * @param timeZoneModel {@link TimeZone}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.9
+	 */
+	public RelativeTimeLabel(String id, IModel<FallbackConfig> configModel, IModel<TimeZone> timeZoneModel) {
+		super(id);
+		formatter = null;
+		this.configModel = configModel;
+		this.timeZoneModel = timeZoneModel;
 	}
 	
 	/**
@@ -52,9 +77,29 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 * @param timeZone {@link TimeZone}
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @since 2.2
+	 * @deprecated on 2.9 use {@link #RelativeTimeLabel(String, IModel, IModel, IModel)}
 	 */
+	@Deprecated
 	public RelativeTimeLabel(String id, IModel<TimePoint> model, FallbackConfig config, TimeZone timeZone) {
-		this(id, model, new Icu4jRelativeTimePointFormatter(config, timeZone));
+		this(id, model, Model.of(config), Model.of(timeZone));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 * @param configModel {@link FallbackConfig}
+	 * @param timeZoneModel {@link TimeZone}
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.9
+	 */
+	public RelativeTimeLabel(String id, IModel<TimePoint> model, IModel<FallbackConfig> configModel,
+			IModel<TimeZone> timeZoneModel) {
+		super(id, model);
+		formatter = null;
+		this.configModel = configModel;
+		this.timeZoneModel = timeZoneModel;
 	}
 	
 	/**
@@ -68,7 +113,10 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 */
 	public RelativeTimeLabel(String id, IModel<TimePoint> model, RelativeTimePointFormatter formatter) {
 		super(id, model);
-		converter = new RelativeTimePointConverter(formatter);
+		Args.isTrue(formatter == null || formatter instanceof Serializable, "formatter must be Serializable");
+		this.formatter = formatter;
+		configModel = null;
+		timeZoneModel = null;
 	}
 	
 	/**
@@ -81,14 +129,18 @@ public class RelativeTimeLabel extends GenericLabel<TimePoint> {
 	 */
 	public RelativeTimeLabel(String id, RelativeTimePointFormatter formatter) {
 		super(id);
-		converter = new RelativeTimePointConverter(formatter);
+		Args.isTrue(formatter == null || formatter instanceof Serializable, "formatter must be Serializable");
+		this.formatter = formatter;
+		configModel = null;
+		timeZoneModel = null;
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	public <C>IConverter<C> getConverter(Class<C> type) {
 		if (type == TimePoint.class) {
-			return (IConverter<C>) converter;
+			return (IConverter<C>) new RelativeTimePointConverter(formatter != null ?
+					formatter : new Icu4jRelativeTimePointFormatter(configModel.getObject(), timeZoneModel.getObject()));
 		}
 		return super.getConverter(type);
 	}
