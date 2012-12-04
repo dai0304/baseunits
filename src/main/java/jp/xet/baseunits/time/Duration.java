@@ -741,7 +741,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	
 	private void checkGreaterThanOrEqualTo(Duration other) {
 		if (compareTo(other) < 0) {
-			throw new IllegalArgumentException(this + " is before " + other);
+			throw new IllegalArgumentException(this + " is less than " + other);
 		}
 	}
 	
