@@ -223,6 +223,8 @@ public class DurationTest {
 		} catch (IllegalArgumentException e) {
 			// success
 		}
+		
+		assertThat(Duration.NONE.plus(Duration.NONE), is(Duration.NONE));
 	}
 	
 	/**
@@ -250,6 +252,8 @@ public class DurationTest {
 		} catch (IllegalArgumentException e) {
 			// success
 		}
+		
+		assertThat(Duration.NONE.minus(Duration.NONE), is(Duration.NONE));
 	}
 	
 	/**
