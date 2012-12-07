@@ -28,9 +28,6 @@ import com.ibm.icu.impl.duration.BasicPeriodFormatterService;
 import com.ibm.icu.impl.duration.DurationFormatter;
 import com.ibm.icu.impl.duration.DurationFormatterFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * ICU4Jを利用した {@link RelativeTimePointFormatter} 実装クラス。
  * 
@@ -39,8 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("serial")
 public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFormatter implements Serializable {
-	
-	private static Logger logger = LoggerFactory.getLogger(Icu4jRelativeTimePointFormatter.class);
 	
 	private static final BasicPeriodFormatterService SERVICE = BasicPeriodFormatterService.getInstance();
 	
@@ -94,7 +89,6 @@ public class Icu4jRelativeTimePointFormatter extends AbstractRelativeTimePointFo
 		if (SERVICE.getAvailableLocaleNames().contains(locale.getLanguage())) {
 			dff.setLocale(locale.getLanguage());
 		} else {
-			logger.warn("Ignore unsupported locale by ICU4J: {}", locale.getLanguage());
 			dff.setLocale("en");
 		}
 		

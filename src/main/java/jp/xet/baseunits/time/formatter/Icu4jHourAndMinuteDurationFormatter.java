@@ -22,13 +22,10 @@ import java.util.Locale;
 import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimeUnit;
 
+import com.google.common.base.Preconditions;
 import com.ibm.icu.text.TimeUnitFormat;
 import com.ibm.icu.util.TimeUnitAmount;
 import com.ibm.icu.util.ULocale;
-
-import com.google.common.base.Preconditions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * ICU4Jを利用した、時・分レベルの {@link DurationFormatter} 実装クラス。
@@ -42,8 +39,6 @@ import org.slf4j.LoggerFactory;
 @Deprecated
 @SuppressWarnings("serial")
 public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatter implements Serializable {
-	
-	private static Logger logger = LoggerFactory.getLogger(Icu4jHourAndMinuteDurationFormatter.class);
 	
 	private final boolean displayZeroMinute;
 	
@@ -73,9 +68,6 @@ public class Icu4jHourAndMinuteDurationFormatter extends AbstractDurationFormatt
 		Preconditions.checkNotNull(locale);
 		
 		ULocale uLocale = ULocale.forLocale(locale);
-		if (logger.isTraceEnabled()) {
-			logger.trace("convert Locale [{}] to ULocale[{}]", locale, uLocale);
-		}
 		TimeUnitFormat format = new TimeUnitFormat(uLocale);
 		
 		long h = target.to(TimeUnit.hour);
