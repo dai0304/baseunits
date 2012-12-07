@@ -23,10 +23,9 @@ import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePointOfDay;
 
-import com.google.common.base.Strings;
-
-import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Converts from Object to {@link TimePointOfDay}.
@@ -50,11 +49,11 @@ public class TimePointOfDayConverter extends AbstractConverter<TimePointOfDay> {
 	 * 
 	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone タイムゾーン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimePointOfDayConverter(String timePattern, TimeZone timeZone) {
-		Preconditions.checkNotNull(timePattern);
-		Preconditions.checkNotNull(timeZone);
+		Args.notNull(timePattern, "timePattern");
+		Args.notNull(timeZone, "timeZone");
 		this.timePattern = timePattern;
 		this.timeZone = timeZone;
 	}
@@ -63,7 +62,7 @@ public class TimePointOfDayConverter extends AbstractConverter<TimePointOfDay> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timeZone タイムゾーン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimePointOfDayConverter(TimeZone timeZone) {
 		this(DEFAILT_PATTERN, timeZone);
@@ -71,7 +70,7 @@ public class TimePointOfDayConverter extends AbstractConverter<TimePointOfDay> {
 	
 	@Override
 	public TimePointOfDay convertToObject(String value, Locale locale) {
-		if (Strings.isNullOrEmpty(value)) {
+		if (Strings.isEmpty(value)) {
 			return null;
 		}
 		

@@ -20,11 +20,11 @@ import java.text.SimpleDateFormat;
 
 import jp.xet.baseunits.time.TimeOfDay;
 
-import com.google.common.base.Preconditions;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * {@link TimeOfDay}を表示するWicketのLabelコンポーネント実装クラス。
@@ -58,10 +58,11 @@ public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 	 * @param model The component's model
 	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @throws IllegalArgumentException 引数{@code timePattern}に{@code null}を与えた場合
 	 */
 	public TimeOfDayLabel(String id, IModel<TimeOfDay> model, String timePattern) {
 		super(id, model);
-		Preconditions.checkNotNull(timePattern);
+		Args.notNull(timePattern, "timePattern");
 		this.timePattern = timePattern;
 	}
 	

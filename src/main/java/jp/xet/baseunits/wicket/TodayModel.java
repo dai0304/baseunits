@@ -21,10 +21,10 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.timeutil.Clock;
 
-import com.google.common.base.Preconditions;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * {@link TimeZone}のモデルより、「今日」を表現するモデル。
@@ -39,10 +39,10 @@ public class TodayModel extends LoadableDetachableModel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timeZoneModel タイムゾーン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TodayModel(IModel<TimeZone> timeZoneModel) {
-		Preconditions.checkNotNull(timeZoneModel);
+		Args.notNull(timeZoneModel, "timeZoneModel");
 		this.timeZoneModel = timeZoneModel;
 	}
 	
@@ -50,12 +50,9 @@ public class TodayModel extends LoadableDetachableModel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timeZone タイムゾーン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public TodayModel(TimeZone timeZone) {
 		this(Model.of(timeZone));
-		Preconditions.checkNotNull(timeZone);
-		
 	}
 	
 	@Override
@@ -68,6 +65,10 @@ public class TodayModel extends LoadableDetachableModel<CalendarDate> {
 	
 	@Override
 	protected CalendarDate load() {
-		return Clock.today(timeZoneModel.getObject());
+		TimeZone timeZone = timeZoneModel.getObject();
+		if (timeZone == null) {
+			timeZone = TimeZone.getTimeZone("Universal");
+		}
+		return Clock.today(timeZone);
 	}
 }

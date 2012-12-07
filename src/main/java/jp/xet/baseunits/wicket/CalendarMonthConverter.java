@@ -22,10 +22,9 @@ import java.util.Locale;
 
 import jp.xet.baseunits.time.CalendarMonth;
 
-import com.google.common.base.Strings;
-
-import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Converts from Object to {@link CalendarMonth}.
@@ -58,17 +57,17 @@ public class CalendarMonthConverter extends AbstractConverter<CalendarMonth> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.1
 	 */
 	public CalendarMonthConverter(String datePattern) {
-		Preconditions.checkNotNull(datePattern);
+		Args.notNull(datePattern, "datePattern");
 		this.datePattern = datePattern;
 	}
 	
 	@Override
 	public CalendarMonth convertToObject(String value, Locale locale) {
-		if (Strings.isNullOrEmpty(value)) {
+		if (Strings.isEmpty(value)) {
 			return null;
 		}
 		

@@ -22,8 +22,8 @@ import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.formatter.DurationFormatter;
 import jp.xet.baseunits.time.formatter.Icu4jDurationFormatter;
 
-import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Converts from Object to {@link Duration}.
@@ -50,11 +50,11 @@ public class DurationConverter extends AbstractConverter<Duration> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param durationFormatter {@link DurationFormatter}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.4
 	 */
 	public DurationConverter(DurationFormatter durationFormatter) {
-		Preconditions.checkNotNull(durationFormatter);
+		Args.notNull(durationFormatter, "durationFormatter");
 		this.durationFormatter = durationFormatter;
 	}
 	

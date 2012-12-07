@@ -22,10 +22,9 @@ import java.util.Locale;
 
 import jp.xet.baseunits.time.CalendarDate;
 
-import com.google.common.base.Strings;
-
-import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Converts from Object to {@link CalendarDate}.
@@ -58,17 +57,17 @@ public class CalendarDateConverter extends AbstractConverter<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public CalendarDateConverter(String datePattern) {
-		Preconditions.checkNotNull(datePattern);
+		Args.notNull(datePattern, "datePattern");
 		this.datePattern = datePattern;
 	}
 	
 	@Override
 	public CalendarDate convertToObject(String value, Locale locale) {
-		if (Strings.isNullOrEmpty(value)) {
+		if (Strings.isEmpty(value)) {
 			return null;
 		}
 		

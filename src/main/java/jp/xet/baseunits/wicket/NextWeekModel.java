@@ -21,10 +21,10 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.CalendarWeek;
 import jp.xet.baseunits.timeutil.Clock;
 
-import com.google.common.base.Preconditions;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * {@link TimeZone}のモデルより、「来週」を表現するモデル。
@@ -39,10 +39,10 @@ public class NextWeekModel extends LoadableDetachableModel<CalendarWeek> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timeZoneModel タイムゾーン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public NextWeekModel(IModel<TimeZone> timeZoneModel) {
-		Preconditions.checkNotNull(timeZoneModel);
+		Args.notNull(timeZoneModel, "timeZoneModel");
 		this.timeZoneModel = timeZoneModel;
 	}
 	
@@ -50,11 +50,9 @@ public class NextWeekModel extends LoadableDetachableModel<CalendarWeek> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timeZone タイムゾーン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public NextWeekModel(TimeZone timeZone) {
 		this(Model.of(timeZone));
-		Preconditions.checkNotNull(timeZone);
 		
 	}
 	
@@ -68,6 +66,10 @@ public class NextWeekModel extends LoadableDetachableModel<CalendarWeek> {
 	
 	@Override
 	protected CalendarWeek load() {
-		return Clock.today(timeZoneModel.getObject()).asCalendarWeek().nextWeek();
+		TimeZone timeZone = timeZoneModel.getObject();
+		if (timeZone == null) {
+			timeZone = TimeZone.getTimeZone("Universal");
+		}
+		return Clock.today(timeZone).asCalendarWeek().nextWeek();
 	}
 }

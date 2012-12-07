@@ -22,11 +22,11 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.CalendarMonth;
 import jp.xet.baseunits.time.TimePoint;
 
-import com.google.common.base.Preconditions;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * {@link CalendarMonth}を表示するWicketのLabelコンポーネント実装クラス。
@@ -86,11 +86,12 @@ public class CalendarMonthLabel extends GenericLabel<CalendarMonth> {
 	 * @param model The component's model
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @throws IllegalArgumentException 引数{@code datePattern}に{@code null}を与えた場合
 	 * @since 2.1
 	 */
 	public CalendarMonthLabel(String id, IModel<CalendarMonth> model, String datePattern) {
 		super(id, model);
-		Preconditions.checkNotNull(datePattern);
+		Args.notNull(datePattern, "datePattern");
 		this.datePattern = datePattern;
 	}
 	
@@ -143,11 +144,11 @@ public class CalendarMonthLabel extends GenericLabel<CalendarMonth> {
 	 * {@link SimpleDateFormat}に基づくパターンを設定する。
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.1
 	 */
 	protected void setDatePattern(String datePattern) {
-		Preconditions.checkNotNull(datePattern);
+		Args.notNull(datePattern, "datePattern");
 		this.datePattern = datePattern;
 	}
 }

@@ -18,10 +18,10 @@ package jp.xet.baseunits.wicket;
 
 import jp.xet.baseunits.time.CalendarDate;
 
-import com.google.common.base.Preconditions;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * 日付期間の開始と終了を表す2つの {@link FormComponent} について、開始日が終了日より未来でないことを検証するバリデータ。
@@ -42,10 +42,11 @@ public class CalendarRangeValidator extends AbstractFormValidator {
 	 * 
 	 * @param from 自
 	 * @param to 至
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public CalendarRangeValidator(FormComponent<CalendarDate> from, FormComponent<CalendarDate> to) {
-		Preconditions.checkNotNull(from);
-		Preconditions.checkNotNull(to);
+		Args.notNull(from, "from");
+		Args.notNull(to, "to");
 		this.from = from;
 		this.to = to;
 	}

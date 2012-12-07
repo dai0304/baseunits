@@ -22,9 +22,8 @@ import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.time.formatter.RelativeTimePointFormatter;
 
-import com.google.common.base.Preconditions;
-
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Converts from Object to {@link Duration}.
@@ -41,12 +40,12 @@ public class RelativeTimePointConverter extends AbstractConverter<TimePoint> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param formatter
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @param formatter {@link RelativeTimePointFormatter}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.7
 	 */
 	public RelativeTimePointConverter(RelativeTimePointFormatter formatter) {
-		Preconditions.checkNotNull(formatter);
+		Args.notNull(formatter, "formatter");
 		this.formatter = formatter;
 	}
 	

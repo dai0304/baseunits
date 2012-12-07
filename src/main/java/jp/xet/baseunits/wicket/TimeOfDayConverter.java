@@ -22,10 +22,9 @@ import java.util.Locale;
 
 import jp.xet.baseunits.time.TimeOfDay;
 
-import com.google.common.base.Strings;
-
-import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Converts from Object to {@link TimeOfDay}.
@@ -53,16 +52,16 @@ public class TimeOfDayConverter extends AbstractConverter<TimeOfDay> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param timePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimeOfDayConverter(String timePattern) {
-		Preconditions.checkNotNull(timePattern);
+		Args.notNull(timePattern, "timePattern");
 		this.timePattern = timePattern;
 	}
 	
 	@Override
 	public TimeOfDay convertToObject(String value, Locale locale) {
-		if (Strings.isNullOrEmpty(value)) {
+		if (Strings.isEmpty(value)) {
 			return null;
 		}
 		

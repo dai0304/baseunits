@@ -21,12 +21,11 @@ import java.util.TimeZone;
 
 import jp.xet.baseunits.time.TimePoint;
 
-import com.google.common.base.Preconditions;
-
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * {@link TimePoint}を表示するWicketのLabelコンポーネント実装クラス。
@@ -64,11 +63,12 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZoneModel タイムゾーン
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @throws IllegalArgumentException 引数{@code datePattern}または{@code timeZoneModel}に{@code null}を与えた場合
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, String datePattern, IModel<TimeZone> timeZoneModel) {
 		super(id, model);
-		Preconditions.checkNotNull(datePattern);
-		Preconditions.checkNotNull(timeZoneModel);
+		Args.notNull(datePattern, "datePattern");
+		Args.notNull(timeZoneModel, "timeZoneModel");
 		this.datePattern = datePattern;
 		this.timeZoneModel = timeZoneModel;
 	}
@@ -98,14 +98,28 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 		this(id, model, DEFAULT_PATTERN, Model.of(timeZone));
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param timeZoneModel time zone
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 */
 	public TimePointLabel(String id, IModel<TimeZone> timeZoneModel) {
 		this(id, DEFAULT_PATTERN, timeZoneModel);
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
+	 * @param timeZoneModel time zone
+	 */
 	public TimePointLabel(String id, String datePattern, IModel<TimeZone> timeZoneModel) {
 		super(id);
-		Preconditions.checkNotNull(datePattern);
-		Preconditions.checkNotNull(timeZoneModel);
+		Args.notNull(datePattern, "datePattern");
+		Args.notNull(timeZoneModel, "timeZoneModel");
 		this.datePattern = datePattern;
 		this.timeZoneModel = timeZoneModel;
 	}
@@ -191,10 +205,10 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * {@link SimpleDateFormat}に基づくパターンを設定する。
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	protected void setDatePattern(String datePattern) {
-		Preconditions.checkNotNull(datePattern);
+		Args.notNull(datePattern, "datePattern");
 		this.datePattern = datePattern;
 	}
 }

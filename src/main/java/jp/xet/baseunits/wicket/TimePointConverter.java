@@ -24,10 +24,9 @@ import java.util.TimeZone;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.TimePoint;
 
-import com.google.common.base.Strings;
-
-import com.google.common.base.Preconditions;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Converts from Object to {@link CalendarDate}.
@@ -54,11 +53,11 @@ public class TimePointConverter extends AbstractConverter<TimePoint> {
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone タイムゾーン
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public TimePointConverter(String datePattern, TimeZone timeZone) {
-		Preconditions.checkNotNull(datePattern);
-		Preconditions.checkNotNull(timeZone);
+		Args.notNull(datePattern, "datePattern");
+		Args.notNull(timeZone, "timeZone");
 		this.datePattern = datePattern;
 		this.timeZone = timeZone;
 	}
@@ -74,7 +73,7 @@ public class TimePointConverter extends AbstractConverter<TimePoint> {
 	
 	@Override
 	public TimePoint convertToObject(String value, Locale locale) {
-		if (Strings.isNullOrEmpty(value)) {
+		if (Strings.isEmpty(value)) {
 			return null;
 		}
 		
