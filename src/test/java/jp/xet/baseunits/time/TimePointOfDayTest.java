@@ -27,7 +27,6 @@ import static org.junit.Assert.fail;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.time.HourOfDay.Meridian;
-import jp.xet.baseunits.timeutil.Clock;
 
 import org.junit.Test;
 
@@ -116,18 +115,5 @@ public class TimePointOfDayTest {
 	public void test05_() throws Exception {
 		assertThat(TimePointOfDay.UTC_NOON.plus(Duration.hours(3)), is(TimePointOfDay.atUTC(15, 0)));
 		assertThat(TimePointOfDay.UTC_NOON.minus(Duration.hours(3)), is(TimePointOfDay.atUTC(9, 0)));
-	}
-	
-	/**
-	 * TODO for daisuke
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void testname() throws Exception {
-		TimePoint now = Clock.now();
-		TimePointOfDay a = TimePointOfDay.from(now.asTimeOfDay(UTC), UTC);
-		TimePointOfDay b = now.asTimePointOfDay();
-		assertThat(a, is(b));
 	}
 }

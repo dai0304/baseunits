@@ -70,7 +70,7 @@ public class DetailedDurationFormatterTest {
 	}
 	
 	@Test
-	public void test3() throws Exception {
+	public void test3() {
 		DurationFormatter f1 = new DetailedDurationFormatter(true, TimeUnit.hour, TimeUnit.minute);
 		DurationFormatter f2 = new DetailedDurationFormatter(false, TimeUnit.hour, TimeUnit.minute);
 		assertThat(f1.format(Duration.NONE), is("0時間 0分"));

@@ -21,9 +21,9 @@
 package jp.xet.baseunits.time;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.Calendar;
@@ -32,6 +32,7 @@ import java.util.TimeZone;
 
 import jp.xet.baseunits.tests.SerializationTester;
 import jp.xet.baseunits.time.HourOfDay.Meridian;
+import jp.xet.baseunits.timeutil.Clock;
 
 import org.junit.Test;
 
@@ -374,6 +375,9 @@ public class TimePointTest {
 	public void test20_asTimePointOfDay() throws Exception {
 		assertThat(TimePoint.at(2012, 2, 26, 14, 18, TimeZone.getTimeZone("Japan")).asTimePointOfDay(),
 				is(TimePointOfDay.at(14, 18, TimeZone.getTimeZone("Japan"))));
+		
+		TimePoint now = Clock.now();
+		assertThat(now.asTimePointOfDay(), is(TimePointOfDay.from(now.asTimeOfDay(UTC), UTC)));
 	}
 	
 	/**
