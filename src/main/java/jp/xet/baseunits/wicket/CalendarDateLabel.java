@@ -107,6 +107,21 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
+	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
+	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @throws IllegalArgumentException 引数{@code datePattern}に{@code null}を与えた場合
+	 * @since 2.10
+	 */
+	public CalendarDateLabel(String id, String datePattern) {
+		super(id);
+		Args.notNull(datePattern, "datePattern");
+		this.datePattern = datePattern;
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
 	 * @param timePoint 表示する暦日が属する{@link TimePoint}
 	 * @param timeZone タイムゾーン
 	 * @throws WicketRuntimeException if the component has been given a null id.
