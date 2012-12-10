@@ -30,7 +30,7 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 /**
- * 区間列（複数の {@link Interval 区間} の列）を表すクラス。
+ * 区間列（複数の{@link Interval 区間}の列）を表すクラス。
  * 
  * @param <T> {@link Interval 区間}の型
  * @author daisuke

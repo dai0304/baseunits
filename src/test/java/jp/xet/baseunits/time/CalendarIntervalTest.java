@@ -99,9 +99,18 @@ public class CalendarIntervalTest {
 	 */
 	@Test
 	public void test03_Equals() throws Exception {
+		assertThat(may.equals(may1), is(false)); // 型違い
 		assertThat(may.equals(CalendarInterval.inclusive(may1, may31)), is(true));
-		assertThat(may.equals(may1), is(false));
 		assertThat(may.equals(CalendarInterval.inclusive(may1, may20)), is(false));
+		
+		assertThat(may.equals(may), is(true));
+		assertThat(may.equals(may1.asCalendarMonth().asCalendarInterval()), is(true));
+		assertThat(may.equals(CalendarInterval.empty()), is(false));
+		
+		// 限界値が異なっていても、空区間同士は等価
+		assertThat(CalendarInterval.empty().equals(CalendarInterval.empty()), is(true));
+		assertThat(CalendarInterval.open(may1, may1).equals(CalendarInterval.open(may2, may2)), is(true));
+		assertThat(CalendarInterval.empty().equals(CalendarInterval.open(may1, may1)), is(true));
 	}
 	
 	/**

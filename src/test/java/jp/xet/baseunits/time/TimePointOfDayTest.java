@@ -112,7 +112,7 @@ public class TimePointOfDayTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test05_() throws Exception {
+	public void test05_plus_minus() throws Exception {
 		assertThat(TimePointOfDay.UTC_NOON.plus(Duration.hours(3)), is(TimePointOfDay.atUTC(15, 0)));
 		assertThat(TimePointOfDay.UTC_NOON.minus(Duration.hours(3)), is(TimePointOfDay.atUTC(9, 0)));
 	}

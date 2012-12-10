@@ -46,7 +46,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param calendarDate 表示する日付
+	 * @param calendarDate 表示する暦日
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public CalendarDateLabel(String id, CalendarDate calendarDate) {
@@ -57,7 +57,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param calendarDate 表示する日付
+	 * @param calendarDate 表示する暦日
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
@@ -69,7 +69,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param model The component's model
+	 * @param model 表示する暦日
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
 	public CalendarDateLabel(String id, IModel<CalendarDate> model) {
@@ -80,7 +80,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param model The component's model
+	 * @param model 表示する暦日
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @throws IllegalArgumentException 引数{@code datePattern}に{@code null}を与えた場合
@@ -95,7 +95,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param timePointModel 基準時刻モデル
+	 * @param timePointModel 表示する暦日が属する{@link TimePoint}
 	 * @param timeZoneModel タイムゾーンモデル
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */
@@ -107,7 +107,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param timePoint 表示する日付
+	 * @param timePoint 表示する暦日が属する{@link TimePoint}
 	 * @param timeZone タイムゾーン
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 */

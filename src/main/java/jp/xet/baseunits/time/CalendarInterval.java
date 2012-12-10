@@ -31,7 +31,7 @@ import jp.xet.baseunits.util.ImmutableIterator;
 import com.google.common.base.Preconditions;
 
 /**
- * 期間（日付の区間）を表すクラス。
+ * 暦日期間（暦日の区間）を表すクラス。
  * 
  * <p>限界の表現には {@link CalendarDate}を利用する。</p>
  * 
@@ -52,11 +52,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 開始日より、下側限界のみを持つ期間を生成する。
+	 * 開始暦日より、下側限界のみを持つ期間を生成する。
 	 * 
-	 * <p>開始日は期間に含む（閉じている）区間である。</p>
+	 * <p>開始暦日は期間に含む（閉じている）区間である。</p>
 	 * 
-	 * @param startDate 開始日（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param startDate 開始暦日（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @since 1.0
 	 */
@@ -65,11 +65,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 終了日より、上側限界のみを持つ期間を生成する。
+	 * 終了暦日より、上側限界のみを持つ期間を生成する。
 	 * 
-	 * <p>終了日は期間に含む（閉じている）区間である。</p>
+	 * <p>終了暦日は期間に含む（閉じている）区間である。</p>
 	 * 
-	 * @param endDate 終了日（上側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param endDate 終了暦日（上側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @since 1.0
 	 */
@@ -78,12 +78,12 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 開始日と終了日より、期間を生成する。
+	 * 開始暦日と終了暦日より、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @param start 開始日
-	 * @param end 終了日
+	 * @param start 開始暦日
+	 * @param end 終了暦日
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
 	 * @since 1.0
@@ -93,16 +93,16 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 開始日と終了日より、期間を生成する。
+	 * 開始暦日と終了暦日より、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @param startYear 開始日の年
-	 * @param startMonth 開始日の月（1〜12）
-	 * @param startDay 開始日の日
-	 * @param endYear 終了日の年
-	 * @param endMonth 終了日の月（1〜12）
-	 * @param endDay 終了日の日
+	 * @param startYear 開始暦日の年
+	 * @param startMonth 開始暦日の月（1〜12）
+	 * @param startDay 開始暦日の日
+	 * @param endYear 終了暦日の年
+	 * @param endMonth 終了暦日の月（1〜12）
+	 * @param endDay 終了暦日の日
 	 * @return 期間
 	 * @throws IllegalArgumentException 下限値が上限値より大きい（未来である）場合
 	 * @since 1.0
@@ -115,11 +115,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 指定した年月の1日からその月末までの、期間を生成する。
+	 * 指定した暦月の初日からその月末日までの、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @param month 開始日の年月
+	 * @param month 暦月
 	 * @return 期間
 	 * @since 1.0
 	 */
@@ -130,39 +130,44 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 指定した年月の1日からその月末までの、期間を生成する。
+	 * 指定した年月の初日からその月末までの、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @param year 開始日の年
-	 * @param month 開始日の月（1〜12）
+	 * @param year 年
+	 * @param month 月（1〜12）
 	 * @return 期間
+	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲外である場合
 	 * @since 1.0
 	 */
 	public static CalendarInterval month(int year, int month) {
-		return month(year, MonthOfYear.valueOf(month));
+		MonthOfYear monthOfYear = MonthOfYear.valueOf(month);
+		Preconditions.checkNotNull(monthOfYear);
+		return month(year, monthOfYear);
 	}
 	
 	/**
-	 * 指定した年月の1日からその月末までの、期間を生成する。
+	 * 指定した暦年及び月の初日からその月末までの、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @param year 開始日の年
-	 * @param month 開始日の月
+	 * @param year 開始暦日の年
+	 * @param month 開始暦日の月
 	 * @return 期間
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	public static CalendarInterval month(int year, MonthOfYear month) {
-		CalendarDate startDate = CalendarDate.from(year, month, DayOfMonth.valueOf(1));
+		Preconditions.checkNotNull(month);
+		CalendarDate startDate = CalendarDate.from(year, month, DayOfMonth.MIN);
 		CalendarDate endDate = startDate.plusMonths(1).plusDays(-1);
 		return inclusive(startDate, endDate);
 	}
 	
 	/**
-	 * 終了日と期間の長さより、期間を生成する。
+	 * 終了暦日と期間の長さより、期間を生成する。
 	 * 
-	 * @param end 終了日（上側限界値）
+	 * @param end 終了暦日（上側限界値）
 	 * @param length 期間の長さ
 	 * @return 期間
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
@@ -179,13 +184,13 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 開始日と期間の長さより、期間を生成する。
+	 * 開始暦日と期間の長さより、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * <p>引数 {@code length} の期間の長さの単位が "日" 未満である場合は、開始日と終了日は同日となる。<p>
+	 * <p>引数 {@code length} の期間の長さの単位が "日" 未満である場合は、開始暦日と終了暦日は同日となる。<p>
 	 * 
-	 * @param start 開始日（下側限界値）
+	 * @param start 開始暦日（下側限界値）
 	 * @param length 期間の長さ
 	 * @return 期間
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
@@ -202,9 +207,9 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 指定した週の月曜日からその週末（日曜日）までの、期間を生成する。
+	 * 指定した暦週の月曜日からその週末（日曜日）までの、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
 	 * @param week 開始週
 	 * @return 期間
@@ -221,7 +226,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	/**
 	 * 指定した週の月曜日からその週末（日曜日）までの、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
 	 * @param year 開始週の年
 	 * @param week 開始週
@@ -233,11 +238,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 指定した年の元旦からその年の大晦日までの、期間を生成する。
+	 * 指定した暦年の元旦からその年の大晦日までの、期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @param year 開始日の年
+	 * @param year 開始暦日の年
 	 * @return 期間
 	 * @since 1.0
 	 */
@@ -250,10 +255,10 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
+	 * <p>生成する期間の開始暦日と終了暦日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
-	 * @param start 開始日
-	 * @param end 終了日
+	 * @param start 開始暦日
+	 * @param end 終了暦日
 	 * @since 1.0
 	 */
 	protected CalendarInterval(CalendarDate start, CalendarDate end) {
@@ -266,9 +271,9 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * この期間の開始日の午前0時を開始日時、この期間の終了日の翌日午前0時を終了日時とする時間の期間を生成する。
+	 * この期間の開始暦日の午前0時を開始{@link TimePoint}、この期間の終了暦日の翌日午前0時を終了{@link TimePoint}とする時間の期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日時は期間に含み（閉じている）、終了日時は期間に含まない（開いている）半開区間を生成する。</p>
+	 * <p>生成する期間の開始{@link TimePoint}は期間に含み（閉じている）、終了{@link TimePoint}は期間に含まない（開いている）半開区間を生成する。</p>
 	 * 
 	 * @param zone タイムゾーン
 	 * @return 時間の期間
@@ -283,8 +288,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * この期間の終了日を起点として、前回の日付の前日を
-	 * この期間の開始日を超過しない範囲で順次取得する反復子を取得する。
+	 * この期間の終了暦日を起点として、前回の暦日の前日を
+	 * この期間の開始暦日を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
 	 * その戻り値の反復子からは、以下の要素が取得できる。
@@ -298,11 +303,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
-	 * <p>この期間が開始日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * <p>この期間が開始暦日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
 	 * {@code true}を返すので、無限ループに注意すること。</p>
 	 * 
-	 * @return 日付の反復子
-	 * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
+	 * @return 暦日の反復子
+	 * @throws IllegalStateException この期間が終了暦日（上側限界）を持たない場合
 	 * @since 1.0
 	 */
 	public Iterator<CalendarDate> daysInReverseIterator() {
@@ -334,8 +339,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * この期間の開始日を起点として、前回の日付の翌日を
-	 * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
+	 * この期間の開始暦日を起点として、前回の暦日の翌日を
+	 * この期間の終了暦日を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
 	 * その戻り値の反復子からは、以下の要素が取得できる。
@@ -349,11 +354,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
-	 * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * <p>この期間が終了暦日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
 	 * {@code true}を返すので、無限ループに注意すること。</p>
 	 * 
-	 * @return 日付の反復子
-	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
+	 * @return 暦日の反復子
+	 * @throws IllegalStateException この期間が開始暦日（下側限界）を持たない場合
 	 * @since 1.0
 	 */
 	public Iterator<CalendarDate> daysIterator() {
@@ -390,9 +395,9 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 終了日を取得する。
+	 * 終了暦日を取得する。
 	 * 
-	 * @return 終了日. 開始日がない場合は{@code null}
+	 * @return 終了暦日。終了暦日がない場合は{@code null}
 	 * @since 1.0
 	 * @see #start()
 	 */
@@ -420,7 +425,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * この期間が、日数にして何日の長さがあるかを取得する。
 	 * 
 	 * @return 日数
-	 * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
+	 * @throws IllegalStateException この期間が開始暦日（下側限界）または終了暦日（下側限界）を持たない場合
 	 * @since 1.0
 	 */
 	public int lengthInDaysInt() {
@@ -436,7 +441,7 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	/**
 	 * この期間の月数としての長さを取得する。
 	 * 
-	 * <p>開始日と終了日が同月であれば{@code 0}ヶ月となる。</p>
+	 * <p>開始暦日と終了暦日が同月であれば{@code 0}ヶ月となる。</p>
 	 * 
 	 * @return 期間の長さ
 	 * @see #lengthInMonthsInt()
@@ -449,10 +454,10 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	/**
 	 * 限界日の「日」要素を考慮せず、この期間が月数にして何ヶ月の長さがあるかを取得する。
 	 * 
-	 * <p>開始日と終了日が同月であれば{@code 0}となる。</p>
+	 * <p>開始暦日と終了暦日が同月であれば{@code 0}となる。</p>
 	 * 
 	 * @return 月数
-	 * @throws IllegalStateException この期間が開始日（下側限界）または終了日（下側限界）を持たない場合
+	 * @throws IllegalStateException この期間が開始暦日（下側限界）または終了暦日（下側限界）を持たない場合
 	 * @since 1.0
 	 */
 	public int lengthInMonthsInt() {
@@ -467,26 +472,26 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * この期間の終了日を含む年月を起点として、前回の前月を
-	 * この期間の開始日を含む年月を超過しない範囲で順次取得する反復子を取得する。
+	 * この期間の終了暦日を含む暦月を起点として、前回の前月を
+	 * この期間の開始暦日を含む暦月を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/10, 2009/04/04] で表される期間に対してこのメソッドを呼び出した場合、
 	 * その戻り値の反復子からは、以下の要素が取得できる。
 	 * <ol>
-	 *   <li>2009/01/04</li>
-	 *   <li>2009/01/03</li>
-	 *   <li>2009/01/02</li>
-	 *   <li>2009/01/01</li>
+	 *   <li>2009/04</li>
+	 *   <li>2009/03</li>
+	 *   <li>2009/02</li>
+	 *   <li>2009/01</li>
 	 * </ol>
 	 * </p>
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
-	 * <p>この期間が開始日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * <p>この期間が開始暦日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
 	 * {@code true}を返すので、無限ループに注意すること。</p>
 	 * 
-	 * @return 年月の反復子
-	 * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
+	 * @return 暦月の反復子
+	 * @throws IllegalStateException この期間が終了暦日（上側限界）を持たない場合
 	 * @since 2.0
 	 */
 	public Iterator<CalendarMonth> monthsInReverseIterator() {
@@ -523,8 +528,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 期間の開始日を含む年月を起点として、前回の翌月を
-	 * この期間の終了日を含む年月を超過しない範囲で順次取得する反復子を取得する。
+	 * 期間の開始暦日を含む暦月を起点として、前回の翌月を
+	 * この期間の終了暦日を含む暦月を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/10, 2009/05/04] で表される期間に対してこのメソッドを呼び出した場合、
 	 * その戻り値の反復子からは、以下の要素が取得できる。
@@ -539,11 +544,11 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
-	 * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * <p>この期間が終了暦日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
 	 * {@code true}を返すので、無限ループに注意すること。</p>
 	 * 
-	 * @return 年月の反復子
-	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
+	 * @return 暦月の反復子
+	 * @throws IllegalStateException この期間が開始暦日（下側限界）を持たない場合
 	 * @since 2.0
 	 */
 	public Iterator<CalendarMonth> monthsIterator() {
@@ -589,9 +594,9 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 開始日を取得する。
+	 * 開始暦日を取得する。
 	 * 
-	 * @return 開始日. 開始日がない場合は{@code null}
+	 * @return 開始暦日。開始暦日がない場合は{@code null}
 	 * @since 1.0
 	 * @see #end()
 	 */
@@ -600,8 +605,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * この期間の開始日を起点として、指定した時間の長さを持ち前回の終了日の翌日を開始日とする期間 {@link CalendarInterval} を
-	 * この期間の終了日を超過しない範囲で順次取得する反復子を取得する。
+	 * この期間の開始暦日を起点として、指定した時間の長さを持ち前回の終了暦日の翌日を開始暦日とする{@link CalendarInterval 期間}を
+	 * この期間の終了暦日を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/01, 2009/01/11] で表される期間に対して、
 	 * 2日間の {@code subintervalLength} を与えた場合、
@@ -617,12 +622,12 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
-	 * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * <p>この期間が終了暦日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
 	 * {@code true}を返すので、無限ループに注意すること。</p>
 	 * 
 	 * @param subintervalLength 反復子が返す期間の長さ
 	 * @return 期間の反復子
-	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
+	 * @throws IllegalStateException この期間が開始暦日（下側限界）を持たない場合
 	 * @throws IllegalArgumentException 引数subintervalLengthの長さ単位が「日」未満の場合
 	 * @since 1.0
 	 */
@@ -658,16 +663,16 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * この期間の終了日を含む週を起点として、前回の前週を
-	 * この期間の開始日を含む週を超過しない範囲で順次取得する反復子を取得する。
+	 * この期間の終了暦日を含む暦週を起点として、前回の前週を
+	 * この期間の開始暦日を含む暦週を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
-	 * <p>この期間が開始日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * <p>この期間が開始暦日（下側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
 	 * {@code true}を返すので、無限ループに注意すること。</p>
 	 * 
-	 * @return 年月の反復子
-	 * @throws IllegalStateException この期間が終了日（上側限界）を持たない場合
+	 * @return 暦週の反復子
+	 * @throws IllegalStateException この期間が終了暦日（上側限界）を持たない場合
 	 * @since 2.0
 	 */
 	public Iterator<CalendarWeek> weeksInReverseIterator() {
@@ -704,16 +709,16 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	}
 	
 	/**
-	 * 期間の開始日を含む週を起点として、前回の翌週を
-	 * この期間の終了日を含む週を超過しない範囲で順次取得する反復子を取得する。
+	 * 期間の開始暦日を含む暦週を起点として、前回の暦週の翌週を
+	 * この期間の終了暦日を含む暦週を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
-	 * <p>この期間が終了日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
+	 * <p>この期間が終了暦日（上側限界）を持たない場合、 {@link Iterator#hasNext()}は常に
 	 * {@code true}を返すので、無限ループに注意すること。</p>
 	 * 
-	 * @return 年月の反復子
-	 * @throws IllegalStateException この期間が開始日（下側限界）を持たない場合
+	 * @return 暦週の反復子
+	 * @throws IllegalStateException この期間が開始暦日（下側限界）を持たない場合
 	 * @since 2.0
 	 */
 	public Iterator<CalendarWeek> weeksIterator() {

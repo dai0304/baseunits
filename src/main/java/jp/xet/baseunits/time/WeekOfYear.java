@@ -27,10 +27,14 @@ import com.google.common.base.Preconditions;
 /**
  * 1年の中の特定の週を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * <p>{@link CalendarWeek} が「2012年の第11週」等を表現するのに対して、
+ * この型は年の概念を持たず、単に「第11週」等を表現する。</p>
+ * 
+ * <p>{@link java.util.Date}と異なり、暦日の概念を持っていない。またタイムゾーンの概念もない。</p>
  * 
  * @author daisuke
  * @since 2.0
+ * @see CalendarWeek
  */
 @SuppressWarnings("serial")
 public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
@@ -65,7 +69,7 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	
 	
 	/**
-	 * 指定した瞬間を表す、{@link WeekOfYear}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link WeekOfYear}を返す。
 	 * 
 	 * @param value 1年間の第1週から数えた週数
 	 * @return {@link WeekOfYear}
@@ -132,35 +136,37 @@ public final class WeekOfYear implements Comparable<WeekOfYear>, Serializable {
 	}
 	
 	/**
-	 * 指定した週 {@code another} が、このオブジェクトが表現する週よりも過去であるかどうかを検証する。
+	 * この週が、{@code other}よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>{@code another} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は{@code false}を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param another 対象週
-	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @since 2.0
-	 */
-	public boolean isAfter(WeekOfYear another) {
-		if (another == null) {
-			return false;
-		}
-		return isBefore(another) == false && equals(another) == false;
-	}
-	
-	/**
-	 * 指定した日 {@code another} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
-	 * 
-	 * <p>{@code another} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
-	 * 
-	 * @param another 対象日
+	 * @param other 比較対象週
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.0
 	 */
-	public boolean isBefore(WeekOfYear another) {
-		if (another == null) {
+	public boolean isAfter(WeekOfYear other) {
+		if (other == null) {
 			return false;
 		}
-		return value < another.value;
+		return value > other.value;
+	}
+	
+	/**
+	 * この週が、{@code other}よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は{@code false}を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 比較対象週
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.0
+	 */
+	public boolean isBefore(WeekOfYear other) {
+		if (other == null) {
+			return false;
+		}
+		return value < other.value;
 	}
 	
 	@Override

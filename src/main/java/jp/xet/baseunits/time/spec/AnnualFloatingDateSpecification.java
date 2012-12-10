@@ -30,7 +30,7 @@ import jp.xet.baseunits.time.MonthOfYear;
 import com.google.common.base.Preconditions;
 
 /**
- * 毎年X月の第Y◎曜日、を表す日付仕様。
+ * 毎年X月の第Y◎曜日にマッチする暦日仕様実装クラス。
  * 
  * @author daisuke
  * @since 1.0
@@ -50,12 +50,13 @@ public final class AnnualFloatingDateSpecification extends AbstractAnnualDateSpe
 	 * 
 	 * @param month 月を表す正数（1〜12）
 	 * @param dayOfWeek 曜日
-	 * @param occurrence 周回数（1〜5）
+	 * @param occurrence 序数（1〜5）
 	 * @throws IllegalArgumentException 引数{@code month}が1〜12の範囲ではない場合
 	 * @throws IllegalArgumentException 引数{@code occurrence}が1〜5の範囲ではない場合
-	 * @throws NullPointerException 引数{@code dayOfWeek}に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	AnnualFloatingDateSpecification(MonthOfYear month, DayOfWeek dayOfWeek, int occurrence) {
+		Preconditions.checkNotNull(month);
 		Preconditions.checkNotNull(dayOfWeek);
 		Preconditions.checkArgument(1 <= occurrence && occurrence <= 5);
 		this.month = month;
@@ -73,18 +74,18 @@ public final class AnnualFloatingDateSpecification extends AbstractAnnualDateSpe
 	}
 	
 	/**
-	 * この仕様を満たす条件としての月（{@link MonthOfYear}）を返す。
+	 * この仕様を満たす条件としての月を返す。
 	 * 
-	 * @return この仕様を満たす条件としての月（{@link MonthOfYear}）
+	 * @return この仕様を満たす条件としての月
 	 */
 	public MonthOfYear getMonth() {
 		return month;
 	}
 	
 	/**
-	 * この仕様を満たす条件としての曜日回数（第3日曜日であれば{@code 3}）を返す。
+	 * この仕様を満たす条件としての序数（第3日曜日であれば{@code 3}）を返す。
 	 * 
-	 * @return この仕様を満たす条件としての曜日回数
+	 * @return この仕様を満たす条件としての序数
 	 */
 	public int getOccurrence() {
 		return occurrence;

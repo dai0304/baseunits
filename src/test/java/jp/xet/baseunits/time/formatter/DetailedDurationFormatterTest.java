@@ -27,14 +27,14 @@ import jp.xet.baseunits.time.TimeUnit;
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link DetailedDurationFormatter}のテストクラス。
  */
 @SuppressWarnings("javadoc")
 public class DetailedDurationFormatterTest {
 	
-	static Duration H10_M10 = Duration.hours(10).plus(Duration.minutes(10));
+	static Duration DUR_10h_10m = Duration.hours(10).plus(Duration.minutes(10));
 	
-	static Duration H10_S10 = Duration.hours(10).plus(Duration.seconds(10));
+	static Duration DUR_10h_10s = Duration.hours(10).plus(Duration.seconds(10));
 	
 	
 	@Test
@@ -45,12 +45,12 @@ public class DetailedDurationFormatterTest {
 		DurationFormatter f4 = new DetailedDurationFormatter(false, TimeUnit.day, TimeUnit.hour, TimeUnit.minute);
 		DurationFormatter f5 = new DetailedDurationFormatter(true, TimeUnit.hour, TimeUnit.minute, TimeUnit.second);
 		DurationFormatter f6 = new DetailedDurationFormatter(false, TimeUnit.hour, TimeUnit.minute, TimeUnit.second);
-		assertThat(f1.format(H10_M10, Locale.JAPAN), is("10時間 10分"));
-		assertThat(f2.format(H10_M10, Locale.JAPAN), is("10時間 10分"));
-		assertThat(f3.format(H10_M10, Locale.JAPAN), is("0日 10時間 10分"));
-		assertThat(f4.format(H10_M10, Locale.JAPAN), is("10時間 10分"));
-		assertThat(f5.format(H10_M10, Locale.JAPAN), is("10時間 10分 0秒"));
-		assertThat(f6.format(H10_M10, Locale.JAPAN), is("10時間 10分"));
+		assertThat(f1.format(DUR_10h_10m, Locale.JAPAN), is("10時間 10分"));
+		assertThat(f2.format(DUR_10h_10m, Locale.JAPAN), is("10時間 10分"));
+		assertThat(f3.format(DUR_10h_10m, Locale.JAPAN), is("0日 10時間 10分"));
+		assertThat(f4.format(DUR_10h_10m, Locale.JAPAN), is("10時間 10分"));
+		assertThat(f5.format(DUR_10h_10m, Locale.JAPAN), is("10時間 10分 0秒"));
+		assertThat(f6.format(DUR_10h_10m, Locale.JAPAN), is("10時間 10分"));
 	}
 	
 	@Test
@@ -61,12 +61,12 @@ public class DetailedDurationFormatterTest {
 		DurationFormatter f4 = new DetailedDurationFormatter(false, TimeUnit.day, TimeUnit.hour, TimeUnit.minute);
 		DurationFormatter f5 = new DetailedDurationFormatter(true, TimeUnit.hour, TimeUnit.minute, TimeUnit.second);
 		DurationFormatter f6 = new DetailedDurationFormatter(false, TimeUnit.hour, TimeUnit.minute, TimeUnit.second);
-		assertThat(f1.format(H10_S10, Locale.JAPAN), is("10時間 0分"));
-		assertThat(f2.format(H10_S10, Locale.JAPAN), is("10時間"));
-		assertThat(f3.format(H10_S10, Locale.JAPAN), is("0日 10時間 0分"));
-		assertThat(f4.format(H10_S10, Locale.JAPAN), is("10時間"));
-		assertThat(f5.format(H10_S10, Locale.JAPAN), is("10時間 0分 10秒"));
-		assertThat(f6.format(H10_S10, Locale.JAPAN), is("10時間 10秒"));
+		assertThat(f1.format(DUR_10h_10s, Locale.JAPAN), is("10時間 0分"));
+		assertThat(f2.format(DUR_10h_10s, Locale.JAPAN), is("10時間"));
+		assertThat(f3.format(DUR_10h_10s, Locale.JAPAN), is("0日 10時間 0分"));
+		assertThat(f4.format(DUR_10h_10s, Locale.JAPAN), is("10時間"));
+		assertThat(f5.format(DUR_10h_10s, Locale.JAPAN), is("10時間 0分 10秒"));
+		assertThat(f6.format(DUR_10h_10s, Locale.JAPAN), is("10時間 10秒"));
 	}
 	
 	@Test

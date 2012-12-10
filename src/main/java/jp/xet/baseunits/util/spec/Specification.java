@@ -19,7 +19,7 @@ package jp.xet.baseunits.util.spec;
 /**
  * 仕様を表すモデル。
  * 
- * <p>DDD本の中で説明している Specification パターンに則ったオブジェクトを表すインターフェイス。
+ * <p>DDD本の中で説明している Specification パターンを表現するインターフェイス。
  * {@link Specification}の実装は、 {@link AbstractSpecification}を基底クラスとして実装するとよい。
  * その場合、 {@link #isSatisfiedBy(Object)} を実装する必要しかない。</p>
  * 

@@ -18,7 +18,7 @@
 package jp.xet.baseunits.time;
 
 /**
- * 現在時刻の取得に失敗したことをあらわす例外。
+ * 現在の{@link TimePoint}の取得に失敗したことをあらわす例外。
  * 
  * @author daisuke
  * @since 1.0

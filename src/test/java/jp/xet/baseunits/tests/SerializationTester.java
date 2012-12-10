@@ -39,7 +39,7 @@ public class SerializationTester {
 	/**
 	 * シリアライズできるかどうか検証する。
 	 * 
-	 * @param serializable シリアライズ対象オブジェクト
+	 * @param serializable シリアライズ対象
 	 * @throws AssertionError シリアライズに失敗した場合
 	 */
 	public static void assertCanBeSerialized(Object serializable) {

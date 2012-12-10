@@ -31,7 +31,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterators;
 
 /**
- * ある特定の期間中にマッチする日付仕様。
+ * ある特定の期間中にマッチする暦日仕様実装クラス。
  * 
  * @author daisuke
  * @since 2.0

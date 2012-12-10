@@ -28,7 +28,7 @@ import jp.xet.baseunits.time.DayOfMonth;
 import com.google.common.base.Preconditions;
 
 /**
- * 毎月Y日（ただし、非営業日の場合は、前営業日/翌営業日）、を表す日付仕様。
+ * 毎月Y日（ただし、非営業日の場合は、前営業日/翌営業日）にマッチする暦日仕様実装クラス。
  * 
  * @author daisuke
  * @since 1.0
@@ -70,18 +70,18 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 	}
 	
 	/**
-	 * この仕様を満たす条件としての日（{@link DayOfMonth}）を返す。
+	 * この仕様を満たす条件としての日を返す。
 	 * 
-	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 * @return この仕様を満たす条件としての日
 	 */
 	public DayOfMonth getDay() {
 		return day;
 	}
 	
 	/**
-	 * この仕様を満たす条件としての日（{@link DayOfMonth}）が非営業日であった場合の日付変更戦略を返す。
+	 * この仕様を満たす条件としての日が非営業日であった場合の日付調整戦略を返す。
 	 * 
-	 * @return 日付変更戦略
+	 * @return 日付調整戦略
 	 */
 	public Shifter getShifter() {
 		return shifter;
@@ -106,7 +106,7 @@ public final class MonthlyFixedBusinessDateSpecification extends AbstractMonthly
 	
 	
 	/**
-	 * 指定日が非営業日の場合のシフト戦略（日付変更戦略）。
+	 * 指定日が非営業日の場合のシフト戦略（日付調整戦略）。
 	 * 
 	 * @since 1.0
 	 */

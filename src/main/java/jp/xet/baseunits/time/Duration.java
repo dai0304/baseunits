@@ -88,10 +88,10 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 2つの時刻の差を表す時間量を返す。
+	 * 2つの{@link TimePoint}の差を表す時間量を返す。
 	 * 
-	 * @param tp1 時刻
-	 * @param tp2 時刻
+	 * @param tp1 {@link TimePoint}
+	 * @param tp2 {@link TimePoint}
 	 * @return 時間量
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -244,12 +244,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日付に、このオブジェクトが表現する長さの時間を加えた、未来の日付を取得する。
+	 * 指定した暦日に、この長さの時間を加えた、未来の暦日を取得する。
 	 * 
-	 * <p>このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。<p>
+	 * <p>この長さの単位が 日 未満である場合は、元の暦日をそのまま返す。<p>
 	 * 
-	 * @param day 元となる日付
-	 * @return このオブジェクトが表現する長さの時間が経過した未来の日付
+	 * @param day 元となる暦日
+	 * @return この長さの時間が経過した未来の暦日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #subtractedFrom(CalendarDate)
 	 * @since 1.0
@@ -270,12 +270,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月に、このオブジェクトが表現する長さの時間を加えた、未来の年月を取得する。
+	 * この長さの時間を、指定した暦月に加えた、未来の暦月を取得する。
 	 * 
-	 * <p>このオブジェクトが表現する時間の長さの単位が 月 未満である場合は、元の年月をそのまま返す。<p>
+	 * <p>この長さの単位が 月 未満である場合は、元の暦月をそのまま返す。<p>
 	 * 
-	 * @param month 元となる年月
-	 * @return このオブジェクトが表現する長さの時間が経過した未来の年月
+	 * @param month 元となる暦月
+	 * @return この長さの時間が経過した未来の暦月
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -295,10 +295,10 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日時に、このオブジェクトが表現する長さの時間を加えた、未来の日時を取得する。
+	 * 指定した{@link TimePoint}に、この長さの時間を加えた、未来の{@link TimePoint}を取得する。
 	 * 
-	 * @param point 元となる日時
-	 * @return このオブジェクトが表現する長さの時間が経過した未来の日時
+	 * @param point 元となる{@link TimePoint}
+	 * @return この長さの時間が経過した未来の{@link TimePoint}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
 	 * @see #subtractedFrom(TimePoint)
@@ -459,7 +459,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する時間量と、引数{@code other}に与えた時間量の差を返す。
+	 * この時間量と{@code other}の差を返す。
 	 * 
 	 * @param other 期間
 	 * @return 時間量の差
@@ -497,7 +497,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * このオブジェクトが表現する時間量と、引数 {@code other} に与えた時間量の和を返す。
+	 * この時間量と、引数 {@code other} に与えた時間量の和を返す。
 	 * 
 	 * @param other 期間
 	 * @return 時間量の和
@@ -513,9 +513,9 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日付を終了日とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 指定した暦日を終了暦日とする、この長さを持つ期間を生成する。
 	 * 
-	 * @param end 終了日（上側限界値）
+	 * @param end 終了暦日（上側限界値）
 	 * @return 期間
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -526,11 +526,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した時刻を終了時刻とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 指定した時刻を終了時刻とする、この長さを持つ期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
+	 * <p>生成する期間の開始時刻は区間に含み（閉じている）、終了時刻は区間に含まない（開いている）半開期間を生成する。</p>
 	 * 
-	 * @param end 終了日時（上側限界値）
+	 * @param end 終了時刻（上側限界値）
 	 * @return 期間
 	 * @throws IllegalArgumentException 減算の結果が0時を超えた場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
@@ -545,11 +545,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日時を終了日時とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 指定した瞬間を終了{@link TimePoint}とする、この長さを持つ期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
+	 * <p>生成する期間の開始{@link TimePoint}は区間に含み（閉じている）、終了{@link TimePoint}は区間に含まない（開いている）半開期間を生成する。</p>
 	 * 
-	 * @param end 終了日時（上側限界値）
+	 * @param end 終了{@link TimePoint}（上側限界値）
 	 * @return 期間
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -560,7 +560,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日付を開始日とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 指定した暦日を開始暦日とする、この長さを持つ期間を生成する。
 	 * 
 	 * <p>生成する期間の開始日と終了日は期間に含む（閉じている）開区間を生成する。</p>
 	 * 
@@ -577,11 +577,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した時刻を開始時刻とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 指定した時刻を開始時刻とする、この長さを持つ期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
+	 * <p>生成する期間の開始{@link TimePoint}は区間に含み（閉じている）、終了{@link TimePoint}は区間に含まない（開いている）半開期間を生成する。</p>
 	 * 
-	 * @param start 開始日時（下側限界値）. {@code null}の場合は、限界がないことを表す
+	 * @param start 開始{@link TimePoint}（下側限界値）. {@code null}の場合は、限界がないことを表す
 	 * @return 期間
 	 * @throws IllegalArgumentException 加算の結果が24時を超えた場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
@@ -593,11 +593,11 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日時を開始日時とする、このオブジェクトが表現する長さを持つ期間を生成する。
+	 * 指定した瞬間を開始{@link TimePoint}とする、この長さを持つ期間を生成する。
 	 * 
-	 * <p>生成する期間の開始日時は区間に含み（閉じている）、終了日時は区間に含まない（開いている）半開期間を生成する。</p>
+	 * <p>生成する期間の開始{@link TimePoint}は区間に含み（閉じている）、終了{@link TimePoint}は区間に含まない（開いている）半開期間を生成する。</p>
 	 * 
-	 * @param start 開始日時（下側限界値）
+	 * @param start 開始{@link TimePoint}（下側限界値）
 	 * @return 期間
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -608,12 +608,12 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日付に、このオブジェクトが表現する長さの時間を引いた、過去の日付を取得する。
+	 * 指定した暦日に、この長さの時間を引いた、過去の暦日を取得する。
 	 * 
-	 * <p>このオブジェクトが表現する時間の長さの単位が 日 未満である場合は、元の日付をそのまま返す。<p>
+	 * <p>この長さの単位が 日 未満である場合は、元の暦日をそのまま返す。<p>
 	 * 
-	 * @param day 元となる日付
-	 * @return このオブジェクトが表現する長さのを引いた、過去の日付
+	 * @param day 元となる暦日
+	 * @return この長さのを引いた、過去の暦日
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #addedTo(CalendarDate)
 	 * @since 1.0
@@ -634,10 +634,10 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
-	 * 指定した日時に、このオブジェクトが表現する長さの時間を引いた、過去の日時を取得する。
+	 * 指定した{@link TimePoint}に、この長さの時間を引いた、過去の{@link TimePoint}を取得する。
 	 * 
-	 * @param point 元となる日時
-	 * @return このオブジェクトが表現する長さのを引いた、過去の日時
+	 * @param point 元となる{@link TimePoint}
+	 * @return この長さのを引いた、過去の{@link TimePoint}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @see #addAmountToTimePoint(long, TimePoint)
 	 * @see #addedTo(TimePoint)
@@ -741,7 +741,7 @@ public class Duration implements Comparable<Duration>, Serializable {
 	
 	private void checkGreaterThanOrEqualTo(Duration other) {
 		if (compareTo(other) < 0) {
-			throw new IllegalArgumentException(this + " is before " + other);
+			throw new IllegalArgumentException(this + " is less than " + other);
 		}
 	}
 	

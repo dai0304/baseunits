@@ -50,6 +50,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param model The component's model
 	 * @param timeZoneModel time zone
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.0
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, IModel<TimeZone> timeZoneModel) {
 		this(id, model, DEFAULT_PATTERN, timeZoneModel);
@@ -64,6 +65,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param timeZoneModel タイムゾーン
 	 * @throws WicketRuntimeException if the component has been given a null id.
 	 * @throws IllegalArgumentException 引数{@code datePattern}または{@code timeZoneModel}に{@code null}を与えた場合
+	 * @since 2.0
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, String datePattern, IModel<TimeZone> timeZoneModel) {
 		super(id, model);
@@ -81,6 +83,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone タイムゾーン
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.0
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, String datePattern, TimeZone timeZone) {
 		this(id, model, datePattern, Model.of(timeZone));
@@ -93,6 +96,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param model The component's model
 	 * @param timeZone time zone
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.0
 	 */
 	public TimePointLabel(String id, IModel<TimePoint> model, TimeZone timeZone) {
 		this(id, model, DEFAULT_PATTERN, Model.of(timeZone));
@@ -104,6 +108,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param id The non-null id of this component
 	 * @param timeZoneModel time zone
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.9
 	 */
 	public TimePointLabel(String id, IModel<TimeZone> timeZoneModel) {
 		this(id, DEFAULT_PATTERN, timeZoneModel);
@@ -115,6 +120,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * @param id The non-null id of this component
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZoneModel time zone
+	 * @since 2.9
 	 */
 	public TimePointLabel(String id, String datePattern, IModel<TimeZone> timeZoneModel) {
 		super(id);
@@ -128,9 +134,10 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param timePoint 表示する日付
+	 * @param timePoint 表示する{@link TimePoint}
 	 * @param timeZoneModel time zone
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.0
 	 */
 	public TimePointLabel(String id, TimePoint timePoint, IModel<TimeZone> timeZoneModel) {
 		this(id, Model.of(timePoint), DEFAULT_PATTERN, timeZoneModel);
@@ -140,10 +147,11 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param timePoint 表示する日付
+	 * @param timePoint 表示する{@link TimePoint}
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZoneModel time zone
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.0
 	 */
 	public TimePointLabel(String id, TimePoint timePoint, String datePattern, IModel<TimeZone> timeZoneModel) {
 		this(id, Model.of(timePoint), datePattern, timeZoneModel);
@@ -153,10 +161,11 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param timePoint 表示する日付
+	 * @param timePoint 表示する{@link TimePoint}
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @param timeZone time zone
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.0
 	 */
 	public TimePointLabel(String id, TimePoint timePoint, String datePattern, TimeZone timeZone) {
 		this(id, Model.of(timePoint), datePattern, Model.of(timeZone));
@@ -166,9 +175,10 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param timePoint 表示する日付
+	 * @param timePoint 表示する{@link TimePoint}
 	 * @param timeZone time zone
 	 * @throws WicketRuntimeException if the component has been given a null id.
+	 * @since 2.0
 	 */
 	public TimePointLabel(String id, TimePoint timePoint, TimeZone timeZone) {
 		this(id, Model.of(timePoint), DEFAULT_PATTERN, Model.of(timeZone));
@@ -188,6 +198,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * {@link SimpleDateFormat}に基づくパターン文字列を返す。
 	 * 
 	 * @return {@link SimpleDateFormat}に基づくパターン
+	 * @since 2.0
 	 */
 	public String getDatePattern() {
 		return datePattern;
@@ -206,6 +217,7 @@ public class TimePointLabel extends GenericLabel<TimePoint> {
 	 * 
 	 * @param datePattern {@link SimpleDateFormat}に基づくパターン
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 2.0
 	 */
 	protected void setDatePattern(String datePattern) {
 		Args.notNull(datePattern, "datePattern");

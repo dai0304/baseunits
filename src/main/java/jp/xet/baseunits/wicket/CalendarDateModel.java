@@ -27,7 +27,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * {@link TimePoint}及び{@link TimeZone}のモデルより、{@link CalendarDate}を表現するモデル。
+ * {@link TimePoint}及びタイムゾーンによって、暦日を表現するモデル実装クラス。
  * 
  * @since 2.0
  */
@@ -42,7 +42,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timePointModel 基準時刻モデル
+	 * @param timePointModel {@link TimePoint}
 	 * @param timeZoneModel タイムゾーンモデル
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 2.0
@@ -57,7 +57,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timePointModel 基準時刻モデル
+	 * @param timePointModel {@link TimePoint}
 	 * @param timeZone タイムゾーン
 	 * @throws IllegalArgumentException 引数{@code timePointModel}に{@code null}を与えた場合
 	 * @since 2.0
@@ -70,7 +70,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timePoint 基準時刻
+	 * @param timePoint {@link TimePoint}
 	 * @param timeZoneModel タイムゾーンモデル
 	 * @throws IllegalArgumentException 引数{@code timeZoneModel}に{@code null}を与えた場合
 	 * @since 2.0
@@ -83,7 +83,7 @@ public class CalendarDateModel extends AbstractReadOnlyModel<CalendarDate> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timePoint 基準時刻
+	 * @param timePoint {@link TimePoint}
 	 * @param timeZone タイムゾーン
 	 * @since 2.0
 	 */

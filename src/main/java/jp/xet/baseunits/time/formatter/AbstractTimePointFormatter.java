@@ -43,5 +43,4 @@ public abstract class AbstractTimePointFormatter implements TimePointFormatter {
 	public String format(TimePoint target, TimeZone timeZone) {
 		return format(target, Locale.getDefault(), timeZone);
 	}
-	
 }

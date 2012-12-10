@@ -24,7 +24,7 @@ import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
 import org.apache.wicket.util.lang.Args;
 
 /**
- * 日付期間の開始と終了を表す2つの {@link FormComponent} について、開始日が終了日より未来でないことを検証するバリデータ。
+ * 暦日期間の開始と終了を表す2つの {@link FormComponent} について、開始暦日が終了暦日より未来でないことを検証するバリデータ。
  * 
  * @author daisuke
  * @since 2.0

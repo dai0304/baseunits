@@ -54,13 +54,13 @@ public class Money implements Comparable<Money>, Serializable {
 	
 	
 	/**
-	 * {@code amount}で表す量のドルを表すインスタンスを返す。
+	 * {@code amount}で表す量のドルを表す金額を返す。
 	 * 
 	 * <p>This creation method is safe to use. It will adjust scale, but will not
 	 * round off the amount.</p>
 	 * 
 	 * @param amount 量
-	 * @return {@code amount}で表す量のドルを表すインスタンス
+	 * @return {@code amount}で表す量のドルを表す金額
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -70,13 +70,13 @@ public class Money implements Comparable<Money>, Serializable {
 	}
 	
 	/**
-	 * {@code amount}で表す量のドルを表すインスタンスを返す。
+	 * {@code amount}で表す量のドルを表す金額を返す。
 	 * 
 	 * <p>WARNING: Because of the indefinite precision of double, this method must
 	 * round off the value.</p>
 	 * 
 	 * @param amount 量
-	 * @return {@code amount}で表す量のドルを表すインスタンス
+	 * @return {@code amount}で表す量のドルを表す金額
 	 * @since 1.0
 	 */
 	public static Money dollars(double amount) {
@@ -87,7 +87,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * This creation method is safe to use. It will adjust scale, but will not
 	 * round off the amount.
 	 * @param amount 量
-	 * @return {@code amount}で表す量のユーロを表すインスタンス
+	 * @return {@code amount}で表す量のユーロを表す金額
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -100,7 +100,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * WARNING: Because of the indefinite precision of double, this method must
 	 * round off the value.
 	 * @param amount 量
-	 * @return {@code amount}で表す量のユーロを表すインスタンス
+	 * @return {@code amount}で表す量のユーロを表す金額
 	 * @since 1.0
 	 */
 	public static Money euros(double amount) {
@@ -111,7 +111,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * {@link Collection}に含む全ての金額の合計金額を返す。
 	 * 
 	 * <p>合計金額の通貨単位は、 {@code monies}の要素の（共通した）通貨単位となるが、
-	 * {@link Collection}が空の場合は、現在のデフォルトロケールにおける通貨単位で、量が0のインスタンスを返す。</p>
+	 * {@link Collection}が空の場合は、現在のデフォルトロケールにおける通貨単位で、量が0の金額を返す。</p>
 	 * 
 	 * @param monies 金額の集合
 	 * @return 合計金額
@@ -206,7 +206,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * round off the amount.
 	 * 
 	 * @param amount 量
-	 * @return {@code amount}で表す量の円を表すインスタンス
+	 * @return {@code amount}で表す量の円を表す金額
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -220,7 +220,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * round off the value.
 	 * 
 	 * @param amount 量
-	 * @return {@code amount}で表す量の円を表すインスタンス
+	 * @return {@code amount}で表す量の円を表す金額
 	 * @since 1.0
 	 */
 	public static Money yens(double amount) {
@@ -416,7 +416,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param divisor 除数
 	 * @return 割合
-	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @throws ClassCastException 引数の通貨単位がこの金額の通貨単位と異なる場合
 	 * @throws ArithmeticException 引数{@code divisor}の量が0だった場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
@@ -466,7 +466,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param other 基準金額
 	 * @return 大きい場合は{@code true}、そうでない場合は{@code false}
-	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @throws ClassCastException 引数の通貨単位がこの金額の通貨単位と異なる場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -481,7 +481,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param other 基準金額
 	 * @return 小さい場合は{@code true}、そうでない場合は{@code false}
-	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @throws ClassCastException 引数の通貨単位がこの金額の通貨単位と異なる場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -528,7 +528,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * 
 	 * @param other 金額
 	 * @return 差し引き金額
-	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @throws ClassCastException 引数の通貨単位がこの金額の通貨単位と異なる場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -566,7 +566,7 @@ public class Money implements Comparable<Money>, Serializable {
 	 * @param other 金額
 	 * @return 足した金額
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
-	 * @throws ClassCastException 引数の通貨単位がこのインスタンスの通貨単位と異なる場合
+	 * @throws ClassCastException 引数の通貨単位がこの金額の通貨単位と異なる場合
 	 * @since 1.0
 	 */
 	public Money plus(Money other) {

@@ -84,9 +84,9 @@ public class NISTClient {
 	}
 	
 	/**
-	 * ネットワーク時間に基づき現在の時刻を返す {@link TimeSource} を返す。
+	 * ネットワーク時間に基づき現在の{@link TimePoint}を返す {@link TimeSource} を返す。
 	 * 
-	 * @return ネットワーク時間に基づき現在の時刻を返す {@link TimeSource}
+	 * @return ネットワーク時間に基づき現在の{@link TimePoint}を返す {@link TimeSource}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */

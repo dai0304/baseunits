@@ -22,12 +22,10 @@ package jp.xet.baseunits.time;
 
 import java.io.Serializable;
 
-import com.google.common.base.Preconditions;
-
 /**
  * 1時間の中の特定の「分」を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。
+ * <p>{@link java.util.Date}と異なり、暦日や時、秒以下（分未満）の概念を持っていない。またタイムゾーンの概念もない。
  * また、このクラスは特定の瞬間をモデリングしたものではなく、その1分間全ての範囲を表すクラスである。</p>
  * 
  * @author daisuke
@@ -131,33 +129,37 @@ public class MinuteOfHour implements Comparable<MinuteOfHour>, Serializable {
 	}
 	
 	/**
-	 * 同日同時において、このインスタンスが表す分が、引数{@code another}で表される分よりも未来かどうか調べる。
+	 * 同日同時において、この分が、引数{@code other}よりも未来かどうか調べる。
 	 * 
-	 * <p>等価である場合は{@code false}を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param another 基準分
-	 * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @param other 比較対象分
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
-	public boolean isAfter(MinuteOfHour another) {
-		Preconditions.checkNotNull(another);
-		return value > another.value;
+	public boolean isAfter(MinuteOfHour other) {
+		if (other == null) {
+			return false;
+		}
+		return value > other.value;
 	}
 	
 	/**
-	 * 同日同時において、このインスタンスが表す分が、引数{@code another}で表される分よりも過去かどうか調べる。
+	 * 同日同時において、この分が、引数{@code another}よりも過去かどうか調べる。
 	 * 
-	 * <p>等価である場合は{@code false}を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param another 基準分
-	 * @return 同日において、このインスタンスが表す分が、引数{@code another}で表される時よりも過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @param other 比較対象分
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
-	public boolean isBefore(MinuteOfHour another) {
-		Preconditions.checkNotNull(another);
-		return value < another.value;
+	public boolean isBefore(MinuteOfHour other) {
+		if (other == null) {
+			return false;
+		}
+		return value < other.value;
 	}
 	
 	@Override

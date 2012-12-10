@@ -24,7 +24,10 @@ import jp.xet.baseunits.time.TimePoint;
 import jp.xet.baseunits.timeutil.Clock;
 
 /**
- * TODO for daisuke
+ * {@link TimePoint}値の{@link Future}アノテーションによるバリデータ実装クラス。
+ * 
+ * @author daisuke
+ * @since 2.9
  */
 public class FutureValidatorForTimePoint implements ConstraintValidator<Future, TimePoint> {
 	

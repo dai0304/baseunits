@@ -54,7 +54,7 @@ public enum DayOfWeek {
 	SUNDAY(Calendar.SUNDAY);
 	
 	/**
-	 * {@link Calendar}に定義されている定数値から、インスタンスを取得する。
+	 * {@link Calendar}に定義されている定数値から、{@link DayOfWeek}を探して返す。
 	 * 
 	 * @param value {@link Calendar}に定義されている定数値
 	 * @return {@link DayOfWeek}. 見つからなかった場合は {@code null}
@@ -78,7 +78,7 @@ public enum DayOfWeek {
 	 * 
 	 * @since 2.0
 	 */
-	public static final int SIZE = 7;
+	public static final int SIZE = values().length;
 	
 	
 	DayOfWeek(int value) {
@@ -98,9 +98,9 @@ public enum DayOfWeek {
 	}
 	
 	/**
-	 * 翌日の曜日を返す。
+	 * この曜日の翌日に当たる曜日を返す。
 	 * 
-	 * @return 翌日の曜日
+	 * @return 翌日に当たる曜日
 	 * @since 2.0
 	 */
 	public DayOfWeek nextDay() {
@@ -108,9 +108,9 @@ public enum DayOfWeek {
 	}
 	
 	/**
-	 * 指定日後の曜日を返す。
+	 * この曜日の指定日後に当たる曜日を返す。
 	 * 
-	 * @param increment 日数
+	 * @param increment 日数（負数も可）
 	 * @return 曜日
 	 * @since 2.0
 	 */
@@ -123,9 +123,9 @@ public enum DayOfWeek {
 	}
 	
 	/**
-	 * 前日の曜日を返す。
+	 * この曜日の前日に当たる曜日を返す。
 	 * 
-	 * @return 前日の曜日
+	 * @return 前日に当たる曜日
 	 * @since 2.0
 	 */
 	public DayOfWeek prevDay() {

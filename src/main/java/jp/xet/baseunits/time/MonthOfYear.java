@@ -23,8 +23,12 @@ import java.util.GregorianCalendar;
 /**
  * 1年の中の特定の「月」を表す列挙型。
  * 
+ * <p>{@link CalendarMonth} が「2012年11月」等を表現するのに対して、
+ * この型は年の概念を持たず、単に「11月」等を表現する。</p>
+ * 
  * @author daisuke
  * @since 1.0
+ * @see CalendarMonth
  */
 public enum MonthOfYear {
 	
@@ -72,7 +76,7 @@ public enum MonthOfYear {
 	DEC(12, DayOfMonth.valueOf(31), Calendar.DECEMBER);
 	
 	/**
-	 * {@link Calendar}に定義する月をあらわす定数値から、インスタンスを取得する。
+	 * {@link Calendar}に定義する月をあらわす定数値から、{@link MonthOfYear}を探して返す。
 	 * 
 	 * @param value {@link Calendar}に定義されている定数値
 	 * @return {@link MonthOfYear}. 見つからなかった場合は {@code null}
@@ -144,9 +148,9 @@ public enum MonthOfYear {
 	}
 	
 	/**
-	 * その月の最終日を取得する。
+	 * 指定した西暦年における、その月の最終日を取得する。
 	 * 
-	 * @param year 該当年. 2月の閏年判定に関わらない場合は、何でも良い。
+	 * @param year 西暦年
 	 * @return 最終日
 	 * @since 2.0
 	 */
@@ -155,20 +159,20 @@ public enum MonthOfYear {
 	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも過去であるかどうかを検証する。
+	 * この月が、{@code other}よりも未来であるかどうかを検証する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は{@code false}を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日時
-	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @param other 比較対象月
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
 	public boolean isAfter(MonthOfYear other) {
 		if (other == null) {
 			return false;
 		}
-		return isBefore(other) == false && equals(other) == false;
+		return value > other.value;
 	}
 	
 //	public DayOfYear at(DayOfMonth month) {
@@ -176,13 +180,13 @@ public enum MonthOfYear {
 //	}
 	
 	/**
-	 * 指定した日 {@code other} が、このオブジェクトが表現する日よりも未来であるかどうかを検証する。
+	 * この月が、{@code other}よりも過去であるかどうかを検証する。
 	 * 
-	 * <p>{@code other} が {@code null} である場合と、お互いが同一日時である場合は {@code false} を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は{@code false}を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param other 対象日
-	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @param other 比較対象月
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
 	public boolean isBefore(MonthOfYear other) {
@@ -193,10 +197,10 @@ public enum MonthOfYear {
 	}
 	
 	/**
-	 * 指定した年の、この月を表す年月を返す。
+	 * 指定した西暦年における、この月を表す暦月を返す。
 	 * 
-	 * @param year 年
-	 * @return 年月
+	 * @param year 西暦年
+	 * @return 暦月
 	 * @since 1.0
 	 */
 	public CalendarMonth on(int year) {

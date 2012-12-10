@@ -30,7 +30,7 @@ import com.google.common.base.Preconditions;
 /**
  * 1日の中の特定の瞬間を表すクラス。
  * 
- * <p>{@link java.util.Date}と異なり、日付の概念を持っていない。またタイムゾーンの概念もない。</p>
+ * <p>{@link java.util.Date}と異なり、暦日の概念を持っていない。またタイムゾーンの概念もない。</p>
  * 
  * @author daisuke
  * @since 1.0
@@ -68,7 +68,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	
 	
 	/**
-	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link TimeOfDay}を返す。
 	 * 
 	 * <p>秒及びミリ秒は{@code 0}として解釈する。</p>
 	 * 
@@ -79,11 +79,11 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @since 1.0
 	 */
 	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute) {
-		return from(hour, minute, SecondOfMinute.valueOf(0), MillisecOfSecond.valueOf(0));
+		return from(hour, minute, SecondOfMinute.MIN, MillisecOfSecond.MIN);
 	}
 	
 	/**
-	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link TimeOfDay}を返す。
 	 * 
 	 * <p>ミリ秒は{@code 0}として解釈する。</p>
 	 * 
@@ -95,11 +95,11 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	 * @since 1.0
 	 */
 	public static TimeOfDay from(HourOfDay hour, MinuteOfHour minute, SecondOfMinute second) {
-		return from(hour, minute, second, MillisecOfSecond.valueOf(0));
+		return from(hour, minute, second, MillisecOfSecond.MIN);
 	}
 	
 	/**
-	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link TimeOfDay}を返す。
 	 * 
 	 * @param hour 時
 	 * @param minute 分
@@ -114,7 +114,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link TimeOfDay}を返す。
 	 * 
 	 * <p>秒及びミリ秒は{@code 0}として解釈する。</p>
 	 * 
@@ -130,7 +130,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link TimeOfDay}を返す。
 	 * 
 	 * <p>ミリ秒は{@code 0}として解釈する。</p>
 	 * 
@@ -147,7 +147,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * 指定した瞬間を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * 指定した瞬間を表す、{@link TimeOfDay}を返す。
 	 * 
 	 * @param hour 時をあらわす正数（0〜23）
 	 * @param minute 分をあらわす正数（0〜59）
@@ -165,7 +165,7 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * UTCの午前0時を基準としたミリ秒を表す、{@link TimeOfDay}のインスタンスを生成する。
+	 * UTCの午前0時を基準としたミリ秒を表す、{@link TimeOfDay}を返す。
 	 * 
 	 * @param millisec UTCの午前0時を基準としたミリ秒
 	 * @return {@link TimeOfDay}
@@ -250,9 +250,9 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * 指定した年月日とタイムゾーンにおける、このインスタンスがあらわす瞬間について {@link TimePoint} 型のインスタンスを返す。
+	 * 指定した暦日とタイムゾーンにおける、この時刻の {@link TimePoint} を返す。
 	 * 
-	 * @param date 年月日
+	 * @param date 暦日
 	 * @param timeZone タイムゾーン
 	 * @return 瞬間
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
@@ -341,30 +341,32 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスがあらわす瞬間が、指定した瞬間よりも未来であるかどうか調べる。
+	 * この瞬間が、指定した瞬間よりも未来であるかどうか調べる。
 	 * 
-	 * <p>等価の場合は{@code false}を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param another 基準瞬間
+	 * @param other 基準瞬間
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public boolean isAfter(TimeOfDay another) {
-		Preconditions.checkNotNull(another);
-		if (hour.isAfter(another.hour)) {
+	public boolean isAfter(TimeOfDay other) {
+		if (other == null) {
+			return false;
+		}
+		if (hour.isAfter(other.hour)) {
 			return true;
 		}
-		if (hour.equals(another.hour)) {
-			if (minute.isAfter(another.minute)) {
+		if (hour.equals(other.hour)) {
+			if (minute.isAfter(other.minute)) {
 				return true;
 			}
-			if (minute.equals(another.minute)) {
-				if (second.isAfter(another.second)) {
+			if (minute.equals(other.minute)) {
+				if (second.isAfter(other.second)) {
 					return true;
 				}
-				if (second.equals(another.second)) {
-					if (millisec.isAfter(another.millisec)) {
+				if (second.equals(other.second)) {
+					if (millisec.isAfter(other.millisec)) {
 						return true;
 					}
 				}
@@ -374,18 +376,20 @@ public final class TimeOfDay implements Comparable<TimeOfDay>, Serializable {
 	}
 	
 	/**
-	 * このインスタンスがあらわす瞬間が、指定した瞬間よりも過去であるかどうか調べる。
+	 * この瞬間が、指定した瞬間よりも過去であるかどうか調べる。
 	 * 
-	 * <p>等価の場合は{@code false}を返す。</p>
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
 	 * 
-	 * @param another 基準瞬間
+	 * @param other 比較対象瞬間
 	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
-	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
-	public boolean isBefore(TimeOfDay another) {
-		Preconditions.checkNotNull(another);
-		return hour.isBefore(another.hour) || (hour.equals(another.hour) && minute.isBefore(another.minute));
+	public boolean isBefore(TimeOfDay other) {
+		if (other == null) {
+			return false;
+		}
+		return hour.isBefore(other.hour) || (hour.equals(other.hour) && minute.isBefore(other.minute));
 	}
 	
 	/**

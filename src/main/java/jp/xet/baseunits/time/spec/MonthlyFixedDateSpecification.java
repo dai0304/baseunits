@@ -29,7 +29,7 @@ import jp.xet.baseunits.time.DayOfMonth;
 import com.google.common.base.Preconditions;
 
 /**
- * 毎月Y日、を表す日付仕様。
+ * 毎月Y日にマッチする暦日仕様実装クラス。
  * 
  * @author daisuke
  * @since 1.0
@@ -52,9 +52,9 @@ public final class MonthlyFixedDateSpecification extends AbstractMonthlyDateSpec
 	}
 	
 	/**
-	 * この仕様を満たす条件としての日（{@link DayOfMonth}）を返す。
+	 * この仕様を満たす条件としての日を返す。
 	 * 
-	 * @return この仕様を満たす条件としての日（{@link DayOfMonth}）
+	 * @return この仕様を満たす条件としての日
 	 */
 	public DayOfMonth getDay() {
 		return day;

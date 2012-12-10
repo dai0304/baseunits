@@ -19,7 +19,7 @@ package jp.xet.baseunits.time.spec;
 import jp.xet.baseunits.time.CalendarDate;
 
 /**
- * 年に一度だけマッチする日付仕様インターフェイス。
+ * 1年間に一度だけマッチする暦日仕様インターフェイス。
  * 
  * @author daisuke
  * @since 2.0
@@ -27,7 +27,7 @@ import jp.xet.baseunits.time.CalendarDate;
 public interface AnnualDateSpecification extends DateSpecification {
 	
 	/**
-	 * 指定した年においてこの日付仕様を満たす年月日を返す。
+	 * 指定した暦年においてこの暦日仕様を満たす暦日を返す。
 	 * 
 	 * @param year 西暦年をあらわす数
 	 * @return {@link CalendarDate}

@@ -31,7 +31,7 @@ import jp.xet.baseunits.util.ImmutableIterator;
 import com.google.common.base.Preconditions;
 
 /**
- * 毎月1度だけ仕様を満たす日付仕様。
+ * 毎月1度だけマッチする暦日仕様の骨格実装。
  * 
  * @author daisuke
  * @since 1.0

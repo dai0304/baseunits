@@ -26,7 +26,7 @@ import jp.xet.baseunits.util.spec.AbstractSpecification;
 import com.google.common.base.Preconditions;
 
 /**
- * 日付仕様の骨格実装クラス。
+ * 暦日仕様の骨格実装クラス。
  * 
  * @author daisuke
  * @since 2.0

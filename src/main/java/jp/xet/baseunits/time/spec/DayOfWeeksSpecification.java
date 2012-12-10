@@ -35,7 +35,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
 /**
- * ある特定の曜日を表す日付仕様。
+ * ある特定の曜日を表す暦日仕様実装クラス。
  * 
  * @author daisuke
  * @since 2.0

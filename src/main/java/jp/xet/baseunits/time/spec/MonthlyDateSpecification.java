@@ -20,7 +20,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarMonth;
 
 /**
- * 月に一度だけマッチする日付仕様インターフェイス。
+ * 1ヶ月に一度だけマッチする暦日仕様インターフェイス。
  * 
  * @author daisuke
  * @since 2.0
@@ -28,12 +28,12 @@ import jp.xet.baseunits.time.CalendarMonth;
 public interface MonthlyDateSpecification extends DateSpecification {
 	
 	/**
-	 * 指定した年月においてこの日付仕様を満たす年月日を返す。
+	 * 指定した暦月においてこの暦日仕様を満たす暦日を返す。
 	 * 
-	 * @param month 年月
+	 * @param month 暦月
 	 * @return {@link CalendarDate}
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	CalendarDate ofYearMonth(CalendarMonth month);
 	
