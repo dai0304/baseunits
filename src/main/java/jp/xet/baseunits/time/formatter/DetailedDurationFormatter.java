@@ -63,11 +63,11 @@ public class DetailedDurationFormatter extends AbstractDurationFormatter impleme
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param allowZero 
-	 * @param timeUnit 
-	 * @param timeUnits 
-	 * @since 2.5
+	 * @param allowZero 値が{@code 0}の単位要素を出力する場合は{@code true}、そうでない場合は{@code false}
+	 * @param timeUnit 1つ目の単位
+	 * @param timeUnits 2つ目以降の単位
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 2.5
 	 */
 	public DetailedDurationFormatter(boolean allowZero, TimeUnit timeUnit, TimeUnit... timeUnits) {
 		Preconditions.checkNotNull(timeUnit);
