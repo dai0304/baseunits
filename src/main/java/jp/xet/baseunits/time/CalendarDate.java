@@ -199,7 +199,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	}
 	
 	
-	private final CalendarMonth calendarMonth;
+	// TODO rename to calendarMonth on v3.0
+	private final CalendarMonth yearMonth;
 	
 	private final DayOfMonth day;
 	
@@ -216,7 +217,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		Preconditions.checkNotNull(calendarMonth);
 		Preconditions.checkNotNull(day);
 		Preconditions.checkArgument(day.isApplyable(calendarMonth));
-		this.calendarMonth = calendarMonth;
+		yearMonth = calendarMonth;
 		this.day = day;
 	}
 	
@@ -227,7 +228,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 1.0
 	 */
 	public CalendarMonth asCalendarMonth() {
-		return calendarMonth;
+		return yearMonth;
 	}
 	
 	// comment-out by daisuke
@@ -269,7 +270,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 1.0
 	 */
 	public CalendarInterval asMonthInterval() {
-		return CalendarInterval.month(calendarMonth);
+		return CalendarInterval.month(yearMonth);
 	}
 	
 	/**
@@ -294,7 +295,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 1.0
 	 */
 	public CalendarInterval asYearInterval() {
-		return CalendarInterval.year(calendarMonth.getYear());
+		return CalendarInterval.year(yearMonth.getYear());
 	}
 	
 	/**
@@ -385,7 +386,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		if (day.equals(other.day) == false) {
 			return false;
 		}
-		if (calendarMonth.equals(other.calendarMonth) == false) {
+		if (yearMonth.equals(other.yearMonth) == false) {
 			return false;
 		}
 		return true;
@@ -428,7 +429,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 1.0
 	 */
 	public MonthOfYear getMonthOfYear() {
-		return calendarMonth.getMonthOfYear();
+		return yearMonth.getMonthOfYear();
 	}
 	
 	/**
@@ -438,7 +439,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 1.0
 	 */
 	public int getYear() {
-		return calendarMonth.getYear();
+		return yearMonth.getYear();
 	}
 	
 	/**
@@ -448,7 +449,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 1.0
 	 */
 	public CalendarMonth getYearMonth() {
-		return calendarMonth;
+		return yearMonth;
 	}
 	
 	@Override
@@ -456,7 +457,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + day.hashCode();
-		result = prime * result + calendarMonth.hashCode();
+		result = prime * result + yearMonth.hashCode();
 		return result;
 	}
 	
@@ -508,10 +509,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		if (other == null) {
 			return false;
 		}
-		if (calendarMonth.isBefore(other.calendarMonth)) {
+		if (yearMonth.isBefore(other.yearMonth)) {
 			return true;
 		}
-		if (calendarMonth.isAfter(other.calendarMonth)) {
+		if (yearMonth.isAfter(other.yearMonth)) {
 			return false;
 		}
 		return day.isBefore(other.day);
@@ -531,10 +532,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		if (other == null) {
 			return false;
 		}
-		if (calendarMonth.isBefore(other.calendarMonth)) {
+		if (yearMonth.isBefore(other.yearMonth)) {
 			return true;
 		}
-		if (calendarMonth.isAfter(other.calendarMonth)) {
+		if (yearMonth.isAfter(other.yearMonth)) {
 			return false;
 		}
 		return day.isBeforeOrEquals(other.day);
@@ -691,8 +692,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	
 	Calendar asJavaCalendarUniversalZoneMidnight() {
 		Calendar calendar = CalendarUtil.newCalendar();
-		calendar.set(Calendar.YEAR, calendarMonth.getYear());
-		calendar.set(Calendar.MONTH, calendarMonth.getMonthOfYear().value - 1);
+		calendar.set(Calendar.YEAR, yearMonth.getYear());
+		calendar.set(Calendar.MONTH, yearMonth.getMonthOfYear().value - 1);
 		calendar.set(Calendar.DATE, day.value);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
