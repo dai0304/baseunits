@@ -38,7 +38,7 @@ public class TimePointOfDayLabel extends GenericLabel<TimePointOfDay> {
 	
 	private static final String DEFAULT_PATTERN = "HH:mm";
 	
-	private final String timePattern;
+	private final String timePattern; // TODO model
 	
 	private IModel<TimeZone> timeZoneModel;
 	

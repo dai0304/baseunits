@@ -37,7 +37,7 @@ public class TimeOfDayLabel extends GenericLabel<TimeOfDay> {
 	
 	private static final String DEFAULT_PATTERN = "HH:mm";
 	
-	private final String timePattern;
+	private final String timePattern; // TODO model
 	
 	
 	/**

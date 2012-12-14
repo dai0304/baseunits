@@ -39,7 +39,7 @@ public class CalendarDateLabel extends GenericLabel<CalendarDate> {
 	
 	private static final String DEFAULT_PATTERN = "yyyy/MM/dd";
 	
-	private String datePattern;
+	private String datePattern; // TODO model
 	
 	
 	/**
