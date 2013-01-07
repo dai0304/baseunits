@@ -183,4 +183,14 @@ public class CalendarWeekTest {
 		assertThat(CalendarWeek.from(2012, 23).isBefore(CalendarWeek.from(2012, 24)), is(true));
 		assertThat(CalendarWeek.from(2012, 23).isBefore(null), is(false));
 	}
+	
+	/**
+	 * {@link CalendarWeek#plusWeeks(int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test11_plusWeeks() throws Exception {
+		assertThat(CalendarWeek.from(2013, 2).plusWeeks(-1), is(CalendarWeek.from(2013, 1)));
+	}
 }
