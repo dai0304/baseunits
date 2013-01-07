@@ -316,9 +316,8 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	public CalendarWeek plusWeeks(int increment) {
 		Calendar calendar = asJavaCalendarUniversalZoneMidnight();
 		calendar.add(Calendar.WEEK_OF_YEAR, increment);
-		int yearValue = calendar.get(Calendar.YEAR);
-		int weekValue = calendar.get(Calendar.WEEK_OF_YEAR);
-		return CalendarWeek.from(yearValue, weekValue);
+		CalendarDate calendarDate = CalendarDate.from(calendar);
+		return CalendarWeek.from(calendarDate);
 	}
 	
 	/**
