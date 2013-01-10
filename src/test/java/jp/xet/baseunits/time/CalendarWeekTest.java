@@ -30,6 +30,23 @@ import org.junit.Test;
  */
 public class CalendarWeekTest {
 	
+	private static final CalendarWeek WK_2011_52ND = CalendarWeek.from(2011, 52);
+	
+	private static final CalendarWeek WK_2011_53RD = CalendarWeek.from(2011, 53); // equals to WK_2012_1ST
+	
+	private static final CalendarWeek WK_2012_1ST = CalendarWeek.from(2012, 1);
+	
+	private static final CalendarWeek WK_2012_2ND = CalendarWeek.from(2012, 2);
+	
+	// ...
+	
+	private static final CalendarWeek WK_2012_52ND = CalendarWeek.from(2012, 52);
+	
+	private static final CalendarWeek WK_2013_1ST = CalendarWeek.from(2013, 1);
+	
+	private static final CalendarWeek WK_2013_2ND = CalendarWeek.from(2013, 2);
+	
+	
 	/**
 	 * {@link CalendarWeek#equals(Object)}のテスト。
 	 * 
@@ -39,13 +56,13 @@ public class CalendarWeekTest {
 	public void test01_equals() throws Exception {
 		CalendarWeek thisWeek = CalendarWeek.from(CalendarDate.from(2012, 2, 24));
 		assertThat(thisWeek.equals(thisWeek), is(true));
-		assertThat(CalendarWeek.from(2012, 1).equals(CalendarWeek.from(2012, 1)), is(true));
-		assertThat(CalendarWeek.from(2012, 1).equals(CalendarWeek.from(2012, 2)), is(false));
-		assertThat(CalendarWeek.from(2012, 1).equals(CalendarWeek.from(2011, 1)), is(false));
+		assertThat(WK_2012_1ST.equals(WK_2012_1ST), is(true));
+		assertThat(WK_2012_1ST.equals(WK_2012_2ND), is(false));
+		assertThat(WK_2012_1ST.equals(CalendarWeek.from(2011, 1)), is(false));
 		
-		assertThat(CalendarWeek.from(2011, 53).equals(CalendarWeek.from(2012, 1)), is(false));
-		assertThat(CalendarWeek.from(2012, 1).equals(null), is(false));
-		assertThat(CalendarWeek.from(2012, 1).equals(new Object()), is(false));
+		assertThat(WK_2011_53RD.equals(WK_2012_1ST), is(false));
+		assertThat(WK_2012_1ST.equals(null), is(false));
+		assertThat(WK_2012_1ST.equals(new Object()), is(false));
 	}
 	
 	/**
@@ -55,9 +72,12 @@ public class CalendarWeekTest {
 	 */
 	@Test
 	public void test02_toString() throws Exception {
-		assertThat(CalendarWeek.from(2011, 52).toString(), is("2011-52th"));
-		assertThat(CalendarWeek.from(2011, 53).toString(), is("2012-1th"));
-		assertThat(CalendarWeek.from(2012, 1).toString(), is("2012-1th"));
+		assertThat(WK_2011_52ND.toString(), is("2011-52nd"));
+		assertThat(WK_2011_53RD.toString(), is("2011-53rd"));
+		assertThat(WK_2012_1ST.toString(), is("2012-1st"));
+		assertThat(WK_2012_2ND.toString(), is("2012-2nd"));
+		assertThat(WK_2013_1ST.toString(), is("2013-1st"));
+		assertThat(WK_2013_2ND.toString(), is("2013-2nd"));
 	}
 	
 	/**
@@ -68,21 +88,22 @@ public class CalendarWeekTest {
 	@Test
 	public void test03_from() throws Exception {
 		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 25)), is(CalendarWeek.from(2011, 51)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 26)), is(CalendarWeek.from(2011, 52)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 27)), is(CalendarWeek.from(2011, 52)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 28)), is(CalendarWeek.from(2011, 52)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 29)), is(CalendarWeek.from(2011, 52)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 30)), is(CalendarWeek.from(2011, 52)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 31)), is(CalendarWeek.from(2011, 52)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 1)), is(CalendarWeek.from(2011, 52)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 2)), is(CalendarWeek.from(2012, 1)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 3)), is(CalendarWeek.from(2012, 1)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 4)), is(CalendarWeek.from(2012, 1)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 5)), is(CalendarWeek.from(2012, 1)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 6)), is(CalendarWeek.from(2012, 1)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 7)), is(CalendarWeek.from(2012, 1)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 8)), is(CalendarWeek.from(2012, 1)));
-		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 9)), is(CalendarWeek.from(2012, 2)));
+		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 26)), is(WK_2011_52ND));
+		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 27)), is(WK_2011_52ND));
+		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 28)), is(WK_2011_52ND));
+		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 29)), is(WK_2011_52ND));
+		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 30)), is(WK_2011_52ND));
+		assertThat(CalendarWeek.from(CalendarDate.from(2011, 12, 31)), is(WK_2011_52ND));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 1)), is(WK_2011_52ND));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 2)), is(WK_2012_1ST));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 3)), is(WK_2012_1ST));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 4)), is(WK_2012_1ST));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 5)), is(WK_2012_1ST));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 6)), is(WK_2012_1ST));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 7)), is(WK_2012_1ST));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 8)), is(WK_2012_1ST));
+		assertThat(CalendarWeek.from(CalendarDate.from(2012, 1, 9)), is(WK_2012_2ND));
+		
 		assertThat(CalendarWeek.from(CalendarDate.from(2012, 2, 24)), is(CalendarWeek.from(2012, 8)));
 		
 		assertThat(CalendarWeek.from(CalendarDate.from(2008, 12, 28)), is(CalendarWeek.from(2008, 52)));
@@ -161,8 +182,8 @@ public class CalendarWeekTest {
 	 */
 	@Test
 	public void test09_hashCode() throws Exception {
-		assertThat(CalendarWeek.from(2012, 2).hashCode(), is(CalendarWeek.from(2012, 2).hashCode()));
-		assertThat(CalendarWeek.from(2012, 3).hashCode(), is(not(CalendarWeek.from(2012, 2).hashCode())));
+		assertThat(WK_2012_2ND.hashCode(), is(WK_2012_2ND.hashCode()));
+		assertThat(CalendarWeek.from(2012, 3).hashCode(), is(not(WK_2012_2ND.hashCode())));
 		assertThat(CalendarWeek.from(3, 2).hashCode(), is(not(CalendarWeek.from(2, 3).hashCode())));
 	}
 	
@@ -191,6 +212,14 @@ public class CalendarWeekTest {
 	 */
 	@Test
 	public void test11_plusWeeks() throws Exception {
-		assertThat(CalendarWeek.from(2013, 2).plusWeeks(-1), is(CalendarWeek.from(2013, 1)));
+		assertThat(WK_2012_1ST.plusWeeks(1), is(WK_2012_2ND));
+		assertThat(WK_2012_2ND.plusWeeks(-1), is(WK_2012_1ST));
+		assertThat(WK_2012_2ND.plusWeeks(-1).plusWeeks(-1), is(WK_2011_52ND));
+		assertThat(WK_2012_2ND.plusWeeks(-2), is(WK_2011_52ND));
+		
+		assertThat(WK_2013_1ST.plusWeeks(1), is(WK_2013_2ND));
+		assertThat(WK_2013_2ND.plusWeeks(-1), is(WK_2013_1ST));
+		assertThat(WK_2013_2ND.plusWeeks(-1).plusWeeks(-1), is(WK_2012_52ND));
+		assertThat(WK_2013_2ND.plusWeeks(-2), is(WK_2012_52ND));
 	}
 }

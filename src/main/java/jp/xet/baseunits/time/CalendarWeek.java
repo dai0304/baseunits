@@ -340,7 +340,21 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	 */
 	@Override
 	public String toString() {
-		return toString("yyyy-w'th'"); //default for console
+		StringBuilder sb = new StringBuilder(String.valueOf(year));
+		String weekValueString = String.valueOf(week.value);
+		sb.append("-").append(weekValueString);
+		if (week.value == 11 || week.value == 12 || week.value == 13) {
+			sb.append("th");
+		} else if (weekValueString.endsWith("1")) {
+			sb.append("st");
+		} else if (weekValueString.endsWith("2")) {
+			sb.append("nd");
+		} else if (weekValueString.endsWith("3")) {
+			sb.append("rd");
+		} else {
+			sb.append("th");
+		}
+		return sb.toString(); //default for console
 	}
 	
 	/**
@@ -349,7 +363,9 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	 * @param pattern パターン
 	 * @return 文字列表現
 	 * @since 2.0
+	 * @deprecated この仕様を正確かつ妥当に実装する手段がない
 	 */
+	@Deprecated
 	public String toString(String pattern) {
 		// Any timezone works, as long as the same one is used throughout.
 		TimeZone arbitraryZone = TimePoint.UTC;
