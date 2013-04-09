@@ -53,6 +53,8 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 */
 	public static final CalendarDate EPOCH_DATE = CalendarDate.from(1970, 1, 1);
 	
+	private static final String DEFAULT_PATTERN = "yyyy-MM-dd";
+	
 	
 	/**
 	 * 指定した暦月及び日で表される暦週を返す。
@@ -168,6 +170,19 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 			return a;
 		}
 		return b;
+	}
+	
+	/**
+	 * 指定した暦日を表す文字列を {@value #DEFAULT_PATTERN} として解析し、暦日を返す。
+	 * 
+	 * @param dateString 暦日を表す文字列 
+	 * @return {@link CalendarDate}
+	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 2.10
+	 */
+	public static CalendarDate parse(String dateString) throws ParseException {
+		return parse(dateString, DEFAULT_PATTERN);
 	}
 	
 	/**
@@ -661,7 +676,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 */
 	@Override
 	public String toString() {
-		return toString("yyyy-MM-dd"); //default for console
+		return toString(DEFAULT_PATTERN); //default for console
 	}
 	
 	/**
