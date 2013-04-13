@@ -33,7 +33,6 @@
         <version>2.4.1</version>
         <configuration>
           <goals>deploy</goals>
-          <!-- リモートにプッシュしないように -->
           <pushChanges>false</pushChanges>
           <localCheckout>true</localCheckout>
         </configuration>
@@ -93,6 +92,11 @@
       <artifactId>validation-api</artifactId>
       <version>1.0.0.GA</version>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>[3.0.0.RELEASE,3.99.99.RELEASE]</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
