@@ -17,7 +17,7 @@ package jp.xet.baseunits.aws.dynamodb;
 
 import jp.xet.baseunits.time.TimePoint;
 
-import com.amazonaws.services.dynamodb.datamodeling.DynamoDBMarshaller;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMarshaller;
 
 /**
  * {@link DynamoDBMarshaller} implementation for {@link TimePoint}.
