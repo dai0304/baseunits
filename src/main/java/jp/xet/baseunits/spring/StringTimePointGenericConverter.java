@@ -51,6 +51,8 @@ public class StringTimePointGenericConverter implements GenericConverter {
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @param format 
 	 */
 	public StringTimePointGenericConverter(String format) {
 		this(format, TimeZone.getDefault());
@@ -72,6 +74,8 @@ public class StringTimePointGenericConverter implements GenericConverter {
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
+	 * @param timeZone 
 	 */
 	public StringTimePointGenericConverter(TimeZone timeZone) {
 		this(DEFAULT_FORMAT, timeZone);
