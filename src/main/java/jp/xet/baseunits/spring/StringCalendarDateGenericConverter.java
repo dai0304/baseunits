@@ -61,9 +61,9 @@ public class StringCalendarDateGenericConverter implements ConditionalGenericCon
 	
 	@Override
 	public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
-		String format = this.format;
+		String f = this.format;
 		try {
-			return source == null ? null : CalendarDate.parse((String) source, format);
+			return source == null ? null : CalendarDate.parse((String) source, f);
 		} catch (ParseException e) {
 			throw new IllegalArgumentException(e);
 		}
