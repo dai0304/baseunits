@@ -19,7 +19,7 @@ import java.text.ParseException;
 
 import jp.xet.baseunits.time.CalendarDate;
 
-import com.amazonaws.services.dynamodb.datamodeling.DynamoDBMarshaller;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMarshaller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
