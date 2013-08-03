@@ -51,7 +51,7 @@ public class StringCalendarDateGenericConverter implements ConditionalGenericCon
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param format
+	 * @param format パターン文字列
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public StringCalendarDateGenericConverter(String format) {

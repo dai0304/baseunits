@@ -52,7 +52,8 @@ public class StringTimePointGenericConverter implements GenericConverter {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param format 
+	 * @param format パターン文字列
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public StringTimePointGenericConverter(String format) {
 		this(format, TimeZone.getDefault());
@@ -61,8 +62,8 @@ public class StringTimePointGenericConverter implements GenericConverter {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param format
-	 * @param timeZone
+	 * @param format パターン文字列
+	 * @param timeZone タイムゾーン
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public StringTimePointGenericConverter(String format, TimeZone timeZone) {
@@ -75,7 +76,8 @@ public class StringTimePointGenericConverter implements GenericConverter {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param timeZone 
+	 * @param timeZone タイムゾーン
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public StringTimePointGenericConverter(TimeZone timeZone) {
 		this(DEFAULT_FORMAT, timeZone);
