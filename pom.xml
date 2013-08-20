@@ -266,11 +266,6 @@
       <name>Project Amateras Maven2 SNAPSHOT Repository</name>
       <url>http://amateras.sourceforge.jp/mvn-snapshot/</url>
     </repository>
-    <repository>
-      <id>jiemamy.org-release</id>
-      <name>Jiemamy Repository</name>
-      <url>http://maven.jiemamy.org/release</url>
-    </repository>
   </repositories>
   <distributionManagement>
     <repository>
