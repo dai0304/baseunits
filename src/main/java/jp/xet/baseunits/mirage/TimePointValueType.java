@@ -25,6 +25,7 @@ import java.sql.Types;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import jp.sf.amateras.mirage.bean.PropertyDesc;
 import jp.sf.amateras.mirage.type.ValueType;
 import jp.xet.baseunits.time.CalendarUtil;
 import jp.xet.baseunits.time.TimePoint;
@@ -85,7 +86,7 @@ public class TimePointValueType extends AbstractBaseunitsValueType<TimePoint> {
 	}
 	
 	@Override
-	public boolean isSupport(Class<?> type) {
+	public boolean isSupport(Class<?> type, PropertyDesc propertyDesc) {
 		return TimePoint.class.isAssignableFrom(type);
 	}
 	
