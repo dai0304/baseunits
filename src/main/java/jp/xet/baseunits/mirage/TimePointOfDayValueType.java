@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
 
+import jp.sf.amateras.mirage.bean.PropertyDesc;
 import jp.sf.amateras.mirage.type.ValueType;
 import jp.xet.baseunits.time.TimePointOfDay;
 
@@ -79,7 +80,7 @@ public class TimePointOfDayValueType extends AbstractBaseunitsValueType<TimePoin
 	}
 	
 	@Override
-	public boolean isSupport(Class<?> type) {
+	public boolean isSupport(Class<?> type, PropertyDesc propertyDesc) {
 		return TimePointOfDay.class.isAssignableFrom(type);
 	}
 	

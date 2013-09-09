@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import jp.sf.amateras.mirage.bean.PropertyDesc;
 import jp.sf.amateras.mirage.type.ValueType;
 import jp.xet.baseunits.time.Duration;
 import jp.xet.baseunits.time.TimeUnit;
@@ -76,7 +77,7 @@ public class DurationSecValueType extends AbstractBaseunitsValueType<Duration> {
 	}
 	
 	@Override
-	public boolean isSupport(Class<?> type) {
+	public boolean isSupport(Class<?> type, PropertyDesc propertyDesc) {
 		return Duration.class.isAssignableFrom(type);
 	}
 	

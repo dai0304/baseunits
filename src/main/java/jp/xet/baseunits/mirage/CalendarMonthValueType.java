@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.TimeZone;
 
+import jp.sf.amateras.mirage.bean.PropertyDesc;
 import jp.sf.amateras.mirage.type.ValueType;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarMonth;
@@ -78,7 +79,7 @@ public class CalendarMonthValueType extends AbstractBaseunitsValueType<CalendarM
 	}
 	
 	@Override
-	public boolean isSupport(Class<?> type) {
+	public boolean isSupport(Class<?> type, PropertyDesc propertyDesc) {
 		return CalendarMonth.class.isAssignableFrom(type);
 	}
 	
