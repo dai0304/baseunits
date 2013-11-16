@@ -33,7 +33,7 @@ public class DurationSerializer extends SerializerBase<Duration> {
 	/**
 	 * インスタンスを生成する。
 	 */
-	protected DurationSerializer() {
+	public DurationSerializer() {
 		super(Duration.class);
 	}
 	

@@ -32,7 +32,7 @@ public class CalendarMonthSerializer extends SerializerBase<CalendarMonth> {
 	/**
 	 * インスタンスを生成する。
 	 */
-	protected CalendarMonthSerializer() {
+	public CalendarMonthSerializer() {
 		super(CalendarMonth.class);
 	}
 	

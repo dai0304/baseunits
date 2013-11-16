@@ -43,7 +43,7 @@ public class TimePointDeserializer extends StdDeserializer<TimePoint> {
 	/**
 	 * インスタンスを生成する。
 	 */
-	protected TimePointDeserializer() {
+	public TimePointDeserializer() {
 		super(TimePoint.class);
 	}
 	

@@ -36,7 +36,7 @@ public class TimePointSerializer extends SerializerBase<TimePoint> {
 	/**
 	 * インスタンスを生成する。
 	 */
-	protected TimePointSerializer() {
+	public TimePointSerializer() {
 		super(TimePoint.class);
 	}
 	
