@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
+ * Copyright 2013 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Created on 2013/08/20
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 
 /**
- * TODO for daisuke
+ * Spring {@link Converter} implementation for {@link CalendarMonth}.
  */
 public class CalendarMonthConverter implements Converter<String, CalendarMonth> {
 	
