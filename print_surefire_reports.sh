@@ -8,3 +8,4 @@ do
     cat $F
     echo
 done
+

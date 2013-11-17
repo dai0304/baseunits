@@ -7,7 +7,8 @@ BaseUnits Library
 Travis CI build status
 ----------------------
 
-[![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=develop)](https://travis-ci.org/dai0304/baseunits)
+master: [![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=master)](https://travis-ci.org/dai0304/baseunits)
+develop: [![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=develop)](https://travis-ci.org/dai0304/baseunits)
 
 Basic information
 -----------------
