@@ -21,6 +21,7 @@
 package jp.xet.baseunits.money;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -44,7 +45,9 @@ public class TallyTest {
 	public void test01_Net() throws Exception {
 		Tally tally = new Tally(Money.dollars(55.34), Money.dollars(12.22), Money.dollars(-3.07));
 		assertThat(tally.net(), is(Money.dollars(64.49)));
-		assertThat(tally, hasToString("[USD 55.34, USD 12.22, USD -3.07]"));
+		assertThat(tally, is(anyOf(
+				hasToString("[USD 55.34, USD 12.22, USD -3.07]"),
+				hasToString("[$ 55.34, $ 12.22, $ -3.07]"))));
 		
 		Iterator<Money> itr = tally.iterator();
 		assertThat(itr.hasNext(), is(true));

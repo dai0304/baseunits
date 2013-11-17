@@ -21,6 +21,7 @@
 package jp.xet.baseunits.money;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertThat;
 
@@ -56,7 +57,7 @@ public class AllotmentTest {
 	@Test
 	public void test02_toString() throws Exception {
 		Allotment<String> abc123dollars = new Allotment<String>("ABC", Money.dollars(1.23));
-		assertThat(abc123dollars, hasToString("ABC --> USD 1.23"));
+		assertThat(abc123dollars, is(anyOf(hasToString("ABC --> USD 1.23"), hasToString("ABC --> $ 1.23"))));
 	}
 	
 	/**
