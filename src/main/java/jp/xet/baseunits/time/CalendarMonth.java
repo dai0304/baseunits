@@ -91,8 +91,8 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	/**
 	 * 指定した暦月を表す文字列を解析し、暦月を返す。
 	 * 
-	 * @param dateString 暦月を表す文字列 
-	 * @param pattern 解析パターン文字列
+	 * @param dateString 暦月を表す文字列
+	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
 	 * @return {@link CalendarMonth}
 	 * @throws ParseException 文字列の解析に失敗した場合 
 	 * @since 1.0

@@ -189,7 +189,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * 指定した暦日を表す文字列を解析し、暦日を返す。
 	 * 
 	 * @param dateString 暦日を表す文字列 
-	 * @param pattern 解析パターン文字列
+	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
 	 * @return {@link CalendarDate}
 	 * @throws ParseException 文字列の解析に失敗した場合 
 	 * @throws NullPointerException 引数に{@code null}を与えた場合

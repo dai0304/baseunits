@@ -17,8 +17,11 @@
 package jp.xet.baseunits.spring;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import jp.xet.baseunits.time.CalendarMonth;
+
+import com.google.common.base.Preconditions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,10 +49,12 @@ public class CalendarMonthConverter implements Converter<String, CalendarMonth> 
 	
 	/**
 	 * インスタンスを生成する。
-	 * @param pattern 
 	 * 
+	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public CalendarMonthConverter(String pattern) {
+		Preconditions.checkNotNull(pattern);
 		this.pattern = pattern;
 	}
 	
@@ -62,5 +67,4 @@ public class CalendarMonthConverter implements Converter<String, CalendarMonth> 
 		}
 		return null;
 	}
-	
 }
