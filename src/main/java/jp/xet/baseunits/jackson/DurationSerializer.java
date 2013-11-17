@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
+ * Copyright 2013 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Created on 2013/08/20
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,14 +26,16 @@ import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.ser.std.SerializerBase;
 
 /**
- * TODO for daisuke
+ * Jackson data serializer implementation for {@link Duration}.
+ * 
+ * @author daisuke
  */
 public class DurationSerializer extends SerializerBase<Duration> {
 	
 	/**
 	 * インスタンスを生成する。
 	 */
-	protected DurationSerializer() {
+	public DurationSerializer() {
 		super(Duration.class);
 	}
 	

@@ -17,6 +17,7 @@
 package jp.xet.baseunits.time.formatter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
 
 import java.util.Locale;
@@ -70,10 +71,11 @@ public class DetailedDurationFormatterTest {
 	}
 	
 	@Test
+	@SuppressWarnings("unchecked")
 	public void test3() {
 		DurationFormatter f1 = new DetailedDurationFormatter(true, TimeUnit.hour, TimeUnit.minute);
 		DurationFormatter f2 = new DetailedDurationFormatter(false, TimeUnit.hour, TimeUnit.minute);
-		assertThat(f1.format(Duration.NONE), is("0時間 0分"));
-		assertThat(f2.format(Duration.NONE), is("0分"));
+		assertThat(f1.format(Duration.NONE), anyOf(is("0 hours 0 minutes"), is("0時間 0分")));
+		assertThat(f2.format(Duration.NONE), anyOf(is("0 minutes"), is("0分")));
 	}
 }

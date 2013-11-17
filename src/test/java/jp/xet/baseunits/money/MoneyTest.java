@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2012 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
+ * Copyright 2011-2013 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Copyright 2010-2011 TRICREO, Inc. (http://tricreo.jp/)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +35,6 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.Locale;
 
-import jp.xet.baseunits.money.Money;
 import jp.xet.baseunits.tests.SerializationTester;
 import jp.xet.baseunits.util.Ratio;
 
@@ -121,7 +120,7 @@ public class MoneyTest {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void test03_Yen() throws Exception {
-		assertThat(y50.toString(), is(anyOf(equalTo("¥ 50"), equalTo("￥ 50"))));
+		assertThat(y50.toString(), is(anyOf(equalTo("¥ 50"), equalTo("￥ 50"), equalTo("JPY 50"))));
 		Money y80 = Money.valueOf(new BigDecimal("80"), JPY);
 		Money y30 = Money.valueOf(30, JPY);
 		assertThat(y50.plus(y30), is(y80));

@@ -1,5 +1,5 @@
 /*
-z * Copyright 2011-2012 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
+ * Copyright 2011-2013 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Created on 2011/09/26
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +13,6 @@ z * Copyright 2011-2012 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * ----
- * Copyright (c) 2004 Domain Language, Inc. (http://domainlanguage.com)
- * This free software is distributed under the "MIT" licence.
- * For more information, see http://timeandmoney.sourceforge.net.
  */
 package jp.xet.baseunits.hibernate;
 

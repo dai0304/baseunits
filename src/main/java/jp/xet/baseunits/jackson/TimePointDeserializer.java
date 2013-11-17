@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
+ * Copyright 2013 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Created on 2013/08/20
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO for daisuke
+ * Jackson data deserializer implementation for {@link TimePoint}.
+ * 
+ * @author daisuke
  */
 public class TimePointDeserializer extends StdDeserializer<TimePoint> {
 	
@@ -43,7 +45,7 @@ public class TimePointDeserializer extends StdDeserializer<TimePoint> {
 	/**
 	 * インスタンスを生成する。
 	 */
-	protected TimePointDeserializer() {
+	public TimePointDeserializer() {
 		super(TimePoint.class);
 	}
 	

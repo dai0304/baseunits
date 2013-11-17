@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2012 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
+ * Copyright 2011-2013 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
  * Created on 2011/10/24
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
