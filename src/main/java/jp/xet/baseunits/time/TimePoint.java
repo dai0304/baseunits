@@ -47,6 +47,9 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	/** エポック */
 	public static final TimePoint EPOCH = TimePoint.from(0);
 	
+	/** ISO 8601 に則った {@link SimpleDateFormat} 仕様の書式 */
+	public static final String ISO8601_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	
 	static final TimeZone UTC = TimeZone.getTimeZone("Universal");
 	
 	
@@ -605,6 +608,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 
 	 * @param other 比較対象{@link TimePoint}
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.13
+	 */
+	public boolean isAfter(Date other) {
+		if (other == null) {
+			return false;
+		}
+		return millisecondsFromEpoch > other.getTime();
+	}
+	
+	/**
+	 * この瞬間が、{@code other}よりも未来であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 比較対象{@link TimePoint}
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
 	public boolean isAfter(TimePoint other) {
@@ -640,6 +660,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 
 	 * @param other 比較対象{@link TimePoint}
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.13
+	 */
+	public boolean isAfterOrEquals(Date other) {
+		if (other == null) {
+			return false;
+		}
+		return millisecondsFromEpoch >= other.getTime();
+	}
+	
+	/**
+	 * この瞬間が、{@code other}よりも未来であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code true} を返す。</p>
+	 * 
+	 * @param other 比較対象{@link TimePoint}
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.3
 	 */
 	public boolean isAfterOrEquals(TimePoint other) {
@@ -647,6 +684,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 			return false;
 		}
 		return millisecondsFromEpoch >= other.millisecondsFromEpoch;
+	}
+	
+	/**
+	 * この瞬間が、{@code other}よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 比較対象{@link TimePoint}
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.13
+	 */
+	public boolean isBefore(Date other) {
+		if (other == null) {
+			return false;
+		}
+		return millisecondsFromEpoch < other.getTime();
 	}
 	
 	/**
@@ -680,6 +734,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 			return false;
 		}
 		return interval.isAfter(this);
+	}
+	
+	/**
+	 * この瞬間が、{@code other}よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code true} を返す。</p>
+	 * 
+	 * @param other 比較対象{@link TimePoint}
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.13
+	 */
+	public boolean isBeforeOrEquals(Date other) {
+		if (other == null) {
+			return false;
+		}
+		return millisecondsFromEpoch <= other.getTime();
 	}
 	
 	/**
