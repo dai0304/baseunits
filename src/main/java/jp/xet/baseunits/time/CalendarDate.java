@@ -28,6 +28,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import jp.xet.baseunits.util.TimeZones;
+
 import com.google.common.base.Preconditions;
 
 /**
@@ -45,16 +47,6 @@ import com.google.common.base.Preconditions;
  */
 @SuppressWarnings("serial")
 public class CalendarDate implements Comparable<CalendarDate>, Serializable {
-	
-	/**
-	 * エポック(1970年1月1日)の暦日
-	 * 
-	 * @since 2.0
-	 */
-	public static final CalendarDate EPOCH_DATE = CalendarDate.from(1970, 1, 1);
-	
-	private static final String DEFAULT_PATTERN = "yyyy-MM-dd";
-	
 	
 	/**
 	 * 指定した暦月及び日で表される暦週を返す。
@@ -175,9 +167,9 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * 指定した暦日を表す文字列を {@value #DEFAULT_PATTERN} として解析し、暦日を返す。
 	 * 
-	 * @param dateString 暦日を表す文字列 
+	 * @param dateString 暦日を表す文字列
 	 * @return {@link CalendarDate}
-	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.10
 	 */
@@ -188,10 +180,10 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	/**
 	 * 指定した暦日を表す文字列を解析し、暦日を返す。
 	 * 
-	 * @param dateString 暦日を表す文字列 
+	 * @param dateString 暦日を表す文字列
 	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
 	 * @return {@link CalendarDate}
-	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
@@ -213,6 +205,15 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 		return from(year, month, date);
 	}
 	
+	
+	/**
+	 * エポック(1970年1月1日)の暦日
+	 * 
+	 * @since 2.0
+	 */
+	public static final CalendarDate EPOCH_DATE = CalendarDate.from(1970, 1, 1);
+	
+	private static final String DEFAULT_PATTERN = "yyyy-MM-dd";
 	
 	// TODO rename to calendarMonth on v3.0
 	private final CalendarMonth yearMonth;
@@ -348,7 +349,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 * @since 2.3
 	 */
 	public TimePoint atMidnightUTC() {
-		return atMidnight(TimePoint.UTC);
+		return atMidnight(TimeZones.UNIVERSAL);
 	}
 	
 	/**
@@ -700,7 +701,7 @@ public class CalendarDate implements Comparable<CalendarDate>, Serializable {
 	 */
 	public String toString(String pattern, Locale locale) {
 		// Any timezone works, as long as the same one is used throughout.
-		TimeZone arbitraryZone = TimePoint.UTC;
+		TimeZone arbitraryZone = TimeZones.UNIVERSAL;
 		TimePoint point = startAsTimePoint(arbitraryZone);
 		return point.toString(pattern, locale, arbitraryZone);
 	}

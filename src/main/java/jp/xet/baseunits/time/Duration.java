@@ -40,10 +40,6 @@ import com.google.common.base.Preconditions;
 @SuppressWarnings("serial")
 public class Duration implements Comparable<Duration>, Serializable {
 	
-	/** 長さ {@code 0} の期間 */
-	public static final Duration NONE = milliseconds(0);
-	
-	
 	/**
 	 * 長さが {@code howMany} 日の時間量を取得する。
 	 * 
@@ -60,8 +56,8 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 長さが {@code days}日 + {@code hours}時間 + {@code minute}分 + {@code seconds}秒
 	 * + {@code milliseconds}ミリ秒 の時間量を取得する。
 	 * 
-	 * @param days 時間の長さ（日） 
-	 * @param hours 時間の長さ（時間） 
+	 * @param days 時間の長さ（日）
+	 * @param hours 時間の長さ（時間）
 	 * @param minutes 時間の長さ（分）
 	 * @param seconds 時間の長さ（秒）
 	 * @param milliseconds  時間の長さ（ミリ秒）
@@ -194,6 +190,19 @@ public class Duration implements Comparable<Duration>, Serializable {
 	}
 	
 	/**
+	 * 長さが {@code howMany}、単位が{@code unit}の時間量を取得する。
+	 * 
+	 * @param howMany 時間の長さ
+	 * @param unit 単位
+	 * @return 時間量
+	 * @throws IllegalArgumentException 引数{@code howMany}に負数を与えた場合
+	 * @since 1.0
+	 */
+	public static Duration valueOf(long howMany, TimeUnit unit) {
+		return new Duration(howMany, unit);
+	}
+	
+	/**
 	 * 長さが {@code howMany} 週間の時間量を取得する。
 	 * 
 	 * @param howMany 時間の長さ（週）
@@ -217,10 +226,9 @@ public class Duration implements Comparable<Duration>, Serializable {
 		return Duration.valueOf(howMany, TimeUnit.year);
 	}
 	
-	static Duration valueOf(long howMany, TimeUnit unit) {
-		return new Duration(howMany, unit);
-	}
 	
+	/** 長さ {@code 0} の期間 */
+	public static final Duration NONE = milliseconds(0);
 	
 	final long quantity;
 	
