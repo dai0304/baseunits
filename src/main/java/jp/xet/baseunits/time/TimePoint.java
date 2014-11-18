@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import jp.xet.baseunits.time.HourOfDay.Meridian;
+import jp.xet.baseunits.util.TimeZones;
 
 import com.google.common.base.Preconditions;
 
@@ -43,12 +44,6 @@ import com.google.common.base.Preconditions;
  */
 @SuppressWarnings("serial")
 public class TimePoint implements Comparable<TimePoint>, Serializable {
-	
-	/** エポック */
-	public static final TimePoint EPOCH = TimePoint.from(0);
-	
-	static final TimeZone UTC = TimeZone.getTimeZone("Universal");
-	
 	
 	/**
 	 * 指定したタイムゾーンにおける、指定した瞬間を表す{@link TimePoint}を返す。
@@ -180,7 +175,8 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	public static TimePoint at12hr(int year, int month, int date, int hour, Meridian meridian, int minute, int second, // CHECKSTYLE IGNORE THIS LINE
 			int millisecond) {
-		return at(year, month, date, HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond, UTC);
+		return at(year, month, date, HourOfDay.convertTo24hour(hour, meridian), minute, second, millisecond,
+				TimeZones.UNIVERSAL);
 	}
 	
 	/**
@@ -247,7 +243,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @since 1.0
 	 */
 	public static TimePoint atMidnightUTC(int year, int month, int date) {
-		return atMidnight(year, month, date, UTC);
+		return atMidnight(year, month, date, TimeZones.UNIVERSAL);
 	}
 	
 	/**
@@ -295,7 +291,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @since 1.0
 	 */
 	public static TimePoint atUTC(int year, int month, int date, int hour, int minute, int second, int millisecond) {
-		return at(year, month, date, hour, minute, second, millisecond, UTC);
+		return at(year, month, date, hour, minute, second, millisecond, TimeZones.UNIVERSAL);
 	}
 	
 	/**
@@ -415,7 +411,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	public static TimePoint parseUTCFrom(String dateString, String pattern) throws ParseException {
 		Preconditions.checkNotNull(dateString);
 		Preconditions.checkNotNull(pattern);
-		return parse(dateString, pattern, UTC);
+		return parse(dateString, pattern, TimeZones.UNIVERSAL);
 	}
 	
 	/**
@@ -431,6 +427,15 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 		return from(calendar.getTime());
 	}
 	
+	
+	/** エポック */
+	public static final TimePoint EPOCH = TimePoint.from(0);
+	
+	/** ISO 8601 に則った {@link SimpleDateFormat} 仕様の書式 (UTC用) */
+	public static final String ISO8601_FORMAT_UNIVERSAL = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	
+	/** ISO 8601 に則った {@link SimpleDateFormat} 仕様の書式 (一般用) */
+	public static final String ISO8601_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZ";
 	
 	/** エポックからの経過ミリ秒 */
 	final long millisecondsFromEpoch;
@@ -460,7 +465,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @since 1.0
 	 */
 	public Calendar asJavaCalendar() {
-		return asJavaCalendar(UTC);
+		return asJavaCalendar(TimeZones.UNIVERSAL);
 	}
 	
 	/**
@@ -605,6 +610,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 
 	 * @param other 比較対象{@link TimePoint}
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.13
+	 */
+	public boolean isAfter(Date other) {
+		if (other == null) {
+			return false;
+		}
+		return millisecondsFromEpoch > other.getTime();
+	}
+	
+	/**
+	 * この瞬間が、{@code other}よりも未来であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 比較対象{@link TimePoint}
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 1.0
 	 */
 	public boolean isAfter(TimePoint other) {
@@ -640,6 +662,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * 
 	 * @param other 比較対象{@link TimePoint}
 	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.13
+	 */
+	public boolean isAfterOrEquals(Date other) {
+		if (other == null) {
+			return false;
+		}
+		return millisecondsFromEpoch >= other.getTime();
+	}
+	
+	/**
+	 * この瞬間が、{@code other}よりも未来であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code true} を返す。</p>
+	 * 
+	 * @param other 比較対象{@link TimePoint}
+	 * @return 未来である場合は{@code true}、そうでない場合は{@code false}
 	 * @since 2.3
 	 */
 	public boolean isAfterOrEquals(TimePoint other) {
@@ -647,6 +686,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 			return false;
 		}
 		return millisecondsFromEpoch >= other.millisecondsFromEpoch;
+	}
+	
+	/**
+	 * この瞬間が、{@code other}よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code false} を返す。</p>
+	 * 
+	 * @param other 比較対象{@link TimePoint}
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.13
+	 */
+	public boolean isBefore(Date other) {
+		if (other == null) {
+			return false;
+		}
+		return millisecondsFromEpoch < other.getTime();
 	}
 	
 	/**
@@ -680,6 +736,23 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 			return false;
 		}
 		return interval.isAfter(this);
+	}
+	
+	/**
+	 * この瞬間が、{@code other}よりも過去であるかどうかを検証する。
+	 * 
+	 * <p>{@code other} が {@code null} である場合は {@code false} を返す。
+	 * また、同一である場合は {@code true} を返す。</p>
+	 * 
+	 * @param other 比較対象{@link TimePoint}
+	 * @return 過去である場合は{@code true}、そうでない場合は{@code false}
+	 * @since 2.13
+	 */
+	public boolean isBeforeOrEquals(Date other) {
+		if (other == null) {
+			return false;
+		}
+		return millisecondsFromEpoch <= other.getTime();
 	}
 	
 	/**
@@ -798,7 +871,19 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 */
 	@Override
 	public String toString() {
-		return asJavaUtilDate().toString();
+		return toString(ISO8601_FORMAT_UNIVERSAL, Locale.getDefault(), TimeZones.UNIVERSAL);
+	}
+	
+	/**
+	 * この瞬間を、指定したパターンで整形し、その文字列表現を取得する。
+	 * 
+	 * @param locale ロケール
+	 * @return 整形済み時間文字列
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
+	 * @since 2.13
+	 */
+	public String toString(Locale locale) {
+		return toString(ISO8601_FORMAT_UNIVERSAL, locale, TimeZones.UNIVERSAL);
 	}
 	
 	/**
@@ -810,6 +895,7 @@ public class TimePoint implements Comparable<TimePoint>, Serializable {
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 2.5
 	 */
+	@Deprecated
 	public String toString(Locale locale, TimeZone zone) {
 		return toString("yyyy-MM-dd'T'HH:mm:ssZZ", locale, zone);
 	}

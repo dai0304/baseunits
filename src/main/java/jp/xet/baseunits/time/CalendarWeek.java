@@ -25,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import jp.xet.baseunits.util.TimeZones;
+
 import com.google.common.base.Preconditions;
 
 /**
@@ -42,11 +44,6 @@ import com.google.common.base.Preconditions;
  */
 @SuppressWarnings("serial")
 public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
-	
-	private static final DayOfWeek START_DAY_OF_WEEK = DayOfWeek.MONDAY;
-	
-	private static final DayOfWeek END_DAY_OF_WEEK = DayOfWeek.SUNDAY;
-	
 	
 	/**
 	 * 指定した暦日を含む暦週を返す。
@@ -102,6 +99,10 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 		return new CalendarWeek(year, week);
 	}
 	
+	
+	private static final DayOfWeek START_DAY_OF_WEEK = DayOfWeek.MONDAY;
+	
+	private static final DayOfWeek END_DAY_OF_WEEK = DayOfWeek.SUNDAY;
 	
 	final int year;
 	
@@ -368,7 +369,7 @@ public class CalendarWeek implements Comparable<CalendarWeek>, Serializable {
 	@Deprecated
 	public String toString(String pattern) {
 		// Any timezone works, as long as the same one is used throughout.
-		TimeZone arbitraryZone = TimePoint.UTC;
+		TimeZone arbitraryZone = TimeZones.UNIVERSAL;
 		TimePoint point = asTimePoint(arbitraryZone);
 		return point.toString(pattern, arbitraryZone);
 	}

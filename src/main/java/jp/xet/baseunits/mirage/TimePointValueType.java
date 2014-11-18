@@ -33,6 +33,12 @@ import jp.xet.baseunits.time.TimePoint;
 /**
  * {@link TimePoint}用{@link ValueType}実装クラス。
  * 
+ * <p>MySQLにおいては、JDBC URLにおいて{@code useLegacyDatetimeCode=false}オプションを指定しなければ、
+ * DB上に保存されるデータにズレが発生する。常に同じタイムゾーンからアクセスしていれば問題は顕在化しないが、
+ * 複数のタイムゾーンから同じデータにアクセスした際に時間がずれる。</p>
+ * 
+ * <p>see http://bugs.mysql.com/bug.php?id=15604</p>
+ * 
  * @author daisuke
  * @since 2.0
  */
