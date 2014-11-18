@@ -27,6 +27,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import jp.xet.baseunits.util.TimeZones;
+
 import com.google.common.base.Preconditions;
 
 /**
@@ -94,12 +96,12 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 * @param dateString 暦月を表す文字列
 	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
 	 * @return {@link CalendarMonth}
-	 * @throws ParseException 文字列の解析に失敗した場合 
+	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @since 1.0
 	 */
 	public static CalendarMonth parse(String dateString, String pattern) throws ParseException {
 		//Any timezone works, as long as the same one is used throughout.
-		TimeZone arbitraryZone = TimePoint.UTC;
+		TimeZone arbitraryZone = TimeZones.UNIVERSAL;
 		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
 		return CalendarMonth.from(point, arbitraryZone);
 	}
@@ -403,7 +405,7 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	 */
 	public String toString(String pattern, Locale locale) {
 		// Any timezone works, as long as the same one is used throughout.
-		TimeZone arbitraryZone = TimePoint.UTC;
+		TimeZone arbitraryZone = TimeZones.UNIVERSAL;
 		TimePoint point = asTimePoint(arbitraryZone);
 		return point.toString(pattern, locale, arbitraryZone);
 	}
