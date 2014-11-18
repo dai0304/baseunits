@@ -3,10 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.xet</groupId>
   <artifactId>baseunits</artifactId>
+  <packaging>jar</packaging>
   <name>Base Units Library</name>
   <version>2.13-SNAPSHOT</version>
   <description>The models of basic unit (ex. Time, Money, etc.)</description>
-  <url>http://maven.xet.jp/site/${project.artifactId}/${project.version}/</url>
+  <url>https://github.com/dai0304/baseunits</url>
   <inceptionYear>2010</inceptionYear>
   <licenses>
     <license>
@@ -20,12 +21,26 @@
     <connection>scm:git:git@github.com:dai0304/baseunits.git</connection>
     <developerConnection>scm:git:git@github.com:dai0304/baseunits.git</developerConnection>
   </scm>
+  <developers>
+    <developer>
+      <id>daisuke</id>
+      <name>Miyamoto Daisuke</name>
+      <email>dai.0304@gmail.com</email>
+      <url>https://twitter.com/daisuke_m</url>
+      <roles>
+        <role>lead</role>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>+9</timezone>
+    </developer>
+  </developers>
   <build>
     <extensions>
       <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh</artifactId>
-        <version>2.4</version>
+        <groupId>org.springframework.build</groupId>
+        <artifactId>aws-maven</artifactId>
+        <version>5.0.0.RELEASE</version>
       </extension>
     </extensions>
     <plugins>
@@ -44,6 +59,11 @@
           <target>1.6</target>
           <encoding>UTF-8</encoding>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -78,18 +98,6 @@
           <outputEncoding>UTF-8</outputEncoding>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.4.1</version>
-        <configuration>
-          <goals>deploy</goals>
-          <pushChanges>false</pushChanges>
-          <localCheckout>true</localCheckout>
-          <username>${scm.username}</username>
-          <password>${scm.password}</password>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <reporting>
@@ -102,10 +110,7 @@
           <charset>UTF-8</charset>
           <encoding>UTF-8</encoding>
           <docencoding>UTF-8</docencoding>
-          <linksource>true</linksource>
-          <links>
-            <link>http://download.oracle.com/javase/6/docs/api/</link>
-          </links>
+          <show>public</show>
         </configuration>
         <reportSets>
           <reportSet>
@@ -195,7 +200,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>[3.0.0.RELEASE,3.99.99.RELEASE]</version>
+      <version>[3.0.0.RELEASE,)</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -257,18 +262,47 @@
   </dependencies>
   <distributionManagement>
     <repository>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/var/www/maven.xet.jp/release</url>
+      <id>aws-release</id>
+      <url>s3://maven.xet.jp/release</url>
     </repository>
     <snapshotRepository>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/var/www/maven.xet.jp/snapshot</url>
+      <id>aws-snapshot</id>
+      <url>s3://maven.xet.jp/snapshot</url>
     </snapshotRepository>
     <site>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/var/www/maven.xet.jp/site/${project.artifactId}/${project.version}</url>
+      <id>aws-site</id>
+      <url>s3://maven.xet.jp/site/${project.artifactId}/${project.version}</url>
     </site>
   </distributionManagement>
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.4</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <guava-version>[r03,)</guava-version>
