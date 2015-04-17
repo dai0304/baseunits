@@ -30,12 +30,12 @@ import org.springframework.core.convert.converter.Converter;
 /**
  * Spring {@link Converter} implementation for {@link CalendarMonth}.
  * 
- * @deprecated use {@link StringToCalendarMonthConverter}
+ * @since #version#
+ * @author daisuke
  */
-@Deprecated
-public class CalendarMonthConverter implements Converter<String, CalendarMonth> {
+public class StringToCalendarMonthConverter implements Converter<String, CalendarMonth> {
 	
-	private static Logger logger = LoggerFactory.getLogger(CalendarMonthConverter.class);
+	private static Logger logger = LoggerFactory.getLogger(StringToCalendarMonthConverter.class);
 	
 	private static final String DEFAULT_PATTERN = "yyyy-MM";
 	
@@ -46,7 +46,7 @@ public class CalendarMonthConverter implements Converter<String, CalendarMonth> 
 	 * インスタンスを生成する。
 	 * 
 	 */
-	public CalendarMonthConverter() {
+	public StringToCalendarMonthConverter() {
 		this(DEFAULT_PATTERN);
 	}
 	
@@ -56,7 +56,7 @@ public class CalendarMonthConverter implements Converter<String, CalendarMonth> 
 	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
-	public CalendarMonthConverter(String pattern) {
+	public StringToCalendarMonthConverter(String pattern) {
 		Preconditions.checkNotNull(pattern);
 		this.pattern = pattern;
 	}

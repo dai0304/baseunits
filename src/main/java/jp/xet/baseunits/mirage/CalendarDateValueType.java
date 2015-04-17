@@ -17,15 +17,18 @@
 package jp.xet.baseunits.mirage;
 
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Calendar;
 import java.util.TimeZone;
 
 import jp.sf.amateras.mirage.bean.PropertyDesc;
 import jp.sf.amateras.mirage.type.ValueType;
 import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.CalendarUtil;
 
 /**
  * {@link CalendarDate}用{@link ValueType}実装クラス。
@@ -35,46 +38,35 @@ import jp.xet.baseunits.time.CalendarDate;
  */
 public class CalendarDateValueType extends AbstractBaseunitsValueType<CalendarDate> {
 	
+	private static final TimeZone UTC = TimeZone.getTimeZone("Universal");
+	
+	private static final Calendar CALENDAR = CalendarUtil.newCalendar(UTC);
+	
+	
 	@Override
 	public CalendarDate get(Class<? extends CalendarDate> type, CallableStatement cs, int index) throws SQLException {
-		java.sql.Date date = cs.getDate(index);
-		if (date == null) {
-			return null;
-		}
-		return CalendarDate.from(date, TimeZone.getDefault());
+		return get(cs.getDate(index, CALENDAR));
 	}
 	
 	@Override
 	public CalendarDate get(Class<? extends CalendarDate> type, CallableStatement cs, String parameterName)
 			throws SQLException {
-		java.sql.Date date = cs.getDate(parameterName);
-		if (date == null) {
-			return null;
-		}
-		return CalendarDate.from(date, TimeZone.getDefault());
+		return get(cs.getDate(parameterName, CALENDAR));
 	}
 	
 	@Override
 	public CalendarDate get(Class<? extends CalendarDate> type, ResultSet rs, int index) throws SQLException {
-		java.sql.Date date = rs.getDate(index);
-		if (date == null) {
-			return null;
-		}
-		return CalendarDate.from(date, TimeZone.getDefault());
+		return get(rs.getDate(index, CALENDAR));
 	}
 	
 	@Override
 	public CalendarDate get(Class<? extends CalendarDate> type, ResultSet rs, String columnName) throws SQLException {
-		java.sql.Date date = rs.getDate(columnName);
-		if (date == null) {
-			return null;
-		}
-		return CalendarDate.from(date, TimeZone.getDefault());
+		return get(rs.getDate(columnName, CALENDAR));
 	}
 	
 	@Override
 	public Class<?> getJavaType(int sqlType) {
-		return java.sql.Date.class;
+		return CalendarDate.class;
 	}
 	
 	@Override
@@ -98,9 +90,15 @@ public class CalendarDateValueType extends AbstractBaseunitsValueType<CalendarDa
 		if (value == null) {
 			stmt.setNull(index, Types.DATE);
 		} else {
-//			long epochMillisec = value.startAsTimePoint(TimeZone.getDefault()).toEpochMillisec();
-//			stmt.setDate(index, new java.sql.Date(epochMillisec));
-			stmt.setString(index, value.toString("yyyy-MM-dd"));
+			long epochMillisec = value.startAsTimePoint(UTC).toEpochMillisec();
+			stmt.setDate(index, new Date(epochMillisec), CALENDAR);
 		}
+	}
+	
+	private CalendarDate get(Date date) {
+		if (date == null) {
+			return null;
+		}
+		return CalendarDate.from(date, UTC);
 	}
 }

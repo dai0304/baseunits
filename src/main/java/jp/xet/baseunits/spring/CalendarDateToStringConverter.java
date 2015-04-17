@@ -1,6 +1,6 @@
 /*
- * Copyright 2013 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
- * Created on 2013/08/20
+ * Copyright 2011 Daisuke Miyamoto.
+ * Created on 2012/08/19
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,25 @@
  */
 package jp.xet.baseunits.spring;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarMonth;
 
 import com.google.common.base.Preconditions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 
 /**
- * Spring {@link Converter} implementation for {@link CalendarMonth}.
+ * {@link String}から{@link CalendarMonth}に変換する {@link Converter}実装クラス。
  * 
- * @deprecated use {@link StringToCalendarMonthConverter}
+ * @since #version#
+ * @version $Id$
+ * @author daisuke
  */
-@Deprecated
-public class CalendarMonthConverter implements Converter<String, CalendarMonth> {
+public class CalendarDateToStringConverter implements Converter<CalendarDate, String> {
 	
-	private static Logger logger = LoggerFactory.getLogger(CalendarMonthConverter.class);
-	
-	private static final String DEFAULT_PATTERN = "yyyy-MM";
+	private static final String DEFAULT_PATTERN = "yyyy-MM-dd";
 	
 	private String pattern;
 	
@@ -46,7 +43,7 @@ public class CalendarMonthConverter implements Converter<String, CalendarMonth> 
 	 * インスタンスを生成する。
 	 * 
 	 */
-	public CalendarMonthConverter() {
+	public CalendarDateToStringConverter() {
 		this(DEFAULT_PATTERN);
 	}
 	
@@ -56,18 +53,13 @@ public class CalendarMonthConverter implements Converter<String, CalendarMonth> 
 	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
-	public CalendarMonthConverter(String pattern) {
+	public CalendarDateToStringConverter(String pattern) {
 		Preconditions.checkNotNull(pattern);
 		this.pattern = pattern;
 	}
 	
 	@Override
-	public CalendarMonth convert(String source) {
-		try {
-			return CalendarMonth.parse(source, pattern);
-		} catch (ParseException e) {
-			logger.error("fail to parse", e);
-		}
-		return null;
+	public String convert(CalendarDate source) {
+		return source == null ? null : source.toString(pattern);
 	}
 }

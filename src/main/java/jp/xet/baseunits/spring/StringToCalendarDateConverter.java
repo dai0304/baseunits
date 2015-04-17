@@ -19,7 +19,7 @@ package jp.xet.baseunits.spring;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import jp.xet.baseunits.time.CalendarMonth;
+import jp.xet.baseunits.time.CalendarDate;
 
 import com.google.common.base.Preconditions;
 
@@ -28,25 +28,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
 
 /**
- * Spring {@link Converter} implementation for {@link CalendarMonth}.
+ * Spring {@link Converter} implementation for {@link CalendarDate}.
  * 
- * @deprecated use {@link StringToCalendarMonthConverter}
+ * @since #version#
+ * @author daisuke
  */
-@Deprecated
-public class CalendarMonthConverter implements Converter<String, CalendarMonth> {
+public class StringToCalendarDateConverter implements Converter<String, CalendarDate> {
 	
-	private static Logger logger = LoggerFactory.getLogger(CalendarMonthConverter.class);
+	private static Logger logger = LoggerFactory.getLogger(StringToCalendarDateConverter.class);
 	
-	private static final String DEFAULT_PATTERN = "yyyy-MM";
+	private static final String DEFAULT_PATTERN = "yyyy-MM-dd";
 	
 	private String pattern;
 	
 	
 	/**
 	 * インスタンスを生成する。
-	 * 
 	 */
-	public CalendarMonthConverter() {
+	public StringToCalendarDateConverter() {
 		this(DEFAULT_PATTERN);
 	}
 	
@@ -56,15 +55,15 @@ public class CalendarMonthConverter implements Converter<String, CalendarMonth> 
 	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
-	public CalendarMonthConverter(String pattern) {
+	public StringToCalendarDateConverter(String pattern) {
 		Preconditions.checkNotNull(pattern);
 		this.pattern = pattern;
 	}
 	
 	@Override
-	public CalendarMonth convert(String source) {
+	public CalendarDate convert(String source) {
 		try {
-			return CalendarMonth.parse(source, pattern);
+			return CalendarDate.parse(source, pattern);
 		} catch (ParseException e) {
 			logger.error("fail to parse", e);
 		}
