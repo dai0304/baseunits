@@ -29,7 +29,10 @@ import org.springframework.core.convert.converter.Converter;
 
 /**
  * Spring {@link Converter} implementation for {@link CalendarMonth}.
+ * 
+ * @deprecated use {@link StringToCalendarMonthConverter}
  */
+@Deprecated
 public class CalendarMonthConverter implements Converter<String, CalendarMonth> {
 	
 	private static Logger logger = LoggerFactory.getLogger(CalendarMonthConverter.class);

@@ -31,7 +31,9 @@ import org.springframework.core.convert.converter.Converter;
  * Spring {@link Converter} implementation for {@link CalendarDate}.
  * 
  * @author daisuke
+ * @deprecated use {@link StringToCalendarDateConverter}
  */
+@Deprecated
 public class CalendarDateConverter implements Converter<String, CalendarDate> {
 	
 	private static Logger logger = LoggerFactory.getLogger(CalendarDateConverter.class);
