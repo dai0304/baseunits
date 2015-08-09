@@ -76,25 +76,26 @@ publishing {
 
 // ======== deployment options ========
 
-uploadArchives {
-	repositories {
-		mavenDeployer {
-			assert project.hasProperty("awsAccessKey") && project.hasProperty("awsSecretKey"): "AWS credential is required"
-			def awsCredentials = [
-				userName: awsAccessKey,
-				passphrase: awsSecretKey
-			]
-
-			configuration = configurations.deployerJars
-			repository(url: "s3://maven.xet.jp/release") {
-				authentication(awsCredentials)
-			}
-			snapshotRepository(url: "s3://maven.xet.jp/snapshot") {
-				authentication(awsCredentials)
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				if (project.hasProperty("awsAccessKey") && project.hasProperty("awsSecretKey")) {
+					def awsCredentials = [
+						userName: awsAccessKey,
+						passphrase: awsSecretKey
+					]
+		
+					configuration = configurations.deployerJars
+					repository(url: "s3://maven.xet.jp/release") {
+						authentication(awsCredentials)
+					}
+					snapshotRepository(url: "s3://maven.xet.jp/snapshot") {
+						authentication(awsCredentials)
+					}
+				}
 			}
 		}
 	}
-}
 
 [install.repositories.mavenInstaller, uploadArchives.repositories.mavenDeployer]*.pom*.whenConfigured { pom ->
 	pom.project {
@@ -110,20 +111,22 @@ uploadArchives {
 	}
 }
 
-bintray {
-	user = bintrayUser
-	key = bintrayApiKey
-
-	publications = ["mavenStuff"]
-	pkg {
-		repo = "maven"
-		name = artifactId
-		desc = "The models of basic unit (ex. Time, Money, etc.)"
-		websiteUrl = "https://github.com/dai0304/baseunits"
-		issueTrackerUrl = "https://github.com/dai0304/baseunits/issues"
-		vcsUrl = "https://github.com/dai0304/baseunits.git"
-		licenses = ["Apache-2.0"]
-		labels = ["Date", "Time", "Money"]
+if (project.hasProperty("bintrayUser") && project.hasProperty("bintrayApiKey")) {
+	bintray {
+		user = project.bintrayUser
+		key = project.bintrayApiKey
+	
+		publications = ["mavenStuff"]
+		pkg {
+			repo = "maven"
+			name = artifactId
+			desc = "The models of basic unit (ex. Time, Money, etc.)"
+			websiteUrl = "https://github.com/dai0304/baseunits"
+			issueTrackerUrl = "https://github.com/dai0304/baseunits/issues"
+			vcsUrl = "https://github.com/dai0304/baseunits.git"
+			licenses = ["Apache-2.0"]
+			labels = ["Date", "Time", "Money"]
+		}
 	}
 }
 
