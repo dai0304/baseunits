@@ -38,6 +38,7 @@ public class DurationSerializer extends JsonSerializer<Duration> {
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
 	 * @since 2.13
 	 */
 	public DurationSerializer() {
