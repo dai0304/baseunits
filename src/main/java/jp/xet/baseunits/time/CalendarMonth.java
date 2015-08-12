@@ -1,6 +1,5 @@
 /*
- * Copyright 2011-2013 Daisuke Miyamoto. (http://d.hatena.ne.jp/daisuke-m)
- * Copyright 2010-2011 TRICREO, Inc. (http://tricreo.jp/)
+ * Copyright 2010-2015 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,13 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
- * ----
- * Copyright (c) 2005 Domain Language, Inc. (http://domainlanguage.com) This
- * free software is distributed under the "MIT" licence.
- * For more information, see http://timeandmoney.sourceforge.net.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.xet.baseunits.time;
 
@@ -46,6 +41,9 @@ import com.google.common.base.Preconditions;
  */
 @SuppressWarnings("serial")
 public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
+	
+	private static final String DEFAULT_PATTERN = "yyyy-MM";
+	
 	
 	/**
 	 * 指定した年月から暦月を返す。
@@ -91,18 +89,30 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	}
 	
 	/**
+	 * 指定した暦月を表す文字列を{@link #DEFAULT_PATTERN}として解析し、暦月を返す。
+	 * 
+	 * @param monthString 暦月を表す文字列
+	 * @return {@link CalendarMonth}
+	 * @throws ParseException 文字列の解析に失敗した場合
+	 * @since 1.0
+	 */
+	public static CalendarMonth parse(String monthString) throws ParseException {
+		return parse(monthString, DEFAULT_PATTERN);
+	}
+	
+	/**
 	 * 指定した暦月を表す文字列を解析し、暦月を返す。
 	 * 
-	 * @param dateString 暦月を表す文字列
+	 * @param monthString 暦月を表す文字列
 	 * @param pattern 解析パターン文字列（{@link SimpleDateFormat}参照）
 	 * @return {@link CalendarMonth}
 	 * @throws ParseException 文字列の解析に失敗した場合
 	 * @since 1.0
 	 */
-	public static CalendarMonth parse(String dateString, String pattern) throws ParseException {
+	public static CalendarMonth parse(String monthString, String pattern) throws ParseException {
 		//Any timezone works, as long as the same one is used throughout.
 		TimeZone arbitraryZone = TimeZones.UNIVERSAL;
-		TimePoint point = TimePoint.parse(dateString, pattern, arbitraryZone);
+		TimePoint point = TimePoint.parse(monthString, pattern, arbitraryZone);
 		return CalendarMonth.from(point, arbitraryZone);
 	}
 	
@@ -374,20 +384,20 @@ public class CalendarMonth implements Comparable<CalendarMonth>, Serializable {
 	/**
 	 * この暦月の文字列表現を取得する。
 	 * 
-	 * <p>{@link SimpleDateFormat}の仕様に基づく {@code "yyyy-MM"}のパターンで整形する。</p>
+	 * <p>{@link SimpleDateFormat}の仕様に基づく{@link #DEFAULT_PATTERN}のパターンで整形する。</p>
 	 * 
 	 * @see java.lang.Object#toString()
 	 * @since 1.0
 	 */
 	@Override
 	public String toString() {
-		return toString("yyyy-MM"); //default for console
+		return toString(DEFAULT_PATTERN); //default for console
 	}
 	
 	/**
 	 * この暦月を、指定したパターンで整形し、その文字列表現を取得する。
 	 * 
-	 * @param pattern パターン
+	 * @param pattern {@link SimpleDateFormat}の仕様に基づくパターン
 	 * @return 文字列表現
 	 * @since 1.0
 	 */
