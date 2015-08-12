@@ -24,7 +24,7 @@ defaultTasks "clean", "build"
 
 // ======== deployment options (dispatched on group name) ========
 group = "jp.xet"
-version = "2.15-SNAPSHOT"
+version = "2.15"
 
 sourceCompatibility = targetCompatibility = 1.6
 
