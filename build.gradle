@@ -138,7 +138,7 @@ repositories {
 dependencies {
 	compile "org.projectlombok:lombok:1.16.2"
 	compile "org.slf4j:slf4j-api:1.7.12"
-	compile "com.google.guava:guava:[10.0,)"
+	compile "com.google.guava:guava:[23.0,)"
 	
 	optional "javax.validation:validation-api:1.0.0.GA"
 	optional "org.springframework:spring-context:[3.0.0.RELEASE,)"
