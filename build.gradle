@@ -136,7 +136,7 @@ repositories {
 	maven { url "http://maven.xet.jp/release" } // for baseunits
 }
 dependencies {
-	compile "org.projectlombok:lombok:1.16.2"
+	compile "org.projectlombok:lombok:1.16.18"
 	compile "org.slf4j:slf4j-api:1.7.25"
 	compile "com.google.guava:guava:[23.0,)"
 	
