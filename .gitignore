@@ -2,3 +2,6 @@ target/
 build/
 .gradle/
 gradle.properties
+.idea/
+bin/
+*.iml

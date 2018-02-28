@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2018 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ public final class Specifications {
 	/**
 	 * どの値にもマッチする仕様を返す。
 	 * 
+	 * @param <T> {@link Specification}が検査する型
 	 * @return 仕様
 	 * @since 2.0
 	 */
@@ -38,7 +39,8 @@ public final class Specifications {
 	
 	/**
 	 * どの値にもマッチしない仕様を返す。
-	 * 
+	 *
+	 * @param <T> {@link Specification}が検査する型
 	 * @return 仕様
 	 * @since 1.0
 	 */

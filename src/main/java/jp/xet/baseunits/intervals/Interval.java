@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2018 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,7 +75,8 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	
 	/**
 	 * 空区間を生成する。
-	 * 
+	 *
+	 * @param <T> 区間要素の型
 	 * @param someValue {@code null}ではない何らかの値。なんでもよい。
 	 * @return 空区間
 	 * @throws NullPointerException 引数に{@code null}を与えた場合
