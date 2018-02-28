@@ -75,7 +75,8 @@ public class Interval<T extends Comparable<T> & Serializable> implements Seriali
 	
 	/**
 	 * 空区間を生成する。
-	 * 
+	 *
+	 * @param <T> 区間要素の型
 	 * @param someValue {@code null}ではない何らかの値。なんでもよい。
 	 * @return 空区間
 	 * @throws NullPointerException 引数に{@code null}を与えた場合

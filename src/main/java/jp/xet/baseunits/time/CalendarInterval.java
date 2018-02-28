@@ -287,14 +287,14 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * この期間の開始暦日を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
-	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * その戻り値の反復子からは、以下の要素が取得できる。</p>
+	 * 
 	 * <ol>
 	 *   <li>2009/01/04</li>
 	 *   <li>2009/01/03</li>
 	 *   <li>2009/01/02</li>
 	 *   <li>2009/01/01</li>
 	 * </ol>
-	 * </p>
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
@@ -338,14 +338,14 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * この期間の終了暦日を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/01, 2009/01/04] で表される期間に対してこのメソッドを呼び出した場合、
-	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * その戻り値の反復子からは、以下の要素が取得できる。</p>
+	 * 
 	 * <ol>
 	 *   <li>2009/01/01</li>
 	 *   <li>2009/01/02</li>
 	 *   <li>2009/01/03</li>
 	 *   <li>2009/01/04</li>
 	 * </ol>
-	 * </p>
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
@@ -471,14 +471,14 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * この期間の開始暦日を含む暦月を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/10, 2009/04/04] で表される期間に対してこのメソッドを呼び出した場合、
-	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * その戻り値の反復子からは、以下の要素が取得できる。</p>
+	 * 
 	 * <ol>
 	 *   <li>2009/04</li>
 	 *   <li>2009/03</li>
 	 *   <li>2009/02</li>
 	 *   <li>2009/01</li>
 	 * </ol>
-	 * </p>
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
@@ -527,7 +527,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * この期間の終了暦日を含む暦月を超過しない範囲で順次取得する反復子を取得する。
 	 * 
 	 * <p>例えば [2009/01/10, 2009/05/04] で表される期間に対してこのメソッドを呼び出した場合、
-	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * その戻り値の反復子からは、以下の要素が取得できる。</p>
+	 * 
 	 * <ol>
 	 *   <li>2009/01</li>
 	 *   <li>2009/02</li>
@@ -535,7 +536,6 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 *   <li>2009/04</li>
 	 *   <li>2009/05</li>
 	 * </ol>
-	 * </p>
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
@@ -605,7 +605,8 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 * 
 	 * <p>例えば [2009/01/01, 2009/01/11] で表される期間に対して、
 	 * 2日間の {@code subintervalLength} を与えた場合、
-	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * その戻り値の反復子からは、以下の要素が取得できる。</p>
+	 * 
 	 * <ol>
 	 *   <li>[2009/01/01, 2009/01/02]</li>
 	 *   <li>[2009/01/03, 2009/01/04]</li>
@@ -613,7 +614,6 @@ public class CalendarInterval extends Interval<CalendarDate> {
 	 *   <li>[2009/01/07, 2009/01/08]</li>
 	 *   <li>[2009/01/09, 2009/01/10]</li>
 	 * </ol>
-	 * </p>
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 
