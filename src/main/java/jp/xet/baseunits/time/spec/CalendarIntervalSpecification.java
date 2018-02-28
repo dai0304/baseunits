@@ -23,6 +23,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterators;
 
 /**
@@ -79,7 +80,7 @@ public final class CalendarIntervalSpecification extends AbstractDateSpecificati
 	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
 		Interval<CalendarDate> i = this.interval.intersect(interval);
 		if (i.isEmpty()) {
-			return Iterators.emptyIterator();
+			return ImmutableSet.<CalendarDate> of().iterator();
 		}
 		CalendarInterval intersect = CalendarInterval.inclusive(i.lowerLimit(), i.upperLimit());
 		return intersect.daysIterator();

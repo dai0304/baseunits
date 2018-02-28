@@ -22,6 +22,7 @@ import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterators;
 
 /**
@@ -78,7 +79,7 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 		if (interval.includes(date)) {
 			return Iterators.singletonIterator(date);
 		} else {
-			return Iterators.emptyIterator();
+			return ImmutableSet.<CalendarDate> of().iterator();
 		}
 	}
 	
