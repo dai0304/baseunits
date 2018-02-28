@@ -16,14 +16,15 @@
 package jp.xet.baseunits.time.spec;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Iterator;
-
-import jp.xet.baseunits.time.CalendarDate;
-import jp.xet.baseunits.time.CalendarInterval;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterators;
+
+import jp.xet.baseunits.time.CalendarDate;
+import jp.xet.baseunits.time.CalendarInterval;
 
 /**
  * ある特定の唯一の暦日を表す暦日仕様実装クラス。
@@ -79,7 +80,7 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 		if (interval.includes(date)) {
 			return Iterators.singletonIterator(date);
 		} else {
-			return ImmutableSet.<CalendarDate> of().iterator();
+			return Collections.emptyIterator();
 		}
 	}
 	
