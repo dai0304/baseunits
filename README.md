@@ -7,16 +7,16 @@ BaseUnits Library
 Travis CI build status
 ----------------------
 
-master: [![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=master)](https://travis-ci.org/dai0304/baseunits)
-develop: [![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=develop)](https://travis-ci.org/dai0304/baseunits)
+* master: [![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=master)](https://travis-ci.org/dai0304/baseunits)
+* develop: [![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=develop)](https://travis-ci.org/dai0304/baseunits)
 
 Basic information
 -----------------
 
-- [Project web site](http://maven.xet.jp/site/baseunits/)
-- [Maven release repository](http://maven.xet.jp/release/)
-- [Maven snapshot repository](http://maven.xet.jp/snapshot/)
+* [Maven release repository](http://maven.xet.jp/release/)
+* [Maven snapshot repository](http://maven.xet.jp/snapshot/)
 
+require Java 8 or later.
 
 How to use?
 -----------
@@ -112,11 +112,9 @@ TBD
 License
 -------
 
-Copyright (C) 2011-2012 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
-
-Copyright (C) 2010-2011 TRICREO, Inc.
-
-Copyright (c) 2004 [Domain Language, Inc.](http://domainlanguage.com)
+* Copyright (C) 2011-2012 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
+* Copyright (C) 2010-2011 TRICREO, Inc.
+* Copyright (c) 2004 [Domain Language, Inc.](http://domainlanguage.com)
 
 Distributed under the Apache License v2.0.  See the file copyright/LICENSE.txt.
 
