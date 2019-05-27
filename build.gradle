@@ -9,7 +9,7 @@ buildscript {
 	dependencies {
 		classpath "nl.javadude.gradle.plugins:license-gradle-plugin:0.10.0"
 		classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2"
-		classpath "org.springframework.build.gradle:propdeps-plugin:0.0.6"
+		classpath "org.springframework.build.gradle:propdeps-plugin:0.0.7"
 	}
 }
 
