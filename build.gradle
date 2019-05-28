@@ -142,7 +142,7 @@ configurations {
 
 dependencies {
 	compileOnly "org.projectlombok:lombok:1.18.8"
-	compile "org.slf4j:slf4j-api:1.7.25"
+	compile "org.slf4j:slf4j-api:1.7.26"
 	compile "com.google.guava:guava:24.0-jre"
 	
 	compileOnly "javax.validation:validation-api:1.0.0.GA"
