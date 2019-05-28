@@ -17,12 +17,10 @@ package jp.xet.baseunits.util.spec;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import jp.xet.baseunits.util.spec.AndSpecification;
-import jp.xet.baseunits.util.spec.Specification;
 
 import org.junit.Test;
 
@@ -84,8 +82,8 @@ public class AndSpecificationTest {
 		Specification<Void> mock1 = mock(Specification.class);
 		@SuppressWarnings("unchecked")
 		Specification<Void> mock2 = mock(Specification.class);
-		when(mock1.isSatisfiedBy(any(Void.class))).thenReturn(true);
-		when(mock2.isSatisfiedBy(any(Void.class))).thenReturn(false);
+		when(mock1.isSatisfiedBy(any())).thenReturn(true);
+		when(mock2.isSatisfiedBy(any())).thenReturn(false);
 		
 		AndSpecification<Void> nandot = new AndSpecification<Void>(mock1, mock2);
 		assertThat(nandot.isSatisfiedBy(null), is(false));
@@ -105,8 +103,8 @@ public class AndSpecificationTest {
 		Specification<Void> mock1 = mock(Specification.class);
 		@SuppressWarnings("unchecked")
 		Specification<Void> mock2 = mock(Specification.class);
-		when(mock1.isSatisfiedBy(any(Void.class))).thenReturn(true);
-		when(mock2.isSatisfiedBy(any(Void.class))).thenReturn(true);
+		when(mock1.isSatisfiedBy(any())).thenReturn(true);
+		when(mock2.isSatisfiedBy(any())).thenReturn(true);
 		
 		AndSpecification<Void> and = new AndSpecification<Void>(mock1, mock2);
 		assertThat(and.isSatisfiedBy(null), is(true));
