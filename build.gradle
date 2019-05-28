@@ -154,7 +154,7 @@ dependencies {
 	compileOnly "com.amazonaws:aws-java-sdk-dynamodb:1.11.287"
 	compileOnly "com.fasterxml.jackson.core:jackson-core:2.9.4"
 	compileOnly "org.codehaus.jackson:jackson-core-asl:1.9.13"
-	compileOnly "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
+	compileOnly "org.codehaus.jackson:jackson-mapper-asl:1.9.13-atlassian-2"
 	
 	deployerJars "org.springframework.build:aws-maven:4.7.0.RELEASE"
 	
