@@ -9,11 +9,9 @@ buildscript {
 	dependencies {
 		classpath "nl.javadude.gradle.plugins:license-gradle-plugin:0.10.0"
 		classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2"
-		classpath "org.springframework.build.gradle:propdeps-plugin:0.0.6"
 	}
 }
 
-apply plugin: "propdeps"
 apply plugin: "java"
 apply plugin: "license"
 apply plugin: "maven"
@@ -135,21 +133,28 @@ repositories {
 	mavenCentral()
 	maven { url "http://maven.xet.jp/release" } // for baseunits
 }
+
+configurations {
+	testCompile {
+		extendsFrom compileOnly
+	}
+}
+
 dependencies {
 	compileOnly "org.projectlombok:lombok:1.16.18"
 	compile "org.slf4j:slf4j-api:1.7.25"
 	compile "com.google.guava:guava:24.0-jre"
 	
-	optional "javax.validation:validation-api:1.0.0.GA"
-	optional "org.springframework:spring-context:3.0.0.RELEASE"
-	optional "org.hibernate:hibernate-core:3.6.7.Final"
-	optional "jp.sf.amateras:mirage:1.2.1"
-	optional "org.apache.wicket:wicket-core:1.5.17"
-	optional "com.ibm.icu:icu4j:4.8.1.1"
-	optional "com.amazonaws:aws-java-sdk-dynamodb:1.11.287"
-	optional "com.fasterxml.jackson.core:jackson-core:2.9.4"
-	optional "org.codehaus.jackson:jackson-core-asl:1.9.13"
-	optional "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
+	compileOnly "javax.validation:validation-api:1.0.0.GA"
+	compileOnly "org.springframework:spring-context:3.0.0.RELEASE"
+	compileOnly "org.hibernate:hibernate-core:3.6.7.Final"
+	compileOnly "jp.sf.amateras:mirage:1.2.1"
+	compileOnly "org.apache.wicket:wicket-core:1.5.17"
+	compileOnly "com.ibm.icu:icu4j:4.8.1.1"
+	compileOnly "com.amazonaws:aws-java-sdk-dynamodb:1.11.287"
+	compileOnly "com.fasterxml.jackson.core:jackson-core:2.9.4"
+	compileOnly "org.codehaus.jackson:jackson-core-asl:1.9.13"
+	compileOnly "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
 	
 	deployerJars "org.springframework.build:aws-maven:4.7.0.RELEASE"
 	
