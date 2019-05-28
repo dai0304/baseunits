@@ -156,7 +156,7 @@ dependencies {
 	compileOnly "org.codehaus.jackson:jackson-core-asl:1.9.13"
 	compileOnly "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
 	
-	deployerJars "org.springframework.build:aws-maven:4.7.0.RELEASE"
+	deployerJars "org.springframework.build:aws-maven:5.0.0.RELEASE"
 	
 	testCompile "junit:junit:4.12"
 	testCompile "org.hamcrest:hamcrest-library:1.3"
