@@ -15,7 +15,7 @@
  */
 package jp.xet.baseunits.mirage;
 
-import jp.sf.amateras.mirage.type.ValueType;
+import com.miragesql.miragesql.type.ValueType;
 
 /**
  * Baseunits内の型を扱う {@link ValueType}の骨格実装クラス。
