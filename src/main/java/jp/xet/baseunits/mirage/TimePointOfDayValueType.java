@@ -22,8 +22,9 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;
 
-import jp.sf.amateras.mirage.bean.PropertyDesc;
-import jp.sf.amateras.mirage.type.ValueType;
+import com.miragesql.miragesql.bean.PropertyDesc;
+import com.miragesql.miragesql.type.ValueType;
+
 import jp.xet.baseunits.time.TimePointOfDay;
 
 /**

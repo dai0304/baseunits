@@ -22,8 +22,9 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.TimeZone;
 
-import jp.sf.amateras.mirage.bean.PropertyDesc;
-import jp.sf.amateras.mirage.type.ValueType;
+import com.miragesql.miragesql.bean.PropertyDesc;
+import com.miragesql.miragesql.type.ValueType;
+
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarMonth;
 
