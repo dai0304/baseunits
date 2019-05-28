@@ -141,7 +141,7 @@ configurations {
 }
 
 dependencies {
-	compileOnly "org.projectlombok:lombok:1.16.18"
+	compileOnly "org.projectlombok:lombok:1.18.8"
 	compile "org.slf4j:slf4j-api:1.7.25"
 	compile "com.google.guava:guava:24.0-jre"
 	
