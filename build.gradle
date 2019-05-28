@@ -146,7 +146,7 @@ dependencies {
 	compile "com.google.guava:guava:24.0-jre"
 	
 	compileOnly "javax.validation:validation-api:1.0.0.GA"
-	compileOnly "org.springframework:spring-context:3.0.0.RELEASE"
+	compileOnly "org.springframework:spring-context:5.1.7.RELEASE"
 	compileOnly "org.hibernate:hibernate-core:3.6.7.Final"
 	compileOnly "com.miragesql:miragesql:2.0.0"
 	compileOnly "org.apache.wicket:wicket-core:1.5.17"
