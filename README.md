@@ -4,12 +4,6 @@ BaseUnits Library
 基礎的な単位にまつわるドメインモデル群を含むクラスライブラリ。現在は「時間」と「金額」を主に扱っているが、
 必要に応じて要望があれば「重さ」「長さ」などのドメインも取り扱っていく。
 
-Travis CI build status
-----------------------
-
-* master: [![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=master)](https://travis-ci.org/dai0304/baseunits)
-* develop: [![Build Status](https://travis-ci.org/dai0304/baseunits.png?branch=develop)](https://travis-ci.org/dai0304/baseunits)
-
 Basic information
 -----------------
 
@@ -112,7 +106,7 @@ TBD
 License
 -------
 
-* Copyright (C) 2011-2012 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
+* Copyright (C) 2011-2019 [Daisuke Miyamoto](http://d.hatena.ne.jp/daisuke-m/)
 * Copyright (C) 2010-2011 TRICREO, Inc.
 * Copyright (c) 2004 [Domain Language, Inc.](http://domainlanguage.com)
 
