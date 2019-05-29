@@ -1,5 +1,0 @@
-awsAccessKey=<for snapshot deploy>
-awsSecretKey=<for snapshot deploy>
-
-bintrayUser=<for release deploy>
-bintrayApiKey=<for release deploy>
