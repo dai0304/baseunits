@@ -47,7 +47,7 @@ configurations {
 dependencies {
 	implementation "org.slf4j:slf4j-api"
 	implementation "com.google.guava:guava:24.0-jre"
-	compileOnly "javax.validation:validation-api:1.0.0.GA"
+	compileOnly "javax.validation:validation-api:2.0.1.Final"
 	compileOnly "org.springframework:spring-context"
 
 	compileOnly "org.hibernate:hibernate-core:3.6.7.Final"
