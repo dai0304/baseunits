@@ -67,7 +67,7 @@ dependencies {
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation "commons-io:commons-io:2.0"
+	testImplementation "commons-io:commons-io:2.6"
 }
 
 bootJar {
