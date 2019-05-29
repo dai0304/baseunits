@@ -3,44 +3,27 @@
 基礎的な単位にまつわるドメインモデル群を含むクラスライブラリ。現在は「時間」と「金額」を主に扱っているが、
 必要に応じて要望があれば「重さ」「長さ」などのドメインも取り扱っていく。
 
-## Basic information
-
-* [Maven release repository](http://maven.xet.jp/release/)
-* [Maven snapshot repository](http://maven.xet.jp/snapshot/)
-
 require Java 8 or later.
 
 ## How to use?
 
 If you're using Maven, add this to your pom.xml under the <repositories> and <dependencies> section:
 
-v2.16 or later
+### v2.16 or later
 
-v2.0〜2.15
+* repositories: jcenter
+* groupId: `jp.xet`
+* artifactId: `baseunits`
 
-```xml
-<project>
-  <!-- ... -->
-  <repositories>
-    <!-- ... -->
-    <repsoitory>
-      <id>maven.xet.jp-release</id>
-      <url>http://maven.xet.jp/release/</url>
-    </repository>
-    <!-- ... -->
-  </repositories>
-  <!-- ... -->
-  <dependencies>
-    <!-- ... -->
-    <dependency>
-      <groupId>jp.xet</groupId>
-      <artifactId>baseunits</artifactId>
-      <version>LATEST</version>
-    </dependency>
-    <!-- ... -->
-  </dependencies>
-  <!-- ... -->
-</project>
+see <https://bintray.com/dai0304/maven/baseunits>
+
+### v2.0〜2.15
+
+* repositories
+    * [Maven release repository](http://maven.xet.jp/release/)
+    * [Maven snapshot repository](http://maven.xet.jp/snapshot/)
+* groupId: `jp.xet`
+* artifactId: `baseunits`
 
 
 ## Example
