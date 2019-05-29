@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,15 @@
 package jp.xet.baseunits.time.spec;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Iterator;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterators;
 
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Iterators;
 
 /**
  * ある特定の唯一の暦日を表す暦日仕様実装クラス。
@@ -78,7 +80,7 @@ public final class FixedDateSpecification extends AbstractDateSpecification impl
 		if (interval.includes(date)) {
 			return Iterators.singletonIterator(date);
 		} else {
-			return Iterators.emptyIterator();
+			return Collections.emptyIterator();
 		}
 	}
 	

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -656,14 +656,14 @@ public class Duration implements Comparable<Duration>, Serializable {
 	 * 
 	 * <p>序算で発生した余りは切り捨てる。</p>
 	 * 
-	 * <code><pre>
+	 * <pre><code>
 	 * Duration d1 = Duration.days(2);
 	 * assertThat(d1.to(TimeUnit.day), is(2L));
 	 * assertThat(d1.to(TimeUnit.hour), is(48L));
 	 * 
 	 * Duration d2 = Duration.hours(49);
 	 * assertThat(d2.to(TimeUnit.day), is(2L));
-	 * </pre></code>
+	 * </code></pre>
 	 * 
 	 * @param unit 単位
 	 * @return 値

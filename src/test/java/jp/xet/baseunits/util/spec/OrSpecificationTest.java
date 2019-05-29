@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,10 @@ package jp.xet.baseunits.util.spec;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import jp.xet.baseunits.util.spec.OrSpecification;
-import jp.xet.baseunits.util.spec.Specification;
 
 import org.junit.Test;
 
@@ -42,8 +40,8 @@ public class OrSpecificationTest {
 		Specification<Void> mock1 = mock(Specification.class);
 		@SuppressWarnings("unchecked")
 		Specification<Void> mock2 = mock(Specification.class);
-		when(mock1.isSatisfiedBy(any(Void.class))).thenReturn(false);
-		when(mock2.isSatisfiedBy(any(Void.class))).thenReturn(false);
+		when(mock1.isSatisfiedBy(any())).thenReturn(false);
+		when(mock2.isSatisfiedBy(any())).thenReturn(false);
 		
 		OrSpecification<Void> or = new OrSpecification<Void>(mock1, mock2);
 		assertThat(or.isSatisfiedBy(null), is(false));
@@ -63,8 +61,8 @@ public class OrSpecificationTest {
 		Specification<Void> mock1 = mock(Specification.class);
 		@SuppressWarnings("unchecked")
 		Specification<Void> mock2 = mock(Specification.class);
-		when(mock1.isSatisfiedBy(any(Void.class))).thenReturn(false);
-		when(mock2.isSatisfiedBy(any(Void.class))).thenReturn(true);
+		when(mock1.isSatisfiedBy(any())).thenReturn(false);
+		when(mock2.isSatisfiedBy(any())).thenReturn(true);
 		
 		OrSpecification<Void> or = new OrSpecification<Void>(mock1, mock2);
 		assertThat(or.isSatisfiedBy(null), is(true));
@@ -84,8 +82,8 @@ public class OrSpecificationTest {
 		Specification<Void> mock1 = mock(Specification.class);
 		@SuppressWarnings("unchecked")
 		Specification<Void> mock2 = mock(Specification.class);
-		when(mock1.isSatisfiedBy(any(Void.class))).thenReturn(true);
-		when(mock2.isSatisfiedBy(any(Void.class))).thenReturn(false);
+		when(mock1.isSatisfiedBy(any())).thenReturn(true);
+		when(mock2.isSatisfiedBy(any())).thenReturn(false);
 		
 		OrSpecification<Void> or = new OrSpecification<Void>(mock1, mock2);
 		assertThat(or.isSatisfiedBy(null), is(true));
@@ -105,8 +103,8 @@ public class OrSpecificationTest {
 		Specification<Void> mock1 = mock(Specification.class);
 		@SuppressWarnings("unchecked")
 		Specification<Void> mock2 = mock(Specification.class);
-		when(mock1.isSatisfiedBy(any(Void.class))).thenReturn(true);
-		when(mock2.isSatisfiedBy(any(Void.class))).thenReturn(true);
+		when(mock1.isSatisfiedBy(any())).thenReturn(true);
+		when(mock2.isSatisfiedBy(any())).thenReturn(true);
 		
 		OrSpecification<Void> or = new OrSpecification<Void>(mock1, mock2);
 		assertThat(or.isSatisfiedBy(null), is(true));

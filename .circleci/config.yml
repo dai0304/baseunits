@@ -1,0 +1,52 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}-{{ checksum ".circleci/config.yml" }}-{{ checksum "build.gradle" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+            - v1-{{ .Branch }}-{{ checksum ".circleci/config.yml" }}
+            - v1-{{ .Branch }}
+            - v1-develop
+            - v1-master
+      - run:
+          name: Show gradle version
+          command: ./gradlew -v
+      - run:
+          name: Download gradle dependencies
+          command: ./gradlew dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-{{ .Branch }}-{{ checksum ".circleci/config.yml" }}-{{ checksum "build.gradle" }}-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - run:
+          name: Run tests
+          command: ./gradlew clean check
+      - store_artifacts:
+          name: Store artifacts
+          path: build/reports
+      - store_test_results:
+          path: build/test-results
+      - deploy:
+          name: Deploy artifacts
+          command: |
+            if [ -n "${CIRCLE_TAG}" -a -n "${BINTRAY_USER}" ]; then
+              ./gradlew build bintrayUpload
+            fi
+
+workflows:
+  version: 2
+  all:
+    jobs:
+      - build:
+          context: bintray
+          filters:
+            tags:
+              only: /.*/

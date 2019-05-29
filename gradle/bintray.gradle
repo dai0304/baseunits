@@ -1,0 +1,51 @@
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			artifact sourcesJar {
+				classifier "sources"
+			}
+			artifact javadocJar {
+				classifier "javadoc"
+			}
+			pom.withXml {
+				asNode().children().last() + {
+					resolveStrategy = Closure.DELEGATE_FIRST
+					name project.name
+					description project.description
+					inceptionYear "2019"
+					licenses {
+						license {
+							name "The Apache Software License, Version 2.0"
+							url "http://www.apache.org/license/LICENSE-2.0.txt"
+							distribution "repo"
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+bintray {
+	user = System.env.BINTRAY_USER
+	key = System.env.BINTRAY_KEY
+	publications = ["mavenJava"]
+	dryRun = System.env.CIRCLE_TAG == null
+	publish = true
+	pkg {
+		repo = "maven"
+		name = project.name
+		desc = "The models of basic unit (ex. Time, Money, etc.)"
+		websiteUrl = "https://github.com/dai0304/baseunits"
+		issueTrackerUrl = "https://github.com/dai0304/baseunits/issues"
+		vcsUrl = "https://github.com/dai0304/baseunits.git"
+		licenses = ["Apache-2.0"]
+		labels = ["Date", "Time", "Money"]
+		githubRepo = 'dai0304/baseunits'
+		version {
+			name = project.version
+			vcsTag = project.version
+		}
+	}
+}

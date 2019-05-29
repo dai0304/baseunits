@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -133,7 +133,7 @@ public class BusinessCalendar {
 			private CalendarDate nextBusinessDate() {
 				CalendarDate result = null;
 				do {
-					result = calendarDays.hasNext() ? (CalendarDate) calendarDays.next() : null;
+					result = calendarDays.hasNext() ? calendarDays.next() : null;
 				} while ((result == null || isBusinessDay(result)) == false);
 				return result;
 			}

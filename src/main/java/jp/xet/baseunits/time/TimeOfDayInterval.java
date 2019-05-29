@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -295,14 +295,14 @@ public class TimeOfDayInterval extends Interval<TimeOfDay> {
 	 * 
 	 * <p>例えば [2009/01/01 02:00, 2009/01/10 15:00) で表される期間に対して、
 	 * 2日間の {@code subintervalLength} を与えた場合、
-	 * その戻り値の反復子からは、以下の要素が取得できる。
+	 * その戻り値の反復子からは、以下の要素が取得できる。</p>
+	 * 
 	 * <ol>
 	 *   <li>[2009/01/01 02:00, 2009/01/03 02:00)</li>
 	 *   <li>[2009/01/03 02:00, 2009/01/05 02:00)</li>
 	 *   <li>[2009/01/05 02:00, 2009/01/07 02:00)</li>
 	 *   <li>[2009/01/07 02:00, 2009/01/09 02:00)</li>
 	 * </ol>
-	 * </p>
 	 * 
 	 * <p>返す反復子は {@link Iterator#remove()} をサポートしない。</p>
 	 * 

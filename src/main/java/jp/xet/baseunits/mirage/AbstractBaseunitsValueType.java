@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package jp.xet.baseunits.mirage;
 
-import jp.sf.amateras.mirage.type.ValueType;
+import com.miragesql.miragesql.type.ValueType;
 
 /**
  * Baseunits内の型を扱う {@link ValueType}の骨格実装クラス。

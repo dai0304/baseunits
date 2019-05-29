@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package jp.xet.baseunits.util.spec;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -39,7 +39,7 @@ public class NotSpecificationTest {
 	public void test01_false_To_true() throws Exception {
 		@SuppressWarnings("unchecked")
 		Specification<Void> mock = mock(Specification.class);
-		when(mock.isSatisfiedBy(any(Void.class))).thenReturn(false);
+		when(mock.isSatisfiedBy(any())).thenReturn(false);
 		
 		NotSpecification<Void> not = new NotSpecification<Void>(mock);
 		assertThat(not.isSatisfiedBy(null), is(true));
@@ -56,7 +56,7 @@ public class NotSpecificationTest {
 	public void test01_true_To_false() throws Exception {
 		@SuppressWarnings("unchecked")
 		Specification<Void> mock = mock(Specification.class);
-		when(mock.isSatisfiedBy(any(Void.class))).thenReturn(true);
+		when(mock.isSatisfiedBy(any())).thenReturn(true);
 		
 		NotSpecification<Void> not = new NotSpecification<Void>(mock);
 		assertThat(not.isSatisfiedBy(null), is(false));

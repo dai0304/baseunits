@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 package jp.xet.baseunits.time.spec;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Iterator;
+
+import com.google.common.base.Preconditions;
 
 import jp.xet.baseunits.intervals.Interval;
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarInterval;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Iterators;
 
 /**
  * ある特定の期間中にマッチする暦日仕様実装クラス。
@@ -79,7 +79,7 @@ public final class CalendarIntervalSpecification extends AbstractDateSpecificati
 	public Iterator<CalendarDate> iterateOver(final CalendarInterval interval) {
 		Interval<CalendarDate> i = this.interval.intersect(interval);
 		if (i.isEmpty()) {
-			return Iterators.emptyIterator();
+			return Collections.emptyIterator();
 		}
 		CalendarInterval intersect = CalendarInterval.inclusive(i.lowerLimit(), i.upperLimit());
 		return intersect.daysIterator();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ package jp.xet.baseunits.util.spec;
  * {@link Specification}の実装は、 {@link AbstractSpecification}を基底クラスとして実装するとよい。
  * その場合、 {@link #isSatisfiedBy(Object)} を実装する必要しかない。</p>
  * 
- * @param <T> {@link Specification}の型
+ * @param <T> {@link Specification}が検査する型
  * @author daisuke
  * @since 1.0
  */

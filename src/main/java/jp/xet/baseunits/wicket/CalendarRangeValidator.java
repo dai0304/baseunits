@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ public class CalendarRangeValidator extends AbstractFormValidator {
 	
 	@Override
 	public FormComponent<?>[] getDependentFormComponents() {
-		return new FormComponent[] {
+		return new FormComponent<?>[] {
 			from,
 			to
 		};

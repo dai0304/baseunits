@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2015 Miyamoto Daisuke.
+ * Copyright 2010-2019 Miyamoto Daisuke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,9 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.TimeZone;
 
-import jp.sf.amateras.mirage.bean.PropertyDesc;
-import jp.sf.amateras.mirage.type.ValueType;
+import com.miragesql.miragesql.bean.PropertyDesc;
+import com.miragesql.miragesql.type.ValueType;
+
 import jp.xet.baseunits.time.CalendarDate;
 import jp.xet.baseunits.time.CalendarMonth;
 
