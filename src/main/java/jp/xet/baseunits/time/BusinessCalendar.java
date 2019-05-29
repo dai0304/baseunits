@@ -133,7 +133,7 @@ public class BusinessCalendar {
 			private CalendarDate nextBusinessDate() {
 				CalendarDate result = null;
 				do {
-					result = calendarDays.hasNext() ? (CalendarDate) calendarDays.next() : null;
+					result = calendarDays.hasNext() ? calendarDays.next() : null;
 				} while ((result == null || isBusinessDay(result)) == false);
 				return result;
 			}

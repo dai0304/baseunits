@@ -52,7 +52,7 @@ public class CalendarRangeValidator extends AbstractFormValidator {
 	
 	@Override
 	public FormComponent<?>[] getDependentFormComponents() {
-		return new FormComponent[] {
+		return new FormComponent<?>[] {
 			from,
 			to
 		};
