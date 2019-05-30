@@ -57,7 +57,7 @@ dependencies {
 	compileOnly "com.amazonaws:aws-java-sdk-dynamodb:1.11.562"
 	compileOnly "com.fasterxml.jackson.core:jackson-core"
 	compileOnly "org.codehaus.jackson:jackson-core-asl:1.9.13"
-	compileOnly "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
+	compileOnly "org.codehaus.jackson:jackson-mapper-asl:1.9.13-atlassian-1"
 
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
