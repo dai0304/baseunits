@@ -6,13 +6,13 @@ buildscript {
 		maven { url "https://plugins.gradle.org/m2/" }
 	}
 	dependencies {
-		classpath 'org.ajoberstar:grgit:1.7.0'
+		classpath 'org.ajoberstar.grgit:grgit-gradle:3.1.1'
 	}
 }
 
 ext {
-	git = org.ajoberstar.grgit.Grgit.open(file('.'))
-	describedCommit = git.describe().toString().trim()
+	git = org.ajoberstar.grgit.Grgit.open(dir: file('.'))
+	describedCommit = git.describe(tags: true).toString().trim()
 }
 
 version = describedCommit +
