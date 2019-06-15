@@ -50,7 +50,7 @@ dependencies {
 	compileOnly "javax.validation:validation-api:1.0.0.GA"
 	compileOnly "org.springframework:spring-context"
 
-	compileOnly "org.hibernate:hibernate-core:3.6.7.Final"
+	compileOnly "org.hibernate:hibernate-core:5.4.3.Final"
 	compileOnly "com.miragesql:miragesql:2.1.0"
 	compileOnly "org.apache.wicket:wicket-core:1.5.17"
 	compileOnly "com.ibm.icu:icu4j:4.8.1.1"
